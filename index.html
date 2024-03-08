@@ -169,6 +169,65 @@
                 font-size: 18px;
             }
         }
+
+        /* Hero Section Styles */
+        .hero-section {
+            position: relative;
+            text-align: center;
+            padding: 50px; /* Adjust as needed */
+        }
+
+        .hero-image {
+            max-width: 100%; /* Ensure the image doesn't exceed its container */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 15px; /* Rounded corners for the image */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+            margin-top: 20px; /* Adjust as needed */
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-text {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333; /* Adjust the color as needed */
+            margin-bottom: 10px;
+        }
+
+        .subtext {
+            font-size: 1.2em;
+            color: #555; /* Adjust the color as needed */
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            background-color: #4CAF50; /* Material Design 3 color */
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .cta-button:hover {
+            background-color: #45a049; /* Darker shade on hover */
+        }
+
+        /* Mobile Styles */
+        @media only screen and (max-width: 600px) {
+            .hero-content {
+                order: 2; /* Reverse order for mobile view */
+            }
+
+            .hero-image {
+                order: 1; /* Reverse order for mobile view */
+            }
+        }
     </style>
 </head>
 <body>
@@ -199,6 +258,16 @@
             <a href="https://discord.gg/gRJS4k2czD" target="_blank"><img src="discord.png" alt="Discord"></a>
         </div>
     </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="main-text">I Make Stuff.</div>
+            <div class="subtext">Web Design | Digital Marketing | Graphic Design | Content Creation | Social Media</div>
+            <a href="#" class="cta-button">Get in Touch</a>
+        </div>
+        <img src="your-hero-image.jpg" alt="Hero Image" class="hero-image">
+    </div>
 
     <section>
         <h2>Features or Highlights</h2>
