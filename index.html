@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google Tag Manager -->
-    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NDCR97CD');</script>
+    <!-- End Google Tag Manager -->
     <!-- End Google Tag Manager -->
     <title>Sudo-V</title>
     <link rel="icon" href="favicon.png" type="image/png">
@@ -26,8 +32,16 @@
             position: relative;
             padding: 20px;
             text-align: center;
-            color: #fff;
-            padding-top: 60px; /* Added padding to create space for the logo */
+            background-color: #f4f4f4; /* Background color for the header */
+            border-radius: 25px; /* Border-radius for the "pill" effect */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+            margin-top: 20px; /* Added margin for separation from the sections below */
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         nav {
@@ -69,9 +83,6 @@
         }
 
         .hamburger-container {
-            position: absolute;
-            top: 10px;
-            right: 10px;
             cursor: pointer;
             z-index: 2; /* Ensure hamburger icon appears above other elements */
             display: flex;
@@ -127,7 +138,6 @@
 
             .hamburger-container {
                 top: 20px;
-                right: 20px;
                 padding-right: 10px; /* Adjusted padding for mobile */
             }
 
@@ -140,16 +150,21 @@
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDCR97CD"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <!-- End Google Tag Manager (noscript) -->
     <header>
-        <img src="logo.png" alt="Caleb Pfohl Logo" width="60" height="60">
-        <div class="hamburger-container" onclick="toggleNav()">
-            <div class="hamburger-icon"></div>
+        <div class="header-content">
+            <h1 style="color: #f0f0f0;">Caleb Pfohl</h1>
+            <div class="hamburger-container" onclick="toggleNav()">
+                <div class="hamburger-icon"></div>
+            </div>
         </div>
     </header>
 
     <nav id="navbar">
-        <img src="navlogo.png" alt="Caleb Pfohl Nav Logo" width="60" height="60"> <!-- Placeholder for nav logo -->
         <a href="#home">Home</a>
         <a href="#features">Features</a>
         <a href="#contact">Contact</a>
