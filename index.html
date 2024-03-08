@@ -140,18 +140,16 @@
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MHJVQQ9B"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <header>
-        <img src="sudologo.png" alt="Sudo-V Logo" width="60" height="60">
+        <img src="logo.png" alt="Caleb Pfohl Logo" width="60" height="60">
         <div class="hamburger-container" onclick="toggleNav()">
             <div class="hamburger-icon"></div>
         </div>
     </header>
 
     <nav id="navbar">
-        <img src="sudonavlogo.png" alt="Sudo-V Nav Logo" width="60" height="60"> <!-- Placeholder for nav logo -->
+        <img src="navlogo.png" alt="Caleb Pfohl Nav Logo" width="60" height="60"> <!-- Placeholder for nav logo -->
         <a href="#home">Home</a>
         <a href="#features">Features</a>
         <a href="#contact">Contact</a>
@@ -177,5 +175,17 @@
     <footer>
         <p>&copy; 2024 Sudo-V. All rights reserved. Website by <a href="https://virtualinsanityllc.com/">Virtual Insanity LLC</a>.</p>
     </footer>
+    <script>
+        function toggleNav() {
+            var nav = document.getElementById('navbar');
+            var hamburgerIcon = document.querySelector('.hamburger-icon');
+
+            // Toggle the 'active' class for the hamburger icon
+            hamburgerIcon.classList.toggle('active');
+
+            // Toggle the position of the navigation menu to slide it in from the right
+            nav.style.right = (nav.style.right === '0px') ? '-100%' : '0px';
+        }
+    </script>
 </body>
 </html>
