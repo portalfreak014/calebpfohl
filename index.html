@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google Tag Manager -->
-    <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-NDCR97CD');</script>
-    <!-- End Google Tag Manager -->
     <!-- End Google Tag Manager -->
     <title>Sudo-V</title>
     <link rel="icon" href="favicon.png" type="image/png">
@@ -33,7 +31,7 @@
             padding: 20px;
             text-align: center;
             background-color: #f4f4f4; /* Background color for the header */
-            border-radius: 25px; /* Border-radius for the "pill" effect */
+            border-radius: 80px; /* Completely rounded corners */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
             margin-top: 20px; /* Added margin for separation from the sections below */
         }
@@ -42,6 +40,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-left: 25px; /* Add left padding */
+            padding-right: 25px; /* Add right padding */
+        }
+
+        .headercopy {
+            position: relative;
+            padding: 20px;
+            text-align: center;
+            border-radius: 80px; /* Completely rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+            margin-top: 20px; /* Added margin for separation from the sections below */
+        }
+
+
+        h1 {
+            color: #444; /* Dark gray for the font color */
+            margin-right: 10px; /* Adjusted margin for spacing */
         }
 
         nav {
@@ -64,6 +79,10 @@
             padding: 10px;
             margin: 10px 0;
             display: block;
+        }
+
+        .NavMenuItems {
+            font-size: 20px;
         }
 
         .social-icons {
@@ -136,6 +155,10 @@
                 padding: 10px;
             }
 
+            h1 {
+                margin-right: 5px; /* Adjusted margin for spacing on mobile */
+            }
+
             .hamburger-container {
                 top: 20px;
                 padding-right: 10px; /* Adjusted padding for mobile */
@@ -150,14 +173,12 @@
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
-    <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDCR97CD"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <!-- End Google Tag Manager (noscript) -->
     <header>
         <div class="header-content">
-            <h1 style="color: #f0f0f0;">Caleb Pfohl</h1>
+            <h1>Caleb Pfohl</h1>
             <div class="hamburger-container" onclick="toggleNav()">
                 <div class="hamburger-icon"></div>
             </div>
@@ -165,9 +186,16 @@
     </header>
 
     <nav id="navbar">
+        <div class="headercopy">
+        <div class="header-content">
+            <h1 style="color: #f8f8ff;">Caleb Pfohl</h1>
+        </div>
+        </div>
+        <div class="NavMenuItems">
         <a href="#home">Home</a>
         <a href="#features">Features</a>
         <a href="#contact">Contact</a>
+        </div>
         <div class="social-icons">
             <a href="https://tiktok.com/@calebpfohl" target="_blank"><img src="tiktok.png" alt="TikTok"></a>
             <a href="https://twitter.com/calebpfohl" target="_blank"><img src="twitter.png" alt="Twitter"></a>
