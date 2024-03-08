@@ -1,3 +1,181 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Tag Manager -->
+    
+    <!-- End Google Tag Manager -->
+    <title>Sudo-V</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+            padding: 0 20px; /* Added padding to the left and right of the entire site */
+            max-width: 500px; /* Restrict page width on desktop */
+            margin: 0 auto; /* Center the content */
+        }
+
+        header {
+            position: relative;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            padding-top: 60px; /* Added padding to create space for the logo */
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            right: -100%; /* Initial position off the screen */
+            height: 100%;
+            width: 100%;
+            background-color: #333;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 1; /* Ensure menu appears above other elements */
+            transition: right 0.3s ease-in-out; /* Smooth transition for the right property */
+            text-align: center; /* Center align the items in the nav menu */
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            margin: 10px 0;
+            display: block;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center; /* Center align the social icons */
+            margin-top: 20px; /* Added margin to bring it up */
+        }
+
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px; /* Adjusted margin for more spacing */
+        }
+
+        .social-icons img {
+            width: 24px; /* Adjusted width for smaller icons */
+            height: 24px; /* Adjusted height for smaller icons */
+        }
+
+        .hamburger-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            z-index: 2; /* Ensure hamburger icon appears above other elements */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding-right: 20px; /* Added padding to the right for the hamburger icon */
+        }
+
+        .hamburger-icon {
+            width: 30px; /* Adjust as needed */
+            height: 3px;
+            background-color: #444; /* Dark gray for initial state */
+            margin: 10px 0; /* Increased margin for more space between lines */
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Smooth transition for transform and background-color properties */
+        }
+
+        /* Pseudo-elements to create additional lines for the "X" effect */
+        .hamburger-icon::before,
+        .hamburger-icon::after {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: #444; /* Dark gray for initial state */
+            position: absolute;
+            transition: transform 0.3s ease-in-out; /* Smooth transition for the transform property */
+        }
+
+        .hamburger-icon::before {
+            transform: translateY(-10px); /* Positioning for the top line of the "X" */
+        }
+
+        .hamburger-icon::after {
+            transform: translateY(10px); /* Positioning for the bottom line of the "X" */
+        }
+
+        .hamburger-icon.active {
+            background-color: #fff; /* White color when active */
+            transform: rotate(-45deg); /* Rotate the central line of the "X" */
+        }
+
+        .hamburger-icon.active::before,
+        .hamburger-icon.active::after {
+            background-color: #fff; /* White color when active */
+            transform: rotate(90deg); /* Rotate pseudo-elements to complete the "X" */
+        }
+
+        /* Mobile Styles */
+        @media only screen and (max-width: 600px) {
+            header, section {
+                padding: 10px;
+            }
+
+            .hamburger-container {
+                top: 20px;
+                right: 20px;
+                padding-right: 10px; /* Adjusted padding for mobile */
+            }
+
+            .social-icons img {
+                width: 20px; /* Adjusted width for smaller icons on mobile */
+                height: 20px; /* Adjusted height for smaller icons on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MHJVQQ9B"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <header>
+        <img src="sudologo.png" alt="Sudo-V Logo" width="60" height="60">
+        <div class="hamburger-container" onclick="toggleNav()">
+            <div class="hamburger-icon"></div>
+        </div>
+    </header>
+
+    <nav id="navbar">
+        <img src="sudonavlogo.png" alt="Sudo-V Nav Logo" width="60" height="60"> <!-- Placeholder for nav logo -->
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#contact">Contact</a>
+        <div class="social-icons">
+            <a href="https://tiktok.com/sudo-v" target="_blank"><img src="tiktok.png" alt="TikTok"></a>
+            <a href="https://twitter.com/sudo-v" target="_blank"><img src="twitter.png" alt="Twitter"></a>
+            <a href="https://instagram.com/sudo-v" target="_blank"><img src="instagram.png" alt="Instagram"></a>
+            <a href="https://discord.com/invite/sudo-v" target="_blank"><img src="discord.png" alt="Discord"></a>
+        </div>
+    </nav>
+
+    <section>
+        <h2>Features or Highlights</h2>
+        <p>Highlight some key features or points about your website.</p>
+    </section>
+
+    <section>
+        <h2>Get Started</h2>
+        <p>Provide a call-to-action or links to navigate to other sections/pages.</p>
+        <a href="#contact">Contact Us</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Sudo-V. All rights reserved. Website by <a href="https://virtualinsanityllc.com/">Virtual Insanity LLC</a>.</p>
+    </footer>
+</body>
 </html>
