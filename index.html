@@ -22,7 +22,7 @@
             color: #333;
             overflow-x: hidden; /* Prevent horizontal scrollbar */
             padding: 0 20px; /* Added padding to the left and right of the entire site */
-            max-width: 500px; /* Restrict page width on desktop */
+            /*max-width: 500px; Restrict page width on desktop */
             margin: 0 auto; /* Center the content */
             margin-top: 0; /* Remove default margin at the top */
         }
@@ -172,36 +172,32 @@
 
         /* Hero Section Styles */
         .hero-section {
+            display: flex;
             position: relative;
+            justify-content: center;
+            align-items: center;
             text-align: center;
             padding: 50px; /* Adjust as needed */
-        }
-
-        .hero-image {
-            max-width: 100%; /* Ensure the image doesn't exceed its container */
-            height: auto; /* Maintain aspect ratio */
-            border-radius: 15px; /* Rounded corners for the image */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
-            margin-top: 20px; /* Adjust as needed */
         }
 
         .hero-content {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            text-align: left;
+            line-height: 1.5; /* Adjust line height for space between lines */
         }
 
         .main-text {
             font-size: 2em;
             font-weight: bold;
             color: #333; /* Adjust the color as needed */
-            margin-bottom: 10px;
+            margin-bottom: 20px; /* Adjust vertical margin for space below */
         }
 
         .subtext {
             font-size: 1.2em;
             color: #555; /* Adjust the color as needed */
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .cta-button {
@@ -210,22 +206,32 @@
             padding: 10px 20px;
             font-size: 1.2em;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 40px;
             transition: background-color 0.3s ease-in-out;
+            display: inline-block;
+            width: auto; /* Ensure the button width adjusts based on content */
+            max-width: 200px; /* Adjust the max-width as needed */
         }
 
         .cta-button:hover {
             background-color: #45a049; /* Darker shade on hover */
         }
 
+        .hero-image {
+            max-width: 20%; /* Adjust as needed */
+            height: auto; /* Maintain aspect ratio */
+            padding: 20px;
+        }
+
         /* Mobile Styles */
         @media only screen and (max-width: 600px) {
-            .hero-content {
-                order: 2; /* Reverse order for mobile view */
+            .hero-section {
+                flex-direction: column-reverse; /* Reverse the order for mobile */
             }
 
+            .hero-content,
             .hero-image {
-                order: 1; /* Reverse order for mobile view */
+                max-width: 100%; /* Adjust as needed for mobile */
             }
         }
     </style>
@@ -264,9 +270,9 @@
         <div class="hero-content">
             <div class="main-text">I Make Stuff.</div>
             <div class="subtext">Web Design | Digital Marketing | Graphic Design | Content Creation | Social Media</div>
-            <a href="#" class="cta-button">Get in Touch</a>
+            <a href="#" class="cta-button">Contact Me</a>
         </div>
-        <img src="your-hero-image.jpg" alt="Hero Image" class="hero-image">
+        <img src="heroimage.png" alt="Hero Image" class="hero-image">
     </div>
 
     <section>
