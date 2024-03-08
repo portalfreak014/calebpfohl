@@ -24,6 +24,7 @@
             padding: 0 20px; /* Added padding to the left and right of the entire site */
             max-width: 500px; /* Restrict page width on desktop */
             margin: 0 auto; /* Center the content */
+            margin-top: 0; /* Remove default margin at the top */
         }
 
         header {
@@ -42,21 +43,13 @@
             align-items: center;
             padding-left: 25px; /* Add left padding */
             padding-right: 25px; /* Add right padding */
+            transition: padding 0.3s ease; /* Smooth transition for padding */
         }
-
-        .headercopy {
-            position: relative;
-            padding: 20px;
-            text-align: center;
-            border-radius: 80px; /* Completely rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
-            margin-top: 20px; /* Added margin for separation from the sections below */
-        }
-
 
         h1 {
             color: #444; /* Dark gray for the font color */
             margin-right: 10px; /* Adjusted margin for spacing */
+            transition: font-size 0.3s ease; /* Smooth transition for font size */
         }
 
         nav {
@@ -79,10 +72,7 @@
             padding: 10px;
             margin: 10px 0;
             display: block;
-        }
-
-        .NavMenuItems {
-            font-size: 20px;
+            font-size: 20px; /* Adjusted font size */
         }
 
         .social-icons {
@@ -168,6 +158,16 @@
                 width: 20px; /* Adjusted width for smaller icons on mobile */
                 height: 20px; /* Adjusted height for smaller icons on mobile */
             }
+
+            /* Reduce padding and font size when the menu is active */
+            .header-content.active {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            h1.active {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
@@ -186,16 +186,12 @@
     </header>
 
     <nav id="navbar">
-        <div class="headercopy">
         <div class="header-content">
             <h1 style="color: #f8f8ff;">Caleb Pfohl</h1>
         </div>
-        </div>
-        <div class="NavMenuItems">
         <a href="#home">Home</a>
         <a href="#features">Features</a>
         <a href="#contact">Contact</a>
-        </div>
         <div class="social-icons">
             <a href="https://tiktok.com/@calebpfohl" target="_blank"><img src="tiktok.png" alt="TikTok"></a>
             <a href="https://twitter.com/calebpfohl" target="_blank"><img src="twitter.png" alt="Twitter"></a>
@@ -222,9 +218,17 @@
         function toggleNav() {
             var nav = document.getElementById('navbar');
             var hamburgerIcon = document.querySelector('.hamburger-icon');
+            var headerContent = document.querySelector('.header-content');
+            var h1 = document.querySelector('h1');
 
             // Toggle the 'active' class for the hamburger icon
             hamburgerIcon.classList.toggle('active');
+
+            // Toggle the 'active' class for header content
+            headerContent.classList.toggle('active');
+
+            // Toggle the 'active' class for h1
+            h1.classList.toggle('active');
 
             // Toggle the position of the navigation menu to slide it in from the right
             nav.style.right = (nav.style.right === '0px') ? '-100%' : '0px';
