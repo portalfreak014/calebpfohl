@@ -29,12 +29,8 @@
 
         header {
             position: relative;
-            padding: 20px;
             text-align: center;
             background-color: #f4f4f4; /* Background color for the header */
-            border-radius: 80px; /* Completely rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
-            margin-top: 20px; /* Added margin for separation from the sections below */
         }
 
         .header-content {
@@ -44,11 +40,15 @@
             padding-left: 25px; /* Add left padding */
             padding-right: 25px; /* Add right padding */
             transition: padding 0.3s ease; /* Smooth transition for padding */
+            border-radius: 80px; /* Completely rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+            margin-top: 20px; /* Added margin for separation from the sections below */
         }
 
         h1 {
             color: #444; /* Dark gray for the font color */
             margin-right: 10px; /* Adjusted margin for spacing */
+            font-size: 30px;
             transition: font-size 0.3s ease; /* Smooth transition for font size */
         }
 
@@ -235,6 +235,15 @@
                 max-width: 100%; /* Adjust as needed for mobile */
             }
         }
+
+        .dynamic-subtext {
+            font-size: 1.2em;
+            color: #555; /* Adjust the color as needed */
+            margin-bottom: 30px;
+            white-space: pre; /* Preserve whitespace for line breaks */
+            display: inline-block;
+        }
+
     </style>
 </head>
 <body>
@@ -270,7 +279,7 @@
     <div class="hero-section">
         <div class="hero-content">
             <div class="main-text">I Make Stuff.</div>
-            <div class="subtext">Web Design | Digital Marketing | Graphic Design | Content Creation | Social Media</div>
+            <div class="dynamic-subtext" id="dynamicSubtext"></div>
             <a href="#" class="cta-button">Contact Me</a>
         </div>
         <img src="heroimage.png" alt="Hero Image" class="hero-image">
@@ -310,5 +319,47 @@
             nav.style.right = (nav.style.right === '0px') ? '-100%' : '0px';
         }
     </script>
+   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const phrases = [
+            "Web Design",
+            "Digital Marketing",
+            "Graphic Design",
+            "Content Creation",
+            "Social Media"
+        ];
+
+        const dynamicSubtext = document.getElementById("dynamicSubtext");
+
+        function typeAndRetract(index) {
+            let i = 0;
+            let direction = 1; // 1 for typing, -1 for retracting
+
+            const typeInterval = setInterval(() => {
+                dynamicSubtext.textContent = phrases[index].substring(0, i);
+
+                i += direction;
+
+                if (i > phrases[index].length || i < 0) {
+                    direction *= -1; // Change the direction for retracting
+                }
+
+                if (i === 0 && direction === -1) {
+                    // After retracting, linger on the emptiness for 2 seconds
+                    clearInterval(typeInterval);
+                    setTimeout(() => {
+                        dynamicSubtext.textContent = ""; // Clear the content
+                        const nextIndex = (index + 1) % phrases.length;
+                        typeAndRetract(nextIndex);
+                    }, 2000);
+                }
+            }, 100); // Adjust the timing as needed
+        }
+
+        // Start typing and retracting the phrases when the page loads
+        typeAndRetract(0);
+    });
+</script>
+
 </body>
 </html>
