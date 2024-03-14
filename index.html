@@ -218,10 +218,16 @@
             background-color: #5C8CEB; /* Darker shade on hover */
         }
 
+        .hero-image-container {
+            position: relative;
+            perspective: 1000px; /* Define the perspective for 3D transforms */
+        }
+
         .hero-image {
-            max-width: 100%; /* Allow the image to adjust its width based on the viewport */
-            height: auto; /* Maintain the aspect ratio */
+            max-width: 100%; /* Adjust as needed */
+            height: auto; /* Maintain aspect ratio */
             padding: 20px;
+            transition: transform 0.3s ease; /* Smooth transition for transform property */
         }
 
         /* Mobile Styles */
@@ -308,8 +314,11 @@
             <div class="dynamic-subtext" id="dynamicSubtext"></div>
             <a href="mailto:hello@calebpfohl.com" class="cta-button">Contact Me</a>
         </div>
-        <img src="hero2enhanced.png" alt="Hero Image" class="hero-image">
+        <div class="hero-image-container">
+            <img src="hero2enhanced.png" alt="Hero Image" class="hero-image" id="heroImage">
+        </div>
     </div>
+    
 
     <section>
         <h2>Features or Highlights</h2>
@@ -388,6 +397,28 @@
         typeAndRetract(0);
     });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const heroImage = document.getElementById("heroImage");
 
+    heroImage.addEventListener("mousemove", function (event) {
+        const rect = heroImage.getBoundingClientRect();
+        const x = event.clientX - rect.left; // X position of cursor relative to the image
+        const y = event.clientY - rect.top; // Y position of cursor relative to the image
+        const centerX = rect.width / 2; // X position of the center of the image
+        const centerY = rect.height / 2; // Y position of the center of the image
+        const deltaX = (x - centerX) / centerX; // Normalized distance of cursor from center horizontally
+        const deltaY = (y - centerY) / centerY; // Normalized distance of cursor from center vertically
+
+        // Apply 3D rotation based on cursor movement
+        heroImage.style.transform = `rotateY(${deltaX * 10}deg) rotateX(${-deltaY * 10}deg)`;
+    });
+
+    // Reset the image rotation when the cursor leaves the image
+    heroImage.addEventListener("mouseleave", function () {
+        heroImage.style.transform = "rotateY(0deg) rotateX(0deg)";
+    });
+});
+</script>
 </body>
 </html>
