@@ -224,10 +224,11 @@
         }
 
         .hero-image {
-            max-width: 100%; /* Adjust as needed */
+            max-width: 100%; /* Ensure the image doesn't exceed the width of its container */
             height: auto; /* Maintain aspect ratio */
-            padding: 20px;
-            transition: transform 0.3s ease; /* Smooth transition for transform property */
+            width: auto; /* Allow the image to adjust its width based on the viewport */
+            max-height: 70vh; /* Limit the height of the image to 70% of the viewport height */
+            padding: 20px; /* Adjust padding as needed */
         }
 
         /* Mobile Styles */
