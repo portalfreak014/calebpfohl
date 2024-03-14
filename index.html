@@ -26,7 +26,7 @@
             margin: 0 auto; /* Center the content */
             margin-top: 0; /* Remove default margin at the top */
         }
-
+        
         header {
             position: relative;
             text-align: center;
@@ -201,7 +201,7 @@
         }
 
         .cta-button {
-            background-color: #4CAF50; /* Material Design 3 color */
+            background-color: #6FA4FF; /* Material Design 3 color */
             color: #fff;
             padding: 10px 20px;
             font-size: 1.2em;
@@ -215,7 +215,7 @@
         }
 
         .cta-button:hover {
-            background-color: #45a049; /* Darker shade on hover */
+            background-color: #5C8CEB; /* Darker shade on hover */
         }
 
         .hero-image {
@@ -244,18 +244,46 @@
             display: inline-block;
         }
 
+        .close-icon {
+            width: 30px;
+            height: 3px;
+            background-color: #fff;
+            position: absolute;
+            transition: opacity 0.3s ease; /* Smooth transition for opacity */
+            opacity: 0; /* Initially invisible */
+        }
+
+        .close-icon::before,
+        .close-icon::after {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: #fff;
+            position: absolute;
+            transition: opacity 0.3s ease; /* Smooth transition for opacity */
+            opacity: 0; /* Initially invisible */
+        }
+
+        .close-icon::before {
+            transform: rotate(-45deg);
+            top: 12px;
+        }
+
+        .close-icon::after {
+            transform: rotate(45deg);
+            top: 12px;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDCR97CD"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <header>
         <div class="header-content">
             <h1>Caleb Pfohl</h1>
-            <div class="hamburger-container" onclick="toggleNav()">
-                <div class="hamburger-icon"></div>
+            <div class="hamburger-container" onclick="toggleNav();">
+                <div class="hamburger-icon" id="hamburgerIcon"></div>
+                <div class="close-icon" id="closeIcon"></div>
             </div>
         </div>
     </header>
@@ -274,8 +302,6 @@
             <a href="https://discord.gg/gRJS4k2czD" target="_blank"><img src="discord.png" alt="Discord"></a>
         </div>
     </nav>
-
-    <!-- Hero Section -->
     <div class="hero-section">
         <div class="hero-content">
             <div class="main-text">I Make Stuff.</div>
@@ -290,6 +316,8 @@
         <p>Highlight some key features or points about your website.</p>
     </section>
 
+    <!-- Hero Section -->
+
     <section>
         <h2>Get Started</h2>
         <p>Provide a call-to-action or links to navigate to other sections/pages.</p>
@@ -302,17 +330,17 @@
     <script>
         function toggleNav() {
             var nav = document.getElementById('navbar');
-            var hamburgerIcon = document.querySelector('.hamburger-icon');
+            var hamburgerIcon = document.getElementById('hamburgerIcon');
+            var closeIcon = document.getElementById('closeIcon');
             var headerContent = document.querySelector('.header-content');
             var h1 = document.querySelector('h1');
 
-            // Toggle the 'active' class for the hamburger icon
+            // Toggle the 'active' class for the hamburger icon and close icon
             hamburgerIcon.classList.toggle('active');
+            closeIcon.classList.toggle('active');
 
-            // Toggle the 'active' class for header content
+            // Toggle the 'active' class for header content and h1
             headerContent.classList.toggle('active');
-
-            // Toggle the 'active' class for h1
             h1.classList.toggle('active');
 
             // Toggle the position of the navigation menu to slide it in from the right
