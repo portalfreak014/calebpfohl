@@ -402,27 +402,27 @@
     });
 </script>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const heroImage = document.getElementById("heroImage");
-
-    heroImage.addEventListener("mousemove", function (event) {
-        const rect = heroImage.getBoundingClientRect();
-        const x = event.clientX - rect.left; // X position of cursor relative to the image
-        const y = event.clientY - rect.top; // Y position of cursor relative to the image
-        const centerX = rect.width / 2; // X position of the center of the image
-        const centerY = rect.height / 2; // Y position of the center of the image
-        const deltaX = (x - centerX) / centerX; // Normalized distance of cursor from center horizontally
-        const deltaY = (y - centerY) / centerY; // Normalized distance of cursor from center vertically
-
-        // Apply 3D rotation based on cursor movement
-        heroImage.style.transform = `rotateY(${deltaX * 10}deg) rotateX(${-deltaY * 10}deg)`;
+    document.addEventListener("DOMContentLoaded", function () {
+        const heroImage = document.getElementById("heroImage");
+    
+        document.addEventListener("mousemove", function (event) {
+            const rect = heroImage.getBoundingClientRect();
+            const x = event.clientX - rect.left; // X position of cursor relative to the image
+            const y = event.clientY - rect.top; // Y position of cursor relative to the image
+            const centerX = rect.width / 2; // X position of the center of the image
+            const centerY = rect.height / 2; // Y position of the center of the image
+            const deltaX = (x - centerX) / centerX; // Normalized distance of cursor from center horizontally
+            const deltaY = (y - centerY) / centerY; // Normalized distance of cursor from center vertically
+    
+            // Apply 3D rotation based on cursor movement
+            heroImage.style.transform = `rotateY(${deltaX * 10}deg) rotateX(${-deltaY * 10}deg)`;
+        });
+    
+        // Reset the image rotation when the cursor leaves the image
+        heroImage.addEventListener("mouseleave", function () {
+            heroImage.style.transform = "rotateY(0deg) rotateX(0deg)";
+        });
     });
-
-    // Reset the image rotation when the cursor leaves the image
-    heroImage.addEventListener("mouseleave", function () {
-        heroImage.style.transform = "rotateY(0deg) rotateX(0deg)";
-    });
-});
-</script>
+    </script>
 </body>
 </html>
