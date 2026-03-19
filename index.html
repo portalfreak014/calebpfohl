@@ -139,6 +139,29 @@
             transform: rotate(90deg); /* Rotate pseudo-elements to complete the "X" */
         }
 
+        .hero-image-frame {
+            display: inline-block;
+            padding: 12px;
+            border-radius: 24px;              /* MD3-style rounded shape [web:1][web:2] */
+            background-color: #fff;
+            border: 4px solid #000;           /* thick cartoony outline */
+            box-shadow:
+                0 4px 8px rgba(0, 0, 0, 0.18),
+                0 8px 16px rgba(0, 0, 0, 0.24); /* MD3-ish elevated card [web:3][web:10] */
+            position: relative;
+            overflow: hidden;                 /* keep “fuzzy” effect clipped to the shape */
+        }
+
+        /* optional: slightly “fuzzy” inner edge using a pseudo-element */
+        .hero-image-frame::before {
+            content: "";
+            position: absolute;
+            inset: 4px;
+            border-radius: 18px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.25); /* soft inner fuzz [web:6][web:8] */
+            pointer-events: none;
+        }
+
         /* Mobile Styles */
         @media only screen and (max-width: 600px) {
             header, section {
@@ -223,14 +246,15 @@
             perspective: 1000px; /* Define the perspective for 3D transforms */
         }
 
+        /* keep your existing hero-image styles, but remove padding from the img itself if you want the border tight */
         .hero-image {
-            max-width: 60%; /* Adjust the maximum width as needed */
-            height: auto; /* Maintain aspect ratio */
-            width: auto; /* Allow the image to adjust its width based on the viewport */
-            max-height: 70vh; /* Limit the height of the image to 70% of the viewport height */
-            padding: 20px; /* Adjust padding as needed */
-            display: block; /* Ensure the image is displayed as a block element */
-            margin: 0 auto; /* Center the image horizontally within its container */
+            max-width: 60%;
+            height: auto;
+            width: auto;
+            max-height: 70vh;
+            display: block;
+            margin: 0 auto;
+            padding: 0; /* override previous 20px if you want */
         }
 
 
@@ -322,9 +346,11 @@
             <div class="dynamic-subtext" id="dynamicSubtext"></div>
             <a href="mailto:hello@calebpfohl.com" class="cta-button" target="_blank">Contact Me</a>
         </div>
-        <div class="hero-image-container">
-            <img src="hero2enhanced.png" alt="Hero Image" class="hero-image" id="heroImage">
-        </div>
+            <div class="hero-image-container">
+                <div class="hero-image-frame">
+                    <img src="hero2enhanced.png" alt="Hero Image" class="hero-image" id="heroImage">
+                </div>
+            </div>
     </div>
     
 
