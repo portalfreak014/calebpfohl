@@ -370,12 +370,13 @@
                       stroke="#000000"
                       stroke-width="10" />
                 <!-- your PNG placed inside -->
-                <image href="hero2enhanced.png"
+                <image xlink:href="hero2enhanced.png"
                        x="40" y="40" width="320" height="320"
                        preserveAspectRatio="xMidYMid meet"
                        id="heroImage" />
               </svg>
             </div>
+
     </div>
     
 
@@ -473,28 +474,28 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const heroImage = document.getElementById("heroImage");
-    
-        document.addEventListener("mousemove", function (event) {
-            const rect = heroImage.getBoundingClientRect();
-            const x = event.clientX - rect.left; // X position of cursor relative to the image
-            const y = event.clientY - rect.top; // Y position of cursor relative to the image
-            const centerX = rect.width / 2; // X position of the center of the image
-            const centerY = rect.height / 2; // Y position of the center of the image
-            const deltaX = (x - centerX) / centerX; // Normalized distance of cursor from center horizontally
-            const deltaY = (y - centerY) / centerY; // Normalized distance of cursor from center vertically
-    
-            // Apply 3D rotation based on cursor movement
-            heroImage.style.transform = `rotateY(${deltaX * 10}deg) rotateX(${-deltaY * 10}deg)`;
-        });
-    
-        // Reset the image rotation when the cursor leaves the image
-        heroImage.addEventListener("mouseleave", function () {
-            heroImage.style.transform = "rotateY(0deg) rotateX(0deg)";
-        });
+document.addEventListener("DOMContentLoaded", function () {
+    const heroSticker = document.querySelector(".hero-sticker");
+
+    document.addEventListener("mousemove", function (event) {
+        const rect = heroSticker.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const deltaX = (x - centerX) / centerX;
+        const deltaY = (y - centerY) / centerY;
+
+        heroSticker.style.transform =
+            `rotateY(${deltaX * 10}deg) rotateX(${-deltaY * 10}deg)`;
+        heroSticker.style.transformStyle = "preserve-3d";
     });
-    </script>
+
+    heroSticker.addEventListener("mouseleave", function () {
+        heroSticker.style.transform = "rotateY(0deg) rotateX(0deg)";
+    });
+});
+</script>
 
 </body>
 </html>
