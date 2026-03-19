@@ -257,6 +257,21 @@
             padding: 0; /* override previous 20px if you want */
         }
 
+        .hero-sticker {
+            max-width: 60%;
+            height: auto;
+            max-height: 70vh;
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.25)); /* MD3-ish elevation [web:3] */
+        }
+        
+        /* optional: slight wobble to make it feel cartoony */
+        .hero-sticker:hover {
+            transform: translateY(-2px);
+            transition: transform 120ms ease-out;
+        }
+
 
         /* Mobile Styles */
         @media only screen and (max-width: 600px) {
@@ -347,9 +362,19 @@
             <a href="mailto:hello@calebpfohl.com" class="cta-button" target="_blank">Contact Me</a>
         </div>
             <div class="hero-image-container">
-                <div class="hero-image-frame">
-                    <img src="hero2enhanced.png" alt="Hero Image" class="hero-image" id="heroImage">
-                </div>
+              <svg class="hero-sticker" viewBox="0 0 400 400">
+                <!-- white sticker background with thick black outline -->
+                <rect x="10" y="10" width="380" height="380"
+                      rx="70" ry="70"
+                      fill="#ffffff"
+                      stroke="#000000"
+                      stroke-width="10" />
+                <!-- your PNG placed inside -->
+                <image href="hero2enhanced.png"
+                       x="40" y="40" width="320" height="320"
+                       preserveAspectRatio="xMidYMid meet"
+                       id="heroImage" />
+              </svg>
             </div>
     </div>
     
