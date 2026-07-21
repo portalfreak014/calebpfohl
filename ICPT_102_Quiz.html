@@ -116,8 +116,10 @@ function shuffle(arr) {
   return arr;
 }
 
+const QUIZ_LENGTH = 20;
+
 function startQuiz() {
-  order = shuffle([...Array(questions.length).keys()]);
+  order = shuffle([...Array(questions.length).keys()]).slice(0, Math.min(QUIZ_LENGTH, questions.length));
   current = 0;
   score = 0;
   document.getElementById('final').textContent = '';
