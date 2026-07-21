@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>ICPT 102 Quiz</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 { margin-top: 10px; text-shadow: 2px 2px 4px #000; }
+  #card {
+    background: #fff;
+    color: #222;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.4);
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+  }
+  #word {
+    font-size: 3em;
+    direction: rtl;
+    margin: 10px 0 25px;
+    color: #1e3c72;
+    font-weight: bold;
+  }
+  .opt {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    padding: 14px;
+    font-size: 1.1em;
+    border: 2px solid #1e3c72;
+    border-radius: 10px;
+    background: #f0f4ff;
+    cursor: pointer;
+    transition: .2s;
+  }
+  .opt:hover { background: #dbe4ff; }
+  .correct { background: #4caf50 !important; color: #fff; border-color:#4caf50; }
+  .wrong { background: #e53935 !important; color: #fff; border-color:#e53935; }
+  #progress { margin-bottom: 15px; font-size: 1.1em; }
+  #score { margin-top: 15px; font-size: 1.2em; font-weight: bold; }
+  #next {
+    margin-top: 20px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    background: #1e3c72;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    display: none;
+  }
+  #restart {
+    margin-top: 15px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    background: #ff9800;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    display: none;
+  }
+  #final { font-size: 1.5em; margin-top: 10px; }
+  #bar {
+    width: 100%;
+    background: #ffffff33;
+    border-radius: 8px;
+    height: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  #barFill {
+    height: 100%;
+    background: #4caf50;
+    width: 0%;
+    transition: width .3s;
+  }
+</style>
+</head>
+<body>
+<h1>ICPT 102 Quiz</h1>
+<div id="card">
+  <div id="progress"></div>
+  <div id="bar"><div id="barFill"></div></div>
+  <div id="word"></div>
+  <div id="options"></div>
+  <div id="score"></div>
+  <div id="final"></div>
+  <button id="next" onclick="nextQuestion()">Next ▶</button>
+  <button id="restart" onclick="startQuiz()">Restart Quiz 🔁</button>
+</div>
+
+<script>
+const questions = [{"word": "انطلق", "answer": "to launch/start/begin", "options": ["protection", "to launch/start/begin", "shadow", "ambassador(s)"]}, {"word": "بعث", "answer": "to send", "options": ["rare", "protection", "to survive", "to send"]}, {"word": "برقية", "answer": "telegram", "options": ["to accuse", "elements (groups)", "tomorrow", "telegram"]}, {"word": "تصدى", "answer": "to confront", "options": ["to confront", "to smoke (first-time use)", "protection", "to foil"]}, {"word": "كافح", "answer": "to fight, go against", "options": ["fraud", "to fight, go against", "to fall deeply in love", "to permit"]}, {"word": "متتالية", "answer": "fighting/sequence", "options": ["clear", "fighting/sequence", "to confront", "telegram"]}, {"word": "نفذ", "answer": "to carry out", "options": ["tunnel(s)", "to confront", "to carry out", "to fall deeply in love"]}, {"word": "رهائن", "answer": "hostages", "options": ["hostages", "to disappear", "to occupy/take by force", "fraud"]}, {"word": "ذخيرة حية", "answer": "live fire", "options": ["fruit", "live fire", "miracle/wonder", "protection"]}, {"word": "عزز", "answer": "to reinforce", "options": ["to reinforce", "evacuation", "committee", "to fall deeply in love"]}, {"word": "اختطف", "answer": "to kidnap", "options": ["exploring", "to fall deeply in love", "wing", "to kidnap"]}, {"word": "انقذ", "answer": "to rescue", "options": ["to excuse", "to invest", "soul", "to rescue"]}, {"word": "فترة", "answer": "time", "options": ["soul", "time", "fashion design", "to fight, go against"]}, {"word": "اتهم", "answer": "to accuse", "options": ["to solve/resolve", "to come", "to accuse", "silencer"]}, {"word": "انتشر", "answer": "to spread", "options": ["conditions/atmosphere", "broke out/started", "to spread", "to rescue"]}, {"word": "هاجم", "answer": "to attack", "options": ["hike/path", "to attack", "course", "dialogues"]}, {"word": "لاحق", "answer": "to chase", "options": ["applicable", "deals", "exceeding", "to chase"]}, {"word": "هدد", "answer": "to threaten", "options": ["wing", "fraud", "to threaten", "United Nations"]}, {"word": "سفير/سفراء", "answer": "ambassador(s)", "options": ["chasing/speeding/continuing", "ambassador(s)", "potential", "to occupy/take by force"]}, {"word": "عيّن", "answer": "to be appointed", "options": ["to smoke (first-time use)", "to be appointed", "to disappear", "conditions/atmosphere"]}, {"word": "صحف", "answer": "newspaper", "options": ["to hide", "available", "newspaper", "method"]}, {"word": "لقب", "answer": "title", "options": ["fashion design", "title", "shadow", "to exert"]}, {"word": "الأمم المتحدة", "answer": "United Nations", "options": ["United Nations", "effort", "course", "to solve/resolve"]}, {"word": "كاتم", "answer": "silencer", "options": ["silencer", "miracle/wonder", "to confront", "hurricane/tornado"]}, {"word": "لجنة", "answer": "committee", "options": ["committee", "jump", "silencer", "to disappear"]}, {"word": "اقتحم", "answer": "to break into", "options": ["to reinforce", "survival", "to break into", "to fight, go against"]}, {"word": "مرجحة", "answer": "likely", "options": ["to possess", "to send", "likely", "exposed"]}, {"word": "عناصر", "answer": "elements (groups)", "options": ["silencer", "elements (groups)", "rewards/awards", "to occupy/take by force"]}, {"word": "كتم", "answer": "to silence/suppress", "options": ["newspaper", "to silence/suppress", "role model", "mandatory"]}, {"word": "نصاب", "answer": "fraudster", "options": ["crash", "exploring", "fruit", "fraudster"]}, {"word": "نصب", "answer": "fraud", "options": ["fraud", "to spread", "food", "rare"]}, {"word": "سرّح", "answer": "to mislead", "options": ["resulted", "to flee", "to mislead", "to solve/resolve"]}, {"word": "حصة", "answer": "share", "options": ["mandatory", "share", "potential", "hike/path"]}, {"word": "اجباري", "answer": "mandatory", "options": ["mandatory", "topic (story)", "telegram", "to silence/suppress"]}, {"word": "اجبر على", "answer": "to force", "options": ["applicable", "to survive", "wing", "to force"]}, {"word": "سمح", "answer": "to permit", "options": ["to prosper/grow", "available", "evacuation", "to permit"]}, {"word": "يمتلك", "answer": "to possess", "options": ["topic (story)", "survival", "to possess", "losses"]}, {"word": "استثمر", "answer": "to invest", "options": ["to invest", "to excuse", "hostages", "decorative/ornamental"]}, {"word": "ثمرة", "answer": "fruit", "options": ["deals", "to excuse", "fruit", "to reinforce"]}, {"word": "اعذر", "answer": "to excuse", "options": ["to send", "to excuse", "to hide", "to chase"]}, {"word": "صفقة", "answer": "deals", "options": ["title", "deals", "miracle/wonder", "shadow"]}, {"word": "حظر", "answer": "to ban", "options": ["time", "to occupy/take by force", "likely", "to ban"]}, {"word": "تطور", "answer": "to develop", "options": ["rare", "to come", "to accuse", "to develop"]}, {"word": "هرب", "answer": "to escape", "options": ["exceeding", "telegram", "to ban", "to escape"]}, {"word": "فرّ", "answer": "to flee", "options": ["newspaper", "to ban", "to flee", "to break into"]}, {"word": "استولى", "answer": "to occupy/take by force", "options": ["to occupy/take by force", "survival", "to force", "elements (groups)"]}, {"word": "جهد", "answer": "effort", "options": ["effort", "course", "rich person(s)", "to be entrusted"]}, {"word": "بذل", "answer": "to exert", "options": ["to exert", "to kidnap", "title", "to threaten"]}, {"word": "محادثات", "answer": "dialogues", "options": ["to force", "dialogues", "protection", "to develop"]}, {"word": "ملفات", "answer": "files", "options": ["to escape", "files", "to invest", "to spread"]}, {"word": "علاقات", "answer": "relations", "options": ["to disappear", "relations", "jump", "to threaten"]}, {"word": "القصة", "answer": "topic (story)", "options": ["dialogues", "topic (story)", "topic", "to reinforce"]}, {"word": "متلاحقة", "answer": "chasing/speeding/continuing", "options": ["exceeding", "soul", "to spread", "chasing/speeding/continuing"]}, {"word": "موضوع", "answer": "topic", "options": ["topic", "shadow", "to kidnap", "to force"]}, {"word": "حل", "answer": "to solve/resolve", "options": ["to accuse", "to solve/resolve", "to permit", "miracle/wonder"]}, {"word": "نفق/أنفاق", "answer": "tunnel(s)", "options": ["to send", "tunnel(s)", "to come", "exceeding"]}, {"word": "احباط", "answer": "to foil", "options": ["resulted", "to foil", "committee", "fighting/sequence"]}, {"word": "اندلعت", "answer": "broke out/started", "options": ["broke out/started", "newspaper", "to survive", "to spread"]}, {"word": "نجا", "answer": "to survive", "options": ["newspaper", "to accuse", "mission", "to survive"]}, {"word": "اعجوبة", "answer": "miracle/wonder", "options": ["exploring", "to disappear", "share", "miracle/wonder"]}, {"word": "حريق ضخم", "answer": "huge fire", "options": ["clear", "deals", "huge fire", "likely"]}, {"word": "غذائية", "answer": "food", "options": ["tomorrow", "food", "to invest", "to fall deeply in love"]}, {"word": "رسم الازياء", "answer": "fashion design", "options": ["fashion design", "live fire", "topic (story)", "deals"]}, {"word": "دورة", "answer": "course", "options": ["to spread", "share", "elements (groups)", "course"]}, {"word": "نادر", "answer": "rare", "options": ["applying", "mandatory", "rare", "silencer"]}, {"word": "جناح", "answer": "wing", "options": ["wing", "effort", "to mislead", "to kidnap"]}, {"word": "محتمل", "answer": "potential", "options": ["potential", "clear", "to rescue", "losses"]}, {"word": "توفر", "answer": "available", "options": ["to excuse", "to ban", "available", "fighting/sequence"]}, {"word": "قدوة", "answer": "role model", "options": ["to develop", "time", "role model", "to mislead"]}, {"word": "تسلم", "answer": "to be entrusted", "options": ["topic (story)", "to be entrusted", "to mislead", "telegram"]}, {"word": "تطبيق", "answer": "applying", "options": ["applying", "telegram", "to reinforce", "hike/path"]}, {"word": "اختفى", "answer": "to disappear", "options": ["to disappear", "huge fire", "to be appointed", "course"]}, {"word": "خفي", "answer": "to hide", "options": ["to hide", "to come", "to reinforce", "wing"]}, {"word": "ظل", "answer": "shadow", "options": ["shadow", "deals", "to excuse", "ambassador(s)"]}, {"word": "خسائر", "answer": "losses", "options": ["ambassador(s)", "losses", "likely", "to chase"]}, {"word": "قفز", "answer": "jump", "options": ["jump", "tunnel(s)", "United Nations", "fruit"]}, {"word": "روح", "answer": "soul", "options": ["share", "live fire", "method", "soul"]}, {"word": "اعصار", "answer": "hurricane/tornado", "options": ["role model", "to foil", "to be entrusted", "hurricane/tornado"]}, {"word": "دخّن", "answer": "to smoke (first-time use)", "options": ["mandatory", "title", "to escape", "to smoke (first-time use)"]}, {"word": "مبالغة", "answer": "exceeding", "options": ["telegram", "shadow", "exceeding", "hostages"]}, {"word": "جوائز", "answer": "rewards/awards", "options": ["jump", "rewards/awards", "to chase", "to threaten"]}, {"word": "اخلاء", "answer": "evacuation", "options": ["United Nations", "topic (story)", "evacuation", "to hide"]}, {"word": "قتالية", "answer": "combat/fighting", "options": ["to launch/start/begin", "United Nations", "combat/fighting", "available"]}, {"word": "تحطم", "answer": "crash", "options": ["hike/path", "crash", "rich person(s)", "evacuation"]}, {"word": "صافي", "answer": "clear", "options": ["course", "clear", "food", "rich person(s)"]}, {"word": "اجواء", "answer": "conditions/atmosphere", "options": ["to disappear", "to escape", "conditions/atmosphere", "to smoke (first-time use)"]}, {"word": "اتى", "answer": "to come", "options": ["to reinforce", "to come", "to carry out", "protection"]}, {"word": "نجاة", "answer": "survival", "options": ["to excuse", "fruit", "survival", "to prosper/grow"]}, {"word": "شريحة", "answer": "rich person(s)", "options": ["survivor", "title", "decorative/ornamental", "rich person(s)"]}, {"word": "يزدهر", "answer": "to prosper/grow", "options": ["hurricane/tornado", "wing", "to attack", "to prosper/grow"]}, {"word": "ناجي/ناجية", "answer": "survivor", "options": ["survivor", "elements (groups)", "to solve/resolve", "share"]}, {"word": "قابل", "answer": "applicable", "options": ["evacuation", "exploring", "to flee", "applicable"]}, {"word": "اطلاع", "answer": "exploring", "options": ["fighting/sequence", "exploring", "hike/path", "to be entrusted"]}, {"word": "عشق", "answer": "to fall deeply in love", "options": ["to fall deeply in love", "to force", "to kidnap", "decorative/ornamental"]}, {"word": "مسار", "answer": "hike/path", "options": ["dialogues", "to foil", "fraud", "hike/path"]}, {"word": "زينة", "answer": "decorative/ornamental", "options": ["to foil", "to chase", "to ban", "decorative/ornamental"]}, {"word": "مهمة", "answer": "mission", "options": ["role model", "soul", "tunnel(s)", "mission"]}, {"word": "تعرض", "answer": "exposed", "options": ["dialogues", "to mislead", "exposed", "to permit"]}, {"word": "حماية", "answer": "protection", "options": ["to confront", "losses", "protection", "telegram"]}, {"word": "خيار", "answer": "choice", "options": ["United Nations", "ambassador(s)", "choice", "to possess"]}, {"word": "طريقة", "answer": "method", "options": ["share", "mission", "losses", "method"]}, {"word": "غدا", "answer": "tomorrow", "options": ["fashion design", "tomorrow", "to attack", "topic"]}, {"word": "نتج", "answer": "resulted", "options": ["to possess", "to accuse", "resulted", "likely"]}];
+
+let order = [];
+let current = 0;
+let score = 0;
+
+function shuffle(arr) {
+  for (let i = arr.length -1; i>0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function startQuiz() {
+  order = shuffle([...Array(questions.length).keys()]);
+  current = 0;
+  score = 0;
+  document.getElementById('final').textContent = '';
+  document.getElementById('restart').style.display = 'none';
+  document.getElementById('next').style.display = 'none';
+  showQuestion();
+}
+
+function showQuestion() {
+  if (current >= order.length) {
+    endQuiz();
+    return;
+  }
+  const q = questions[order[current]];
+  document.getElementById('progress').textContent = `Question ${current+1} / ${order.length}`;
+  document.getElementById('barFill').style.width = `${(current/order.length)*100}%`;
+  document.getElementById('word').textContent = q.word;
+  document.getElementById('score').textContent = `Score: ${score}`;
+  const optsDiv = document.getElementById('options');
+  optsDiv.innerHTML = '';
+  const opts = [...q.options];
+  opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(btn, opt, q.answer);
+    optsDiv.appendChild(btn);
+  });
+  document.getElementById('next').style.display = 'none';
+}
+
+function selectAnswer(btn, chosen, correctAns) {
+  const buttons = document.querySelectorAll('.opt');
+  buttons.forEach(b => b.onclick = null);
+  buttons.forEach(b => {
+    if (b.textContent === correctAns) b.classList.add('correct');
+    else if (b === btn) b.classList.add('wrong');
+  });
+  if (chosen === correctAns) score++;
+  document.getElementById('score').textContent = `Score: ${score}`;
+  document.getElementById('next').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  current++;
+  showQuestion();
+}
+
+function endQuiz() {
+  document.getElementById('progress').textContent = 'Quiz Complete!';
+  document.getElementById('barFill').style.width = '100%';
+  document.getElementById('word').textContent = '🎉';
+  document.getElementById('options').innerHTML = '';
+  document.getElementById('score').textContent = '';
+  document.getElementById('final').textContent = `Final Score: ${score} / ${order.length} (${Math.round(score/order.length*100)}%)`;
+  document.getElementById('restart').style.display = 'inline-block';
+  document.getElementById('next').style.display = 'none';
+}
+
+startQuiz();
+</script>
+</body>
+</html>
