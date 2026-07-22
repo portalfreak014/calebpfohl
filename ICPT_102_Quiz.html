@@ -87,6 +87,47 @@
     width: 0%;
     transition: width .3s;
   }
+  #playerName {
+  padding: 10px;
+  border: 2px solid #1e3c72;
+  border-radius: 8px;
+  font-size: 1em;
+  margin-right: 8px;
+  width: 60%;
+}
+#saveScore {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #4caf50;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+}
+#saveScoreArea { margin-top: 15px; }
+#leaderboardList {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+#leaderboardList li {
+  background: #f0f4ff;
+  border: 2px solid #1e3c72;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 8px 0;
+  font-size: 1.05em;
+}
+#clearBoard {
+  margin-top: 15px;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 8px;
+  background: #e53935;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -100,6 +141,15 @@
   <div id="final"></div>
   <button id="next" onclick="nextQuestion()">Next ▶</button>
   <button id="restart" onclick="startQuiz()">Restart Quiz 🔁</button>
+  <div id="saveScoreArea" style="display:none;">
+    <input type="text" id="playerName" placeholder="Enter your name (optional)">
+    <button id="saveScore" onclick="saveScore()">Save Score 💾</button>
+  </div>
+</div>
+  <div id="card">
+  <h2>Leaderboard 🏆</h2>
+  <ul id="leaderboardList"></ul>
+  <button id="clearBoard" onclick="clearLeaderboard()">Clear Leaderboard 🗑️</button>
 </div>
 
 <script>
@@ -177,9 +227,45 @@ function endQuiz() {
   document.getElementById('final').textContent = `Final Score: ${score} / ${order.length} (${Math.round(score/order.length*100)}%)`;
   document.getElementById('restart').style.display = 'inline-block';
   document.getElementById('next').style.display = 'none';
+  document.getElementById('saveScore').style.display = 'inline-block'; // show save UI
+}
+
+  async function loadLeaderboard() {
+  const res = await fetch('/api/leaderboard');
+  return res.ok ? await res.json() : [];
+}
+
+async function renderLeaderboard() {
+  const board = await loadLeaderboard();
+  const list = document.getElementById('leaderboardList');
+  list.innerHTML = '';
+  if (board.length === 0) {
+    list.innerHTML = '<li style="list-style:none; color:#888;">No scores yet. Be the first!</li>';
+    return;
+  }
+  board.slice(0, 10).forEach(entry => {
+    const li = document.createElement('li');
+    li.textContent = `${entry.name} — ${entry.score}/${entry.total} (${entry.pct}%)`;
+    list.appendChild(li);
+  });
+}
+
+async function saveScore() {
+  const nameInput = document.getElementById('playerName');
+  const name = nameInput.value.trim() || 'Anonymous';
+  const pct = Math.round((score / order.length) * 100);
+  await fetch('/api/leaderboard', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, score, total: order.length, pct })
+  });
+  await renderLeaderboard();
+  document.getElementById('saveScoreArea').style.display = 'inline-block';
+  nameInput.value = '';
 }
 
 startQuiz();
+renderLeaderboard(); // load board on page open
 </script>
 </body>
 </html>
