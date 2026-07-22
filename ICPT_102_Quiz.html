@@ -15,8 +15,6 @@
     margin: 0;
     padding: 20px;
   }
-  div {}
-  #spacing { padding: 10px 10px; }
   h1 { margin-top: 10px; text-shadow: 2px 2px 4px #000; }
   #card {
     background: #fff;
@@ -199,6 +197,7 @@ function startQuiz() {
   score = 0;
   results = [];
   document.getElementById('final').textContent = '';
+  document.getElementById('review').innerHTML = '';
   document.getElementById('restart').style.display = 'none';
   document.getElementById('next').style.display = 'none';
   showQuestion();
