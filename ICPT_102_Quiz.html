@@ -183,7 +183,6 @@
     <input type="text" id="playerName" placeholder="Enter your name (optional)">
     <button id="saveScore" onclick="saveScore()">Save Score 💾</button>
   </div>
-  <div id="spacing"></div>
 </div>
   <div id="card">
   <h2>Leaderboard 🏆</h2>
@@ -276,7 +275,7 @@ function endQuiz() {
   document.getElementById('final').textContent = `Final Score: ${score} / ${order.length} (${Math.round(score/order.length*100)}%)`;
   document.getElementById('restart').style.display = 'inline-block';
   document.getElementById('next').style.display = 'none';
-  document.getElementById('saveScore').style.display = 'inline-block'; // show save UI
+  document.getElementById('saveScoreArea').style.display = 'inline-block'; // show save UI
 
   const reviewDiv = document.getElementById('review');
   reviewDiv.innerHTML = '';
