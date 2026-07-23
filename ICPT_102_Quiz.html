@@ -16,6 +16,10 @@
     padding: 20px;
   }
   h1 { margin-top: 10px; text-shadow: 2px 2px 4px #000; }
+  
+  #card { 
+    display: none; 
+  }
   #card {
     background: #fff;
     color: #222;
@@ -168,6 +172,11 @@
 </head>
 <body>
 <h1>ICPT 102 Quiz</h1>
+  <div id="modeSelect">
+  <button onclick="startQuiz(5)">Quick Quiz (5 Questions)</button>
+  <button onclick="startQuiz(15)">Standard Quiz (15 Questions)</button>
+  <button onclick="startContextQuiz()">Vocabulary in Context</button>
+</div>
 <div id="card">
   <div id="progress"></div>
   <div id="bar"><div id="barFill"></div></div>
@@ -175,10 +184,10 @@
   <div id="options"></div>
   <div id="score"></div>
   <div id="final"></div>
-  <div id="final"></div>
 <div id="review"></div>
   <button id="next" onclick="nextQuestion()">Next ▶</button>
   <button id="restart" onclick="startQuiz()">Restart Quiz 🔁</button>
+  <button id="changeMode" onclick="showModeSelect()">Change Mode 🔄</button>
   <div id="saveScoreArea" style="display:none;">
     <input type="text" id="playerName" placeholder="Enter your name (optional)">
     <button id="saveScore" onclick="saveScore()">Save Score 💾</button>
@@ -200,6 +209,50 @@ const questions = [{"word": "اِنْطَلَقَ", "answer": "to launch/start/b
 {"word": "كُلّ", "answer": "all/every", "options": ["all/every", "various/sundry", "successive/consecutive", "rare"]},
 {"word": "شَتَّى", "answer": "various/sundry", "options": ["various/sundry", "all/every", "successive/consecutive", "applicable"]},
 {"word": "سَائِر", "answer": "all/the rest of", "options": ["all/the rest of", "various/sundry", "elements/groups", "potential"]}, {"word": "مُتَتَالِيَة", "answer": "successive/consecutive; sequence", "options": ["clear", "successive/consecutive; sequence", "to confront", "telegram"]}, {"word": "نَفَّذَ", "answer": "to implement", "options": ["tunnel(s)", "to confront", "to implement", "to fall deeply in love"]}, {"word": "رَهَائِن", "answer": "hostages", "options": ["hostages", "to disappear", "to occupy/take by force", "fraud"]}, {"word": "ذَخِيرَة حَيَّة", "answer": "live ammunition", "options": ["fruit", "live ammunition", "miracle/wonder", "protection"]}, {"word": "عَزَّزَ", "answer": "to reinforce", "options": ["to reinforce", "evacuation", "committee", "to fall deeply in love"]}, {"word": "اِخْتَطَفَ", "answer": "to kidnap", "options": ["exploring", "to fall deeply in love", "wing", "to kidnap"]}, {"word": "أَنْقَذَ", "answer": "to rescue", "options": ["to excuse", "to invest", "soul", "to rescue"]}, {"word": "فَتْرَة", "answer": "period of time", "options": ["soul", "period of time", "fashion design", "to fight, struggle against"]}, {"word": "اِتَّهَمَ", "answer": "to accuse", "options": ["to solve/resolve", "to come", "to accuse", "silencer"]}, {"word": "اِنْتَشَرَ", "answer": "to spread", "options": ["conditions/atmosphere", "broke out/started", "to spread", "to rescue"]}, {"word": "هَاجَمَ", "answer": "to attack", "options": ["hike/path", "to attack", "course", "talks"]}, {"word": "لَاحَقَ", "answer": "to chase", "options": ["applicable", "deals", "exceeding", "to chase"]}, {"word": "هَدَّدَ", "answer": "to threaten", "options": ["wing", "fraud", "to threaten", "United Nations"]}, {"word": "سَفِير/سُفَرَاء", "answer": "ambassador(s)", "options": ["successive/consecutive", "ambassador(s)", "potential", "to occupy/take by force"]}, {"word": "عَيَّنَ", "answer": "to appoint/designate", "options": ["to smoke", "to appoint/designate", "to disappear", "conditions/atmosphere"]}, {"word": "صُحُف", "answer": "newspapers/pages", "options": ["to hide", "available", "newspapers/pages", "method"]}, {"word": "لَقَب", "answer": "title", "options": ["fashion design", "title", "shadow", "to exert"]}, {"word": "الأُمَم المُتَّحِدَة", "answer": "United Nations", "options": ["United Nations", "effort", "course", "to solve/resolve"]}, {"word": "كَاتِم", "answer": "silencer", "options": ["silencer", "miracle/wonder", "to confront", "hurricane/tornado"]}, {"word": "لَجْنَة", "answer": "committee", "options": ["committee", "jump", "silencer", "to disappear"]}, {"word": "اِقْتَحَمَ", "answer": "to break into", "options": ["to reinforce", "survival", "to break into", "to fight, struggle against"]}, {"word": "مُرَجَّحَة", "answer": "likely", "options": ["to possess", "to send", "likely", "exposed"]}, {"word": "عَنَاصِر", "answer": "elements/groups", "options": ["silencer", "elements/groups", "rewards/awards", "to occupy/take by force"]}, {"word": "كَتَمَ", "answer": "to silence/suppress", "options": ["newspaper", "to silence/suppress", "role model", "mandatory"]}, {"word": "نَصَّاب", "answer": "fraudster", "options": ["crash", "exploring", "fruit", "fraudster"]}, {"word": "نَصْب", "answer": "fraud", "options": ["fraud", "to spread", "food", "rare"]}, {"word": "سَرَّحَ", "answer": "to release/dismiss", "options": ["resulted", "to flee", "to release/dismiss", "to solve/resolve"]}, {"word": "حِصَّة", "answer": "share", "options": ["mandatory", "share", "potential", "hike/path"]}, {"word": "إِجْبَارِيّ", "answer": "mandatory", "options": ["mandatory", "story", "telegram", "to silence/suppress"]}, {"word": "أَجْبَرَ عَلَى", "answer": "to force", "options": ["applicable", "to survive", "wing", "to force"]}, {"word": "سَمَحَ", "answer": "to permit", "options": ["to prosper/grow", "available", "evacuation", "to permit"]}, {"word": "يَمْتَلِكُ", "answer": "to possess", "options": ["story", "survival", "to possess", "losses"]}, {"word": "اِسْتَثْمَرَ", "answer": "to invest", "options": ["to invest", "to excuse", "hostages", "decorative/ornamental"]}, {"word": "ثَمَرَة", "answer": "fruit", "options": ["deals", "to excuse", "fruit", "to reinforce"]}, {"word": "اُعْذُرْ", "answer": "to excuse", "options": ["to send", "to excuse", "to hide", "to chase"]}, {"word": "صَفْقَة", "answer": "deal", "options": ["title", "deal", "miracle/wonder", "shadow"]}, {"word": "حَظْر", "answer": "ban", "options": ["period of time", "to occupy/take by force", "likely", "ban"]}, {"word": "تَطَوَّرَ", "answer": "to develop", "options": ["rare", "to come", "to accuse", "to develop"]}, {"word": "هَرَبَ", "answer": "to escape", "options": ["exceeding", "telegram", "ban", "to escape"]}, {"word": "فَرَّ", "answer": "to flee", "options": ["newspaper", "ban", "to flee", "to break into"]}, {"word": "اِسْتَوْلَى", "answer": "to seize/take over", "options": ["to seize/take over", "survival", "to force", "elements/groups"]}, {"word": "جُهْد", "answer": "effort", "options": ["effort", "course", "wealthy person(s)", "to receive/take charge of"]}, {"word": "بَذَلَ", "answer": "to exert", "options": ["to exert", "to kidnap", "title", "to threaten"]}, {"word": "مُحَادَثَات", "answer": "talks/conversations", "options": ["to force", "talks/conversations", "protection", "to develop"]}, {"word": "مَلَفَّات", "answer": "files", "options": ["to escape", "files", "to invest", "to spread"]}, {"word": "عَلَاقَات", "answer": "relations", "options": ["to disappear", "relations", "jump", "to threaten"]}, {"word": "القِصَّة", "answer": "story", "options": ["talks/conversations", "story", "topic", "to reinforce"]}, {"word": "مُتَلَاحِقَة", "answer": "successive/rapid", "options": ["exceeding", "soul", "to spread", "successive/rapid"]}, {"word": "مَوْضُوع", "answer": "topic", "options": ["topic", "shadow", "to kidnap", "to force"]}, {"word": "حَلَّ", "answer": "to solve/resolve", "options": ["to accuse", "to solve/resolve", "to permit", "miracle/wonder"]}, {"word": "نَفَق/أَنْفَاق", "answer": "tunnel(s)", "options": ["to send", "tunnel(s)", "to come", "exceeding"]}, {"word": "إِحْبَاط", "answer": "foiling/thwarting", "options": ["resulted", "foiling/thwarting", "committee", "successive/consecutive; sequence"]}, {"word": "اِنْدَلَعَتْ", "answer": "broke out/started", "options": ["broke out/started", "newspaper", "to survive", "to spread"]}, {"word": "نَجَا", "answer": "to survive", "options": ["newspaper", "to accuse", "mission", "to survive"]}, {"word": "أُعْجُوبَة", "answer": "miracle/wonder", "options": ["exploring", "to disappear", "share", "miracle/wonder"]}, {"word": "حَرِيق ضَخْم", "answer": "huge fire", "options": ["clear", "deal", "huge fire", "likely"]}, {"word": "غِذَائِيَّة", "answer": "nutritional/food-related", "options": ["tomorrow", "nutritional/food-related", "to invest", "to fall deeply in love"]}, {"word": "رَسْم الأَزْيَاء", "answer": "fashion design", "options": ["fashion design", "live ammunition", "story", "deal"]}, {"word": "دَوْرَة", "answer": "course", "options": ["to spread", "share", "elements/groups", "course"]}, {"word": "نَادِر", "answer": "rare", "options": ["application/implementation", "mandatory", "rare", "silencer"]}, {"word": "جَنَاح", "answer": "wing", "options": ["wing", "effort", "to release/dismiss", "to kidnap"]}, {"word": "مُحْتَمَل", "answer": "potential", "options": ["potential", "clear", "to rescue", "losses"]}, {"word": "مُتَوَافِر", "answer": "available", "options": ["to excuse", "ban", "available", "successive/consecutive; sequence"]}, {"word": "قُدْوَة", "answer": "role model", "options": ["to develop", "period of time", "role model", "to release/dismiss"]}, {"word": "تَسَلَّمَ", "answer": "to receive/take charge of", "options": ["story", "to receive/take charge of", "to release/dismiss", "telegram"]}, {"word": "تَطْبِيق", "answer": "application/implementation", "options": ["application/implementation", "telegram", "to reinforce", "hike/path"]}, {"word": "اِخْتَفَى", "answer": "to disappear", "options": ["to disappear", "huge fire", "to appoint/designate", "course"]}, {"word": "أَخْفَى", "answer": "to hide", "options": ["to hide", "to come", "to reinforce", "wing"]}, {"word": "ظِلّ", "answer": "shadow", "options": ["shadow", "deal", "to excuse", "ambassador(s)"]}, {"word": "خَسَائِر", "answer": "losses", "options": ["ambassador(s)", "losses", "likely", "to chase"]}, {"word": "قَفْزَة", "answer": "jump", "options": ["jump", "tunnel(s)", "United Nations", "fruit"]}, {"word": "رُوح", "answer": "soul", "options": ["share", "live ammunition", "method", "soul"]}, {"word": "إِعْصَار", "answer": "hurricane/tornado", "options": ["role model", "foiling/thwarting", "to receive/take charge of", "hurricane/tornado"]}, {"word": "دَخَّنَ", "answer": "to smoke", "options": ["mandatory", "title", "to escape", "to smoke"]}, {"word": "مُبَالَغَة", "answer": "exaggeration/overstatement", "options": ["telegram", "shadow", "exaggeration/overstatement", "hostages"]}, {"word": "جَوَائِز", "answer": "rewards/awards", "options": ["jump", "rewards/awards", "to chase", "to threaten"]}, {"word": "إِخْلَاء", "answer": "evacuation", "options": ["United Nations", "story", "evacuation", "to hide"]}, {"word": "قِتَالِيَّة", "answer": "combat/fighting", "options": ["to launch/start/begin", "United Nations", "combat/fighting", "available"]}, {"word": "تَحَطُّم", "answer": "crash/crashing", "options": ["hike/path", "crash/crashing", "wealthy person(s)", "evacuation"]}, {"word": "صَافِي", "answer": "clear", "options": ["course", "clear", "food", "wealthy person(s)"]}, {"word": "أَجْوَاء", "answer": "atmosphere/weather conditions", "options": ["to disappear", "to escape", "atmosphere/weather conditions", "to smoke"]}, {"word": "أَتَى", "answer": "to come", "options": ["to reinforce", "to come", "to carry out", "protection"]}, {"word": "نَجَاة", "answer": "survival", "options": ["to excuse", "fruit", "survival", "to prosper/grow"]}, {"word": "شَرِيحَة", "answer": "segment/stratum", "options": ["survivor", "title", "decorative/ornamental", "segment/stratum"]}, {"word": "يَزْدَهِرُ", "answer": "to prosper/grow", "options": ["hurricane/tornado", "wing", "to attack", "to prosper/grow"]}, {"word": "نَاجٍ/نَاجِيَة", "answer": "survivor", "options": ["survivor", "elements/groups", "to solve/resolve", "share"]}, {"word": "قَابِل لِلتَّطْبِيق", "answer": "applicable", "options": ["evacuation", "exploring", "to flee", "applicable"]}, {"word": "اِطِّلَاع", "answer": "knowledge/review", "options": ["successive/consecutive; sequence", "knowledge/review", "hike/path", "to receive/take charge of"]}, {"word": "عِشْق", "answer": "passionate love", "options": ["passionate love", "to force", "to kidnap", "decorative/ornamental"]}, {"word": "مَسَار", "answer": "path/route", "options": ["talks/conversations", "foiling/thwarting", "fraud", "path/route"]}, {"word": "زِينَة", "answer": "decoration/ornament", "options": ["foiling/thwarting", "to chase", "ban", "decoration/ornament"]}, {"word": "مُهِمَّة", "answer": "mission", "options": ["role model", "soul", "tunnel(s)", "mission"]}, {"word": "تَعَرُّض", "answer": "exposure", "options": ["talks/conversations", "to release/dismiss", "exposure", "to permit"]}, {"word": "حِمَايَة", "answer": "protection", "options": ["to confront", "losses", "protection", "telegram"]}, {"word": "خِيَار", "answer": "choice", "options": ["United Nations", "ambassador(s)", "choice", "to possess"]}, {"word": "طَرِيقَة", "answer": "method", "options": ["share", "mission", "losses", "method"]}, {"word": "غَدًا", "answer": "tomorrow", "options": ["fashion design", "tomorrow", "to attack", "topic"]}, {"word": "نَتَجَ", "answer": "to result", "options": ["to possess", "to accuse", "to result", "likely"]}];
+
+const contextQuestions = [
+  {
+    sentence: "بعد الحادث، حاول المسعفون <u><b>إنقاذ</b></u> الركاب المحاصرين في السيارة.",
+    answer: "to rescue",
+    options: ["to rescue", "to threaten", "to kidnap", "to accuse"]
+  },
+  {
+    sentence: "أعلنت الشرطة أنها <u><b>قبضت على</b></u> المشتبه به بعد مطاردة طويلة في المدينة.",
+    answer: "to arrest / to get hold of",
+    options: ["to arrest / to get hold of", "to release/dismiss", "to escape", "to flee"]
+  },
+  {
+    sentence: "انتشرت الفوضى في الشارع عندما <u><b>هاجم</b></u> رجل مسلح المتجر.",
+    answer: "to attack",
+    options: ["to attack", "to confront", "to reinforce", "to permit"]
+  },
+  {
+    sentence: "قررت الحكومة فرض <u><b>حظر</b></u> على استيراد بعض المنتجات الغذائية.",
+    answer: "ban",
+    options: ["ban", "committee", "deal", "share"]
+  },
+  {
+    sentence: "استطاع الفريق الطبي <u><b>إخلاء</b></u> المستشفى بسرعة قبل انتشار الحريق.",
+    answer: "evacuation",
+    options: ["evacuation", "survival", "protection", "fraud"]
+  },
+  {
+    sentence: "كذب الرجل على الجميع، وتبين في النهاية أنه <u><b>نصاب</b></u> محترف.",
+    answer: "fraudster",
+    options: ["fraudster", "ambassador(s)", "role model", "survivor"]
+  },
+  {
+    sentence: "بعد سنوات من الحرب، <u><b>تشرد</b></u> آلاف السكان وفقدوا منازلهم.",
+    answer: "became homeless",
+    options: ["became homeless", "fled", "prospered", "invested"]
+  },
+  {
+    sentence: "حاول اللاعب رفع <u><b>مستوى</b></u> أدائه قبل المباراة النهائية.",
+    answer: "level",
+    options: ["level", "method", "period of time", "course"]
+  }
+];
+  
 let order = [];
 let current = 0;
 let score = 0;
@@ -215,8 +268,36 @@ function shuffle(arr) {
 
 const QUIZ_LENGTH = 20;
 
-function startQuiz() {
-  order = shuffle([...Array(questions.length).keys()]).slice(0, Math.min(QUIZ_LENGTH, questions.length));
+let lastLength = 20;
+let quizMode = 'standard';
+
+  function showModeSelect() {
+  document.getElementById('card').style.display = 'none';
+  document.getElementById('modeSelect').style.display = 'block';
+}
+
+function startQuiz(length) {
+  if (length) lastLength = length;
+  const activeLength = lastLength; // use this instead of "length" below
+  document.getElementById('modeSelect').style.display = 'none';
+  document.getElementById('card').style.display = 'block';
+  quizMode = 'standard';
+  order = shuffle([...Array(questions.length).keys()]).slice(0, Math.min(activeLength, questions.length));
+  current = 0;
+  score = 0;
+  results = [];
+  document.getElementById('final').textContent = '';
+  document.getElementById('review').innerHTML = '';
+  document.getElementById('restart').style.display = 'none';
+  document.getElementById('next').style.display = 'none';
+  showQuestion();
+}
+
+  function startContextQuiz() {
+  document.getElementById('modeSelect').style.display = 'none';
+  document.getElementById('card').style.display = 'block';
+  quizMode = 'context';
+  order = shuffle([...Array(contextQuestions.length).keys()]);
   current = 0;
   score = 0;
   results = [];
@@ -232,25 +313,34 @@ function showQuestion() {
     endQuiz();
     return;
   }
-  const q = questions[order[current]];
+  const q = quizMode === 'context' ? contextQuestions[order[current]] : questions[order[current]];
   document.getElementById('progress').textContent = `Question ${current+1} / ${order.length}`;
   document.getElementById('barFill').style.width = `${(current/order.length)*100}%`;
-  document.getElementById('word').textContent = q.word;
+
+  const wordEl = document.getElementById('word');
+  if (quizMode === 'context') {
+    wordEl.innerHTML = q.sentence; // uses innerHTML so <u><b> tags render
+    wordEl.style.fontSize = '1.3em'; // smaller for full sentences
+    wordEl.style.direction = 'rtl';
+  } else {
+    wordEl.textContent = q.word;
+    wordEl.style.fontSize = '3em';
+  }
+
   document.getElementById('score').textContent = `Score: ${score}`;
   const optsDiv = document.getElementById('options');
   optsDiv.innerHTML = '';
-  const opts = [...q.options];
-  opts.forEach(opt => {
+  q.options.forEach(opt => {
     const btn = document.createElement('button');
     btn.className = 'opt';
     btn.textContent = opt;
-    btn.onclick = () => selectAnswer(btn, opt, q.answer);
+    btn.onclick = () => selectAnswer(btn, opt, q.answer, q);
     optsDiv.appendChild(btn);
   });
   document.getElementById('next').style.display = 'none';
 }
 
-function selectAnswer(btn, chosen, correctAns) {
+function selectAnswer(btn, chosen, correctAns, q) {
   const buttons = document.querySelectorAll('.opt');
   buttons.forEach(b => b.onclick = null);
   buttons.forEach(b => {
@@ -260,10 +350,10 @@ function selectAnswer(btn, chosen, correctAns) {
     const isCorrect = chosen === correctAns;
   if (isCorrect) score++;
   results.push({
-    word: questions[order[current]].word,
-    chosen: chosen,
-    correctAns: correctAns,
-    isCorrect: isCorrect
+      word: quizMode === 'context' ? q.sentence : q.word,
+      chosen: chosen,
+      correctAns: correctAns,
+      isCorrect: isCorrect
   });
   document.getElementById('score').textContent = `Score: ${score}`;
   document.getElementById('next').style.display = 'inline-block';
@@ -283,7 +373,7 @@ function endQuiz() {
   document.getElementById('final').textContent = `Final Score: ${score} / ${order.length} (${Math.round(score/order.length*100)}%)`;
   document.getElementById('restart').style.display = 'inline-block';
   document.getElementById('next').style.display = 'none';
-  document.getElementById('saveScoreArea').style.display = 'inline-block'; // show save UI
+  document.getElementById('saveScoreArea').style.display = 'none'; // show save UI, or don't
 
   const reviewDiv = document.getElementById('review');
   reviewDiv.innerHTML = '';
@@ -333,7 +423,7 @@ async function saveScore() {
   nameInput.value = '';
 }
 
-startQuiz();
+document.getElementById('card').style.display = 'none';
 renderLeaderboard(); // load board on page open
 </script>
 </body>
