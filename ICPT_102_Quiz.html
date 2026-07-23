@@ -507,7 +507,7 @@ function endQuiz() {
   document.getElementById('final').textContent = `Final Score: ${score} / ${order.length} (${Math.round(score/order.length*100)}%)`;
   document.getElementById('restart').style.display = 'inline-block';
   document.getElementById('next').style.display = 'none';
-  document.getElementById('saveScoreArea').style.display = 'none'; // show save UI, or don't
+  document.getElementById('saveScoreArea').style.display = 'inline-block'; // show save UI, or don't
 
   const reviewDiv = document.getElementById('review');
   reviewDiv.innerHTML = '';
