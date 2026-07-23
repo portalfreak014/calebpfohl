@@ -219,7 +219,7 @@
   <div id="modeSelect">
   <button onclick="startQuiz(5)">Quick Quiz (5 Questions)</button>
   <button onclick="startQuiz(15)">Standard Quiz (15 Questions)</button>
-  <button onclick="startContextQuiz()">Vocabulary in Context</button>
+  <button onclick="startContextQuiz(6)">Vocabulary in Context</button>
 </div>
 <div id="card">
   <div id="progress"></div>
@@ -427,11 +427,11 @@ function startQuiz(length) {
   showQuestion();
 }
 
-  function startContextQuiz() {
+  function startContextQuiz(length = 10) {
   document.getElementById('modeSelect').style.display = 'none';
   document.getElementById('card').style.display = 'block';
   quizMode = 'context';
-  order = shuffle([...Array(contextQuestions.length).keys()]);
+  order = shuffle([...Array(contextQuestions.length).keys()]).slice(0, Math.min(length, contextQuestions.length));
   current = 0;
   score = 0;
   results = [];
