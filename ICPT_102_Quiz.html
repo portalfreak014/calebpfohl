@@ -171,6 +171,18 @@
   margin: 8px 0;
   font-size: 1.05em;
 }
+  #leaderboardCard {
+  background: #fff;
+  color: #222;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  padding: 30px;
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 25px;
+}
 #clearBoard {
   margin-top: 15px;
   padding: 10px 25px;
@@ -225,11 +237,11 @@
     <button id="saveScore" onclick="saveScore()">Save Score 💾</button>
   </div>
 </div>
-  <div id="card">
-  <h2>Leaderboard 🏆</h2>
-  <ul id="leaderboardList"></ul>
+    <div id="leaderboardCard">
+      <h2>Leaderboard 🏆</h2>
+        <ul id="leaderboardList"></ul>
   <!-- <button id="clearBoard" onclick="clearLeaderboard()">Clear Leaderboard 🗑️</button> -->
-</div>
+    </div>
 
 <script>
 const questions = [{"word": "اِنْطَلَقَ", "answer": "to launch/start/begin", "options": ["protection", "to launch/start/begin", "shadow", "ambassador(s)"]}, {"word": "بَعَثَ", "answer": "to send", "options": ["rare", "protection", "to survive", "to send"]}, {"word": "بَرْقِيَّة", "answer": "telegram", "options": ["to accuse", "elements (groups)", "tomorrow", "telegram"]}, {"word": "تَصَدَّى", "answer": "to confront", "options": ["to confront", "to smoke", "protection", "to foil"]}, {"word": "كَافَحَ", "answer": "to fight, struggle against", "options": ["fraud", "to fight, struggle against", "to fall deeply in love", "to permit"]},{"word": "لَقُوا حَتْفَهُم", "answer": "met their end", "options": ["met their end", "to escape", "survivor", "to rescue"]},
