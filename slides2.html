@@ -457,6 +457,13 @@ audio.addEventListener('ended', async () => {
   updatePlayButton();
 });
 
+progressWrap.style.cursor = 'pointer';
+progressWrap.addEventListener('click', e => {
+  const r = progressWrap.getBoundingClientRect();
+  const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+  if (audio.duration) audio.currentTime = pct * audio.duration;
+});
+
 loadTrack(0);
 updatePlayButton();
 </script>
