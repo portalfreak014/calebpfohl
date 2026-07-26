@@ -55,6 +55,86 @@
     .flip-word.show-en .en{opacity:1;transform:rotateX(0deg)}
     .fs-tip{position:fixed;top:22px;left:22px;z-index:22;background:rgba(255,255,255,.84);border:1px solid rgba(201,162,39,.35);box-shadow:0 10px 26px rgba(0,0,0,.08);border-radius:999px;padding:.55rem .9rem;font-size:1rem;color:var(--muted)}.icon{width:34px;height:34px;margin-bottom:.55rem;color:var(--black)}.icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.icon-fill svg{fill:currentColor;stroke:none}
     @media (max-width:900px){.hero,.split,.grid2,.grid3{grid-template-columns:1fr}.heroimg{height:30vh}.midimg{height:28vh}.title{font-size:2.3rem}.fs-tip{left:12px;top:12px;font-size:.78rem}}
+    .audio-player{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:25;
+  width:min(320px,calc(100vw - 36px));
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(201,162,39,.42);
+  border-radius:22px;
+  box-shadow:0 14px 34px rgba(0,0,0,.12);
+  padding:12px 14px;
+  backdrop-filter:blur(10px);
+}
+
+.audio-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+.audio-title{
+  font-size:1rem;
+  font-weight:700;
+}
+.audio-track{
+  font-size:.92rem;
+  color:var(--muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.audio-controls{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.audio-btn{
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:999px;
+  background:#fff;
+  color:var(--black);
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  cursor:pointer;
+  font-size:1rem;
+}
+.audio-btn.primary{
+  background:var(--black);
+  color:#fff;
+}
+.audio-progress{
+  height:6px;
+  background:#ece6d8;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:8px;
+}
+.audio-progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--red),var(--gold));
+  transition:width .2s linear;
+}
+.audio-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:.82rem;
+  color:var(--muted);
+  margin-top:6px;
+}
+@media (max-width:900px){
+  .audio-player{
+    right:12px;
+    bottom:12px;
+    width:min(300px,calc(100vw - 24px));
+  }
+}
   </style>
 </head>
 <body>
@@ -236,6 +316,28 @@
   </section>
 </div>
 
+<div class="audio-player" aria-label="مشغل صوت">
+  <div class="audio-top">
+    <div>
+      <div class="audio-title">الموسيقى</div>
+      <div class="audio-track" id="trackName">مقطوعة ١</div>
+    </div>
+    <div class="audio-controls">
+      <button class="audio-btn" id="prevBtn" aria-label="السابق">⏮</button>
+      <button class="audio-btn primary" id="playBtn" aria-label="تشغيل أو إيقاف">▶</button>
+      <button class="audio-btn" id="nextBtn" aria-label="التالي">⏭</button>
+    </div>
+  </div>
+  <div class="audio-progress">
+    <div class="audio-progress-bar" id="progressBar"></div>
+  </div>
+  <div class="audio-meta">
+    <span id="timeNow">0:00</span>
+    <span id="timeTotal">0:00</span>
+  </div>
+  <audio id="bgAudio" preload="metadata"></audio>
+</div>
+
 <script>
 let current=1;const slides=[...document.querySelectorAll('.slide')];const total=slides.length;
 function goToSlide(n,dir=1){if(n<1)n=total;if(n>total)n=1;const prev=slides[current-1];const next=slides[n-1];if(prev===next)return;prev.classList.remove('active','out-left','out-right');prev.classList.add(dir>0?'out-left':'out-right');next.classList.remove('out-left','out-right');next.classList.add('active');animateSlide(next);current=n;setTimeout(()=>prev.classList.remove('out-left','out-right'),560)}
@@ -247,6 +349,87 @@ async function toggleFullscreen(){try{if(!document.fullscreenElement){await docu
 function initFlipWords(){document.querySelectorAll('.flip-word').forEach(el=>{setInterval(()=>{el.classList.toggle('show-en')},5000)})}
 initFlipWords();
 try{animateSlide(document.querySelector('.slide.active'))}catch(e){}
+
+const tracks = [
+  { title: 'مقطوعة ١', src: '11minweddingsong.mp3' },
+  { title: 'مقطوعة ٢', src: '5minweddingsong.mp3' },
+  { title: 'مقطوعة ٣', src: 'PUT_TRACK_3_HERE.mp3' },
+  { title: 'مقطوعة ٤', src: 'PUT_TRACK_4_HERE.mp3' }
+];
+
+const audio = document.getElementById('bgAudio');
+const playBtn = document.getElementById('playBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const trackName = document.getElementById('trackName');
+const progressBar = document.getElementById('progressBar');
+const timeNow = document.getElementById('timeNow');
+const timeTotal = document.getElementById('timeTotal');
+
+let trackIndex = 0;
+
+function fmtTime(sec){
+  if (!isFinite(sec)) return '0:00';
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60).toString().padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+function loadTrack(i){
+  trackIndex = (i + tracks.length) % tracks.length;
+  audio.src = tracks[trackIndex].src;
+  trackName.textContent = tracks[trackIndex].title;
+  progressBar.style.width = '0%';
+  timeNow.textContent = '0:00';
+  timeTotal.textContent = '0:00';
+}
+
+function updatePlayButton(){
+  playBtn.textContent = audio.paused ? '▶' : '⏸';
+}
+
+playBtn.addEventListener('click', async () => {
+  try {
+    if (audio.paused) {
+      await audio.play();
+    } else {
+      audio.pause();
+    }
+    updatePlayButton();
+  } catch(e) {}
+});
+
+prevBtn.addEventListener('click', async () => {
+  loadTrack(trackIndex - 1);
+  try { await audio.play(); } catch(e) {}
+  updatePlayButton();
+});
+
+nextBtn.addEventListener('click', async () => {
+  loadTrack(trackIndex + 1);
+  try { await audio.play(); } catch(e) {}
+  updatePlayButton();
+});
+
+audio.addEventListener('loadedmetadata', () => {
+  timeTotal.textContent = fmtTime(audio.duration);
+});
+
+audio.addEventListener('timeupdate', () => {
+  if (audio.duration) {
+    progressBar.style.width = ((audio.currentTime / audio.duration) * 100) + '%';
+  }
+  timeNow.textContent = fmtTime(audio.currentTime);
+});
+
+audio.addEventListener('ended', async () => {
+  loadTrack(trackIndex + 1);
+  try { await audio.play(); } catch(e) {}
+  updatePlayButton();
+});
+
+loadTrack(0);
+updatePlayButton();
 </script>
 </body>
 </html>
