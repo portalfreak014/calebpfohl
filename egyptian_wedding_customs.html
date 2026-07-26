@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="slides-format" content="viewport" />
+  <title>Egyptian Wedding Customs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300..700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #faf7f0;
+      --color-bg-deep: #f4ede1;
+      --color-surface: #fffdf8;
+      --color-text: #1f2937;
+      --color-text-secondary: #475569;
+      --color-text-muted: #7c6f64;
+      --color-accent-1: #b7791f;
+      --color-accent-2: #8b5e34;
+      --color-accent-3: #6b8e5a;
+      --color-glass-bg: rgba(255,255,255,0.82);
+      --color-glass-border: rgba(0,0,0,0.08);
+      --color-vignette: rgba(0,0,0,0.06);
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body: 'Work Sans', Arial, sans-serif;
+    }
+  </style>
+  <style>
+    :root { --color-bg: #faf7f0; --color-text: #1f2937; --glow-color-rgb: 183,121,31; }
+    *{box-sizing:border-box} html,body{margin:0;background:var(--color-bg)} body{font-family:var(--font-body);color:var(--color-text);overflow:hidden;height:100vh;width:100vw}
+    .deck{width:100vw;height:100vh;position:relative}.slide{position:absolute;top:0;left:0;width:100%;height:100%;background:var(--color-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transform:scale(.97);transition:opacity .6s ease,transform .6s ease;pointer-events:none;overflow:hidden}.slide.active{opacity:1;transform:scale(1);pointer-events:all}.slide>.content{position:relative;z-index:2;width:100%;max-width:1120px;padding:clamp(1.5rem,4vw,4rem)}
+    .nav-controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(255,255,255,.75);backdrop-filter:blur(10px);padding:10px 20px;border-radius:999px;border:1px solid rgba(0,0,0,.08)}
+    .nav-btn{width:38px;height:38px;border:none;background:rgba(255,255,255,.85);color:#8b5e34;border-radius:50%;font-size:1.1rem;cursor:pointer}.slide-dots{display:flex;gap:8px}.dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.15);cursor:pointer}.dot.active{background:#b7791f;transform:scale(1.25)}.slide-counter{font-size:.82rem;color:#7c6f64;min-width:46px;text-align:center}
+    .reveal{opacity:0;transform:translateY(18px)}
+    .gradient-mesh{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}.blob{position:absolute;border-radius:50%;filter:blur(80px);animation:float 14s ease-in-out infinite}.blob:nth-child(2){animation-duration:18s}.blob:nth-child(3){animation-duration:22s}
+    @keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-24px) scale(1.08)}}
+    .slide::before{content:'';position:absolute;inset:0;z-index:1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:.02;pointer-events:none}
+    .slide::after{content:'';position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center,transparent 52%,var(--color-vignette) 100%);pointer-events:none}
+    .card{background:var(--color-glass-bg);border:1px solid var(--color-glass-border);border-radius:24px;box-shadow:0 14px 35px rgba(0,0,0,.06)}
+    .photo{width:100%;height:100%;object-fit:cover;border-radius:24px}.kicker{letter-spacing:.16em;text-transform:uppercase;color:#7c6f64;font-size:.84rem}.ar{font-family:'Noto Naskh Arabic','Amiri',serif}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center}.split{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.two{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}.timeline{display:grid;gap:16px}.timeline .item{display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:start;padding:18px 20px}
+    .big{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,4.5rem);line-height:.95}.h1{font-family:var(--font-display);font-size:clamp(2.7rem,6vw,5.2rem);line-height:.95}.h2{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1}.img-frame{padding:10px;background:rgba(255,255,255,.65);border:1px solid rgba(0,0,0,.08);border-radius:30px;box-shadow:0 22px 45px rgba(0,0,0,.08)}
+    .slide-1 .photo-hero{height:62vh}.slide-10 .content{text-align:center}
+    @media (max-width: 900px){.hero-grid,.split,.three,.two{grid-template-columns:1fr}.slide-1 .photo-hero{height:34vh}.timeline .item{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="deck">
+  <div class="slide slide-1 active" data-slide="1">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:420px;height:420px;top:-80px;right:-80px;background:#e9c88b;opacity:.25"></div>
+      <div class="blob" style="width:280px;height:280px;bottom:-70px;left:-30px;background:#d8b07a;opacity:.2"></div>
+      <div class="blob" style="width:220px;height:220px;top:45%;left:18%;background:#b7c9a8;opacity:.18"></div>
+    </div>
+    <div class="content">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker reveal">Cultural presentation</div>
+          <h1 class="h1 reveal">Egyptian Wedding Customs</h1>
+          <p class="text-xl text-text-secondary max-w-xl reveal">Stages, symbols, and the balance between tradition and modern life.</p>
+          <div class="mt-8 card p-6 reveal">
+            <div class="kicker mb-2">Arabic title</div>
+            <div class="text-3xl ar">الزفاف المصري بين التقاليد والحداثة</div>
+          </div>
+        </div>
+        <div class="img-frame reveal"><img class="photo photo-hero" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/8496bb2c48cd1903edb94c3a02513273fcb5e0ad.jpg" alt="Egyptian wedding reception"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-2" data-slide="2">
+    <div class="gradient-mesh"><div class="blob" style="width:320px;height:320px;top:-70px;right:-50px;background:#e8cf9d;opacity:.14"></div><div class="blob" style="width:240px;height:240px;bottom:-60px;left:-40px;background:#b7c9a8;opacity:.12"></div></div>
+    <div class="content">
+      <div class="split">
+        <div>
+          <div class="kicker reveal">Slide 1</div>
+          <h2 class="h2 reveal">Core idea</h2>
+          <p class="text-lg text-text-secondary reveal">In Egypt, a wedding is not only about two people. It also expresses family honor, social connection, hospitality, and public celebration.</p>
+          <div class="mt-6 timeline">
+            <div class="item card reveal"><div class="kicker">Family</div><div>Parents and relatives often play a visible role from the first agreement to the final celebration.</div></div>
+            <div class="item card reveal"><div class="kicker">Community</div><div>The event is usually public, loud, and collective rather than private and minimal.</div></div>
+            <div class="item card reveal"><div class="kicker">Symbolism</div><div>Jewelry, henna, contract signing, music, and procession all carry social meaning.</div></div>
+          </div>
+        </div>
+        <div class="img-frame reveal"><img class="photo" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/7800b62bf13218d0c77c3ffe9dc6ae72d2fb84fe.jpg" alt="Wedding hall"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-3" data-slide="3">
+    <div class="gradient-mesh"><div class="blob" style="width:290px;height:290px;top:-60px;right:0;background:#e5bd74;opacity:.14"></div><div class="blob" style="width:220px;height:220px;bottom:-50px;left:-20px;background:#c7d4b4;opacity:.12"></div></div>
+    <div class="content">
+      <div class="split">
+        <div>
+          <div class="kicker reveal">Slide 2</div>
+          <h2 class="h2 reveal">Before the wedding</h2>
+          <div class="two mt-8">
+            <div class="card p-6 reveal"><div class="kicker mb-2">الفاتحة</div><div class="text-lg">Some families begin with reading Al-Fatiha as a blessing before or around the engagement.</div></div>
+            <div class="card p-6 reveal"><div class="kicker mb-2">الشبكة</div><div class="text-lg">The groom often gives jewelry, usually gold, as part of the engagement tradition.</div></div>
+            <div class="card p-6 reveal"><div class="kicker mb-2">الخِطبة</div><div class="text-lg">The engagement period lets the couple and both families prepare for marriage.</div></div>
+            <div class="card p-6 reveal"><div class="kicker mb-2">الخواتم</div><div class="text-lg">Engagement rings are commonly worn on the right hand before the wedding.</div></div>
+          </div>
+        </div>
+        <div class="card p-8 reveal">
+          <div class="kicker mb-3">What to say</div>
+          <p class="text-lg text-text-secondary">Talk about the wedding as a process, not a single night. This slide helps you explain that Egyptian marriage begins with agreement between families, symbolic gifts, and a formal engagement period.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-4" data-slide="4">
+    <div class="gradient-mesh"><div class="blob" style="width:340px;height:340px;top:-90px;right:-70px;background:#e6b36e;opacity:.13"></div><div class="blob" style="width:260px;height:260px;bottom:-70px;left:-50px;background:#e7d6b8;opacity:.12"></div></div>
+    <div class="content">
+      <div class="split">
+        <div class="img-frame reveal"><img class="photo" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Wedding_Henna.jpg" alt="Henna ceremony"></div>
+        <div>
+          <div class="kicker reveal">Slide 3</div>
+          <h2 class="h2 reveal">Henna night</h2>
+          <p class="text-lg text-text-secondary reveal">Henna night, often held one or two days before the wedding, is a separate celebration centered on beauty, joy, and preparation. In some communities it is mainly for women, while in other parts of Egypt men may also participate.</p>
+          <div class="mt-6 three">
+            <div class="card p-5 reveal"><div class="kicker">Art</div><div>Henna designs decorate the hands and sometimes the feet.</div></div>
+            <div class="card p-5 reveal"><div class="kicker">Emotion</div><div>The mood is intimate, festive, and highly social.</div></div>
+            <div class="card p-5 reveal"><div class="kicker">Timing</div><div>It usually comes right before the main wedding day.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-5" data-slide="5">
+    <div class="gradient-mesh"><div class="blob" style="width:320px;height:320px;top:-70px;right:-50px;background:#ddb775;opacity:.15"></div><div class="blob" style="width:250px;height:250px;bottom:-50px;left:-20px;background:#b7c9a8;opacity:.1"></div></div>
+    <div class="content">
+      <div class="split">
+        <div>
+          <div class="kicker reveal">Slide 4</div>
+          <h2 class="h2 reveal">Contract and ceremony</h2>
+          <div class="timeline mt-8">
+            <div class="item card reveal"><div class="kicker">كتب الكتاب</div><div>For many Muslim families, the marriage becomes official when the contract is signed with an authorized ma'zoun.</div></div>
+            <div class="item card reveal"><div class="kicker">Church wedding</div><div>For Christian families, the formal ceremony takes place in church with the priest.</div></div>
+            <div class="item card reveal"><div class="kicker">Meaning</div><div>This stage shows that marriage is both emotional and legal, not only celebratory.</div></div>
+          </div>
+        </div>
+        <div class="card p-8 reveal">
+          <div class="big mb-3">2 sides</div>
+          <p class="text-lg text-text-secondary">You can contrast religious form and social celebration here: first the marriage is recognized, then it is celebrated publicly.</p>
+          <div class="mt-8 card p-5" style="background:rgba(183,121,31,.08)">
+            <div class="kicker">Speaking cue</div>
+            <div class="text-lg">Official first, festive second.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-6" data-slide="6">
+    <div class="gradient-mesh"><div class="blob" style="width:350px;height:350px;top:-100px;right:-80px;background:#e8ca92;opacity:.16"></div><div class="blob" style="width:220px;height:220px;bottom:-50px;left:0;background:#d5e1cb;opacity:.12"></div></div>
+    <div class="content">
+      <div class="split">
+        <div>
+          <div class="kicker reveal">Slide 5</div>
+          <h2 class="h2 reveal">The public celebration</h2>
+          <p class="text-lg text-text-secondary reveal">A famous feature of Egyptian weddings is the zaffa, a lively procession with music, performers, and a dramatic entrance. Women may also celebrate with zaghrouta, a high trilling sound used to express joy.</p>
+          <div class="mt-8 two">
+            <div class="card p-6 reveal"><div class="kicker mb-2">الزفّة</div><div class="text-lg">A ceremonial entrance with drums, music, and visible energy.</div></div>
+            <div class="card p-6 reveal"><div class="kicker mb-2">الزغروطة</div><div class="text-lg">A vocal expression of happiness heard at major celebrations.</div></div>
+          </div>
+        </div>
+        <div class="img-frame reveal"><img class="photo" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/12ea0d3226cdff41b9be1191af7dbf61bebfb787.jpg" alt="Egyptian zaffa procession"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-7" data-slide="7">
+    <div class="gradient-mesh"><div class="blob" style="width:300px;height:300px;top:-70px;right:-40px;background:#e0ba81;opacity:.14"></div><div class="blob" style="width:230px;height:230px;bottom:-50px;left:-20px;background:#c8d4b8;opacity:.11"></div></div>
+    <div class="content">
+      <div class="three">
+        <div class="card p-7 reveal"><div class="kicker mb-2">Clothing</div><div class="text-xl mb-3">Dress and presentation matter.</div><div class="text-text-secondary">The bride often appears in a formal gown and veil, while the groom usually wears a suit or another formal style.</div></div>
+        <div class="card p-7 reveal"><div class="kicker mb-2">Music</div><div class="text-xl mb-3">Loud sound is normal.</div><div class="text-text-secondary">Music is not background only; it is central to the event’s mood and public energy.</div></div>
+        <div class="card p-7 reveal"><div class="kicker mb-2">Hospitality</div><div class="text-xl mb-3">Guests are honored.</div><div class="text-text-secondary">Food, sweets, drinks, and welcome all show generosity and social respect.</div></div>
+      </div>
+      <div class="mt-8 card p-6 reveal">
+        <div class="kicker mb-2">Speaking cue</div>
+        <div class="text-lg">This slide is good for comparing values: beauty, joy, generosity, and shared celebration.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-8" data-slide="8">
+    <div class="gradient-mesh"><div class="blob" style="width:330px;height:330px;top:-90px;right:-60px;background:#eccb94;opacity:.15"></div><div class="blob" style="width:260px;height:260px;bottom:-70px;left:-50px;background:#d9c5ab;opacity:.12"></div></div>
+    <div class="content">
+      <div class="split">
+        <div>
+          <div class="kicker reveal">Slide 6</div>
+          <h2 class="h2 reveal">What weddings show about society</h2>
+          <div class="timeline mt-8">
+            <div class="item card reveal"><div class="kicker">Family ties</div><div>Marriage joins families, not only individuals.</div></div>
+            <div class="item card reveal"><div class="kicker">Public joy</div><div>Celebration is often visible and shared, not hidden.</div></div>
+            <div class="item card reveal"><div class="kicker">Tradition</div><div>Customs such as henna, jewelry, and processions preserve cultural memory.</div></div>
+            <div class="item card reveal"><div class="kicker">Religion and law</div><div>The contract and ceremony connect social life with formal recognition.</div></div>
+          </div>
+        </div>
+        <div class="card p-8 reveal">
+          <div class="kicker mb-3">Simple thesis</div>
+          <div class="big mb-3">More than a party</div>
+          <p class="text-lg text-text-secondary">This is probably the most important message in the whole presentation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-9" data-slide="9">
+    <div class="gradient-mesh"><div class="blob" style="width:340px;height:340px;top:-80px;right:-70px;background:#e6bd7f;opacity:.14"></div><div class="blob" style="width:240px;height:240px;bottom:-60px;left:-30px;background:#bad0b3;opacity:.11"></div></div>
+    <div class="content">
+      <div class="two">
+        <div class="card p-8 reveal">
+          <div class="kicker mb-2">Traditional side</div>
+          <div class="text-2xl mb-3">Family-centered, symbolic, communal</div>
+          <div class="text-text-secondary">Older customs emphasize family approval, ritual sequence, and visible social participation.</div>
+        </div>
+        <div class="card p-8 reveal">
+          <div class="kicker mb-2">Modern side</div>
+          <div class="text-2xl mb-3">Flexible, urban, personalized</div>
+          <div class="text-text-secondary">Many modern weddings keep the main symbols but change scale, style, venue, and music choices.</div>
+        </div>
+      </div>
+      <div class="mt-8 card p-6 reveal">
+        <div class="kicker mb-2">Closing point</div>
+        <div class="text-lg">Egyptian weddings change with time, but they still preserve strong ideas about family, celebration, and identity.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-10" data-slide="10">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:420px;height:420px;top:-90px;right:-80px;background:#e8c786;opacity:.24"></div>
+      <div class="blob" style="width:280px;height:280px;bottom:-80px;left:-40px;background:#cfb38d;opacity:.18"></div>
+      <div class="blob" style="width:220px;height:220px;top:48%;left:20%;background:#b9ccb0;opacity:.16"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1"></canvas>
+    <div class="content">
+      <div class="kicker reveal">Ending</div>
+      <h2 class="h1 reveal">Thank you</h2>
+      <p class="text-xl text-text-secondary reveal">الزفاف المصري ليس حفلة فقط، بل هو تعبير عن الأسرة والفرح والهوية.</p>
+    </div>
+  </div>
+</div>
+<div class="nav-controls">
+  <button class="nav-btn" aria-label="Previous slide" onclick="changeSlide(-1)">&#8249;</button>
+  <div class="slide-dots" id="dots"></div>
+  <button class="nav-btn" aria-label="Next slide" onclick="changeSlide(1)">&#8250;</button>
+  <span class="slide-counter" id="counter">1 / 10</span>
+</div>
+<script>
+let current=1;const total=document.querySelectorAll('.slide').length;const dotsContainer=document.getElementById('dots');const counter=document.getElementById('counter');for(let i=1;i<=total;i++){const dot=document.createElement('div');dot.className='dot'+(i===1?' active':'');dot.onclick=()=>goToSlide(i);dotsContainer.appendChild(dot)}function goToSlide(n){const prev=document.querySelector('.slide.active');const next=document.querySelector(`.slide[data-slide="${n}"]`);if(prev)prev.classList.remove('active');if(next){next.classList.add('active');animateSlide(next)}current=n;updateNav()}function changeSlide(dir){let next=current+dir;if(next<1)next=total;if(next>total)next=1;goToSlide(next)}function updateNav(){document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i+1===current));counter.textContent=current+' / '+total}document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();changeSlide(1)}if(e.key==='ArrowLeft'){e.preventDefault();changeSlide(-1)}});let touchStartX=0;document.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX});document.addEventListener('touchend',e=>{const diff=touchStartX-e.changedTouches[0].clientX;if(Math.abs(diff)>50)changeSlide(diff>0?1:-1)});
+function animateSlide(slide){slide.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transition='none';el.style.opacity='0';el.style.transform='translateY(18px)';el.offsetHeight;const delay=i*0.08;el.style.transition=`opacity 0.35s ease ${delay}s, transform 0.35s ease ${delay}s`;el.style.opacity='1';el.style.transform='translateY(0px)'})}
+window.initParticles=function(canvas){if(!canvas)return;const ctx=canvas.getContext('2d');canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;const particles=Array.from({length:36},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,size:Math.random()*2+.7,alpha:Math.random()*.25+.08}));(function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle='rgba(183,121,31,'+p.alpha+')';ctx.fill()});requestAnimationFrame(animate)})()};document.querySelectorAll('.particle-canvas').forEach(c=>window.initParticles(c));try{animateSlide(document.querySelector('.slide.active'))}catch(e){}
+</script>
+</body>
+</html>
