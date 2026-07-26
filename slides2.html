@@ -107,18 +107,39 @@
   background:var(--black);
   color:#fff;
 }
+
 .audio-progress{
-  height:6px;
+  position:relative;
+  height:8px;
   background:#ece6d8;
   border-radius:999px;
-  overflow:hidden;
+  overflow:visible;
   margin-top:8px;
+  direction:ltr;
+  cursor:pointer;
 }
 .audio-progress-bar{
   height:100%;
   width:0%;
   background:linear-gradient(90deg,var(--red),var(--gold));
-  transition:width .2s linear;
+  border-radius:999px;
+  transition:width .12s linear;
+}
+.audio-progress-thumb{
+  position:absolute;
+  top:50%;
+  left:0;
+  width:16px;
+  height:16px;
+  border-radius:999px;
+  background:var(--gold);
+  border:2px solid #fff;
+  box-shadow:0 4px 10px rgba(0,0,0,.18);
+  transform:translate(-50%,-50%);
+  cursor:grab;
+}
+.audio-progress-thumb:active{
+  cursor:grabbing;
 }
 .audio-meta{
   display:flex;
@@ -127,13 +148,7 @@
   font-size:.82rem;
   color:var(--muted);
   margin-top:6px;
-}
-@media (max-width:900px){
-  .audio-player{
-    right:12px;
-    bottom:12px;
-    width:min(300px,calc(100vw - 24px));
-  }
+  direction:ltr;
 }
 .audio-volume{
   display:flex;
@@ -142,10 +157,12 @@
   margin-top:8px;
   font-size:.82rem;
   color:var(--muted);
+  direction:ltr;
 }
 .audio-volume input[type=range]{
   width:100%;
   accent-color:var(--gold);
+  direction:ltr;
 }
   </style>
 </head>
@@ -340,8 +357,9 @@
       <button class="audio-btn" id="nextBtn" aria-label="التالي">⏭</button>
     </div>
   </div>
-  <div class="audio-progress">
+  <div class="audio-progress" id="progressWrap">
     <div class="audio-progress-bar" id="progressBar"></div>
+    <div class="audio-progress-thumb" id="progressThumb"></div>
   </div>
   <div class="audio-meta">
     <span id="timeNow">0:00</span>
@@ -380,9 +398,10 @@ const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const trackName = document.getElementById('trackName');
 const progressBar = document.getElementById('progressBar');
+const progressThumb = document.getElementById('progressThumb');
+const progressWrap = document.getElementById('progressWrap');
 const timeNow = document.getElementById('timeNow');
 const timeTotal = document.getElementById('timeTotal');
-
 const volumeSlider = document.getElementById('volumeSlider');
 const volumeLabel = document.getElementById('volumeLabel');
 
@@ -396,6 +415,7 @@ volumeSlider.addEventListener('input', () => {
 });
 
 let trackIndex = 0;
+let isScrubbing = false;
 
 function fmtTime(sec){
   if (!isFinite(sec)) return '0:00';
@@ -404,11 +424,17 @@ function fmtTime(sec){
   return `${m}:${s}`;
 }
 
+function setProgressUI(pct){
+  const safe = Math.max(0, Math.min(1, pct || 0));
+  progressBar.style.width = (safe * 100) + '%';
+  progressThumb.style.left = (safe * 100) + '%';
+}
+
 function loadTrack(i){
   trackIndex = (i + tracks.length) % tracks.length;
   audio.src = tracks[trackIndex].src;
   trackName.textContent = tracks[trackIndex].title;
-  progressBar.style.width = '0%';
+  setProgressUI(0);
   timeNow.textContent = '0:00';
   timeTotal.textContent = '0:00';
 }
@@ -417,13 +443,17 @@ function updatePlayButton(){
   playBtn.textContent = audio.paused ? '▶' : '⏸';
 }
 
+function scrubTo(clientX){
+  const r = progressWrap.getBoundingClientRect();
+  const pct = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+  setProgressUI(pct);
+  if (audio.duration) audio.currentTime = pct * audio.duration;
+}
+
 playBtn.addEventListener('click', async () => {
   try {
-    if (audio.paused) {
-      await audio.play();
-    } else {
-      audio.pause();
-    }
+    if (audio.paused) await audio.play();
+    else audio.pause();
     updatePlayButton();
   } catch(e) {}
 });
@@ -445,10 +475,14 @@ audio.addEventListener('loadedmetadata', () => {
 });
 
 audio.addEventListener('timeupdate', () => {
-  if (audio.duration) {
-    progressBar.style.width = ((audio.currentTime / audio.duration) * 100) + '%';
+  if (audio.duration && !isScrubbing) {
+    setProgressUI(audio.currentTime / audio.duration);
   }
   timeNow.textContent = fmtTime(audio.currentTime);
+});
+
+audio.addEventListener('seeked', () => {
+  if (audio.duration) setProgressUI(audio.currentTime / audio.duration);
 });
 
 audio.addEventListener('ended', async () => {
@@ -457,11 +491,31 @@ audio.addEventListener('ended', async () => {
   updatePlayButton();
 });
 
-progressWrap.style.cursor = 'pointer';
 progressWrap.addEventListener('click', e => {
-  const r = progressWrap.getBoundingClientRect();
-  const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
-  if (audio.duration) audio.currentTime = pct * audio.duration;
+  scrubTo(e.clientX);
+});
+
+progressThumb.addEventListener('pointerdown', e => {
+  isScrubbing = true;
+  progressThumb.setPointerCapture(e.pointerId);
+  scrubTo(e.clientX);
+});
+
+progressThumb.addEventListener('pointermove', e => {
+  if (isScrubbing) scrubTo(e.clientX);
+});
+
+progressThumb.addEventListener('pointerup', e => {
+  isScrubbing = false;
+  progressThumb.releasePointerCapture(e.pointerId);
+});
+
+window.addEventListener('pointermove', e => {
+  if (isScrubbing) scrubTo(e.clientX);
+});
+
+window.addEventListener('pointerup', () => {
+  isScrubbing = false;
 });
 
 loadTrack(0);
