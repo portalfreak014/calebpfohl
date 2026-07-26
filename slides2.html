@@ -135,6 +135,18 @@
     width:min(300px,calc(100vw - 24px));
   }
 }
+.audio-volume{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:8px;
+  font-size:.82rem;
+  color:var(--muted);
+}
+.audio-volume input[type=range]{
+  width:100%;
+  accent-color:var(--gold);
+}
   </style>
 </head>
 <body>
@@ -335,6 +347,11 @@
     <span id="timeNow">0:00</span>
     <span id="timeTotal">0:00</span>
   </div>
+  <div class="audio-volume" aria-label="مستوى الصوت">
+    <span>🔊</span>
+    <input id="volumeSlider" type="range" min="0" max="100" value="30">
+    <span id="volumeLabel">30%</span>
+  </div>
   <audio id="bgAudio" preload="metadata"></audio>
 </div>
 
@@ -365,6 +382,18 @@ const trackName = document.getElementById('trackName');
 const progressBar = document.getElementById('progressBar');
 const timeNow = document.getElementById('timeNow');
 const timeTotal = document.getElementById('timeTotal');
+
+const volumeSlider = document.getElementById('volumeSlider');
+const volumeLabel = document.getElementById('volumeLabel');
+
+audio.volume = 0.3;
+volumeSlider.value = '30';
+volumeLabel.textContent = '30%';
+
+volumeSlider.addEventListener('input', () => {
+  audio.volume = Number(volumeSlider.value) / 100;
+  volumeLabel.textContent = volumeSlider.value + '%';
+});
 
 let trackIndex = 0;
 
