@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="slides-format" content="viewport" />
+  <title>الزفاف المصري</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fff7ef;
+      --surface:#fffdfb;
+      --surface-2:#fff4de;
+      --text:#111111;
+      --muted:#555555;
+      --red:#ce1126;
+      --black:#111111;
+      --gold:#c9a227;
+      --gold-2:#e1c35c;
+      --line:rgba(201,162,39,.42);
+      --shadow:0 18px 40px rgba(0,0,0,.10);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:radial-gradient(circle at top, #fff7ef 0%, #fff8f1 48%, #f8ecd2 100%)}
+    body{font-family:'Noto Sans Arabic',sans-serif;color:var(--text);overflow:hidden;height:100vh;width:100vw}
+    .deck{width:100vw;height:100vh;position:relative}
+    .slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(40px);transition:opacity .55s ease, transform .55s ease;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(248,236,210,.92))}
+    .slide.active{opacity:1;transform:translateX(0);pointer-events:all}
+    .slide.out-left{transform:translateX(-40px);opacity:0}
+    .slide.out-right{transform:translateX(40px);opacity:0}
+    .content{position:relative;z-index:2;width:min(1120px,100%);padding:clamp(1.2rem,3vw,3rem)}
+    .band-red,.band-black{position:absolute;left:0;width:100%;z-index:0}.band-red{top:0;height:16px;background:var(--red)}.band-black{bottom:0;height:16px;background:var(--black)}
+    .gold-wash{position:absolute;inset:0;background:radial-gradient(circle at 20% 20%, rgba(201,162,39,.10), transparent 28%), radial-gradient(circle at 80% 70%, rgba(201,162,39,.10), transparent 24%);z-index:0}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,.93), rgba(255,249,238,.95));border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);position:relative}
+    .panel::before{content:'';position:absolute;inset:0;border-radius:28px;padding:1px;background:linear-gradient(135deg, rgba(201,162,39,.65), rgba(255,255,255,.25), rgba(201,162,39,.45));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+    .title,.h2,.kicker,.counter,.flip-word .en{font-family:'Open Sans','Noto Sans Arabic',sans-serif}
+    .title{font-size:clamp(2.5rem,6.6vw,5.3rem);line-height:1.05;font-weight:700;margin:0 0 .55rem}
+    .h2{font-size:clamp(1.95rem,4.4vw,3.15rem);line-height:1.1;font-weight:700;margin:0 0 1rem}
+    .kicker{font-size:.9rem;letter-spacing:.08em;color:var(--red);margin-bottom:.5rem;font-weight:700}
+    .lead{font-size:clamp(1.18rem,2.2vw,1.52rem);color:var(--muted);max-width:35ch}
+    .hero,.split,.grid2,.grid3{display:grid;gap:24px;align-items:center}.hero{grid-template-columns:1.05fr .95fr}.split{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:repeat(2,1fr)}.grid3{grid-template-columns:repeat(3,1fr)}
+    .photo{width:100%;height:100%;object-fit:cover;border-radius:24px}.frame{padding:10px;background:#fff;border-radius:30px;border:1px solid rgba(201,162,39,.35);box-shadow:0 12px 30px rgba(0,0,0,.08)}
+    .heroimg{height:60vh}.midimg{height:52vh}
+    .note{padding:1.05rem 1.15rem}.note h3{font-size:1.24rem;margin:0 0 .35rem;font-weight:700}.note p{margin:0;color:var(--muted);font-size:1.08rem;line-height:1.78}
+    .mini{padding:1.1rem 1.05rem;min-height:128px}.mini h3{font-size:1.16rem;margin:0 0 .35rem;font-weight:700}.mini p{margin:0;color:var(--muted);font-size:1.06rem;line-height:1.72}
+    .reveal{opacity:0;transform:translateY(16px)}
+    .flag-mark{display:inline-flex;gap:8px;align-items:center}.flag-mark span{display:block;width:20px;height:6px;border-radius:999px}.flag-mark span:nth-child(1){background:var(--red)}.flag-mark span:nth-child(2){background:#d6d6d6}.flag-mark span:nth-child(3){background:var(--black)}
+    .flip-word{display:inline-grid;place-items:center;position:relative;min-width:84px;height:1.8em;padding-inline:.2rem;vertical-align:middle;perspective:700px}
+    .flip-word .face{grid-area:1/1;backface-visibility:hidden;transition:transform .8s ease, opacity .8s ease;transform-style:preserve-3d;white-space:nowrap}
+    .flip-word .ar{opacity:1;transform:rotateX(0deg)}
+    .flip-word .en{opacity:0;transform:rotateX(90deg);font-size:.92em;color:var(--red);direction:ltr}
+    .flip-word.show-en .ar{opacity:0;transform:rotateX(-90deg)}
+    .flip-word.show-en .en{opacity:1;transform:rotateX(0deg)}
+    .fs-tip{position:fixed;top:22px;left:22px;z-index:22;background:rgba(255,255,255,.84);border:1px solid rgba(201,162,39,.35);box-shadow:0 10px 26px rgba(0,0,0,.08);border-radius:999px;padding:.55rem .9rem;font-size:1rem;color:var(--muted)}.icon{width:34px;height:34px;margin-bottom:.55rem;color:var(--black)}.icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.icon-fill svg{fill:currentColor;stroke:none}
+    @media (max-width:900px){.hero,.split,.grid2,.grid3{grid-template-columns:1fr}.heroimg{height:30vh}.midimg{height:28vh}.title{font-size:2.3rem}.fs-tip{left:12px;top:12px;font-size:.78rem}}
+  
+.audio-player{
+  position:fixed;
+  bottom:14px;
+  right:14px;
+  z-index:25;
+  width:min(240px,calc(100vw - 36px)); /* was 320px */
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(201,162,39,.42);
+  border-radius:22px;
+  box-shadow:0 14px 34px rgba(0,0,0,.12);
+  padding:8px 10px; /* was 12px 14px */
+  backdrop-filter:blur(10px);
+}
+
+.audio-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+.audio-title{
+  font-size:.85rem;
+  font-weight:700;
+}
+.audio-track{
+  font-size:.78rem;
+  color:var(--muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.audio-controls{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.audio-btn{
+  width:30px;
+  height:30px;
+  border:none;
+  border-radius:999px;
+  background:#fff;
+  color:var(--black);
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  cursor:pointer;
+  font-size:.85rem;
+}
+.audio-btn.primary{
+  background:var(--black);
+  color:#fff;
+}
+
+.audio-progress{
+  position:relative;
+  height:8px;
+  background:#ece6d8;
+  border-radius:999px;
+  overflow:visible;
+  margin-top:8px;
+  direction:ltr;
+  cursor:pointer;
+}
+.audio-progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--red),var(--gold));
+  border-radius:999px;
+  transition:width .12s linear;
+}
+.audio-progress-thumb{
+  position:absolute;
+  top:50%;
+  left:0;
+  width:16px;
+  height:16px;
+  border-radius:999px;
+  background:var(--gold);
+  border:2px solid #fff;
+  box-shadow:0 4px 10px rgba(0,0,0,.18);
+  transform:translate(-50%,-50%);
+  cursor:grab;
+}
+.audio-progress-thumb:active{
+  cursor:grabbing;
+}
+.audio-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:.82rem;
+  color:var(--muted);
+  margin-top:6px;
+  direction:ltr;
+}
+.audio-volume{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:8px;
+  font-size:.82rem;
+  color:var(--muted);
+  direction:ltr;
+}
+.audio-volume input[type=range]{
+  width:100%;
+  accent-color:var(--gold);
+  direction:ltr;
+}
+  </style>
+</head>
+<body>
+<div class="fs-tip">F ملء الشاشة</div>
+<div class="deck">
+  <section class="slide active" data-slide="1">
+    <div class="band-red"></div><div class="band-black"></div><div class="gold-wash"></div>
+    <div class="content">
+      <div class="hero">
+        <div>
+          <div class="flag-mark reveal" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="kicker reveal">عرض ثقافي</div>
+          <h1 class="title reveal">الزفاف المصري</h1>
+          <p class="lead reveal">مراحله، رموزه، وما يكشفه عن المجتمع.</p>
+        </div>
+        <div class="frame reveal"><img class="photo heroimg" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/8496bb2c48cd1903edb94c3a02513273fcb5e0ad.jpg" alt="حفل زفاف مصري" width="800" height="473"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="2">
+    <div class="band-red"></div><div class="band-black"></div><div class="gold-wash"></div>
+    <div class="content">
+      <div class="split">
+        <div>
+          <div class="kicker reveal">الفكرة</div>
+          <h2 class="h2 reveal">ليس حفلاً فقط</h2>
+          <div class="grid2">
+            <div class="panel mini reveal"><div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="2.2"></circle><circle cx="15" cy="8" r="2.2"></circle><path d="M5.5 17c.8-2.3 2.5-3.5 5-3.5s4.2 1.2 5 3.5"></path></svg></div><h3>الأسرة</h3><p>الزواج يربط بين عائلتين.</p></div>
+            <div class="panel mini reveal"><div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><circle cx="9" cy="10" r=".8" class="icon-fill"></circle><circle cx="15" cy="10" r=".8" class="icon-fill"></circle><path d="M8.5 14c.9 1 2.1 1.5 3.5 1.5s2.6-.5 3.5-1.5"></path></svg></div><h3>الفرح</h3><p>الاحتفال <span class="flip-word" data-ar="جماعي" data-en="collective"><span class="face ar">جماعي</span><span class="face en">collective</span></span>.</p></div>
+            <div class="panel mini reveal"><div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 4.2-2.7 6.9-7 9-4.3-2.1-7-4.8-7-9V7l7-4z"></path></svg></div><h3>الرمز</h3><p>لكل مرحلة معنى <span class="flip-word" data-ar="اجتماعي" data-en="social"><span class="face ar">اجتماعي</span><span class="face en">social</span></span>.</p></div>
+            <div class="panel mini reveal"><div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h9l3 3v13H6z"></path><path d="M15 4v4h4"></path><path d="M9 12h6M9 16h4"></path></svg></div><h3>الهوية</h3><p>العادات تحفظ الذاكرة.</p></div>
+          </div>
+        </div>
+        <div class="panel note reveal">
+          <h3>فكرة الشريحة</h3>
+          <p>الزفاف في مصر مناسبة عائلية واجتماعية كبيرة.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="3">
+    <div class="band-red"></div><div class="band-black"></div><div class="gold-wash"></div>
+    <div class="content">
+      <div>
+        <div class="kicker reveal">قبل الزفاف</div>
+        <h2 class="h2 reveal">البداية</h2>
+        <div class="grid3">
+          <div class="panel mini reveal"><h3><span class="flip-word" data-ar="الفاتحة" data-en="Al-Fatiha"><span class="face ar">الفاتحة</span><span class="face en">Al-Fatiha</span></span></h3><p>بركة وبداية.</p></div>
+          <div class="panel mini reveal"><h3><span class="flip-word" data-ar="الخِطبة" data-en="engagement"><span class="face ar">الخِطبة</span><span class="face en">engagement</span></span></h3><p>اتفاق بين الأسرتين.</p></div>
+          <div class="panel mini reveal"><h3><span class="flip-word" data-ar="الشبكة" data-en="gold gift"><span class="face ar">الشبكة</span><span class="face en">gold gift</span></span></h3><p>ذهب ورمز للالتزام.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="4">
+    <div class="band-red"></div><div class="band-black"></div><div class="gold-wash"></div>
+    <div class="content">
+      <div class="split">
+        <div class="frame reveal"><img class="photo midimg" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Wedding_Henna.jpg" alt="ليلة الحناء" width="2392" height="3437"></div>
+        <div>
+          <div class="kicker reveal">قبل الحفل</div>
+          <h2 class="h2 reveal">ليلة <span class="flip-word" data-ar="الحناء" data-en="henna"><span class="face ar">الحناء</span><span class="face en">henna</span></span></h2>
+          <div class="grid2">
+            <div class="panel mini reveal"><div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4c1.2 2.4 3.6 4.8 6 6-2.4 1.2-4.8 3.6-6 6-1.2-2.4-3.6-4.8-6-6 2.4-1.2 4.8-3.6 6-6z"></path></svg></div><h3>الزينة</h3><p><span class="flip-word" data-ar="نقوش" data-en="patterns"><span class="face ar">نقوش</span><span class="face en">patterns</span></span> على اليدين.</p></div>
+            <div class="panel mini reveal">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8"></circle>
+                  <circle cx="9" cy="10" r=".8" class="icon-fill"></circle>
+                  <circle cx="15" cy="10" r=".8" class="icon-fill"></circle>
+                  <path d="M8.5 14c.9 1 2.1 1.5 3.5 1.5s2.6-.5 3.5-1.5"></path>
+                </svg>
+              </div>
+              <h3>الفرح</h3>
+              <p>جو نسائي واجتماعي.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="5">
+    <div class="band-red"></div><div class="band-black"></div><div class="gold-wash"></div>
+    <div class="content">
+      <div class="split">
+        <div>
+          <div class="kicker reveal">المرحلة الرسمية</div>
+          <h2 class="h2 reveal">العقد والمراسم</h2>
+          <div class="grid2">
+            <div class="panel mini reveal"><h3><span class="flip-word" data-ar="كتب الكتاب" data-en="marriage contract"><span class="face ar">كتب الكتاب</span><span class="face en">marriage contract</span></span></h3><p>العقد يجعل الزواج رسمياً.</p></div>
+            <div class="panel mini reveal"><h3><span class="flip-word" data-ar="المراسم" data-en="ceremony"><span class="face ar">المراسم</span><span class="face en">ceremony</span></span></h3><p>الاحتفال يأتي بعد التوثيق.</p></div>
+          </div>
+        </div>
+        <div class="panel note reveal">
+          <h3>فكرة الشريحة</h3>
+          <p>هنا يظهر الجانب القانوني والديني للزواج.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="6">
+    <div class="band-red"></div><div class="band-black"></div><div class="gold-wash"></div>
+    <div class="content">
+      <div class="split">
+        <div>
+          <div class="kicker reveal">المشهد الأشهر</div>
+          <h2 class="h2 reveal"><span class="flip-word" data-ar="الزفّة" data-en="procession"><span class="face ar">الزفّة</span><span class="face en">procession</span></span></h2>
+          <div class="grid2">
+            <div class="panel mini reveal"><div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 4v10.5a2.5 2.5 0 1 1-1.5-2.3V6.3L19 5v7.5a2.5 2.5 0 1 1-1.5-2.3V4z"></path></svg></div><h3>الموسيقى</h3><p>دخول صاخب ومبهج.</p></div>
+            <div class="panel mini reveal"><h3><span class="flip-word" data-ar="الزغروطة" data-en="ululation"><span class="face ar">الزغروطة</span><span class="face en">ululation</span></span></h3><p>صوت يدل على الفرح.</p></div>
+          </div>
+        </div>
+        <div class="frame reveal"><img class="photo midimg" src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/12ea0d3226cdff41b9be1191af7dbf61bebfb787.jpg" alt="الزفة المصرية" width="640" height="480"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="7">
+    <div class="band-red"></div><div class="band-black"></div><div class="gold-wash"></div>
+    <div class="content">
+      <div>
+        <div class="kicker reveal">داخل الحفل</div>
+        <h2 class="h2 reveal">ما الذي نراه؟</h2>
+        <div class="grid3">
+          <div class="panel mini reveal"><h3>الملابس</h3><p>أناقة واضحة.</p></div>
+          <div class="panel mini reveal"><div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4v7"></path><path d="M10 4v7"></path><path d="M7 8h3"></path><path d="M17 4c-1.7 2-2.2 4-2.2 6.4V20"></path></svg></div><h3>الطعام</h3><p><span class="flip-word" data-ar="كرم" data-en="generosity"><span class="face ar">كرم</span><span class="face en">generosity</span></span> وحفاوة.</p></div>
+          <div class="panel mini reveal"><div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="9" r="2"></circle><circle cx="16" cy="9" r="2"></circle><circle cx="12" cy="7" r="2"></circle><path d="M5 18c.5-1.9 1.9-3 4-3"></path><path d="M19 18c-.5-1.9-1.9-3-4-3"></path><path d="M8.5 18c.6-2.2 2-3.4 3.5-3.4s2.9 1.2 3.5 3.4"></path></svg></div><h3>الضيوف</h3><p>حضور واسع ومشاركة.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="8">
+    <div class="band-red"></div><div class="band-black"></div><div class="gold-wash"></div>
+    <div class="content">
+      <div class="split">
+        <div>
+          <div class="kicker reveal">المعنى</div>
+          <h2 class="h2 reveal">ماذا يكشف الزفاف؟</h2>
+          <div class="grid2">
+            <div class="panel mini reveal"><div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 13l-2 2a3 3 0 1 1-4-4l3-3a3 3 0 0 1 4 0"></path><path d="M14 11l2-2a3 3 0 1 1 4 4l-3 3a3 3 0 0 1-4 0"></path><path d="M9 15l6-6"></path></svg></div><h3><span class="flip-word" data-ar="الترابط" data-en="connection"><span class="face ar">الترابط</span><span class="face en">connection</span></span></h3><p>قوة العلاقات العائلية.</p></div>
+            <div class="panel mini reveal"><h3>الهوية</h3><p>استمرار العادات.</p></div>
+          </div>
+        </div>
+        <div class="panel note reveal">
+          <h3>الجملة الأساسية</h3>
+          <p>الزفاف المصري مرآة للمجتمع.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="9">
+    <div class="band-red"></div><div class="band-black"></div><div class="gold-wash"></div>
+    <div class="content">
+      <div>
+        <div class="kicker reveal">اليوم</div>
+        <h2 class="h2 reveal">بين التقاليد والحداثة</h2>
+        <div class="grid2">
+          <div class="panel mini reveal"><h3>التقاليد</h3><p>الأسرة، الحناء، الزفّة.</p></div>
+          <div class="panel mini reveal"><div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19h16"></path><path d="M6 19V9l6-4 6 4v10"></path><path d="M10 12h4"></path></svg></div><h3><span class="flip-word" data-ar="الحداثة" data-en="modernity"><span class="face ar">الحداثة</span><span class="face en">modernity</span></span></h3><p>قاعات حديثة وأسلوب جديد.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="10">
+    <div class="band-red"></div><div class="band-black"></div><div class="gold-wash"></div>
+    <div class="content" style="text-align:center">
+      <div class="flag-mark reveal" aria-hidden="true" style="justify-content:center;margin-inline:auto"><span></span><span></span><span></span></div>
+      <h2 class="title reveal" style="font-size:clamp(2.2rem,6vw,4.6rem)">شكراً</h2>
+      <p class="lead reveal" style="margin-inline:auto">الزفاف المصري تعبير عن الأسرة والفرح والهوية.</p>
+    </div>
+  </section>
+</div>
+
+<div class="audio-player" aria-label="مشغل صوت">
+  <div class="audio-top">
+    <div>
+      <div class="audio-title">الموسيقى</div>
+      <div class="audio-track" id="trackName">مقطوعة ١</div>
+    </div>
+    <div class="audio-controls">
+      <button class="audio-btn" id="prevBtn" aria-label="السابق">⏮</button>
+      <button class="audio-btn primary" id="playBtn" aria-label="تشغيل أو إيقاف">▶</button>
+      <button class="audio-btn" id="nextBtn" aria-label="التالي">⏭</button>
+    </div>
+  </div>
+  <div class="audio-progress" id="progressWrap">
+    <div class="audio-progress-bar" id="progressBar"></div>
+    <div class="audio-progress-thumb" id="progressThumb"></div>
+  </div>
+  <div class="audio-meta">
+    <span id="timeNow">0:00</span>
+    <span id="timeTotal">0:00</span>
+  </div>
+  <div class="audio-volume" aria-label="مستوى الصوت">
+    <span>🔊</span>
+    <input id="volumeSlider" type="range" min="0" max="100" value="30">
+    <span id="volumeLabel">30%</span>
+  </div>
+  <audio id="bgAudio" preload="metadata"></audio>
+</div>
+
+<script>
+let current=1;const slides=[...document.querySelectorAll('.slide')];const total=slides.length;
+function goToSlide(n,dir=1){if(n<1)n=total;if(n>total)n=1;const prev=slides[current-1];const next=slides[n-1];if(prev===next)return;prev.classList.remove('active','out-left','out-right');prev.classList.add(dir>0?'out-left':'out-right');next.classList.remove('out-left','out-right');next.classList.add('active');animateSlide(next);current=n;setTimeout(()=>prev.classList.remove('out-left','out-right'),560)}
+function changeSlide(dir){goToSlide(current+dir,dir)}
+document.addEventListener('keydown',e=>{const tag=(e.target&&e.target.tagName)||'';if(['INPUT','TEXTAREA'].includes(tag))return;const k=e.key.toLowerCase();if(k==='arrowright'||k===' '){e.preventDefault();changeSlide(1)}if(k==='arrowleft'){e.preventDefault();changeSlide(-1)}if(k==='f'){e.preventDefault();toggleFullscreen()}});
+let touchStartX=0;document.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX});document.addEventListener('touchend',e=>{const diff=touchStartX-e.changedTouches[0].clientX;if(Math.abs(diff)>50)changeSlide(diff>0?1:-1)});
+function animateSlide(slide){slide.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transition='none';el.style.opacity='0';el.style.transform='translateY(16px)';el.offsetHeight;const delay=i*0.08;el.style.transition=`opacity .35s ease ${delay}s, transform .35s ease ${delay}s`;el.style.opacity='1';el.style.transform='translateY(0)'})}
+async function toggleFullscreen(){try{if(!document.fullscreenElement){await document.documentElement.requestFullscreen()}else{await document.exitFullscreen()}}catch(e){}}
+function initFlipWords(){document.querySelectorAll('.flip-word').forEach(el=>{setInterval(()=>{el.classList.toggle('show-en')},5000)})}
+initFlipWords();
+try{animateSlide(document.querySelector('.slide.active'))}catch(e){}
+
+const tracks = [
+  { title: 'مقطوعة ١', src: '11minweddingsong.mp3' },
+  { title: 'مقطوعة ٢', src: '5minweddingsong.mp3' },
+  { title: 'مقطوعة ٣', src: 'PUT_TRACK_3_HERE.mp3' },
+  { title: 'مقطوعة ٤', src: 'PUT_TRACK_4_HERE.mp3' }
+];
+
+const audio = document.getElementById('bgAudio');
+const playBtn = document.getElementById('playBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const trackName = document.getElementById('trackName');
+const progressBar = document.getElementById('progressBar');
+const progressThumb = document.getElementById('progressThumb');
+const progressWrap = document.getElementById('progressWrap');
+const timeNow = document.getElementById('timeNow');
+const timeTotal = document.getElementById('timeTotal');
+const volumeSlider = document.getElementById('volumeSlider');
+const volumeLabel = document.getElementById('volumeLabel');
+
+audio.volume = 0.3;
+volumeSlider.value = '30';
+volumeLabel.textContent = '30%';
+
+volumeSlider.addEventListener('input', () => {
+  audio.volume = Number(volumeSlider.value) / 100;
+  volumeLabel.textContent = volumeSlider.value + '%';
+});
+
+let trackIndex = 0;
+let isScrubbing = false;
+
+function fmtTime(sec){
+  if (!isFinite(sec)) return '0:00';
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60).toString().padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+function setProgressUI(pct){
+  const safe = Math.max(0, Math.min(1, pct || 0));
+  progressBar.style.width = (safe * 100) + '%';
+  progressThumb.style.left = (safe * 100) + '%';
+}
+
+function loadTrack(i){
+  trackIndex = (i + tracks.length) % tracks.length;
+  audio.src = tracks[trackIndex].src;
+  trackName.textContent = tracks[trackIndex].title;
+  setProgressUI(0);
+  timeNow.textContent = '0:00';
+  timeTotal.textContent = '0:00';
+}
+
+function updatePlayButton(){
+  playBtn.textContent = audio.paused ? '▶' : '⏸';
+}
+
+function scrubTo(clientX){
+  const r = progressWrap.getBoundingClientRect();
+  const pct = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+  setProgressUI(pct);
+  if (audio.duration) audio.currentTime = pct * audio.duration;
+}
+
+playBtn.addEventListener('click', async () => {
+  try {
+    if (audio.paused) await audio.play();
+    else audio.pause();
+    updatePlayButton();
+  } catch(e) {}
+});
+
+prevBtn.addEventListener('click', async () => {
+  loadTrack(trackIndex - 1);
+  try { await audio.play(); } catch(e) {}
+  updatePlayButton();
+});
+
+nextBtn.addEventListener('click', async () => {
+  loadTrack(trackIndex + 1);
+  try { await audio.play(); } catch(e) {}
+  updatePlayButton();
+});
+
+audio.addEventListener('loadedmetadata', () => {
+  timeTotal.textContent = fmtTime(audio.duration);
+});
+
+audio.addEventListener('timeupdate', () => {
+  if (audio.duration && !isScrubbing) {
+    setProgressUI(audio.currentTime / audio.duration);
+  }
+  timeNow.textContent = fmtTime(audio.currentTime);
+});
+
+audio.addEventListener('seeked', () => {
+  if (audio.duration) setProgressUI(audio.currentTime / audio.duration);
+});
+
+audio.addEventListener('ended', async () => {
+  loadTrack(trackIndex + 1);
+  try { await audio.play(); } catch(e) {}
+  updatePlayButton();
+});
+
+progressWrap.addEventListener('click', e => {
+  scrubTo(e.clientX);
+});
+
+progressThumb.addEventListener('pointerdown', e => {
+  isScrubbing = true;
+  progressThumb.setPointerCapture(e.pointerId);
+  scrubTo(e.clientX);
+});
+
+progressThumb.addEventListener('pointermove', e => {
+  if (isScrubbing) scrubTo(e.clientX);
+});
+
+progressThumb.addEventListener('pointerup', e => {
+  isScrubbing = false;
+  progressThumb.releasePointerCapture(e.pointerId);
+});
+
+window.addEventListener('pointermove', e => {
+  if (isScrubbing) scrubTo(e.clientX);
+});
+
+window.addEventListener('pointerup', () => {
+  isScrubbing = false;
+});
+
+loadTrack(0);
+updatePlayButton();
+</script>
+</body>
+</html>
