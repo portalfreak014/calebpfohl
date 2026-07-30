@@ -354,7 +354,8 @@ function showQuestion() {
   document.getElementById('score').textContent = `Score: ${score}`;
   const optsDiv = document.getElementById('options');
   optsDiv.innerHTML = '';
-  q.options.forEach(opt => {
+  const shuffledOptions = shuffle([...q.options]);
+  shuffledOptions.forEach(opt => {
     const btn = document.createElement('button');
     btn.className = 'opt';
     btn.textContent = opt;
