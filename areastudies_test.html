@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Area Studies 140E Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Noto Sans', 'Noto Sans Arabic', sans-serif;
+    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 { margin-top: 10px; text-shadow: 2px 2px 4px #000; }
+  
+  #card { 
+    display: none; 
+  }
+  #card {
+    background: #fff;
+    color: #222;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.4);
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  @media (max-width: 480px) {
+  #card {
+    width: calc(100% - 20px);
+    padding: 20px;
+    border-radius: 12px;
+  }
+  body { padding: 10px; }
+}
+
+@media (min-width: 900px) {
+  #card {
+    max-width: 700px;
+    padding: 40px;
+  }
+}
+  #word {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    font-size: 3em;
+    direction: rtl;
+    margin: 10px 0 25px;
+    color: #1e3c72;
+    font-weight: bold;
+  }
+  .opt {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    padding: 14px;
+    font-size: 1.1em;
+    border: 2px solid #1e3c72;
+    border-radius: 10px;
+    background: #f0f4ff;
+    cursor: pointer;
+    transition: .2s;
+  }
+  .opt:hover { background: #dbe4ff; }
+  .correct { background: #4caf50 !important; color: #fff; border-color:#4caf50; }
+  .wrong { background: #e53935 !important; color: #fff; border-color:#e53935; }
+  #progress { margin-bottom: 15px; font-size: 1.1em; }
+  #score { margin-top: 15px; font-size: 1.2em; font-weight: bold; }
+  #next {
+    margin-top: 20px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    background: #1e3c72;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    display: none;
+  }
+  #restart {
+    margin-top: 15px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    background: #ff9800;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    display: none;
+  }
+  #final { font-size: 1.5em; margin-top: 10px; }
+  #bar {
+    width: 100%;
+    background: #ffffff33;
+    border-radius: 8px;
+    height: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  #barFill {
+    height: 100%;
+    background: #4caf50;
+    width: 0%;
+    transition: width .3s;
+  }
+  #playerName {
+  padding: 10px;
+  border: 2px solid #1e3c72;
+  border-radius: 8px;
+  font-size: 1em;
+  margin-right: 8px;
+  width: 60%;
+}
+#saveScore {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #4caf50;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+}
+#saveScoreArea { margin-top: 15px; }
+  #modeSelect {
+  background: #fff;
+  color: #222;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  padding: 30px;
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 25px;
+}
+#modeSelect h2 {
+  margin-top: 0;
+  color: #1e3c72;
+}
+#modeSelect button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 14px;
+  font-size: 1.1em;
+  border: 2px solid #1e3c72;
+  border-radius: 10px;
+  background: #f0f4ff;
+  color: #1e3c72;
+  cursor: pointer;
+  transition: .2s;
+}
+#modeSelect button:hover {
+  background: #dbe4ff;
+}
+#leaderboardList {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+#leaderboardList li {
+  background: #f0f4ff;
+  border: 2px solid #1e3c72;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 8px 0;
+  font-size: 1.05em;
+}
+  #leaderboardCard {
+  background: #fff;
+  color: #222;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  padding: 30px;
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 25px;
+}
+#clearBoard {
+  margin-top: 15px;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 8px;
+  background: #e53935;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+}
+  #review {
+  margin-top: 20px;
+  text-align: left;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.review-item {
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.correct-item { background: #e8f5e9; border-left: 5px solid #4caf50; }
+.wrong-item { background: #ffebee; border-left: 5px solid #e53935; }
+.review-word { font-size: 1.4em; direction: rtl; font-weight: bold; color: #1e3c72; }
+.review-answer { font-size: 0.95em; color: #444; }
+.review-correct { font-size: 0.95em; color: #c62828; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>Area Studies 140E Quiz</h1>
+  <div id="modeSelect">
+  <button onclick="startQuiz(5)">Mini Quiz (5 Questions)</button>
+  <button onclick="startContextQuiz(10)">Context Quiz (10 Questions)</button>
+  <button onclick="startArabiziQuiz(6)">Arabizi Quiz (6 Questions)</button>
+</div>
+<div id="card">
+  <div id="progress"></div>
+  <div id="bar"><div id="barFill"></div></div>
+  <div id="word"></div>
+  <div id="options"></div>
+  <div id="score"></div>
+  <div id="final"></div>
+<div id="review"></div>
+  <button id="next" onclick="nextQuestion()">Next ▶</button>
+  <button id="restart" onclick="startQuiz()">Restart Quiz 🔁</button>
+  <button id="changeMode" onclick="showModeSelect()">Change Mode 🔄</button>
+  <div id="saveScoreArea" style="display:none;">
+    <input type="text" id="playerName" placeholder="Enter your name (optional)">
+    <button id="saveScore" onclick="saveScore()">Save Score 💾</button>
+  </div>
+</div>
+    <div id="leaderboardCard">
+      <h2>Leaderboard 🏆</h2>
+        <ul id="leaderboardList"></ul>
+  <!-- <button id="clearBoard" onclick="clearLeaderboard()">Clear Leaderboard 🗑️</button> -->
+    </div>
+
+<script>
+const questions = [{"word": "Abbasid Caliphate", "answer": "750-1258 CE, capital in Baghdad", "options": ["750-1258 CE, capital in Baghdad", "661-750 CE, capital in Damascus", "1258-1516 CE, capital in Cairo", "1516-1918 CE, capital in Istanbul"]}, {"word": "The Crusades", "answer": "Series of religious wars between Christians and Muslims for the Holy Land (1096-1291)", "options": ["Series of religious wars between Christians and Muslims for the Holy Land (1096-1291)", "Mongol invasions of the Middle East", "Ottoman conquest of Egypt", "Arab conquest of Spain"]}, {"word": "Siege of Baghdad (1258)", "answer": "Mongol destruction of the Abbasid capital, ending the caliphate's golden age", "options": ["Mongol destruction of the Abbasid capital, ending the caliphate's golden age", "Crusader capture of Jerusalem", "Ottoman siege of Baghdad", "British occupation of Iraq"]}, {"word": "Six Day War (1967)", "answer": "Israel vs. Egypt, Jordan, and Syria; Israel captured the Sinai, West Bank, Gaza, and Golan Heights", "options": ["Israel vs. Egypt, Jordan, and Syria; Israel captured the Sinai, West Bank, Gaza, and Golan Heights", "Iraq's invasion of Kuwait", "2003 US-led invasion of Iraq", "Suez Crisis of 1956"]}, {"word": "Iraqi Invasion of Kuwait (1990)", "answer": "Led to the 1991 Gulf War and US-led coalition response", "options": ["Led to the 1991 Gulf War and US-led coalition response", "Started the Iran-Iraq War", "Caused the Six Day War", "Triggered the Arab Spring"]}, {"word": "2003 Gulf War", "answer": "US-led invasion of Iraq that toppled Saddam Hussein", "options": ["US-led invasion of Iraq that toppled Saddam Hussein", "Israeli-Egyptian peace treaty negotiations", "Mongol invasion of Baghdad", "Iraqi invasion of Kuwait"]}, {"word": "Oslo Accords (1993)", "answer": "Agreements between Israel and the PLO establishing limited Palestinian self-governance", "options": ["Agreements between Israel and the PLO establishing limited Palestinian self-governance", "Treaty ending the Six Day War", "Agreement dividing Ottoman territories", "Ceasefire ending the Gulf War"]}, {"word": "The Intifadas", "answer": "Palestinian uprisings against Israeli occupation (1987 and 2000)", "options": ["Palestinian uprisings against Israeli occupation (1987 and 2000)", "Mongol rebellions against the Abbasids", "Egyptian revolts against Ottoman rule", "Kuwaiti resistance to Iraqi occupation"]}, {"word": "Mongol Invasion", "answer": "13th-century conquest that destroyed the Abbasid Caliphate and Baghdad", "options": ["13th-century conquest that destroyed the Abbasid Caliphate and Baghdad", "Ottoman expansion into Arabia", "Crusader invasion of Egypt", "British colonization of the Gulf"]}, {"word": "Islamic Art (Abbasid era)", "answer": "Characterized by arabesque patterns, calligraphy, and geometric designs", "options": ["Characterized by arabesque patterns, calligraphy, and geometric designs", "Focused on realistic human portraiture", "Dominated by Byzantine mosaics only", "Primarily Persian miniature painting"]}, {"word": "Post-Ottoman Arab States", "answer": "Modern nations (Iraq, Syria, Jordan, etc.) formed after WWI when European powers divided former Ottoman territory", "options": ["Modern nations (Iraq, Syria, Jordan, etc.) formed after WWI when European powers divided former Ottoman territory", "Independent kingdoms that predate the Ottomans", "States created during the Crusades", "Nations formed after the Mongol invasion"]}, {"word": "Economic Diversification", "answer": "Gulf states reducing dependence on oil revenue (e.g., Saudi Vision 2030)", "options": ["Gulf states reducing dependence on oil revenue (e.g., Saudi Vision 2030)", "Increasing reliance on a single export commodity", "Adopting a shared regional currency", "Nationalizing all foreign businesses"]}, {"word": "Sectarianism", "answer": "Division and tension based on religious sect, mainly Sunni vs. Shi'a Islam", "options": ["Division and tension based on religious sect, mainly Sunni vs. Shi'a Islam", "Conflict between Arabs and Persians only", "Rivalry between monarchies and republics", "Competition over oil currency values"]}, {"word": "Major Sects of Islam", "answer": "Sunni and Shi'a are the two largest branches", "options": ["Sunni and Shi'a are the two largest branches", "Catholic and Orthodox", "Sufi and Wahhabi are the only two branches", "Maronite and Druze"]}, {"word": "Ancient Egypt", "answer": "Dynastic civilization along the Nile predating Islamic-era Arab history", "options": ["Dynastic civilization along the Nile predating Islamic-era Arab history", "Founded during the Abbasid Caliphate", "Established after the Crusades", "Part of the Ottoman Empire's founding territory"]}];
+
+const contextQuestions = [{"sentence": "After the fall of the Ottoman Empire following World War I, Britain and France divided former Ottoman Arab territories into new states under the <u><b>Sykes-Picot Agreement</b></u> framework.", "answer": "Mandate system dividing the Arab world", "options": ["Mandate system dividing the Arab world", "Oslo Accords", "Abbasid succession plan", "Gulf Cooperation Council charter"]}, {"sentence": "In 1258, the <u><b>Mongols</b></u> besieged and destroyed Baghdad, killing the last Abbasid caliph and ending the caliphate's centuries-long rule.", "answer": "Mongols", "options": ["Mongols", "Crusaders", "Ottomans", "British forces"]}, {"sentence": "In August 1990, Iraq under Saddam Hussein invaded and annexed <u><b>Kuwait</b></u>, prompting a US-led international coalition response.", "answer": "Kuwait", "options": ["Kuwait", "Saudi Arabia", "Iran", "Jordan"]}, {"sentence": "During the <u><b>Six Day War</b></u> of 1967, Israel decisively defeated Egypt, Jordan, and Syria, capturing significant new territory.", "answer": "Six Day War", "options": ["Six Day War", "Yom Kippur War", "2003 Gulf War", "Suez Crisis"]}, {"sentence": "The <u><b>Oslo Accords</b></u> of 1993 were signed between Israeli Prime Minister Rabin and PLO leader Arafat, creating the Palestinian Authority.", "answer": "Oslo Accords", "options": ["Oslo Accords", "Camp David Accords", "Abraham Accords", "Sykes-Picot Agreement"]}, {"sentence": "The First and Second <u><b>Intifadas</b></u> were grassroots Palestinian uprisings characterized by protests, strikes, and clashes with Israeli forces.", "answer": "Intifadas", "options": ["Intifadas", "Crusades", "Gulf Wars", "Mandates"]}, {"sentence": "Under the <u><b>Abbasid Caliphate</b></u>, Baghdad became a global center of science, philosophy, and trade during the Islamic Golden Age.", "answer": "Abbasid Caliphate", "options": ["Abbasid Caliphate", "Umayyad Caliphate", "Ottoman Empire", "Fatimid Caliphate"]}, {"sentence": "Many Gulf economies pursue <u><b>economic diversification</b></u> strategies to lessen dependence on volatile oil revenues.", "answer": "economic diversification", "options": ["economic diversification", "currency devaluation", "sectarian reform", "military expansion"]}, {"sentence": "Regional <u><b>sectarianism</b></u>, particularly the Sunni-Shi'a divide, continues to shape alliances and conflicts across Iraq, Syria, and Lebanon.", "answer": "sectarianism", "options": ["sectarianism", "secularism", "federalism", "colonialism"]}, {"sentence": "Islamic art from the Abbasid period is best known for intricate <u><b>arabesque</b></u> geometric and vegetal patterns rather than figural representation.", "answer": "arabesque", "options": ["arabesque", "calligraphy alone", "mosaic portraiture", "fresco painting"]}];
+
+const arabiziQuestions = [{"word": "3", "answer": "ع (ayn) — a guttural sound with no English letter equivalent", "options": ["ع (ayn) — a guttural sound with no English letter equivalent", "خ (kha) — raspy 'kh' sound", "ح (ha) — breathy 'h' sound", "ص (sad) — emphatic 's' sound"]}, {"word": "5", "answer": "خ (kha) — like the 'ch' in Bach", "options": ["خ (kha) — like the 'ch' in Bach", "ع (ayn) — guttural sound", "ح (ha) — breathy 'h' sound", "ق (qaf) — deep 'k' sound"]}, {"word": "7", "answer": "ح (ha) — a breathy 'h' sound deeper than English 'h'", "options": ["ح (ha) — a breathy 'h' sound deeper than English 'h'", "خ (kha) — raspy 'kh' sound", "ص (sad) — emphatic 's' sound", "ط (ta) — emphatic 't' sound"]}, {"word": "9", "answer": "ص (sad) — an emphatic 's' sound", "options": ["ص (sad) — an emphatic 's' sound", "ض (dad) — emphatic 'd' sound", "ذ (thal) — soft 'th' sound", "ظ (za) — emphatic 'z' sound"]}, {"word": "2", "answer": "ء (hamza) — a glottal stop", "options": ["ء (hamza) — a glottal stop", "ع (ayn) — guttural sound", "ح (ha) — breathy sound", "غ (ghayn) — guttural 'gh' sound"]}, {"word": "Why are numbers used in Arabizi?", "answer": "To represent Arabic sounds/letters that have no direct Latin alphabet equivalent", "options": ["To represent Arabic sounds/letters that have no direct Latin alphabet equivalent", "Because Arabic has no written alphabet", "To encode secret military messages", "Because keyboards only support numbers"]}];
+
+let order = [];
+let current = 0;
+let score = 0;
+let results = [];
+
+function shuffle(arr) {
+  for (let i = arr.length -1; i>0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let lastLength = 5;
+let quizMode = 'mini';
+
+function showModeSelect() {
+  document.getElementById('card').style.display = 'none';
+  document.getElementById('modeSelect').style.display = 'block';
+}
+
+function startQuiz(length) {
+  if (length) lastLength = length;
+  const activeLength = lastLength;
+  document.getElementById('modeSelect').style.display = 'none';
+  document.getElementById('card').style.display = 'block';
+  quizMode = 'mini';
+  order = shuffle([...Array(questions.length).keys()]).slice(0, Math.min(activeLength, questions.length));
+  current = 0;
+  score = 0;
+  results = [];
+  document.getElementById('final').textContent = '';
+  document.getElementById('review').innerHTML = '';
+  document.getElementById('restart').style.display = 'none';
+  document.getElementById('next').style.display = 'none';
+  showQuestion();
+}
+
+function startContextQuiz(length = 10) {
+  document.getElementById('modeSelect').style.display = 'none';
+  document.getElementById('card').style.display = 'block';
+  quizMode = 'context';
+  order = shuffle([...Array(contextQuestions.length).keys()]).slice(0, Math.min(length, contextQuestions.length));
+  current = 0;
+  score = 0;
+  results = [];
+  document.getElementById('final').textContent = '';
+  document.getElementById('review').innerHTML = '';
+  document.getElementById('restart').style.display = 'none';
+  document.getElementById('next').style.display = 'none';
+  showQuestion();
+}
+
+function startArabiziQuiz(length = 6) {
+  document.getElementById('modeSelect').style.display = 'none';
+  document.getElementById('card').style.display = 'block';
+  quizMode = 'arabizi';
+  order = shuffle([...Array(arabiziQuestions.length).keys()]).slice(0, Math.min(length, arabiziQuestions.length));
+  current = 0;
+  score = 0;
+  results = [];
+  document.getElementById('final').textContent = '';
+  document.getElementById('review').innerHTML = '';
+  document.getElementById('restart').style.display = 'none';
+  document.getElementById('next').style.display = 'none';
+  showQuestion();
+}
+
+function getCurrentSet() {
+  if (quizMode === 'context') return contextQuestions;
+  if (quizMode === 'arabizi') return arabiziQuestions;
+  return questions;
+}
+
+function showQuestion() {
+  if (current >= order.length) {
+    endQuiz();
+    return;
+  }
+  const set = getCurrentSet();
+  const q = set[order[current]];
+  document.getElementById('progress').textContent = `Question ${current+1} / ${order.length}`;
+  document.getElementById('barFill').style.width = `${(current/order.length)*100}%`;
+
+  const wordEl = document.getElementById('word');
+  if (quizMode === 'context') {
+    wordEl.innerHTML = q.sentence;
+    wordEl.style.fontSize = '1.3em';
+    wordEl.style.direction = 'ltr';
+  } else if (quizMode === 'arabizi') {
+    wordEl.textContent = q.word;
+    wordEl.style.fontSize = '3em';
+    wordEl.style.direction = 'ltr';
+  } else {
+    wordEl.textContent = q.word;
+    wordEl.style.fontSize = '1.6em';
+    wordEl.style.direction = 'ltr';
+  }
+
+  document.getElementById('score').textContent = `Score: ${score}`;
+  const optsDiv = document.getElementById('options');
+  optsDiv.innerHTML = '';
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(btn, opt, q.answer, q);
+    optsDiv.appendChild(btn);
+  });
+  document.getElementById('next').style.display = 'none';
+}
+
+function selectAnswer(btn, chosen, correctAns, q) {
+  const buttons = document.querySelectorAll('.opt');
+  buttons.forEach(b => b.onclick = null);
+  buttons.forEach(b => {
+    if (b.textContent === correctAns) b.classList.add('correct');
+    else if (b === btn) b.classList.add('wrong');
+  });
+  const isCorrect = chosen === correctAns;
+  if (isCorrect) score++;
+  results.push({
+    word: quizMode === 'context' ? q.sentence : q.word,
+    chosen: chosen,
+    correctAns: correctAns,
+    isCorrect: isCorrect
+  });
+  document.getElementById('score').textContent = `Score: ${score}`;
+  document.getElementById('next').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  current++;
+  showQuestion();
+}
+
+function endQuiz() {
+  document.getElementById('progress').textContent = 'Quiz Complete!';
+  document.getElementById('barFill').style.width = '100%';
+  document.getElementById('word').textContent = '🎉';
+  document.getElementById('options').innerHTML = '';
+  document.getElementById('score').textContent = '';
+  document.getElementById('final').textContent = `Final Score: ${score} / ${order.length} (${Math.round(score/order.length*100)}%)`;
+  document.getElementById('restart').style.display = 'inline-block';
+  document.getElementById('next').style.display = 'none';
+  document.getElementById('saveScoreArea').style.display = 'inline-block';
+
+  const reviewDiv = document.getElementById('review');
+  reviewDiv.innerHTML = '';
+  results.forEach(r => {
+    const item = document.createElement('div');
+    item.className = r.isCorrect ? 'review-item correct-item' : 'review-item wrong-item';
+    item.innerHTML = `
+      <span class="review-word">${r.word}</span>
+      <span class="review-answer">Your answer: ${r.chosen}</span>
+      ${!r.isCorrect ? `<span class="review-correct">Correct: ${r.correctAns}</span>` : ''}
+    `;
+    reviewDiv.appendChild(item);
+  });
+}
+
+async function loadLeaderboard() {
+  const res = await fetch('/api/leaderboard');
+  return res.ok ? await res.json() : [];
+}
+
+async function renderLeaderboard() {
+  const board = await loadLeaderboard();
+  const list = document.getElementById('leaderboardList');
+  list.innerHTML = '';
+  if (board.length === 0) {
+    list.innerHTML = '<li style="list-style:none; color:#888;">No scores yet. Be the first!</li>';
+    return;
+  }
+  board.slice(0, 15).forEach(entry => {
+    const li = document.createElement('li');
+    const quizTag = entry.quiz || 'ICPT 102';
+    const modeTag = entry.mode ? ` · ${entry.mode}` : '';
+    li.innerHTML = `<strong>${entry.name}</strong> — ${entry.score}/${entry.total} (${entry.pct}%)<br><span style="font-size:0.8em; color:#555;">${quizTag}${modeTag}</span>`;
+    list.appendChild(li);
+  });
+}
+
+const QUIZ_ID = 'Area Studies 140E';
+
+function modeLabel(mode) {
+  if (mode === 'context') return 'Context Quiz';
+  if (mode === 'arabizi') return 'Arabizi Quiz';
+  return 'Mini Quiz';
+}
+
+async function saveScore() {
+  const nameInput = document.getElementById('playerName');
+  const name = nameInput.value.trim() || 'Anonymous';
+  const pct = Math.round((score / order.length) * 100);
+  await fetch('/api/leaderboard', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, score, total: order.length, pct, quiz: QUIZ_ID, mode: modeLabel(quizMode) })
+  });
+  await renderLeaderboard();
+  document.getElementById('saveScoreArea').style.display = 'inline-block';
+  nameInput.value = '';
+}
+
+document.getElementById('card').style.display = 'none';
+renderLeaderboard();
+</script>
+</body>
+</html>
