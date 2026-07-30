@@ -426,11 +426,21 @@ async function renderLeaderboard() {
     list.innerHTML = '<li style="list-style:none; color:#888;">No scores yet. Be the first!</li>';
     return;
   }
-  board.slice(0, 10).forEach(entry => {
+  board.slice(0, 15).forEach(entry => {
     const li = document.createElement('li');
-    li.textContent = `${entry.name} — ${entry.score}/${entry.total} (${entry.pct}%)`;
+    const quizTag = entry.quiz || 'ICPT 102';
+    const modeTag = entry.mode ? ` · ${entry.mode}` : '';
+    li.innerHTML = `<strong>${entry.name}</strong> — ${entry.score}/${entry.total} (${entry.pct}%)<br><span style="font-size:0.8em; color:#555;">${quizTag}${modeTag}</span>`;
     list.appendChild(li);
   });
+}
+
+const QUIZ_ID = 'Area Studies 140E';
+
+function modeLabel(mode) {
+  if (mode === 'context') return 'Context Quiz';
+  if (mode === 'arabizi') return 'Arabizi Quiz';
+  return 'Mini Quiz';
 }
 
 async function saveScore() {
@@ -440,7 +450,7 @@ async function saveScore() {
   await fetch('/api/leaderboard', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, score, total: order.length, pct })
+    body: JSON.stringify({ name, score, total: order.length, pct, quiz: QUIZ_ID, mode: modeLabel(quizMode) })
   });
   await renderLeaderboard();
   document.getElementById('saveScoreArea').style.display = 'inline-block';
