@@ -323,12 +323,13 @@ function startArabiziQuiz(length = 6) {
   showQuestion();
 }
 
-function startAllQuiz() {
+function startAllQuiz(length) {
   document.getElementById('modeSelect').style.display = 'none';
   document.getElementById('card').style.display = 'block';
   quizMode = 'all';
   const totalLength = questions.length + contextQuestions.length + arabiziQuestions.length;
-  order = shuffle([...Array(totalLength).keys()]);
+  const activeLength = length ? Math.min(length, totalLength) : totalLength;
+  order = shuffle([...Array(totalLength).keys()]).slice(0, activeLength);
   current = 0;
   score = 0;
   results = [];
