@@ -423,20 +423,6 @@ function selectAnswer(btn, chosen, correctAns, q, effectiveType) {
   document.getElementById('next').style.display = 'inline-block';
 }
 
-  document.getElementById('score').textContent = `Score: ${score}`;
-  const optsDiv = document.getElementById('options');
-  optsDiv.innerHTML = '';
-  const shuffledOptions = shuffle([...q.options]);
-  shuffledOptions.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'opt';
-    btn.textContent = opt;
-    btn.onclick = () => selectAnswer(btn, opt, q.answer, q);
-    optsDiv.appendChild(btn);
-  });
-  document.getElementById('next').style.display = 'none';
-}
-
 function nextQuestion() {
   current++;
   showQuestion();
