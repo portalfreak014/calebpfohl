@@ -222,6 +222,9 @@
   <button onclick="startQuiz(5)">Mini Quiz (5 Questions)</button>
   <button onclick="startContextQuiz(10)">Context Quiz (10 Questions)</button>
   <button onclick="startArabiziQuiz(6)">Arabizi Quiz (6 Questions)</button>
+  <button onclick="startAllQuiz(50)">50 Questions</button>
+  <button onclick="startAllQuiz(100)">100 Questions</button>
+  <button onclick="startAllQuiz()">All Questions (Full Review)</button>
 </div>
 <div id="card">
   <div id="progress"></div>
@@ -320,10 +323,30 @@ function startArabiziQuiz(length = 6) {
   showQuestion();
 }
 
-function getCurrentSet() {
-  if (quizMode === 'context') return contextQuestions;
-  if (quizMode === 'arabizi') return arabiziQuestions;
-  return questions;
+function startAllQuiz() {
+  document.getElementById('modeSelect').style.display = 'none';
+  document.getElementById('card').style.display = 'block';
+  quizMode = 'all';
+  const totalLength = questions.length + contextQuestions.length + arabiziQuestions.length;
+  order = shuffle([...Array(totalLength).keys()]);
+  current = 0;
+  score = 0;
+  results = [];
+  document.getElementById('final').textContent = '';
+  document.getElementById('review').innerHTML = '';
+  document.getElementById('restart').style.display = 'none';
+  document.getElementById('next').style.display = 'none';
+  showQuestion();
+}
+
+  function getQuestionByGlobalIndex(idx) {
+  if (idx < questions.length) {
+    return { q: questions[idx], type: 'mini' };
+  } else if (idx < questions.length + contextQuestions.length) {
+    return { q: contextQuestions[idx - questions.length], type: 'context' };
+  } else {
+    return { q: arabiziQuestions[idx - questions.length - contextQuestions.length], type: 'arabizi' };
+  }
 }
 
 function showQuestion() {
@@ -331,19 +354,34 @@ function showQuestion() {
     endQuiz();
     return;
   }
-  const set = getCurrentSet();
-  const q = set[order[current]];
+
+  let q, effectiveType;
+  if (quizMode === 'all') {
+    const result = getQuestionByGlobalIndex(order[current]);
+    q = result.q;
+    effectiveType = result.type;
+  } else {
+    const set = getCurrentSet();
+    q = set[order[current]];
+    effectiveType = quizMode;
+  }
+
   document.getElementById('progress').textContent = `Question ${current+1} / ${order.length}`;
   document.getElementById('barFill').style.width = `${(current/order.length)*100}%`;
 
   const wordEl = document.getElementById('word');
-  if (quizMode === 'context') {
+  if (effectiveType === 'context') {
     wordEl.innerHTML = q.sentence;
     wordEl.style.fontSize = '1.3em';
     wordEl.style.direction = 'ltr';
-  } else if (quizMode === 'arabizi') {
-    wordEl.textContent = q.word;
-    wordEl.style.fontSize = '3em';
+  } else if (effectiveType === 'arabizi') {
+    if (q.sentence) {
+      wordEl.innerHTML = q.sentence;
+      wordEl.style.fontSize = '1.3em';
+    } else {
+      wordEl.textContent = q.word;
+      wordEl.style.fontSize = '3em';
+    }
     wordEl.style.direction = 'ltr';
   } else {
     wordEl.textContent = q.word;
@@ -359,13 +397,13 @@ function showQuestion() {
     const btn = document.createElement('button');
     btn.className = 'opt';
     btn.textContent = opt;
-    btn.onclick = () => selectAnswer(btn, opt, q.answer, q);
+    btn.onclick = () => selectAnswer(btn, opt, q.answer, q, effectiveType);
     optsDiv.appendChild(btn);
   });
   document.getElementById('next').style.display = 'none';
 }
 
-function selectAnswer(btn, chosen, correctAns, q) {
+function selectAnswer(btn, chosen, correctAns, q, effectiveType) {
   const buttons = document.querySelectorAll('.opt');
   buttons.forEach(b => b.onclick = null);
   buttons.forEach(b => {
@@ -374,14 +412,29 @@ function selectAnswer(btn, chosen, correctAns, q) {
   });
   const isCorrect = chosen === correctAns;
   if (isCorrect) score++;
+  const displayType = effectiveType || quizMode;
   results.push({
-    word: quizMode === 'context' ? q.sentence : q.word,
+    word: displayType === 'context' ? q.sentence : (q.sentence || q.word),
     chosen: chosen,
     correctAns: correctAns,
     isCorrect: isCorrect
   });
   document.getElementById('score').textContent = `Score: ${score}`;
   document.getElementById('next').style.display = 'inline-block';
+}
+
+  document.getElementById('score').textContent = `Score: ${score}`;
+  const optsDiv = document.getElementById('options');
+  optsDiv.innerHTML = '';
+  const shuffledOptions = shuffle([...q.options]);
+  shuffledOptions.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(btn, opt, q.answer, q);
+    optsDiv.appendChild(btn);
+  });
+  document.getElementById('next').style.display = 'none';
 }
 
 function nextQuestion() {
@@ -441,6 +494,7 @@ const QUIZ_ID = 'Area Studies 140E';
 function modeLabel(mode) {
   if (mode === 'context') return 'Context Quiz';
   if (mode === 'arabizi') return 'Arabizi Quiz';
+  if (mode === 'all') return 'All Questions';
   return 'Mini Quiz';
 }
 
