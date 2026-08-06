@@ -269,7 +269,7 @@
 
 <script>
 
-const QUIZ_ID = "Unit 6";
+const currentQuizId = () => quizData?.quizId || "Unit 6";
 
 let quizData = null;
 let QUIZ_MODES = {};
@@ -549,7 +549,7 @@ async function renderLeaderboard() {
   });
 }
 
-const QUIZ_ID = 'Unit 6';
+const currentQuizId = () => quizData?.quizId || "Unit 6";
 
 function modeLabel(mode) {
   return QUIZ_MODES[mode]?.label || mode;
@@ -571,7 +571,7 @@ async function saveScore() {
       score,
       total,
       pct,
-      quiz: QUIZ_ID,
+      quiz: currentQuizId(),
       mode: modeLabel(quizMode)
     })
   });
