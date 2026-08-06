@@ -441,10 +441,20 @@ function showQuestion() {
   document.getElementById("progress").textContent = `Question ${current + 1} of ${order.length}`;
   document.getElementById("barFill").style.width = `${((current + 1) / order.length) * 100}%`;
 
-  const wordEl = document.getElementById("word");
-  wordEl.textContent = question.word || question.sentence || "";
-  wordEl.style.direction = "ltr";
-  wordEl.style.fontSize = "1.6em";
+const wordEl = document.getElementById('word');
+wordEl.textContent = question.arabic;
+// removed the ltr/font-size overrides so the CSS rtl styling applies
+
+const optionsEl = document.getElementById('options');
+optionsEl.innerHTML = '';
+const correctText = question.choices[question.answer];
+shuffle(Object.values(question.choices)).forEach(optionText => {
+  const btn = document.createElement('button');
+  btn.className = 'opt';
+  btn.textContent = optionText;
+  btn.onclick = () => selectAnswer(btn, optionText, correctText, question);
+  optionsEl.appendChild(btn);
+});
 
   const optionsEl = document.getElementById("options");
   optionsEl.innerHTML = "";
@@ -472,7 +482,7 @@ function selectAnswer(button, selectedAnswer, correctAnswer, question) {
   else score++;
 
   results.push({
-    word: question.word || question.sentence || "",
+    word: question.arabic || question.sentence || "",
     chosen: selectedAnswer,
     correct: correctAnswer,
     isCorrect
