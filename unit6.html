@@ -269,53 +269,78 @@
 
 <script>
 
-const ch26Questions = [
-  {
-    q: "In a car accident context, which word means 'first medical help'?",
-    choices: ["treatment", "first aid", "help", "care"],
-    answer: 1
-  },
-  // more Chapter 26 items...
-];
-
-const ch27Questions = [
-  // Media / communication / politics items...
-];
-
-const ch28Questions = [
-];
-
-const ch29Questions = [
-];
-
-const ch30Questions = [
-];
-
 const QUIZ_ID = "Unit 6";
 
-const QUIZ_MODES = {
-  ch26: { label: "Chapter 26 Quiz", questions: ch26Questions },
-  ch27: { label: "Chapter 27 Quiz", questions: ch27Questions },
-  ch28: { label: "Chapter 28 Quiz", questions: ch28Questions },
-  ch29: { label: "Chapter 29 Quiz", questions: ch29Questions },
-  ch30: { label: "Chapter 30 Quiz", questions: ch30Questions },
-  all: {
-    label: "All Questions (Full Review)",
-    questions: [
-      ...ch26Questions,
-      ...ch27Questions,
-      ...ch28Questions,
-      ...ch29Questions,
-      ...ch30Questions
-    ]
-  }
-};
+let quizData = null;
+let QUIZ_MODES = {};
 
 let quizMode = "ch26";
 let order = [];
 let current = 0;
 let score = 0;
 let results = [];
+
+async function loadQuizData() {
+  try {
+    const response = await fetch("unit6.json");
+
+    if (!response.ok) {
+      throw new Error(`Could not load unit6.json: ${response.status}`);
+    }
+
+    quizData = await response.json();
+
+    QUIZ_MODES = {
+      ch26: {
+        label: quizData.chapters.ch26.label,
+        questions: quizData.chapters.ch26.questions
+      },
+
+      ch27: {
+        label: quizData.chapters.ch27.label,
+        questions: quizData.chapters.ch27.questions
+      },
+
+      ch28: {
+        label: quizData.chapters.ch28.label,
+        questions: quizData.chapters.ch28.questions
+      },
+
+      ch29: {
+        label: quizData.chapters.ch29.label,
+        questions: quizData.chapters.ch29.questions
+      },
+
+      ch30: {
+        label: quizData.chapters.ch30.label,
+        questions: quizData.chapters.ch30.questions
+      },
+
+      all: {
+        label: "All Questions (Full Review)",
+        questions: [
+          ...quizData.chapters.ch26.questions,
+          ...quizData.chapters.ch27.questions,
+          ...quizData.chapters.ch28.questions,
+          ...quizData.chapters.ch29.questions,
+          ...quizData.chapters.ch30.questions
+        ]
+      }
+    };
+
+    document.getElementById("modeSelect").style.display = "block";
+
+    await renderLeaderboard();
+  } catch (error) {
+    console.error("Quiz data failed to load:", error);
+
+    document.getElementById("modeSelect").innerHTML = `
+      <h2>Quiz could not load</h2>
+      <p>Make sure unit6.json is in the same folder as this HTML file.</p>
+      <p>${error.message}</p>
+    `;
+  }
+}
 
 function shuffle(array) {
   const out = [...array];
@@ -332,19 +357,43 @@ function showModeSelect() {
 }
 
 function setMode(mode) {
-  if (!QUIZ_MODES[mode]) return;
+  if (!quizData) {
+    console.warn("Quiz data has not loaded yet.");
+    return;
+  }
+
+  if (!QUIZ_MODES[mode]) {
+    console.error(`Unknown quiz mode: ${mode}`);
+    return;
+  }
+
   quizMode = mode;
   startQuiz();
 }
 
 function startQuiz() {
+  if (!quizData) {
+    console.warn("Quiz data has not loaded yet.");
+    return;
+  }
+
   const activeMode = QUIZ_MODES[quizMode];
-  if (!activeMode || !activeMode.questions.length) return;
+
+  if (!activeMode || !activeMode.questions.length) {
+    console.error(`No questions found for mode: ${quizMode}`);
+    return;
+  }
 
   document.getElementById("modeSelect").style.display = "none";
   document.getElementById("card").style.display = "block";
 
-  order = shuffle(Array.from({ length: activeMode.questions.length }, (_, i) => i));
+  order = shuffle(
+    Array.from(
+      { length: activeMode.questions.length },
+      (_, index) => index
+    )
+  );
+
   current = 0;
   score = 0;
   results = [];
@@ -361,7 +410,11 @@ function startQuiz() {
 
 function getCurrentQuestion() {
   const activeMode = QUIZ_MODES[quizMode];
-  if (!activeMode) return null;
+
+  if (!activeMode) {
+    return null;
+  }
+
   return activeMode.questions[order[current]];
 }
 
@@ -551,6 +604,8 @@ async function renderLeaderboard() {
     list.appendChild(li);
   });
 }
+
+document.addEventListener("DOMContentLoaded", loadQuizData);
 </script>
 </body>
 </html>
