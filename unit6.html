@@ -217,15 +217,34 @@
 </style>
 </head>
 <body>
-<h1>Area Studies 140E Quiz</h1>
+<h1>Unit 6 Vocabulary Quiz</h1>
   <div id="modeSelect">
-    <button class="primary" onclick="setMode('ch26')">Chapter 26 Quiz</button>
-    <button class="primary" onclick="setMode('ch27')">Chapter 27 Quiz</button>
-    <button class="primary" onclick="setMode('ch28')">Chapter 28 Quiz</button>
-    <button class="primary" onclick="setMode('ch29')">Chapter 29 Quiz</button>
-    <button class="primary" onclick="setMode('ch30')">Chapter 30 Quiz</button>
-    <button onclick="setMode('all')">All Chapters (Full Review)</button>
-  </div>
+  <h2>Select a Quiz Mode</h2>
+
+  <button class="primary" onclick="setMode('ch26')">
+    Chapter 26 Quiz
+  </button>
+
+  <button class="primary" onclick="setMode('ch27')">
+    Chapter 27 Quiz
+  </button>
+
+  <button class="primary" onclick="setMode('ch28')">
+    Chapter 28 Quiz
+  </button>
+
+  <button class="primary" onclick="setMode('ch29')">
+    Chapter 29 Quiz
+  </button>
+
+  <button class="primary" onclick="setMode('ch30')">
+    Chapter 30 Quiz
+  </button>
+
+  <button onclick="setMode('all')">
+    All Questions (Full Review)
+  </button>
+</div>
 <div id="card">
   <div id="progress"></div>
   <div id="bar"><div id="barFill"></div></div>
@@ -272,101 +291,119 @@ const ch29Questions = [
 const ch30Questions = [
 ];
 
-...
+const QUIZ_ID = "Unit 6";
+
+const QUIZ_MODES = {
+  ch26: {
+    label: "Chapter 26 Quiz",
+    questions: ch26Questions
+  },
+
+  ch27: {
+    label: "Chapter 27 Quiz",
+    questions: ch27Questions
+  },
+
+  ch28: {
+    label: "Chapter 28 Quiz",
+    questions: ch28Questions
+  },
+
+  ch29: {
+    label: "Chapter 29 Quiz",
+    questions: ch29Questions
+  },
+
+  ch30: {
+    label: "Chapter 30 Quiz",
+    questions: ch30Questions
+  },
+
+  all: {
+    label: "All Questions (Full Review)",
+    questions: [
+      ...ch26Questions,
+      ...ch27Questions,
+      ...ch28Questions,
+      ...ch29Questions,
+      ...ch30Questions
+    ]
+  }
+};
 
 let order = [];
 let current = 0;
 let score = 0;
 let results = [];
+let quizMode = "ch26";
 
-function shuffle(arr) {
-  for (let i = arr.length -1; i>0; i--) {
-    const j = Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]]=[arr[j],arr[i]];
+function shuffle(array) {
+  const shuffled = [...array];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  return arr;
-}
 
-let lastLength = 5;
-let quizMode = 'mini';
+  return shuffled;
+}
 
 function showModeSelect() {
-  document.getElementById('card').style.display = 'none';
-  document.getElementById('modeSelect').style.display = 'block';
+  document.getElementById("card").style.display = "none";
+  document.getElementById("modeSelect").style.display = "block";
 }
 
-function startQuiz(length) {
-  if (length) lastLength = length;
-  const activeLength = lastLength;
-  document.getElementById('modeSelect').style.display = 'none';
-  document.getElementById('card').style.display = 'block';
-  quizMode = 'mini';
-  order = shuffle([...Array(questions.length).keys()]).slice(0, Math.min(activeLength, questions.length));
-  current = 0;
-  score = 0;
-  results = [];
-  document.getElementById('final').textContent = '';
-  document.getElementById('review').innerHTML = '';
-  document.getElementById('restart').style.display = 'none';
-  document.getElementById('next').style.display = 'none';
-  showQuestion();
-}
-
-function startContextQuiz(length = 10) {
-  document.getElementById('modeSelect').style.display = 'none';
-  document.getElementById('card').style.display = 'block';
-  quizMode = 'context';
-  order = shuffle([...Array(contextQuestions.length).keys()]).slice(0, Math.min(length, contextQuestions.length));
-  current = 0;
-  score = 0;
-  results = [];
-  document.getElementById('final').textContent = '';
-  document.getElementById('review').innerHTML = '';
-  document.getElementById('restart').style.display = 'none';
-  document.getElementById('next').style.display = 'none';
-  showQuestion();
-}
-
-function startArabiziQuiz(length = 6) {
-  document.getElementById('modeSelect').style.display = 'none';
-  document.getElementById('card').style.display = 'block';
-  quizMode = 'arabizi';
-  order = shuffle([...Array(arabiziQuestions.length).keys()]).slice(0, Math.min(length, arabiziQuestions.length));
-  current = 0;
-  score = 0;
-  results = [];
-  document.getElementById('final').textContent = '';
-  document.getElementById('review').innerHTML = '';
-  document.getElementById('restart').style.display = 'none';
-  document.getElementById('next').style.display = 'none';
-  showQuestion();
-}
-
-function startAllQuiz(length) {
-  document.getElementById('modeSelect').style.display = 'none';
-  document.getElementById('card').style.display = 'block';
-  quizMode = 'all';
-  const totalLength = questions.length + contextQuestions.length + arabiziQuestions.length;
-  const activeLength = length ? Math.min(length, totalLength) : totalLength;
-  order = shuffle([...Array(totalLength).keys()]).slice(0, activeLength);
-  current = 0;
-  score = 0;
-  results = [];
-  document.getElementById('final').textContent = '';
-  document.getElementById('review').innerHTML = '';
-  document.getElementById('restart').style.display = 'none';
-  document.getElementById('next').style.display = 'none';
-  showQuestion();
-}
-
-  function getQuestionByGlobalIndex(idx) {
-  if (idx < questions.length) {
-    return { q: questions[idx], type: 'mini' };
-  } else if (idx < questions.length + contextQuestions.length) {
-    return { q: contextQuestions[idx - questions.length], type: 'context' };
-  } else {
-    return { q: arabiziQuestions[idx - questions.length - contextQuestions.length], type: 'arabizi' };
+function setMode(mode) {
+  if (!QUIZ_MODES[mode]) {
+    console.error(`Unknown quiz mode: ${mode}`);
+    return;
   }
+
+  quizMode = mode;
+  startQuiz();
+}
+
+function startQuiz() {
+  const activeMode = QUIZ_MODES[quizMode];
+
+  if (!activeMode || !activeMode.questions.length) {
+    console.error(`No questions found for mode: ${quizMode}`);
+    return;
+  }
+
+  document.getElementById("modeSelect").style.display = "none";
+  document.getElementById("card").style.display = "block";
+
+  order = shuffle(
+    Array.from({ length: activeMode.questions.length }, (_, index) => index)
+  );
+
+  current = 0;
+  score = 0;
+  results = [];
+
+  document.getElementById("final").textContent = "";
+  document.getElementById("review").innerHTML = "";
+  document.getElementById("restart").style.display = "none";
+  document.getElementById("next").style.display = "none";
+  document.getElementById("saveScoreArea").style.display = "none";
+
+  document.getElementById("score").textContent = "Score: 0";
+
+  showQuestion();
+}
+
+function getCurrentQuestion() {
+  const activeMode = QUIZ_MODES[quizMode];
+
+  if (!activeMode || !activeMode.questions.length) {
+    return null;
+  }
+
+  const questionIndex = order[current];
+
+  return activeMode.questions[questionIndex];
 }
 
 function showQuestion() {
@@ -375,72 +412,85 @@ function showQuestion() {
     return;
   }
 
-  let q, effectiveType;
-  if (quizMode === 'all') {
-    const result = getQuestionByGlobalIndex(order[current]);
-    q = result.q;
-    effectiveType = result.type;
-  } else {
-    const set = getCurrentSet();
-    q = set[order[current]];
-    effectiveType = quizMode;
+  const question = getCurrentQuestion();
+
+  if (!question) {
+    endQuiz();
+    return;
   }
 
-  document.getElementById('progress').textContent = `Question ${current+1} / ${order.length}`;
-  document.getElementById('barFill').style.width = `${(current/order.length)*100}%`;
+  const totalQuestions = order.length;
+  const questionNumber = current + 1;
 
-  const wordEl = document.getElementById('word');
-  if (effectiveType === 'context') {
-    wordEl.innerHTML = q.sentence;
-    wordEl.style.fontSize = '1.3em';
-    wordEl.style.direction = 'ltr';
-  } else if (effectiveType === 'arabizi') {
-    if (q.sentence) {
-      wordEl.innerHTML = q.sentence;
-      wordEl.style.fontSize = '1.3em';
-    } else {
-      wordEl.textContent = q.word;
-      wordEl.style.fontSize = '3em';
-    }
-    wordEl.style.direction = 'ltr';
-  } else {
-    wordEl.textContent = q.word;
-    wordEl.style.fontSize = '1.6em';
-    wordEl.style.direction = 'ltr';
-  }
+  document.getElementById("progress").textContent =
+    `Question ${questionNumber} of ${totalQuestions}`;
 
-  document.getElementById('score').textContent = `Score: ${score}`;
-  const optsDiv = document.getElementById('options');
-  optsDiv.innerHTML = '';
-  const shuffledOptions = shuffle([...q.options]);
-  shuffledOptions.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'opt';
-    btn.textContent = opt;
-    btn.onclick = () => selectAnswer(btn, opt, q.answer, q, effectiveType);
-    optsDiv.appendChild(btn);
+  document.getElementById("barFill").style.width =
+    `${(questionNumber / totalQuestions) * 100}%`;
+
+  const wordElement = document.getElementById("word");
+
+  wordElement.textContent = question.word || question.sentence || "";
+  wordElement.style.direction = "ltr";
+  wordElement.style.fontSize = "1.6em";
+
+  const optionsElement = document.getElementById("options");
+  optionsElement.innerHTML = "";
+
+  const shuffledOptions = shuffle(question.options);
+
+  shuffledOptions.forEach(option => {
+    const button = document.createElement("button");
+
+    button.className = "opt";
+    button.textContent = option;
+
+    button.onclick = () => {
+      selectAnswer(
+        button,
+        option,
+        question.answer,
+        question
+      );
+    };
+
+    optionsElement.appendChild(button);
   });
-  document.getElementById('next').style.display = 'none';
+
+  document.getElementById("next").style.display = "none";
 }
 
-function selectAnswer(btn, chosen, correctAns, q, effectiveType) {
-  const buttons = document.querySelectorAll('.opt');
-  buttons.forEach(b => b.onclick = null);
-  buttons.forEach(b => {
-    if (b.textContent === correctAns) b.classList.add('correct');
-    else if (b === btn) b.classList.add('wrong');
+function selectAnswer(button, selectedAnswer, correctAnswer, question) {
+  const optionButtons = document.querySelectorAll(".opt");
+
+  optionButtons.forEach(optionButton => {
+    optionButton.onclick = null;
+
+    if (optionButton.textContent === correctAnswer) {
+      optionButton.classList.add("correct");
+    }
   });
-  const isCorrect = chosen === correctAns;
-  if (isCorrect) score++;
-  const displayType = effectiveType || quizMode;
+
+  const isCorrect = selectedAnswer === correctAnswer;
+
+  if (!isCorrect) {
+    button.classList.add("wrong");
+  } else {
+    score++;
+  }
+
   results.push({
-    word: displayType === 'context' ? q.sentence : (q.sentence || q.word),
-    chosen: chosen,
-    correctAns: correctAns,
-    isCorrect: isCorrect
+    word: question.word || question.sentence || "",
+    chosen: selectedAnswer,
+    correct: correctAnswer,
+    isCorrect
   });
-  document.getElementById('score').textContent = `Score: ${score}`;
-  document.getElementById('next').style.display = 'inline-block';
+
+  document.getElementById("score").textContent =
+    `Score: ${score}`;
+
+  document.getElementById("next").style.display =
+    "inline-block";
 }
 
 function nextQuestion() {
@@ -449,27 +499,65 @@ function nextQuestion() {
 }
 
 function endQuiz() {
-  document.getElementById('progress').textContent = 'Quiz Complete!';
-  document.getElementById('barFill').style.width = '100%';
-  document.getElementById('word').textContent = '🎉';
-  document.getElementById('options').innerHTML = '';
-  document.getElementById('score').textContent = '';
-  document.getElementById('final').textContent = `Final Score: ${score} / ${order.length} (${Math.round(score/order.length*100)}%)`;
-  document.getElementById('restart').style.display = 'inline-block';
-  document.getElementById('next').style.display = 'none';
-  document.getElementById('saveScoreArea').style.display = 'inline-block';
+  const totalQuestions = order.length;
+  const percentage = totalQuestions
+    ? Math.round((score / totalQuestions) * 100)
+    : 0;
 
-  const reviewDiv = document.getElementById('review');
-  reviewDiv.innerHTML = '';
-  results.forEach(r => {
-    const item = document.createElement('div');
-    item.className = r.isCorrect ? 'review-item correct-item' : 'review-item wrong-item';
+  document.getElementById("progress").textContent =
+    "Quiz Complete!";
+
+  document.getElementById("barFill").style.width = "100%";
+  document.getElementById("word").textContent = "";
+  document.getElementById("options").innerHTML = "";
+
+  document.getElementById("score").textContent =
+    `Score: ${score} / ${totalQuestions}`;
+
+  document.getElementById("final").textContent =
+    `Final Score: ${score} / ${totalQuestions} (${percentage}%)`;
+
+  document.getElementById("restart").style.display =
+    "inline-block";
+
+  document.getElementById("next").style.display =
+    "none";
+
+  document.getElementById("saveScoreArea").style.display =
+    "block";
+
+  renderReview();
+}
+
+function renderReview() {
+  const reviewElement = document.getElementById("review");
+
+  reviewElement.innerHTML = "";
+
+  results.forEach(result => {
+    const item = document.createElement("div");
+
+    item.className = result.isCorrect
+      ? "review-item correct-item"
+      : "review-item wrong-item";
+
     item.innerHTML = `
-      <span class="review-word">${r.word}</span>
-      <span class="review-answer">Your answer: ${r.chosen}</span>
-      ${!r.isCorrect ? `<span class="review-correct">Correct: ${r.correctAns}</span>` : ''}
+      <span class="review-word">${result.word}</span>
+      <span class="review-answer">
+        Your answer: ${result.chosen}
+      </span>
+      ${
+        result.isCorrect
+          ? ""
+          : `
+            <span class="review-correct">
+              Correct answer: ${result.correct}
+            </span>
+          `
+      }
     `;
-    reviewDiv.appendChild(item);
+
+    reviewElement.appendChild(item);
   });
 }
 
@@ -495,27 +583,40 @@ async function renderLeaderboard() {
   });
 }
 
-const QUIZ_ID = 'Area Studies 140E';
+const QUIZ_ID = 'Unit 6';
 
 function modeLabel(mode) {
-  if (mode === 'context') return 'Context Quiz';
-  if (mode === 'arabizi') return 'Arabizi Quiz';
-  if (mode === 'all') return 'All Questions';
-  return 'Mini Quiz';
+  return QUIZ_MODES[mode]?.label || mode;
 }
 
 async function saveScore() {
-  const nameInput = document.getElementById('playerName');
-  const name = nameInput.value.trim() || 'Anonymous';
-  const pct = Math.round((score / order.length) * 100);
-  await fetch('/api/leaderboard', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, score, total: order.length, pct, quiz: QUIZ_ID, mode: modeLabel(quizMode) })
+  const nameInput = document.getElementById("playerName");
+  const name = nameInput.value.trim() || "Anonymous";
+  const total = order.length;
+  const percentage = total
+    ? Math.round((score / total) * 100)
+    : 0;
+
+  await fetch("/api/leaderboard", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name,
+      score,
+      total,
+      pct: percentage,
+      quiz: QUIZ_ID,
+      mode: modeLabel(quizMode)
+    })
   });
+
   await renderLeaderboard();
-  document.getElementById('saveScoreArea').style.display = 'inline-block';
-  nameInput.value = '';
+
+  nameInput.value = "";
+  document.getElementById("saveScoreArea").style.display =
+    "none";
 }
 
 document.getElementById('card').style.display = 'none';
