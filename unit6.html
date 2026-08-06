@@ -541,55 +541,40 @@ function modeLabel(mode) {
 }
 
 async function saveScore() {
-  const nameInput = document.getElementById("playerName");
-  const name = nameInput.value.trim() || "Anonymous";
+  const nameInput = document.getElementById('playerName');
+  const name = nameInput.value.trim() || 'Anonymous';
   const total = order.length;
   const pct = total ? Math.round((score / total) * 100) : 0;
-
-  await fetch("/api/leaderboard", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      name,
-      score,
-      total,
-      pct,
-      quiz: currentQuizId(),
-      mode: modeLabel(quizMode)
-    })
+  await fetch('/api/leaderboard', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, score, total, pct, quiz: currentQuizId, mode: modeLabel(quizMode) })
   });
-
-  nameInput.value = "";
-  document.getElementById("saveScoreArea").style.display = "none";
+  nameInput.value = '';
+  document.getElementById('saveScoreArea').style.display = 'none';
   await renderLeaderboard();
-}
+} // <-- this closing brace MUST be here, ending saveScore BEFORE renderLeaderboard starts
+
 async function renderLeaderboard() {
-  const res = await fetch("/api/leaderboard");
+  const res = await fetch('/api/leaderboard');
   const board = res.ok ? await res.json() : [];
-  const list = document.getElementById("leaderboardList");
-
-  list.innerHTML = "";
-
+  const list = document.getElementById('leaderboardList');
+  list.innerHTML = '';
   if (!Array.isArray(board) || board.length === 0) {
-    list.innerHTML = `<li style="list-style:none;color:#888;">No scores yet. Be the first!</li>`;
+    list.innerHTML = '<li style="list-style:none;color:#888">No scores yet. Be the first!</li>';
     return;
   }
-
   board.slice(0, 15).forEach(entry => {
-    const li = document.createElement("li");
-    const name = entry.name || "Anonymous";
-    const scoreText = entry.total != null ? `${entry.score}/${entry.total}` : `${entry.score}`;
-    const pctText = entry.pct != null ? ` (${entry.pct}%)` : "";
-    const quizTag = entry.quiz ? ` | ${entry.quiz}` : "";
-    const modeTag = entry.mode ? ` | ${entry.mode}` : "";
-
-    li.innerHTML = `<strong>${name}</strong> — ${scoreText}${pctText}<br><span style="font-size:0.8em;color:#555;">${quizTag}${modeTag}</span>`;
+    const li = document.createElement('li');
+    const name = entry.name || 'Anonymous';
+    const scoreText = entry.total != null ? `${entry.score}/${entry.total}` : entry.score;
+    const pctText = entry.pct != null ? ` (${entry.pct}%)` : '';
+    const quizTag = entry.quiz ? entry.quiz : '';
+    const modeTag = entry.mode ? ` · ${entry.mode}` : '';
+    li.innerHTML = `<strong>${name}</strong> — ${scoreText}${pctText}<br><span style="font-size:0.8em;color:#555">${quizTag}${modeTag}</span>`;
     list.appendChild(li);
   });
 }
-
 
 document.addEventListener("DOMContentLoaded", loadQuizData);
 </script>
