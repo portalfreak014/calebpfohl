@@ -294,31 +294,11 @@ const ch30Questions = [
 const QUIZ_ID = "Unit 6";
 
 const QUIZ_MODES = {
-  ch26: {
-    label: "Chapter 26 Quiz",
-    questions: ch26Questions
-  },
-
-  ch27: {
-    label: "Chapter 27 Quiz",
-    questions: ch27Questions
-  },
-
-  ch28: {
-    label: "Chapter 28 Quiz",
-    questions: ch28Questions
-  },
-
-  ch29: {
-    label: "Chapter 29 Quiz",
-    questions: ch29Questions
-  },
-
-  ch30: {
-    label: "Chapter 30 Quiz",
-    questions: ch30Questions
-  },
-
+  ch26: { label: "Chapter 26 Quiz", questions: ch26Questions },
+  ch27: { label: "Chapter 27 Quiz", questions: ch27Questions },
+  ch28: { label: "Chapter 28 Quiz", questions: ch28Questions },
+  ch29: { label: "Chapter 29 Quiz", questions: ch29Questions },
+  ch30: { label: "Chapter 30 Quiz", questions: ch30Questions },
   all: {
     label: "All Questions (Full Review)",
     questions: [
@@ -331,22 +311,19 @@ const QUIZ_MODES = {
   }
 };
 
+let quizMode = "ch26";
 let order = [];
 let current = 0;
 let score = 0;
 let results = [];
-let quizMode = "ch26";
 
 function shuffle(array) {
-  const shuffled = [...array];
-
-  for (let i = shuffled.length - 1; i > 0; i--) {
+  const out = [...array];
+  for (let i = out.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    [out[i], out[j]] = [out[j], out[i]];
   }
-
-  return shuffled;
+  return out;
 }
 
 function showModeSelect() {
@@ -355,30 +332,19 @@ function showModeSelect() {
 }
 
 function setMode(mode) {
-  if (!QUIZ_MODES[mode]) {
-    console.error(`Unknown quiz mode: ${mode}`);
-    return;
-  }
-
+  if (!QUIZ_MODES[mode]) return;
   quizMode = mode;
   startQuiz();
 }
 
 function startQuiz() {
   const activeMode = QUIZ_MODES[quizMode];
-
-  if (!activeMode || !activeMode.questions.length) {
-    console.error(`No questions found for mode: ${quizMode}`);
-    return;
-  }
+  if (!activeMode || !activeMode.questions.length) return;
 
   document.getElementById("modeSelect").style.display = "none";
   document.getElementById("card").style.display = "block";
 
-  order = shuffle(
-    Array.from({ length: activeMode.questions.length }, (_, index) => index)
-  );
-
+  order = shuffle(Array.from({ length: activeMode.questions.length }, (_, i) => i));
   current = 0;
   score = 0;
   results = [];
@@ -388,7 +354,6 @@ function startQuiz() {
   document.getElementById("restart").style.display = "none";
   document.getElementById("next").style.display = "none";
   document.getElementById("saveScoreArea").style.display = "none";
-
   document.getElementById("score").textContent = "Score: 0";
 
   showQuestion();
@@ -396,14 +361,8 @@ function startQuiz() {
 
 function getCurrentQuestion() {
   const activeMode = QUIZ_MODES[quizMode];
-
-  if (!activeMode || !activeMode.questions.length) {
-    return null;
-  }
-
-  const questionIndex = order[current];
-
-  return activeMode.questions[questionIndex];
+  if (!activeMode) return null;
+  return activeMode.questions[order[current]];
 }
 
 function showQuestion() {
@@ -413,71 +372,43 @@ function showQuestion() {
   }
 
   const question = getCurrentQuestion();
-
   if (!question) {
     endQuiz();
     return;
   }
 
-  const totalQuestions = order.length;
-  const questionNumber = current + 1;
+  document.getElementById("progress").textContent = `Question ${current + 1} of ${order.length}`;
+  document.getElementById("barFill").style.width = `${((current + 1) / order.length) * 100}%`;
 
-  document.getElementById("progress").textContent =
-    `Question ${questionNumber} of ${totalQuestions}`;
+  const wordEl = document.getElementById("word");
+  wordEl.textContent = question.word || question.sentence || "";
+  wordEl.style.direction = "ltr";
+  wordEl.style.fontSize = "1.6em";
 
-  document.getElementById("barFill").style.width =
-    `${(questionNumber / totalQuestions) * 100}%`;
+  const optionsEl = document.getElementById("options");
+  optionsEl.innerHTML = "";
 
-  const wordElement = document.getElementById("word");
-
-  wordElement.textContent = question.word || question.sentence || "";
-  wordElement.style.direction = "ltr";
-  wordElement.style.fontSize = "1.6em";
-
-  const optionsElement = document.getElementById("options");
-  optionsElement.innerHTML = "";
-
-  const shuffledOptions = shuffle(question.options);
-
-  shuffledOptions.forEach(option => {
-    const button = document.createElement("button");
-
-    button.className = "opt";
-    button.textContent = option;
-
-    button.onclick = () => {
-      selectAnswer(
-        button,
-        option,
-        question.answer,
-        question
-      );
-    };
-
-    optionsElement.appendChild(button);
+  shuffle(question.options).forEach(option => {
+    const btn = document.createElement("button");
+    btn.className = "opt";
+    btn.textContent = option;
+    btn.onclick = () => selectAnswer(btn, option, question.answer, question);
+    optionsEl.appendChild(btn);
   });
 
   document.getElementById("next").style.display = "none";
 }
 
 function selectAnswer(button, selectedAnswer, correctAnswer, question) {
-  const optionButtons = document.querySelectorAll(".opt");
-
-  optionButtons.forEach(optionButton => {
-    optionButton.onclick = null;
-
-    if (optionButton.textContent === correctAnswer) {
-      optionButton.classList.add("correct");
-    }
+  const buttons = document.querySelectorAll(".opt");
+  buttons.forEach(btn => {
+    btn.onclick = null;
+    if (btn.textContent === correctAnswer) btn.classList.add("correct");
   });
 
   const isCorrect = selectedAnswer === correctAnswer;
-
-  if (!isCorrect) {
-    button.classList.add("wrong");
-  } else {
-    score++;
-  }
+  if (!isCorrect) button.classList.add("wrong");
+  else score++;
 
   results.push({
     word: question.word || question.sentence || "",
@@ -486,11 +417,8 @@ function selectAnswer(button, selectedAnswer, correctAnswer, question) {
     isCorrect
   });
 
-  document.getElementById("score").textContent =
-    `Score: ${score}`;
-
-  document.getElementById("next").style.display =
-    "inline-block";
+  document.getElementById("score").textContent = `Score: ${score}`;
+  document.getElementById("next").style.display = "inline-block";
 }
 
 function nextQuestion() {
@@ -499,33 +427,18 @@ function nextQuestion() {
 }
 
 function endQuiz() {
-  const totalQuestions = order.length;
-  const percentage = totalQuestions
-    ? Math.round((score / totalQuestions) * 100)
-    : 0;
+  const total = order.length;
+  const pct = total ? Math.round((score / total) * 100) : 0;
 
-  document.getElementById("progress").textContent =
-    "Quiz Complete!";
-
+  document.getElementById("progress").textContent = "Quiz Complete!";
   document.getElementById("barFill").style.width = "100%";
   document.getElementById("word").textContent = "";
   document.getElementById("options").innerHTML = "";
-
-  document.getElementById("score").textContent =
-    `Score: ${score} / ${totalQuestions}`;
-
-  document.getElementById("final").textContent =
-    `Final Score: ${score} / ${totalQuestions} (${percentage}%)`;
-
-  document.getElementById("restart").style.display =
-    "inline-block";
-
-  document.getElementById("next").style.display =
-    "none";
-
-  document.getElementById("saveScoreArea").style.display =
-    "block";
-
+  document.getElementById("score").textContent = `Score: ${score} / ${total}`;
+  document.getElementById("final").textContent = `Final Score: ${score} / ${total} (${pct}%)`;
+  document.getElementById("restart").style.display = "inline-block";
+  document.getElementById("next").style.display = "none";
+  document.getElementById("saveScoreArea").style.display = "block";
   renderReview();
 }
 
@@ -593,9 +506,7 @@ async function saveScore() {
   const nameInput = document.getElementById("playerName");
   const name = nameInput.value.trim() || "Anonymous";
   const total = order.length;
-  const percentage = total
-    ? Math.round((score / total) * 100)
-    : 0;
+  const pct = total ? Math.round((score / total) * 100) : 0;
 
   await fetch("/api/leaderboard", {
     method: "POST",
@@ -606,21 +517,40 @@ async function saveScore() {
       name,
       score,
       total,
-      pct: percentage,
+      pct,
       quiz: QUIZ_ID,
       mode: modeLabel(quizMode)
     })
   });
 
-  await renderLeaderboard();
-
   nameInput.value = "";
-  document.getElementById("saveScoreArea").style.display =
-    "none";
+  document.getElementById("saveScoreArea").style.display = "none";
+  await renderLeaderboard();
 }
+async function renderLeaderboard() {
+  const res = await fetch("/api/leaderboard");
+  const board = res.ok ? await res.json() : [];
+  const list = document.getElementById("leaderboardList");
 
-document.getElementById('card').style.display = 'none';
-renderLeaderboard();
+  list.innerHTML = "";
+
+  if (!Array.isArray(board) || board.length === 0) {
+    list.innerHTML = `<li style="list-style:none;color:#888;">No scores yet. Be the first!</li>`;
+    return;
+  }
+
+  board.slice(0, 15).forEach(entry => {
+    const li = document.createElement("li");
+    const name = entry.name || "Anonymous";
+    const scoreText = entry.total != null ? `${entry.score}/${entry.total}` : `${entry.score}`;
+    const pctText = entry.pct != null ? ` (${entry.pct}%)` : "";
+    const quizTag = entry.quiz ? ` | ${entry.quiz}` : "";
+    const modeTag = entry.mode ? ` | ${entry.mode}` : "";
+
+    li.innerHTML = `<strong>${name}</strong> — ${scoreText}${pctText}<br><span style="font-size:0.8em;color:#555;">${quizTag}${modeTag}</span>`;
+    list.appendChild(li);
+  });
+}
 </script>
 </body>
 </html>
