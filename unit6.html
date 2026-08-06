@@ -281,11 +281,17 @@ let score = 0;
 let results = [];
 
 async function loadQuizData() {
+  const dataUrl = "./unit6.json";
+
   try {
-    const response = await fetch("unit6.json");
+    const response = await fetch(dataUrl, {
+      cache: "no-store"
+    });
 
     if (!response.ok) {
-      throw new Error(`Could not load unit6.json: ${response.status}`);
+      throw new Error(
+        `Could not load ${dataUrl}: HTTP ${response.status}`
+      );
     }
 
     quizData = await response.json();
@@ -335,12 +341,14 @@ async function loadQuizData() {
     console.error("Quiz data failed to load:", error);
 
     document.getElementById("modeSelect").innerHTML = `
-      <h2>Quiz could not load</h2>
-      <p>Make sure unit6.json is in the same folder as this HTML file.</p>
+      <h2>Quiz data failed to load</h2>
+      <p>Check that unit6.json was deployed beside unit6.html.</p>
       <p>${error.message}</p>
     `;
   }
 }
+
+document.addEventListener("DOMContentLoaded", loadQuizData);
 
 function shuffle(array) {
   const out = [...array];
