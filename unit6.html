@@ -553,7 +553,7 @@ async function saveScore() {
   nameInput.value = '';
   document.getElementById('saveScoreArea').style.display = 'none';
   await renderLeaderboard();
-} // <-- this closing brace MUST be here, ending saveScore BEFORE renderLeaderboard starts
+}
 
 async function renderLeaderboard() {
   const res = await fetch('/api/leaderboard');
@@ -574,7 +574,6 @@ async function renderLeaderboard() {
     li.innerHTML = `<strong>${name}</strong> — ${scoreText}${pctText}<br><span style="font-size:0.8em;color:#555">${quizTag}${modeTag}</span>`;
     list.appendChild(li);
   });
-}
 }
 
 document.addEventListener("DOMContentLoaded", loadQuizData);
