@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -7,7 +8,7 @@
 <style>
   body {
     font-family: 'Noto Sans', 'Noto Sans Arabic', sans-serif;
-    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -17,11 +18,8 @@
     padding: 20px;
   }
   h1 { margin-top: 10px; text-shadow: 2px 2px 4px #000; }
-  
-  #card { 
-    display: none; 
-  }
-  #card {
+  #card { display: none; }
+  #card, #modeSelect, #leaderboardCard {
     background: #fff;
     color: #222;
     border-radius: 16px;
@@ -34,217 +32,75 @@
     margin-bottom: 25px;
   }
   @media (max-width: 480px) {
-  #card {
-    width: calc(100% - 20px);
-    padding: 20px;
-    border-radius: 12px;
+    #card, #modeSelect, #leaderboardCard { width: calc(100% - 20px); padding: 20px; border-radius: 12px; }
+    body { padding: 10px; }
   }
-  body { padding: 10px; }
-}
-
-@media (min-width: 900px) {
-  #card {
-    max-width: 700px;
-    padding: 40px;
+  @media (min-width: 900px) {
+    #card, #modeSelect, #leaderboardCard { max-width: 700px; padding: 40px; }
   }
-}
-  #word {
-    font-family: 'Noto Sans Arabic', sans-serif;
-    font-size: 3em;
-    direction: rtl;
-    margin: 10px 0 25px;
-    color: #1e3c72;
-    font-weight: bold;
-  }
+  #word { font-family: 'Noto Sans Arabic', sans-serif; font-size: 3em; direction: rtl; margin: 10px 0 25px; color: #1e3c72; font-weight: bold; }
   .opt {
-    display: block;
-    width: 100%;
-    margin: 8px 0;
-    padding: 14px;
-    font-size: 1.1em;
-    border: 2px solid #1e3c72;
-    border-radius: 10px;
-    background: #f0f4ff;
-    cursor: pointer;
-    transition: .2s;
+    display: block; width: 100%; margin: 8px 0; padding: 14px; font-size: 1.1em;
+    border: 2px solid #1e3c72; border-radius: 10px; background: #f0f4ff; cursor: pointer; transition: .2s;
   }
   .opt:hover { background: #dbe4ff; }
-  .correct { background: #4caf50 !important; color: #fff; border-color:#4caf50; }
-  .wrong { background: #e53935 !important; color: #fff; border-color:#e53935; }
+  .correct { background: #4caf50 !important; color: #fff; border-color: #4caf50; }
+  .wrong { background: #e53935 !important; color: #fff; border-color: #e53935; }
   #progress { margin-bottom: 15px; font-size: 1.1em; }
   #score { margin-top: 15px; font-size: 1.2em; font-weight: bold; }
   #next {
-    margin-top: 20px;
-    padding: 10px 25px;
-    border: none;
-    border-radius: 8px;
-    background: #1e3c72;
-    color: #fff;
-    font-size: 1em;
-    cursor: pointer;
-    display: none;
+    margin-top: 20px; padding: 10px 25px; border: none; border-radius: 8px;
+    background: #1e3c72; color: #fff; font-size: 1em; cursor: pointer; display: none;
   }
   #restart {
-    margin-top: 15px;
-    padding: 10px 25px;
-    border: none;
-    border-radius: 8px;
-    background: #ff9800;
-    color: #fff;
-    font-size: 1em;
-    cursor: pointer;
-    display: none;
+    margin-top: 15px; padding: 10px 25px; border: none; border-radius: 8px;
+    background: #ff9800; color: #fff; font-size: 1em; cursor: pointer; display: none;
   }
   #final { font-size: 1.5em; margin-top: 10px; }
-  #bar {
-    width: 100%;
-    background: #ffffff33;
-    border-radius: 8px;
-    height: 10px;
-    margin-bottom: 20px;
-    overflow: hidden;
-  }
-  #barFill {
-    height: 100%;
-    background: #4caf50;
-    width: 0%;
-    transition: width .3s;
-  }
+  #bar { width: 100%; background: #ffffff33; border-radius: 8px; height: 10px; margin-bottom: 20px; overflow: hidden; }
+  #barFill { height: 100%; background: #4caf50; width: 0; transition: width .3s; }
   #playerName {
-  padding: 10px;
-  border: 2px solid #1e3c72;
-  border-radius: 8px;
-  font-size: 1em;
-  margin-right: 8px;
-  width: 60%;
-}
-#saveScore {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  background: #4caf50;
-  color: #fff;
-  font-size: 1em;
-  cursor: pointer;
-}
-#saveScoreArea { margin-top: 15px; }
-  #modeSelect {
-  background: #fff;
-  color: #222;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.4);
-  padding: 30px;
-  max-width: 600px;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
-  margin-bottom: 25px;
-}
-#modeSelect h2 {
-  margin-top: 0;
-  color: #1e3c72;
-}
-#modeSelect button {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 14px;
-  font-size: 1.1em;
-  border: 2px solid #1e3c72;
-  border-radius: 10px;
-  background: #f0f4ff;
-  color: #1e3c72;
-  cursor: pointer;
-  transition: .2s;
-}
-#modeSelect button:hover {
-  background: #dbe4ff;
-}
-#leaderboardList {
-  list-style: none;
-  padding: 0;
-  text-align: left;
-}
-#leaderboardList li {
-  background: #f0f4ff;
-  border: 2px solid #1e3c72;
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin: 8px 0;
-  font-size: 1.05em;
-}
-  #leaderboardCard {
-  background: #fff;
-  color: #222;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.4);
-  padding: 30px;
-  max-width: 600px;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
-  margin-bottom: 25px;
-}
-#clearBoard {
-  margin-top: 15px;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 8px;
-  background: #e53935;
-  color: #fff;
-  font-size: 1em;
-  cursor: pointer;
-}
-  #review {
-  margin-top: 20px;
-  text-align: left;
-  max-height: 400px;
-  overflow-y: auto;
-}
-.review-item {
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin: 8px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.correct-item { background: #e8f5e9; border-left: 5px solid #4caf50; }
-.wrong-item { background: #ffebee; border-left: 5px solid #e53935; }
-.review-word { font-size: 1.4em; direction: rtl; font-weight: bold; color: #1e3c72; }
-.review-answer { font-size: 0.95em; color: #444; }
-.review-correct { font-size: 0.95em; color: #c62828; font-weight: bold; }
+    padding: 10px; border: 2px solid #1e3c72; border-radius: 8px; font-size: 1em; margin-right: 8px; width: 60%;
+  }
+  #saveScore {
+    padding: 10px 20px; border: none; border-radius: 8px; background: #4caf50; color: #fff; font-size: 1em; cursor: pointer;
+  }
+  #saveScoreArea { margin-top: 15px; }
+  #modeSelect h2 { margin-top: 0; color: #1e3c72; }
+  #modeSelect button {
+    display: block; width: 100%; margin: 10px 0; padding: 14px; font-size: 1.1em;
+    border: 2px solid #1e3c72; border-radius: 10px; background: #f0f4ff; color: #1e3c72; cursor: pointer; transition: .2s;
+  }
+  #modeSelect button:hover { background: #dbe4ff; }
+  #leaderboardList { list-style: none; padding: 0; text-align: left; }
+  #leaderboardList li {
+    background: #f0f4ff; border: 2px solid #1e3c72; border-radius: 8px; padding: 10px 14px; margin: 8px 0; font-size: 1.05em;
+  }
+  #clearBoard {
+    margin-top: 15px; padding: 10px 25px; border: none; border-radius: 8px; background: #e53935; color: #fff; font-size: 1em; cursor: pointer;
+  }
+  #review { margin-top: 20px; text-align: left; max-height: 400px; overflow-y: auto; }
+  .review-item { border-radius: 10px; padding: 12px 16px; margin: 8px 0; display: flex; flex-direction: column; gap: 4px; }
+  .correct-item { background: #e8f5e9; border-left: 5px solid #4caf50; }
+  .wrong-item { background: #ffebee; border-left: 5px solid #e53935; }
+  .review-word { font-size: 1.4em; direction: rtl; font-weight: bold; color: #1e3c72; }
+  .review-answer { font-size: 0.95em; color: #444; }
+  .review-correct { font-size: 0.95em; color: #c62828; font-weight: bold; }
 </style>
 </head>
 <body>
 <h1>Unit 6 Vocabulary Quiz</h1>
-  <div id="modeSelect">
+
+<div id="modeSelect">
   <h2>Select a Quiz Mode</h2>
-
-  <button class="primary" onclick="setMode('ch26')">
-    Chapter 26 Quiz
-  </button>
-
-  <button class="primary" onclick="setMode('ch27')">
-    Chapter 27 Quiz
-  </button>
-
-  <button class="primary" onclick="setMode('ch28')">
-    Chapter 28 Quiz
-  </button>
-
-  <button class="primary" onclick="setMode('ch29')">
-    Chapter 29 Quiz
-  </button>
-
-  <button class="primary" onclick="setMode('ch30')">
-    Chapter 30 Quiz
-  </button>
-
-  <button onclick="setMode('all')">
-    All Questions (Full Review)
-  </button>
+  <button class="primary" onclick="setMode('ch26')">Chapter 26 Quiz</button>
+  <button class="primary" onclick="setMode('ch27')">Chapter 27 Quiz</button>
+  <button class="primary" onclick="setMode('ch28')">Chapter 28 Quiz</button>
+  <button class="primary" onclick="setMode('ch29')">Chapter 29 Quiz</button>
+  <button class="primary" onclick="setMode('ch30')">Chapter 30 Quiz</button>
+  <button onclick="setMode('all')">All Questions (Full Review)</button>
 </div>
+
 <div id="card">
   <div id="progress"></div>
   <div id="bar"><div id="barFill"></div></div>
@@ -252,78 +108,46 @@
   <div id="options"></div>
   <div id="score"></div>
   <div id="final"></div>
-<div id="review"></div>
+  <div id="review"></div>
   <button id="next" onclick="nextQuestion()">Next ▶</button>
   <button id="restart" onclick="startQuiz()">Restart Quiz 🔁</button>
   <button id="changeMode" onclick="showModeSelect()">Change Mode 🔄</button>
-  <div id="saveScoreArea" style="display:none;">
+  <div id="saveScoreArea" style="display:none">
     <input type="text" id="playerName" placeholder="Enter your name (optional)">
     <button id="saveScore" onclick="saveScore()">Save Score 💾</button>
   </div>
 </div>
-    <div id="leaderboardCard">
-      <h2>Leaderboard 🏆</h2>
-        <ul id="leaderboardList"></ul>
-  <!-- <button id="clearBoard" onclick="clearLeaderboard()">Clear Leaderboard 🗑️</button> -->
-    </div>
+
+<div id="leaderboardCard">
+  <h2>Leaderboard 🏆</h2>
+  <ul id="leaderboardList"></ul>
+  <!-- <button id="clearBoard" onclick="clearLeaderboard()">Clear Leaderboard</button> -->
+</div>
 
 <script>
-
-const currentQuizId = () => quizData?.quizId || "Unit 6";
-
+const currentQuizId = 'Unit 6';
 let quizData = null;
-let QUIZ_MODES = {};
-
-let quizMode = "ch26";
+let QUIZMODES = {};
+let quizMode = 'ch26';
 let order = [];
 let current = 0;
 let score = 0;
 let results = [];
 
 async function loadQuizData() {
-  const dataUrl = "./unit6.json";
-
+  const dataUrl = './unit6.json';
   try {
-    const response = await fetch(dataUrl, {
-      cache: "no-store"
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Could not load ${dataUrl}: HTTP ${response.status}`
-      );
-    }
-
+    const response = await fetch(dataUrl, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`Could not load ${dataUrl}: HTTP ${response.status}`);
     quizData = await response.json();
-
-    QUIZ_MODES = {
-      ch26: {
-        label: quizData.chapters.ch26.label,
-        questions: quizData.chapters.ch26.questions
-      },
-
-      ch27: {
-        label: quizData.chapters.ch27.label,
-        questions: quizData.chapters.ch27.questions
-      },
-
-      ch28: {
-        label: quizData.chapters.ch28.label,
-        questions: quizData.chapters.ch28.questions
-      },
-
-      ch29: {
-        label: quizData.chapters.ch29.label,
-        questions: quizData.chapters.ch29.questions
-      },
-
-      ch30: {
-        label: quizData.chapters.ch30.label,
-        questions: quizData.chapters.ch30.questions
-      },
-
+    QUIZMODES = {
+      ch26: { label: quizData.chapters.ch26.label, questions: quizData.chapters.ch26.questions },
+      ch27: { label: quizData.chapters.ch27.label, questions: quizData.chapters.ch27.questions },
+      ch28: { label: quizData.chapters.ch28.label, questions: quizData.chapters.ch28.questions },
+      ch29: { label: quizData.chapters.ch29.label, questions: quizData.chapters.ch29.questions },
+      ch30: { label: quizData.chapters.ch30.label, questions: quizData.chapters.ch30.questions },
       all: {
-        label: "All Questions (Full Review)",
+        label: 'All Questions (Full Review)',
         questions: [
           ...quizData.chapters.ch26.questions,
           ...quizData.chapters.ch27.questions,
@@ -333,22 +157,18 @@ async function loadQuizData() {
         ]
       }
     };
-
-    document.getElementById("modeSelect").style.display = "block";
-
+    document.getElementById('modeSelect').style.display = 'block';
     await renderLeaderboard();
   } catch (error) {
-    console.error("Quiz data failed to load:", error);
-
-    document.getElementById("modeSelect").innerHTML = `
+    console.error('Quiz data failed to load', error);
+    document.getElementById('modeSelect').innerHTML = `
       <h2>Quiz data failed to load</h2>
       <p>Check that unit6.json was deployed beside unit6.html.</p>
       <p>${error.message}</p>
     `;
   }
 }
-
-document.addEventListener("DOMContentLoaded", loadQuizData);
+document.addEventListener('DOMContentLoaded', loadQuizData);
 
 function shuffle(array) {
   const out = [...array];
@@ -360,122 +180,74 @@ function shuffle(array) {
 }
 
 function showModeSelect() {
-  document.getElementById("card").style.display = "none";
-  document.getElementById("modeSelect").style.display = "block";
+  document.getElementById('card').style.display = 'none';
+  document.getElementById('modeSelect').style.display = 'block';
 }
 
 function setMode(mode) {
-  if (!quizData) {
-    console.warn("Quiz data has not loaded yet.");
-    return;
-  }
-
-  if (!QUIZ_MODES[mode]) {
-    console.error(`Unknown quiz mode: ${mode}`);
-    return;
-  }
-
+  if (!quizData) { console.warn('Quiz data has not loaded yet.'); return; }
+  if (!QUIZMODES[mode]) { console.error('Unknown quiz mode', mode); return; }
   quizMode = mode;
   startQuiz();
 }
 
 function startQuiz() {
-  if (!quizData) {
-    console.warn("Quiz data has not loaded yet.");
-    return;
-  }
-
-  const activeMode = QUIZ_MODES[quizMode];
-
-  if (!activeMode || !activeMode.questions.length) {
-    console.error(`No questions found for mode: ${quizMode}`);
-    return;
-  }
-
-  document.getElementById("modeSelect").style.display = "none";
-  document.getElementById("card").style.display = "block";
-
-  order = shuffle(
-    Array.from(
-      { length: activeMode.questions.length },
-      (_, index) => index
-    )
-  );
-
+  if (!quizData) { console.warn('Quiz data has not loaded yet.'); return; }
+  const activeMode = QUIZMODES[quizMode];
+  if (!activeMode || !activeMode.questions.length) { console.error('No questions found for mode', quizMode); return; }
+  document.getElementById('modeSelect').style.display = 'none';
+  document.getElementById('card').style.display = 'block';
+  order = shuffle(Array.from({ length: activeMode.questions.length }, (_, index) => index));
   current = 0;
   score = 0;
   results = [];
-
-  document.getElementById("final").textContent = "";
-  document.getElementById("review").innerHTML = "";
-  document.getElementById("restart").style.display = "none";
-  document.getElementById("next").style.display = "none";
-  document.getElementById("saveScoreArea").style.display = "none";
-  document.getElementById("score").textContent = "Score: 0";
-
+  document.getElementById('final').textContent = '';
+  document.getElementById('review').innerHTML = '';
+  document.getElementById('restart').style.display = 'none';
+  document.getElementById('next').style.display = 'none';
+  document.getElementById('saveScoreArea').style.display = 'none';
+  document.getElementById('score').textContent = 'Score: 0';
   showQuestion();
 }
 
 function getCurrentQuestion() {
-  const activeMode = QUIZ_MODES[quizMode];
-
-  if (!activeMode) {
-    return null;
-  }
-
+  const activeMode = QUIZMODES[quizMode];
+  if (!activeMode) return null;
   return activeMode.questions[order[current]];
 }
 
 function showQuestion() {
-  if (current >= order.length) {
-    endQuiz();
-    return;
-  }
-
+  if (current >= order.length) { endQuiz(); return; }
   const question = getCurrentQuestion();
-  if (!question) {
-    endQuiz();
-    return;
-  }
-
-  document.getElementById("progress").textContent = `Question ${current + 1} of ${order.length}`;
-  document.getElementById("barFill").style.width = `${((current + 1) / order.length) * 100}%`;
-
-const wordEl = document.getElementById('word');
-wordEl.textContent = question.arabic;
-// removed the ltr/font-size overrides so the CSS rtl styling applies
-
-const optionsEl = document.getElementById('options');
-optionsEl.innerHTML = '';
-const correctText = question.choices[question.answer];
-shuffle(Object.values(question.choices)).forEach(optionText => {
-  const btn = document.createElement('button');
-  btn.className = 'opt';
-  btn.textContent = optionText;
-  btn.onclick = () => selectAnswer(btn, optionText, correctText, question);
-  optionsEl.appendChild(btn);
-});
+  if (!question) { endQuiz(); return; }
+  document.getElementById('progress').textContent = `Question ${current + 1} of ${order.length}`;
+  document.getElementById('barFill').style.width = `${((current + 1) / order.length) * 100}%`;
+  const wordEl = document.getElementById('word');
+  wordEl.textContent = question.arabic;
+  const optionsEl = document.getElementById('options');
+  optionsEl.innerHTML = '';
+  const correctText = question.choices[question.answer];
+  shuffle(Object.values(question.choices)).forEach(optionText => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = optionText;
+    btn.onclick = () => selectAnswer(btn, optionText, correctText, question);
+    optionsEl.appendChild(btn);
+  });
+}
 
 function selectAnswer(button, selectedAnswer, correctAnswer, question) {
-  const buttons = document.querySelectorAll(".opt");
+  const buttons = document.querySelectorAll('.opt');
   buttons.forEach(btn => {
     btn.onclick = null;
-    if (btn.textContent === correctAnswer) btn.classList.add("correct");
+    if (btn.textContent === correctAnswer) btn.classList.add('correct');
   });
-
   const isCorrect = selectedAnswer === correctAnswer;
-  if (!isCorrect) button.classList.add("wrong");
+  if (!isCorrect) button.classList.add('wrong');
   else score++;
-
-  results.push({
-    word: question.arabic || question.sentence || "",
-    chosen: selectedAnswer,
-    correct: correctAnswer,
-    isCorrect
-  });
-
-  document.getElementById("score").textContent = `Score: ${score}`;
-  document.getElementById("next").style.display = "inline-block";
+  results.push({ word: question.arabic, chosen: selectedAnswer, correct: correctAnswer, isCorrect });
+  document.getElementById('score').textContent = `Score: ${score}`;
+  document.getElementById('next').style.display = 'inline-block';
 }
 
 function nextQuestion() {
@@ -486,47 +258,29 @@ function nextQuestion() {
 function endQuiz() {
   const total = order.length;
   const pct = total ? Math.round((score / total) * 100) : 0;
-
-  document.getElementById("progress").textContent = "Quiz Complete!";
-  document.getElementById("barFill").style.width = "100%";
-  document.getElementById("word").textContent = "";
-  document.getElementById("options").innerHTML = "";
-  document.getElementById("score").textContent = `Score: ${score} / ${total}`;
-  document.getElementById("final").textContent = `Final Score: ${score} / ${total} (${pct}%)`;
-  document.getElementById("restart").style.display = "inline-block";
-  document.getElementById("next").style.display = "none";
-  document.getElementById("saveScoreArea").style.display = "block";
+  document.getElementById('progress').textContent = 'Quiz Complete!';
+  document.getElementById('barFill').style.width = '100%';
+  document.getElementById('word').textContent = '';
+  document.getElementById('options').innerHTML = '';
+  document.getElementById('score').textContent = `Score: ${score}/${total}`;
+  document.getElementById('final').textContent = `Final Score: ${score}/${total} (${pct}%)`;
+  document.getElementById('restart').style.display = 'inline-block';
+  document.getElementById('next').style.display = 'none';
+  document.getElementById('saveScoreArea').style.display = 'block';
   renderReview();
 }
 
 function renderReview() {
-  const reviewElement = document.getElementById("review");
-
-  reviewElement.innerHTML = "";
-
+  const reviewElement = document.getElementById('review');
+  reviewElement.innerHTML = '';
   results.forEach(result => {
-    const item = document.createElement("div");
-
-    item.className = result.isCorrect
-      ? "review-item correct-item"
-      : "review-item wrong-item";
-
+    const item = document.createElement('div');
+    item.className = result.isCorrect ? 'review-item correct-item' : 'review-item wrong-item';
     item.innerHTML = `
       <span class="review-word">${result.word}</span>
-      <span class="review-answer">
-        Your answer: ${result.chosen}
-      </span>
-      ${
-        result.isCorrect
-          ? ""
-          : `
-            <span class="review-correct">
-              Correct answer: ${result.correct}
-            </span>
-          `
-      }
+      <span class="review-answer">Your answer: ${result.chosen}</span>
+      ${result.isCorrect ? '' : `<span class="review-correct">Correct answer: ${result.correct}</span>`}
     `;
-
     reviewElement.appendChild(item);
   });
 }
@@ -537,7 +291,7 @@ async function loadLeaderboard() {
 }
 
 function modeLabel(mode) {
-  return QUIZ_MODES[mode]?.label || mode;
+  return (QUIZMODES[mode] && QUIZMODES[mode].label) || mode;
 }
 
 async function saveScore() {
@@ -571,12 +325,10 @@ async function renderLeaderboard() {
     const pctText = entry.pct != null ? ` (${entry.pct}%)` : '';
     const quizTag = entry.quiz ? entry.quiz : '';
     const modeTag = entry.mode ? ` · ${entry.mode}` : '';
-    li.innerHTML = `<strong>${name}</strong> — ${scoreText}${pctText}<br><span style="font-size:0.8em;color:#555">${quizTag}${modeTag}</span>`;
+    li.innerHTML = `<strong>${name}</strong> ${scoreText}${pctText}<br><span style="font-size:0.8em;color:#555">${quizTag}${modeTag}</span>`;
     list.appendChild(li);
   });
 }
-
-document.addEventListener("DOMContentLoaded", loadQuizData);
 </script>
 </body>
 </html>
