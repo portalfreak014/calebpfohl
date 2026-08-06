@@ -456,20 +456,6 @@ shuffle(Object.values(question.choices)).forEach(optionText => {
   optionsEl.appendChild(btn);
 });
 
-  const optionsEl = document.getElementById("options");
-  optionsEl.innerHTML = "";
-
-  shuffle(question.options).forEach(option => {
-    const btn = document.createElement("button");
-    btn.className = "opt";
-    btn.textContent = option;
-    btn.onclick = () => selectAnswer(btn, option, question.answer, question);
-    optionsEl.appendChild(btn);
-  });
-
-  document.getElementById("next").style.display = "none";
-}
-
 function selectAnswer(button, selectedAnswer, correctAnswer, question) {
   const buttons = document.querySelectorAll(".opt");
   buttons.forEach(btn => {
@@ -602,6 +588,7 @@ async function renderLeaderboard() {
     li.innerHTML = `<strong>${name}</strong> — ${scoreText}${pctText}<br><span style="font-size:0.8em;color:#555;">${quizTag}${modeTag}</span>`;
     list.appendChild(li);
   });
+}
 }
 
 document.addEventListener("DOMContentLoaded", loadQuizData);
