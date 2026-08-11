@@ -350,6 +350,18 @@ function startAllQuiz(length) {
   }
 }
 
+  function getCurrentSet() {
+  if (quizMode === 'mini') {
+    return questions;          // main mini-quiz questions
+  } else if (quizMode === 'context') {
+    return contextQuestions;   // context quiz questions
+  } else if (quizMode === 'arabizi') {
+    return arabiziQuestions;   // arabizi quiz questions
+  } else {
+    return questions;          // default / fallback
+  }
+}
+
 function showQuestion() {
   if (current >= order.length) {
     endQuiz();
