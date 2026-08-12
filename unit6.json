@@ -2,627 +2,73 @@
   "quizId": "Unit 6",
   "title": "Unit 6 Vocabulary Quiz",
   "chapters": {
-    "ch26": {
-      "label": "Chapter 26 Quiz",
-      "questions": [
-        {
-          "number": 1,
-          "arabic": "إسعافات أولية",
-          "choices": {
-            "A": "treatment",
-            "B": "first aid",
-            "C": "help",
-            "D": "care"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 2,
-          "arabic": "إطار",
-          "choices": {
-            "A": "wheel",
-            "B": "tire",
-            "C": "part",
-            "D": "frame"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 3,
-          "arabic": "بالغة",
-          "choices": {
-            "A": "small",
-            "B": "extreme",
-            "C": "large",
-            "D": "serious"
-          },
-          "answer": "D"
-        },
-        {
-          "number": 4,
-          "arabic": "تأثير",
-          "choices": {
-            "A": "result",
-            "B": "effect",
-            "C": "cause",
-            "D": "impact"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 5,
-          "arabic": "خطر",
-          "choices": {
-            "A": "safe",
-            "B": "dangerous",
-            "C": "risky",
-            "D": "harmful"
-          },
-          "answer": "C"
-        },
-        {
-          "number": 6,
-          "arabic": "خمر",
-          "choices": {
-            "A": "drink",
-            "B": "liquor",
-            "C": "beverage",
-            "D": "liquid"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 7,
-          "arabic": "سيطرة",
-          "choices": {
-            "A": "control",
-            "B": "power",
-            "C": "influence",
-            "D": "force"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 8,
-          "arabic": "ضرر",
-          "choices": {
-            "A": "damage",
-            "B": "loss",
-            "C": "harm",
-            "D": "injury"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 9,
-          "arabic": "طفيف",
-          "choices": {
-            "A": "minor",
-            "B": "slight",
-            "C": "small",
-            "D": "light"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 10,
-          "arabic": "مؤخرة",
-          "choices": {
-            "A": "front",
-            "B": "rear",
-            "C": "side",
-            "D": "back"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 11,
-          "arabic": "مخدر",
-          "choices": {
-            "A": "drug",
-            "B": "narcotic",
-            "C": "medicine",
-            "D": "substance"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 12,
-          "arabic": "مسؤول",
-          "choices": {
-            "A": "person",
-            "B": "responsible/accountable",
-            "C": "leader",
-            "D": "manager"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 13,
-          "arabic": "مفاجئ",
-          "choices": {
-            "A": "sudden",
-            "B": "quick",
-            "C": "fast",
-            "D": "unexpected"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 14,
-          "arabic": "ألم معوي",
-          "choices": {
-            "A": "pain",
-            "B": "intestinal pain",
-            "C": "stomach",
-            "D": "illness"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 15,
-          "arabic": "بطن",
-          "choices": {
-            "A": "stomach",
-            "B": "abdomen",
-            "C": "body",
-            "D": "part"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 16,
-          "arabic": "حبوب مهدئة",
-          "choices": {
-            "A": "medicine",
-            "B": "tranquilizer/pain pills",
-            "C": "tablets",
-            "D": "drugs"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 17,
-          "arabic": "شديد",
-          "choices": {
-            "A": "strong",
-            "B": "severe",
-            "C": "heavy",
-            "D": "extreme"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 18,
-          "arabic": "صداع",
-          "choices": {
-            "A": "headache",
-            "B": "pain",
-            "C": "illness",
-            "D": "disease"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 19,
-          "arabic": "ضغط الدم",
-          "choices": {
-            "A": "blood pressure",
-            "B": "pressure",
-            "C": "blood",
-            "D": "level"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 20,
-          "arabic": "طوال النهار",
-          "choices": {
-            "A": "all day",
-            "B": "throughout the day",
-            "C": "daily",
-            "D": "always"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 21,
-          "arabic": "عينة",
-          "choices": {
-            "A": "test",
-            "B": "sample/specimen",
-            "C": "part",
-            "D": "item"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 22,
-          "arabic": "قسم الطوارئ",
-          "choices": {
-            "A": "clinic",
-            "B": "emergency department",
-            "C": "hospital",
-            "D": "room"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 23,
-          "arabic": "مختبر",
-          "choices": {
-            "A": "lab",
-            "B": "laboratory",
-            "C": "place",
-            "D": "room"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 24,
-          "arabic": "ملوث",
-          "choices": {
-            "A": "dirty",
-            "B": "contaminated",
-            "C": "polluted",
-            "D": "infected"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 25,
-          "arabic": "منـاوب",
-          "choices": {
-            "A": "worker",
-            "B": "on duty",
-            "C": "active",
-            "D": "present"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 26,
-          "arabic": "اكتئاب",
-          "choices": {
-            "A": "sadness",
-            "B": "depression",
-            "C": "feeling",
-            "D": "emotion"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 27,
-          "arabic": "غضبان",
-          "choices": {
-            "A": "angry",
-            "B": "upset",
-            "C": "mad",
-            "D": "nervous"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 28,
-          "arabic": "فرح",
-          "choices": {
-            "A": "joy",
-            "B": "happy",
-            "C": "pleased",
-            "D": "glad"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 29,
-          "arabic": "متفائل",
-          "choices": {
-            "A": "hopeful",
-            "B": "optimistic",
-            "C": "positive",
-            "D": "happy"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 30,
-          "arabic": "متوتر الأعصاب",
-          "choices": {
-            "A": "calm",
-            "B": "nervous",
-            "C": "anxious",
-            "D": "stressed"
-          },
-          "answer": "D"
-        },
-        {
-          "number": 31,
-          "arabic": "مرتبك",
-          "choices": {
-            "A": "confused",
-            "B": "puzzled",
-            "C": "unsure",
-            "D": "nervous"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 32,
-          "arabic": "مرهق",
-          "choices": {
-            "A": "tired",
-            "B": "exhausted",
-            "C": "fatigued",
-            "D": "weak"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 33,
-          "arabic": "أولي",
-          "choices": {
-            "A": "final",
-            "B": "initial/preliminary",
-            "C": "first",
-            "D": "early"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 34,
-          "arabic": "دورة مياه",
-          "choices": {
-            "A": "bathroom",
-            "B": "restroom",
-            "C": "toilet",
-            "D": "place"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 35,
-          "arabic": "سلبي",
-          "choices": {
-            "A": "negative",
-            "B": "bad",
-            "C": "wrong",
-            "D": "poor"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 36,
-          "arabic": "نسيم",
-          "choices": {
-            "A": "wind",
-            "B": "breeze",
-            "C": "air",
-            "D": "current"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 37,
-          "arabic": "فاتورة",
-          "choices": {
-            "A": "bill",
-            "B": "invoice",
-            "C": "receipt",
-            "D": "payment"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 38,
-          "arabic": "أحس",
-          "choices": {
-            "A": "to think",
-            "B": "to feel/experience",
-            "C": "to sense",
-            "D": "to know"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 39,
-          "arabic": "أدى إلى",
-          "choices": {
-            "A": "to result",
-            "B": "to lead to",
-            "C": "to cause",
-            "D": "to produce"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 40,
-          "arabic": "ارتطم",
-          "choices": {
-            "A": "to crash",
-            "B": "to collide",
-            "C": "to hit",
-            "D": "to strike"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 41,
-          "arabic": "استقل",
-          "choices": {
-            "A": "to ride",
-            "B": "to take transportation",
-            "C": "to travel",
-            "D": "to go"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 42,
-          "arabic": "اصطدم بـ",
-          "choices": {
-            "A": "to crash",
-            "B": "to collide with",
-            "C": "to hit",
-            "D": "to strike"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 43,
-          "arabic": "أقل",
-          "choices": {
-            "A": "to carry",
-            "B": "to transport",
-            "C": "to move",
-            "D": "to take"
-          },
-          "answer": "D"
-        },
-        {
-          "number": 44,
-          "arabic": "ألحق",
-          "choices": {
-            "A": "to cause",
-            "B": "to inflict",
-            "C": "to bring",
-            "D": "to give"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 45,
-          "arabic": "انتاب",
-          "choices": {
-            "A": "to affect",
-            "B": "to be afflicted with",
-            "C": "to feel",
-            "D": "to experience"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 46,
-          "arabic": "انحرف",
-          "choices": {
-            "A": "to move",
-            "B": "to veer off/deviate",
-            "C": "to turn",
-            "D": "to change"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 47,
-          "arabic": "انفجر",
-          "choices": {
-            "A": "to explode",
-            "B": "to blow up",
-            "C": "to burst",
-            "D": "to break"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 48,
-          "arabic": "أوصى",
-          "choices": {
-            "A": "to advise",
-            "B": "to recommend",
-            "C": "to suggest",
-            "D": "to instruct"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 49,
-          "arabic": "تحسن",
-          "choices": {
-            "A": "to get better",
-            "B": "to improve",
-            "C": "to recover",
-            "D": "to change"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 50,
-          "arabic": "تعافى",
-          "choices": {
-            "A": "to recover",
-            "B": "to get well",
-            "C": "to heal",
-            "D": "to improve"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 51,
-          "arabic": "تهشم",
-          "choices": {
-            "A": "to break",
-            "B": "to be smashed/crushed",
-            "C": "to damage",
-            "D": "to destroy"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 52,
-          "arabic": "شعر",
-          "choices": {
-            "A": "to feel",
-            "B": "to sense",
-            "C": "to think",
-            "D": "to know"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 53,
-          "arabic": "عبّر",
-          "choices": {
-            "A": "to say",
-            "B": "to express",
-            "C": "to speak",
-            "D": "to explain"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 54,
-          "arabic": "عوّض",
-          "choices": {
-            "A": "to repay",
-            "B": "to compensate",
-            "C": "to replace",
-            "D": "to give"
-          },
-          "answer": "B"
-        },
-        {
-          "number": 55,
-          "arabic": "فقد",
-          "choices": {
-            "A": "to lose",
-            "B": "to miss",
-            "C": "to forget",
-            "D": "to leave"
-          },
-          "answer": "A"
-        },
-        {
-          "number": 56,
-          "arabic": "قاس",
-          "choices": {
-            "A": "to measure",
-            "B": "to calculate",
-            "C": "to check",
-            "D": "to examine"
-          },
-          "answer": "A"
-        }
-      ]
-    },
+    "ch26": { "label": "Chapter 26 Quiz", "questions": [
+{ "number": 1, "arabic": "مَأهول (بالسكان)", "choices": { "A": "inhabited (with people)", "B": "empty", "C": "rural", "D": "deserted" }, "answer": "A" },
+{ "number": 2, "arabic": "مُبتدئ", "choices": { "A": "beginner", "B": "expert", "C": "teacher", "D": "professional" }, "answer": "A" },
+{ "number": 3, "arabic": "مُتَابَعة", "choices": { "A": "follow-up", "B": "introduction", "C": "delay", "D": "summary" }, "answer": "A" },
+{ "number": 4, "arabic": "مُسابَقة", "choices": { "A": "race, competition", "B": "meeting", "C": "lesson", "D": "break" }, "answer": "A" },
+{ "number": 5, "arabic": "مُستَعدّ", "choices": { "A": "ready", "B": "late", "C": "busy", "D": "tired" }, "answer": "A" },
+{ "number": 6, "arabic": "مَشهَد / مَشاهِد", "choices": { "A": "scene(s)", "B": "actor(s)", "C": "audience", "D": "camera" }, "answer": "A" },
+{ "number": 7, "arabic": "مُغامَرة", "choices": { "A": "adventure", "B": "argument", "C": "instruction", "D": "promise" }, "answer": "A" },
+{ "number": 8, "arabic": "مُغرَم بـ", "choices": { "A": "fond of", "B": "angry at", "C": "afraid of", "D": "bored with" }, "answer": "A" },
+{ "number": 9, "arabic": "مُغنٍ / مُغنّون - مُغنّيات", "choices": { "A": "singer(s) (m - f)", "B": "writer(s)", "C": "actor(s)", "D": "director(s)" }, "answer": "A" },
+{ "number": 10, "arabic": "مُفَضَّل", "choices": { "A": "favorite", "B": "boring", "C": "usual", "D": "difficult" }, "answer": "A" },
+{ "number": 11, "arabic": "مُكَبَّرة", "choices": { "A": "enlarged, maximized", "B": "hidden", "C": "deleted", "D": "shortened" }, "answer": "A" },
+{ "number": 12, "arabic": "مُمَثِّل", "choices": { "A": "actor", "B": "singer", "C": "painter", "D": "author" }, "answer": "A" },
+{ "number": 13, "arabic": "مُنافَسة", "choices": { "A": "competition", "B": "cooperation", "C": "discussion", "D": "vacation" }, "answer": "A" },
+{ "number": 14, "arabic": "مُنَوّعات", "choices": { "A": "variety show", "B": "news program", "C": "sports show", "D": "documentary" }, "answer": "A" },
+{ "number": 15, "arabic": "مَوضوع / مَوضوعات - مواضيع", "choices": { "A": "topic(s)", "B": "students", "C": "grades", "D": "dates" }, "answer": "A" },
+{ "number": 16, "arabic": "ناي", "choices": { "A": "flute", "B": "drum", "C": "violin", "D": "lute" }, "answer": "A" },
+{ "number": 17, "arabic": "نمّى / يُنمّي / تَنمية", "choices": { "A": "to develop", "B": "to destroy", "C": "to stop", "D": "to forget" }, "answer": "A" },
+{ "number": 18, "arabic": "هوى / يهوي / هواية", "choices": { "A": "to like, take up as a hobby", "B": "to sell", "C": "to borrow", "D": "to punish" }, "answer": "A" },
+{ "number": 19, "arabic": "شائعة", "choices": { "A": "widespread, popular", "B": "secret", "C": "illegal", "D": "local only" }, "answer": "A" },
+{ "number": 20, "arabic": "شجّع / يُشجّع / تشجيع", "choices": { "A": "to encourage", "B": "to ignore", "C": "to insult", "D": "to refuse" }, "answer": "A" },
+{ "number": 21, "arabic": "صاخبة", "choices": { "A": "noisy", "B": "silent", "C": "empty", "D": "clean" }, "answer": "A" },
+{ "number": 22, "arabic": "صبر", "choices": { "A": "patience", "B": "anger", "C": "fear", "D": "joy" }, "answer": "A" },
+{ "number": 23, "arabic": "صحب / يَصحَب / صُحبة", "choices": { "A": "to accompany", "B": "to leave", "C": "to hide", "D": "to complain" }, "answer": "A" },
+{ "number": 24, "arabic": "صنّارة أو سنّارة", "choices": { "A": "fishhook", "B": "net", "C": "rope", "D": "knife" }, "answer": "A" },
+{ "number": 25, "arabic": "صَيد السمَك", "choices": { "A": "fishing", "B": "swimming", "C": "sailing", "D": "diving" }, "answer": "A" },
+{ "number": 26, "arabic": "طبّال", "choices": { "A": "drummer", "B": "singer", "C": "guitarist", "D": "writer" }, "answer": "A" },
+{ "number": 27, "arabic": "طَرِب / يَطرَب / طَرَب", "choices": { "A": "to be delighted", "B": "to be angry", "C": "to be bored", "D": "to be worried" }, "answer": "A" },
+{ "number": 28, "arabic": "طُعم", "choices": { "A": "bait", "B": "hook", "C": "boat", "D": "net" }, "answer": "A" },
+{ "number": 29, "arabic": "طَبْخ", "choices": { "A": "cooking", "B": "shopping", "C": "cleaning", "D": "sleeping" }, "answer": "A" },
+{ "number": 30, "arabic": "عازِف", "choices": { "A": "musician", "B": "doctor", "C": "pilot", "D": "teacher" }, "answer": "A" },
+{ "number": 31, "arabic": "عاطفيّ", "choices": { "A": "romantic", "B": "scientific", "C": "political", "D": "economic" }, "answer": "A" },
+{ "number": 32, "arabic": "عدسة مقرِّبة", "choices": { "A": "zoom lens", "B": "microphone", "C": "tripod", "D": "flash" }, "answer": "A" },
+{ "number": 33, "arabic": "عزف / يَعزِف / عزف", "choices": { "A": "to play a musical instrument", "B": "to write a book", "C": "to paint", "D": "to cook" }, "answer": "A" },
+{ "number": 34, "arabic": "عنف", "choices": { "A": "violence", "B": "peace", "C": "friendship", "D": "cooperation" }, "answer": "A" },
+{ "number": 35, "arabic": "عود", "choices": { "A": "lute", "B": "drum", "C": "flute", "D": "piano" }, "answer": "A" },
+{ "number": 36, "arabic": "فكرة", "choices": { "A": "idea", "B": "object", "C": "place", "D": "person" }, "answer": "A" },
+{ "number": 37, "arabic": "فَلسفة", "choices": { "A": "philosophy", "B": "biology", "C": "chemistry", "D": "engineering" }, "answer": "A" },
+{ "number": 38, "arabic": "قارِب / قَوارِب", "choices": { "A": "boat(s)", "B": "car(s)", "C": "plane(s)", "D": "train(s)" }, "answer": "A" },
+{ "number": 39, "arabic": "قصيدة / قصائد", "choices": { "A": "poem(s)", "B": "novel(s)", "C": "letter(s)", "D": "article(s)" }, "answer": "A" },
+{ "number": 40, "arabic": "كامِيرا رَقمية", "choices": { "A": "digital camera", "B": "television", "C": "radio", "D": "phone" }, "answer": "A" },
+{ "number": 41, "arabic": "كَمان", "choices": { "A": "violin", "B": "trumpet", "C": "drum", "D": "flute" }, "answer": "A" },
+{ "number": 42, "arabic": "لوحة", "choices": { "A": "painting", "B": "photograph", "C": "poster", "D": "window" }, "answer": "A" },
+{ "number": 43, "arabic": "مؤلِّف", "choices": { "A": "author", "B": "actor", "C": "singer", "D": "painter" }, "answer": "A" },
+{ "number": 44, "arabic": "أثار / يُثير / إثارة", "choices": { "A": "to excite, thrill", "B": "to calm", "C": "to prevent", "D": "to delay" }, "answer": "A" },
+{ "number": 45, "arabic": "استمتع / يستمتع / استمتاع", "choices": { "A": "to enjoy", "B": "to complain", "C": "to forget", "D": "to cancel" }, "answer": "A" },
+{ "number": 46, "arabic": "اطّلع / يَطَّلع / اطّلاع", "choices": { "A": "to study", "B": "to sleep", "C": "to drive", "D": "to cook" }, "answer": "A" },
+{ "number": 47, "arabic": "أطلق اسم...", "choices": { "A": "to give a name", "B": "to erase a name", "C": "to hide a name", "D": "to translate a name" }, "answer": "A" },
+{ "number": 48, "arabic": "ألوان زيتية", "choices": { "A": "oil color", "B": "water color", "C": "ink", "D": "pencil" }, "answer": "A" },
+{ "number": 49, "arabic": "إيقاع", "choices": { "A": "rhythm", "B": "melody", "C": "instrument", "D": "audience" }, "answer": "A" },
+{ "number": 50, "arabic": "بارِع", "choices": { "A": "skillful", "B": "lazy", "C": "weak", "D": "careless" }, "answer": "A" },
+{ "number": 51, "arabic": "تابع / يتابع / متابعة", "choices": { "A": "to follow up, to pursue", "B": "to stop", "C": "to forget", "D": "to hide" }, "answer": "A" },
+{ "number": 52, "arabic": "تصوير", "choices": { "A": "photography", "B": "translation", "C": "editing", "D": "printing" }, "answer": "A" },
+{ "number": 53, "arabic": "جمع / يجمع / جمع", "choices": { "A": "to collect", "B": "to throw away", "C": "to break", "D": "to lose" }, "answer": "A" },
+{ "number": 54, "arabic": "جمع الطوابع", "choices": { "A": "stamp collecting", "B": "coin collecting", "C": "book collecting", "D": "photo collecting" }, "answer": "A" },
+{ "number": 55, "arabic": "جمعية", "choices": { "A": "association", "B": "school", "C": "company", "D": "family" }, "answer": "A" },
+{ "number": 56, "arabic": "جمهور / جماهير", "choices": { "A": "public", "B": "government", "C": "army", "D": "police" }, "answer": "A" },
+{ "number": 57, "arabic": "حديث", "choices": { "A": "modern", "B": "ancient", "C": "traditional", "D": "secret" }, "answer": "A" },
+{ "number": 58, "arabic": "حوّل / يُحوِّل / تحوِيل", "choices": { "A": "to change", "B": "to copy", "C": "to close", "D": "to clean" }, "answer": "A" },
+{ "number": 59, "arabic": "حياكة", "choices": { "A": "sewing", "B": "driving", "C": "typing", "D": "singing" }, "answer": "A" },
+{ "number": 60, "arabic": "خيال علمي", "choices": { "A": "science fiction", "B": "history", "C": "biography", "D": "poetry" }, "answer": "A" },
+{ "number": 61, "arabic": "خيط / خُيوط", "choices": { "A": "thread(s)", "B": "button(s)", "C": "needle(s)", "D": "fabric(s)" }, "answer": "A" },
+{ "number": 62, "arabic": "رسم", "choices": { "A": "drawing", "B": "singing", "C": "acting", "D": "dancing" }, "answer": "A" },
+{ "number": 63, "arabic": "رواية", "choices": { "A": "novel", "B": "short film", "C": "song", "D": "speech" }, "answer": "A" },
+{ "number": 64, "arabic": "زاول / يُزاوِل / مزاولة", "choices": { "A": "to practice", "B": "to cancel", "C": "to sell", "D": "to forget" }, "answer": "A" },
+{ "number": 65, "arabic": "زخرف / يُزخرف / زخرفة", "choices": { "A": "to ornament, embellish with embroidery", "B": "to erase", "C": "to fold", "D": "to wash" }, "answer": "A" }
+] },
     "ch27": {
       "label": "Chapter 27 Quiz",
       "questions": [
