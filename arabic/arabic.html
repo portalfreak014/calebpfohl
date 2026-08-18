@@ -397,6 +397,40 @@
       background: var(--md-sys-color-secondary-container);
     }
 
+    .nav-item.coming-soon {
+  color: color-mix(
+    in srgb,
+    var(--md-sys-color-on-surface-variant) 58%,
+    var(--md-sys-color-surface)
+  );
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.nav-item.coming-soon:disabled {
+  color: color-mix(
+    in srgb,
+    var(--md-sys-color-on-surface-variant) 58%,
+    var(--md-sys-color-surface)
+  );
+  background: transparent;
+}
+
+.nav-item.coming-soon .nav-icon {
+  opacity: 0.72;
+}
+
+.nav-item.coming-soon .coming-soon-label {
+  display: block;
+  margin-top: -1px;
+  color: inherit;
+  font-size: 0.62rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
     .empty-note {
       padding: 16px;
       border-radius: var(--radius-md);
