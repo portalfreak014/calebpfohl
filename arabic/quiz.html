@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6750A4">
+  <meta name="description" content="A mobile-first Arabic study quiz.">
+  <title>Arabic Study Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary:#6750a4; --on-primary:#fff; --primary-container:#e9ddff; --on-primary-container:#21005d; --surface:#fffbfe; --surface-low:#f7f2fa; --surface-high:#ece6f0; --on-surface:#1c1b1f; --variant:#49454f; --outline:#79747e; --outline-variant:#cac4d0; --success:#146c2e; --success-container:#b9f8c8; --error:#ba1a1a; --error-container:#ffdad6; --radius-lg:28px; --radius-md:18px; }
+    * { box-sizing:border-box; }
+    html,body { min-width:320px; min-height:100%; }
+    body { margin:0; color:var(--on-surface); background:var(--surface); font-family:"Noto Sans","Noto Sans Arabic",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+    button,a { -webkit-tap-highlight-color:transparent; font:inherit; }
+    button { cursor:pointer; }
+    .material-symbols-rounded { font-family:"Material Symbols Rounded"; font-weight:normal; font-style:normal; font-size:24px; line-height:1; display:inline-block; direction:ltr; white-space:nowrap; font-variation-settings:"FILL" 0,"wght" 500,"GRAD" 0,"opsz" 24; }
+    .app { width:min(100%,760px); min-height:100dvh; margin:0 auto; padding:max(16px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom)); display:flex; flex-direction:column; }
+    .topbar { display:grid; grid-template-columns:48px 1fr 48px; align-items:center; min-height:56px; gap:8px; }
+    .icon-button { display:grid; place-items:center; width:48px; height:48px; padding:0; border:0; border-radius:50%; color:var(--variant); background:transparent; }
+    .icon-button:hover { background:rgb(29 27 32 / .08); }
+    .heading { min-width:0; text-align:center; }
+    .eyebrow { margin:0; color:var(--variant); font-size:.78rem; font-weight:700; letter-spacing:.04em; }
+    .title { overflow:hidden; margin:2px 0 0; font-size:1rem; font-weight:800; text-overflow:ellipsis; white-space:nowrap; }
+    .progress-block { margin:16px 4px 0; }
+    .progress-copy { display:flex; justify-content:space-between; gap:12px; margin:0 0 8px; color:var(--variant); font-size:.83rem; font-weight:700; }
+    .progress { height:8px; overflow:hidden; border-radius:999px; background:var(--surface-high); }
+    .progress > span { display:block; width:0; height:100%; border-radius:inherit; background:var(--primary); transition:width 220ms ease; }
+    main { flex:1; display:flex; flex-direction:column; justify-content:center; padding:32px 0 20px; }
+    .question-kicker { margin:0 0 14px; color:var(--variant); font-size:.9rem; font-weight:700; }
+    .prompt { margin:0 0 30px; font-family:"Noto Sans Arabic","Noto Sans",sans-serif; font-size:clamp(2rem,8vw,3.5rem); font-weight:700; line-height:1.45; text-align:center; }
+    .choices { display:grid; gap:12px; }
+    .choice { display:grid; grid-template-columns:34px minmax(0,1fr); align-items:center; gap:14px; width:100%; min-height:64px; padding:14px 16px; border:2px solid var(--outline-variant); border-radius:var(--radius-md); color:var(--on-surface); background:var(--surface); text-align:left; transition:background 150ms ease,border-color 150ms ease,transform 150ms ease; }
+    .choice:hover:not(:disabled) { background:var(--surface-low); }
+    .choice:active:not(:disabled) { transform:scale(.99); }
+    .choice-key { display:grid; place-items:center; width:32px; height:32px; border-radius:50%; color:var(--variant); background:var(--surface-high); font-size:.82rem; font-weight:800; }
+    .choice-text { font-size:1rem; font-weight:650; line-height:1.35; }
+    .choice.selected { border-color:var(--primary); background:var(--primary-container); }
+    .choice.correct { border-color:var(--success); color:#083d19; background:var(--success-container); }
+    .choice.incorrect { border-color:var(--error); color:#601410; background:var(--error-container); }
+    .choice:disabled { cursor:default; }
+    .feedback { display:none; align-items:flex-start; gap:12px; margin-top:20px; padding:16px; border-radius:var(--radius-md); line-height:1.45; }
+    .feedback.show { display:flex; }
+    .feedback.good { color:#083d19; background:var(--success-container); }
+    .feedback.bad { color:#601410; background:var(--error-container); }
+    .feedback strong { display:block; margin-bottom:2px; }
+    .action-area { min-height:76px; padding-top:20px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:52px; padding:0 24px; border:0; border-radius:999px; font-weight:800; text-decoration:none; }
+    .button.full { width:100%; }
+    .button.primary { color:var(--on-primary); background:var(--primary); box-shadow:0 1px 3px rgb(0 0 0 / .25); }
+    .button.primary:disabled { opacity:.42; cursor:not-allowed; box-shadow:none; }
+    .button.tonal { color:var(--on-primary-container); background:var(--primary-container); }
+    .screen { text-align:center; }
+    .screen-icon { display:grid; place-items:center; width:72px; height:72px; margin:0 auto 20px; border-radius:24px; color:var(--on-primary-container); background:var(--primary-container); }
+    .screen-icon .material-symbols-rounded { font-size:38px; font-variation-settings:"FILL" 1,"wght" 500,"GRAD" 0,"opsz" 36; }
+    .screen h1 { margin:0 0 10px; font-size:clamp(1.8rem,7vw,2.5rem); line-height:1.15; letter-spacing:-.03em; }
+    .screen p { max-width:42ch; margin:0 auto 24px; color:var(--variant); line-height:1.55; }
+    .score { margin:24px 0; color:var(--primary); font-size:3.2rem; font-weight:800; line-height:1; }
+    .screen .button + .button { margin-top:12px; }
+    .hidden { display:none !important; }
+    :focus-visible { outline:3px solid var(--primary); outline-offset:3px; }
+    @media (min-width:700px) { .app { padding:32px 32px; } main { padding-top:50px; } .choice { min-height:72px; padding:16px 20px; } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar" id="topbar">
+      <button class="icon-button" id="exit-button" type="button" aria-label="Exit quiz"><span class="material-symbols-rounded" aria-hidden="true">close</span></button>
+      <div class="heading"><p class="eyebrow" id="chapter-label">Loading quiz</p><p class="title" id="quiz-title">Arabic Study</p></div>
+      <button class="icon-button" id="restart-button" type="button" aria-label="Restart chapter"><span class="material-symbols-rounded" aria-hidden="true">refresh</span></button>
+    </header>
+    <section class="progress-block" id="progress-block" aria-label="Quiz progress"><p class="progress-copy"><span id="progress-text">Loading</span><span id="score-text">0 correct</span></p><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div></section>
+    <main>
+      <section id="loading-screen" class="screen"><div class="screen-icon"><span class="material-symbols-rounded">progress_activity</span></div><h1>Loading your quiz</h1><p>Getting your study set ready.</p></section>
+      <section id="quiz-screen" class="hidden" aria-live="polite"><p class="question-kicker" id="question-kicker"></p><h1 class="prompt" id="prompt" lang="ar" dir="rtl"></h1><div class="choices" id="choices" aria-label="Answer choices"></div><div class="feedback" id="feedback" role="status"></div><div class="action-area"><button class="button primary full" id="next-button" type="button" disabled>Choose an answer</button></div></section>
+      <section id="complete-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">celebration</span></div><h1>Chapter complete</h1><p id="complete-copy"></p><div class="score" id="final-score"></div><button class="button primary full" id="again-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">refresh</span>Practice again</button><a class="button tonal full" href="arabic.html">Back to Arabic Study</a></section>
+      <section id="error-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">error</span></div><h1>Quiz unavailable</h1><p id="error-copy">We could not load this study set.</p><a class="button primary full" href="arabic.html">Back to Arabic Study</a></section>
+    </main>
+  </div>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const unit = (params.get('unit') || 'unit6').replace(/[^a-zA-Z0-9_-]/g, '');
+    const chapterId = (params.get('chapter') || '').replace(/[^a-zA-Z0-9_-]/g, '');
+    const state = { data:null, chapter:null, questions:[], index:0, score:0, selected:null, answered:false };
+    const $ = id => document.getElementById(id);
+    const show = id => $(id).classList.remove('hidden');
+    const hide = id => $(id).classList.add('hidden');
+    const storageKey = () => `arabicStudyProgress:${unit}:${chapterId}`;
+    const saveProgress = completed => localStorage.setItem(storageKey(), JSON.stringify({ completed, total:state.questions.length, score:state.score, updatedAt:new Date().toISOString() }));
+    const setError = message => { hide('loading-screen'); hide('quiz-screen'); hide('complete-screen'); hide('progress-block'); hide('topbar'); $('error-copy').textContent = message; show('error-screen'); };
+    const shuffle = list => { const copy=[...list]; for(let i=copy.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [copy[i],copy[j]]=[copy[j],copy[i]]; } return copy; };
+    function updateProgress() { const total=state.questions.length || 1; const current=Math.min(state.index+1,total); const percent=Math.round((state.index/total)*100); $('progress-text').textContent = `Question ${current} of ${total}`; $('score-text').textContent = `${state.score} correct`; $('progress-fill').style.width = `${percent}%`; document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', percent); }
+    function renderQuestion() { state.selected=null; state.answered=false; const q=state.questions[state.index]; updateProgress(); $('question-kicker').textContent = 'Choose the English meaning'; $('prompt').textContent = q.arabic; const choices=$('choices'); choices.innerHTML=''; Object.entries(q.choices).forEach(([key,text]) => { const button=document.createElement('button'); button.type='button'; button.className='choice'; button.dataset.key=key; button.innerHTML=`<span class="choice-key">${key}</span><span class="choice-text">${text}</span>`; button.addEventListener('click',()=>selectAnswer(key)); choices.appendChild(button); }); hide('feedback'); $('feedback').className='feedback'; $('next-button').disabled=true; $('next-button').textContent='Choose an answer'; }
+    function selectAnswer(key) { if(state.answered) return; state.selected=key; document.querySelectorAll('.choice').forEach(button=>button.classList.toggle('selected',button.dataset.key===key)); $('next-button').disabled=false; $('next-button').textContent='Check answer'; }
+    function checkAnswer() { const q=state.questions[state.index]; const correct=state.selected===q.answer; state.answered=true; if(correct) state.score+=1; document.querySelectorAll('.choice').forEach(button=>{ const key=button.dataset.key; button.disabled=true; if(key===q.answer) button.classList.add('correct'); else if(key===state.selected) button.classList.add('incorrect'); }); const feedback=$('feedback'); feedback.className=`feedback show ${correct?'good':'bad'}`; const correctText=q.choices[q.answer]; feedback.innerHTML=`<span class="material-symbols-rounded" aria-hidden="true">${correct?'check_circle':'info'}</span><div><strong>${correct?'Correct!':'Not quite.'}</strong>${correct?`“${correctText}” is the correct meaning.`:`The correct answer is ${q.answer}: “${correctText}.”`}</div>`; $('next-button').textContent=state.index===state.questions.length-1?'See results':'Continue'; saveProgress(state.index+1); }
+    function next() { if(!state.selected) return; if(!state.answered) { checkAnswer(); return; } if(state.index<state.questions.length-1) { state.index+=1; renderQuestion(); } else { complete(); } }
+    function complete() { saveProgress(state.questions.length); hide('quiz-screen'); hide('progress-block'); $('final-score').textContent=`${state.score} / ${state.questions.length}`; $('complete-copy').textContent=`You completed ${state.chapter.label}. Keep practicing to make these words stick.`; show('complete-screen'); }
+    function restart() { state.index=0; state.score=0; state.selected=null; state.answered=false; localStorage.removeItem(storageKey()); hide('complete-screen'); show('progress-block'); show('quiz-screen'); renderQuestion(); window.scrollTo({top:0,behavior:'smooth'}); }
+    async function init() { try { const response=await fetch(`data/${unit}.json`,{cache:'no-store'}); if(!response.ok) throw new Error('data file not found'); state.data=await response.json(); const chapters=state.data.chapters || {}; const selectedId=chapterId || Object.keys(chapters)[0]; state.chapter=chapters[selectedId]; if(!state.chapter || !Array.isArray(state.chapter.questions) || !state.chapter.questions.length) throw new Error('chapter not found'); state.questions=shuffle(state.chapter.questions); document.title=`${state.chapter.label} · Arabic Study`; $('quiz-title').textContent=state.data.title || 'Arabic Study'; $('chapter-label').textContent=state.chapter.label; $('exit-button').addEventListener('click',()=>location.href='arabic.html'); $('restart-button').addEventListener('click',restart); $('again-button').addEventListener('click',restart); $('next-button').addEventListener('click',next); hide('loading-screen'); show('quiz-screen'); renderQuestion(); } catch(error) { setError('We could not load this quiz. Make sure the data file exists and the chapter link is correct.'); } }
+    init();
+  </script>
+</body>
+</html>
