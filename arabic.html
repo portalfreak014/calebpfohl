@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6750A4">
+  <meta name="description" content="A mobile-first Arabic study hub.">
+  <title>Arabic Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --md-sys-color-primary: #6750a4;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-primary-container: #e9ddff;
+      --md-sys-color-on-primary-container: #21005d;
+      --md-sys-color-secondary-container: #e8def8;
+      --md-sys-color-on-secondary-container: #1d192b;
+      --md-sys-color-surface: #fffbfe;
+      --md-sys-color-surface-container: #f3edf7;
+      --md-sys-color-surface-container-high: #ece6f0;
+      --md-sys-color-on-surface: #1c1b1f;
+      --md-sys-color-on-surface-variant: #49454f;
+      --md-sys-color-outline: #79747e;
+      --md-sys-color-outline-variant: #cac4d0;
+      --md-sys-elevation-1: 0 1px 2px rgb(0 0 0 / 0.30), 0 1px 3px 1px rgb(0 0 0 / 0.15);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-width: 320px;
+      background: var(--md-sys-color-surface);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      color: var(--md-sys-color-on-surface);
+      background: var(--md-sys-color-surface);
+      font-family: "Noto Sans", "Noto Sans Arabic", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .material-symbols-rounded {
+      font-family: "Material Symbols Rounded";
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: "liga";
+      -webkit-font-smoothing: antialiased;
+      font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+    }
+
+    .app {
+      width: min(100%, 760px);
+      min-height: 100dvh;
+      margin: 0 auto;
+      padding: max(16px, env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom));
+    }
+
+    .top-app-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 64px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      color: var(--md-sys-color-on-primary-container);
+      background: var(--md-sys-color-primary-container);
+    }
+
+    .brand-mark .material-symbols-rounded {
+      font-size: 26px;
+      font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
+    }
+
+    .brand-copy { line-height: 1.15; }
+
+    .brand-title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .brand-subtitle {
+      margin: 4px 0 0;
+      color: var(--md-sys-color-on-surface-variant);
+      font-size: 0.78rem;
+    }
+
+    .icon-button {
+      display: inline-grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      color: var(--md-sys-color-on-surface-variant);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .icon-button:hover { background: rgb(29 27 32 / 0.08); }
+    .icon-button:focus-visible, .button:focus-visible, .nav-item:focus-visible {
+      outline: 3px solid var(--md-sys-color-primary);
+      outline-offset: 2px;
+    }
+
+    .hero {
+      padding: 24px;
+      border-radius: var(--radius-xl);
+      color: var(--md-sys-color-on-primary-container);
+      background: var(--md-sys-color-primary-container);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 16ch;
+      margin-bottom: 12px;
+      font-size: clamp(2rem, 8vw, 3rem);
+      line-height: 1.12;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      max-width: 48ch;
+      margin-bottom: 24px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 0 24px;
+      border: 0;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+    }
+
+    .button:active { transform: scale(0.98); }
+
+    .button-primary {
+      color: var(--md-sys-color-on-primary);
+      background: var(--md-sys-color-primary);
+      box-shadow: var(--md-sys-elevation-1);
+    }
+
+    .button-primary:hover { box-shadow: 0 2px 5px rgb(0 0 0 / 0.25); }
+
+    .section { margin-top: 36px; }
+
+    .section-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .text-button {
+      padding: 10px 12px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--md-sys-color-primary);
+      background: transparent;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .text-button:hover { background: rgb(103 80 164 / 0.08); }
+
+    .continue {
+      padding: 20px;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--radius-lg);
+      background: var(--md-sys-color-surface);
+    }
+
+    .continue-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .continue-label {
+      margin: 0 0 6px;
+      color: var(--md-sys-color-on-surface-variant);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .continue-title {
+      margin: 0;
+      font-size: 1.15rem;
+      line-height: 1.3;
+    }
+
+    .progress-copy {
+      margin: 18px 0 10px;
+      color: var(--md-sys-color-on-surface-variant);
+      font-size: 0.9rem;
+    }
+
+    .progress {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--md-sys-color-surface-container-high);
+    }
+
+    .progress > span {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--md-sys-color-primary);
+      transition: width 300ms ease;
+    }
+
+    .study-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .study-item {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      min-height: 76px;
+      padding: 14px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      color: inherit;
+      background: var(--md-sys-color-surface-container);
+      text-align: left;
+      text-decoration: none;
+      transition: background 150ms ease, transform 150ms ease;
+    }
+
+    .study-item:hover {
+      background: var(--md-sys-color-surface-container-high);
+      transform: translateY(-1px);
+    }
+
+    .study-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      color: var(--md-sys-color-on-secondary-container);
+      background: var(--md-sys-color-secondary-container);
+    }
+
+    .study-icon .arabic {
+      font-family: "Noto Sans Arabic", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .study-title {
+      margin: 0;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .study-meta {
+      margin: 4px 0 0;
+      color: var(--md-sys-color-on-surface-variant);
+      font-size: 0.84rem;
+    }
+
+    .recent {
+      display: grid;
+      gap: 10px;
+    }
+
+    .recent-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 2px;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    }
+
+    .recent-item:last-child { border-bottom: 0; }
+
+    .recent-title { margin: 0; font-weight: 700; }
+    .recent-meta { margin: 4px 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.84rem; }
+    .score { color: var(--md-sys-color-primary); font-weight: 800; }
+
+    .bottom-nav {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--md-sys-color-outline-variant);
+      background: rgb(255 251 254 / 0.94);
+      backdrop-filter: blur(16px);
+    }
+
+    .bottom-nav-inner {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(80px, 1fr));
+      width: min(100%, 520px);
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: grid;
+      justify-items: center;
+      gap: 3px;
+      min-height: 56px;
+      padding: 6px 12px;
+      border: 0;
+      border-radius: 16px;
+      color: var(--md-sys-color-on-surface-variant);
+      background: transparent;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .nav-item.active { color: var(--md-sys-color-on-secondary-container); }
+
+    .nav-item.active .nav-icon {
+      min-width: 64px;
+      padding: 4px 16px;
+      border-radius: 999px;
+      background: var(--md-sys-color-secondary-container);
+    }
+
+    .empty-note {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      color: var(--md-sys-color-on-surface-variant);
+      background: var(--md-sys-color-surface-container);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    @media (min-width: 700px) {
+      .app { padding: 32px 32px 112px; }
+      .top-app-bar { margin-bottom: 32px; }
+      .hero { padding: 40px; }
+      .continue { padding: 24px; }
+      .study-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="top-app-bar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <span class="material-symbols-rounded">translate</span>
+        </div>
+        <div class="brand-copy">
+          <p class="brand-title">Arabic Study</p>
+          <p class="brand-subtitle" lang="ar" dir="rtl">تعلّم العربية خطوة بخطوة</p>
+        </div>
+      </div>
+      <button class="icon-button" type="button" aria-label="Open settings">
+        <span class="material-symbols-rounded" aria-hidden="true">settings</span>
+      </button>
+    </header>
+
+    <section class="hero" aria-labelledby="welcome-heading">
+      <p class="eyebrow">Your study space</p>
+      <h1 id="welcome-heading">Learn Arabic with focus.</h1>
+      <p>Short, clear practice sessions designed for your phone—one question, one step, one win at a time.</p>
+      <a class="button button-primary" href="#study-sets">
+        Start studying
+        <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+      </a>
+    </section>
+
+    <section class="section" aria-labelledby="continue-heading">
+      <div class="section-heading">
+        <h2 id="continue-heading">Continue learning</h2>
+      </div>
+      <article class="continue">
+        <div class="continue-top">
+          <div>
+            <p class="continue-label">Most recent set</p>
+            <h3 class="continue-title">Arabic Foundations</h3>
+          </div>
+          <span class="material-symbols-rounded" aria-hidden="true">play_circle</span>
+        </div>
+        <p class="progress-copy" id="progress-label">Your progress will appear here when a quiz is connected.</p>
+        <div class="progress" role="progressbar" aria-labelledby="progress-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <span id="progress-fill"></span>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" id="study-sets" aria-labelledby="sets-heading">
+      <div class="section-heading">
+        <h2 id="sets-heading">Study sets</h2>
+        <button class="text-button" type="button">View all</button>
+      </div>
+      <div class="study-list">
+        <a class="study-item" href="#">
+          <span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">أ</span></span>
+          <span>
+            <span class="study-title">Arabic Foundations</span>
+            <span class="study-meta">Alphabet, sounds, and basics</span>
+          </span>
+          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+        </a>
+        <a class="study-item" href="#">
+          <span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">ك</span></span>
+          <span>
+            <span class="study-title">Vocabulary</span>
+            <span class="study-meta">Everyday words and phrases</span>
+          </span>
+          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+        </a>
+        <a class="study-item" href="#">
+          <span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">ج</span></span>
+          <span>
+            <span class="study-title">Grammar</span>
+            <span class="study-meta">Build clear sentence patterns</span>
+          </span>
+          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+        </a>
+        <a class="study-item" href="#">
+          <span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">م</span></span>
+          <span>
+            <span class="study-title">Exam practice</span>
+            <span class="study-meta">Focused review sets and quizzes</span>
+          </span>
+          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="recent-heading">
+      <div class="section-heading">
+        <h2 id="recent-heading">Recent activity</h2>
+      </div>
+      <div class="empty-note">
+        Your completed quizzes and scores will appear here after the first quiz is connected to this new homepage.
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Primary navigation">
+    <div class="bottom-nav-inner">
+      <button class="nav-item active" type="button" aria-current="page">
+        <span class="nav-icon material-symbols-rounded" aria-hidden="true">home</span>
+        Home
+      </button>
+      <button class="nav-item" type="button">
+        <span class="nav-icon material-symbols-rounded" aria-hidden="true">school</span>
+        Learn
+      </button>
+      <button class="nav-item" type="button">
+        <span class="nav-icon material-symbols-rounded" aria-hidden="true">bar_chart</span>
+        Progress
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    const progress = JSON.parse(localStorage.getItem("arabicStudyProgress") || "null");
+    const fill = document.getElementById("progress-fill");
+    const label = document.getElementById("progress-label");
+    const bar = document.querySelector(".progress");
+
+    if (progress && Number.isFinite(progress.completed) && Number.isFinite(progress.total) && progress.total > 0) {
+      const percent = Math.max(0, Math.min(100, Math.round((progress.completed / progress.total) * 100)));
+      fill.style.width = percent + "%";
+      label.textContent = `${progress.completed} of ${progress.total} questions completed`;
+      bar.setAttribute("aria-valuenow", percent);
+    }
+  </script>
+</body>
+</html>
