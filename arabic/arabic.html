@@ -137,10 +137,13 @@
     }
 
     .icon-button:hover { background: rgb(29 27 32 / 0.08); }
-    .icon-button:focus-visible, .button:focus-visible, .nav-item:focus-visible {
-      outline: 3px solid var(--md-sys-color-primary);
-      outline-offset: 2px;
-    }
+    .icon-button:focus-visible,
+.button:focus-visible,
+.nav-item:focus-visible,
+.resource-item:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
 
     .hero {
       padding: 24px;
@@ -302,6 +305,76 @@
       background: var(--md-sys-color-surface-container-high);
       transform: translateY(-1px);
     }
+
+    .resource-groups {
+  display: grid;
+  gap: 24px;
+}
+
+.resource-group-title {
+  margin: 0 0 10px;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.resource-list {
+  display: grid;
+  gap: 10px;
+}
+
+.resource-item {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 76px;
+  padding: 14px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--radius-md);
+  color: inherit;
+  background: var(--md-sys-color-surface);
+  text-decoration: none;
+  transition: background 150ms ease, transform 150ms ease;
+}
+
+.resource-item:hover {
+  background: var(--md-sys-color-surface-container);
+  transform: translateY(-1px);
+}
+
+.resource-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  color: var(--md-sys-color-on-secondary-container);
+  background: var(--md-sys-color-secondary-container);
+}
+
+.resource-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.resource-meta {
+  margin: 4px 0 0;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.external-icon {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 18px;
+}
 
     .study-icon {
       display: grid;
@@ -543,6 +616,174 @@
         </a>
       </div>
     </section>
+
+    <section
+  class="section"
+  id="class-resources"
+  aria-labelledby="resources-heading"
+>
+  <div class="section-heading">
+    <h2 id="resources-heading">Class resources</h2>
+  </div>
+
+  <div class="resource-groups">
+    <div>
+      <h3 class="resource-group-title">Course tools</h3>
+
+      <div class="resource-list">
+        <a
+          class="resource-item"
+          href="PASTE_COURSE_LINK_HERE"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="resource-icon" aria-hidden="true">
+            <span class="material-symbols-rounded">school</span>
+          </span>
+
+          <span>
+            <span class="resource-title">
+              Course site
+              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
+            </span>
+            <span class="resource-meta">
+              Assignments, announcements, and course materials
+            </span>
+          </span>
+
+          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+        </a>
+
+        <a
+          class="resource-item"
+          href="PASTE_SHARED_DRIVE_LINK_HERE"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="resource-icon" aria-hidden="true">
+            <span class="material-symbols-rounded">folder</span>
+          </span>
+
+          <span>
+            <span class="resource-title">
+              Shared class files
+              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
+            </span>
+            <span class="resource-meta">
+              Slides, handouts, readings, and reference documents
+            </span>
+          </span>
+
+          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="resource-group-title">Language tools</h3>
+
+      <div class="resource-list">
+        <a
+          class="resource-item"
+          href="PASTE_DICTIONARY_LINK_HERE"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="resource-icon" aria-hidden="true">
+            <span class="material-symbols-rounded">menu_book</span>
+          </span>
+
+          <span>
+            <span class="resource-title">
+              Arabic dictionary
+              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
+            </span>
+            <span class="resource-meta">
+              Look up vocabulary, roots, definitions, and usage
+            </span>
+          </span>
+
+          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+        </a>
+
+        <a
+          class="resource-item"
+          href="PASTE_KEYBOARD_LINK_HERE"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="resource-icon" aria-hidden="true">
+            <span class="material-symbols-rounded">keyboard</span>
+          </span>
+
+          <span>
+            <span class="resource-title">
+              Arabic keyboard guide
+              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
+            </span>
+            <span class="resource-meta">
+              Type Arabic characters and practice your keyboard layout
+            </span>
+          </span>
+
+          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="resource-group-title">Reference & practice</h3>
+
+      <div class="resource-list">
+        <a
+          class="resource-item"
+          href="PASTE_GRAMMAR_LINK_HERE"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="resource-icon" aria-hidden="true">
+            <span class="material-symbols-rounded">article</span>
+          </span>
+
+          <span>
+            <span class="resource-title">
+              Grammar reference
+              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
+            </span>
+            <span class="resource-meta">
+              Review sentence structure, verb forms, and key grammar notes
+            </span>
+          </span>
+
+          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+        </a>
+
+        <a
+          class="resource-item"
+          href="PASTE_PRACTICE_LINK_HERE"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="resource-icon" aria-hidden="true">
+            <span class="material-symbols-rounded">headphones</span>
+          </span>
+
+          <span>
+            <span class="resource-title">
+              Listening practice
+              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
+            </span>
+            <span class="resource-meta">
+              Practice comprehension with Arabic audio and video
+            </span>
+          </span>
+
+          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
     <section class="section" aria-labelledby="recent-heading">
       <div class="section-heading">
