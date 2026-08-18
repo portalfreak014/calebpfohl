@@ -1,2 +1,9 @@
-[build]
-  functions = "netlify/functions"
+[[redirects]]
+  from = "/areastudies"
+  to = "/areastudies.html"
+  status = 200
+
+[[redirects]]
+  from = "/arabic"
+  to = "/arabic/arabic"
+  status = 301
