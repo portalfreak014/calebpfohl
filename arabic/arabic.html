@@ -513,6 +513,111 @@
       line-height: 1.55;
     }
 
+    .drawer-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  opacity: 0;
+  visibility: hidden;
+  background: rgb(28 27 31 / 0.38);
+  transition: opacity 200ms ease, visibility 200ms ease;
+}
+
+.drawer-scrim.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.navigation-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 21;
+  width: min(86vw, 360px);
+  padding: max(20px, env(safe-area-inset-top)) 12px 24px;
+  overflow-y: auto;
+  transform: translateX(105%);
+  color: var(--md-sys-color-on-surface);
+  background: var(--md-sys-color-surface-container);
+  box-shadow: -8px 0 24px rgb(0 0 0 / 0.16);
+  transition: transform 250ms ease;
+}
+
+.navigation-drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+  padding: 0 8px 14px 16px;
+}
+
+.drawer-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.drawer-section-label {
+  margin: 20px 16px 8px;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.drawer-item {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+  margin: 2px 0;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: var(--md-sys-color-on-surface);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.drawer-item:hover {
+  background: rgb(103 80 164 / 0.08);
+}
+
+.drawer-item.active {
+  color: var(--md-sys-color-on-secondary-container);
+  background: var(--md-sys-color-secondary-container);
+}
+
+.drawer-item.coming-soon {
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.drawer-item.coming-soon .drawer-item-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.drawer-item-badge {
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: var(--md-sys-color-on-surface-variant);
+  background: var(--md-sys-color-surface-container-high);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
     @media (min-width: 700px) {
       .app { padding: 32px 32px 112px; }
       .top-app-bar { margin-bottom: 32px; }
@@ -542,9 +647,16 @@
           <p class="brand-subtitle" lang="ar" dir="rtl">تعلّم العربية خطوة بخطوة</p>
         </div>
       </div>
-      <button class="icon-button" type="button" aria-label="Open settings">
-        <span class="material-symbols-rounded" aria-hidden="true">settings</span>
-      </button>
+      <button
+          class="icon-button"
+          id="menu-button"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="navigation-drawer"
+        >
+      <span class="material-symbols-rounded" aria-hidden="true">menu</span>
+    </button>
     </header>
 
     <section class="hero" aria-labelledby="welcome-heading">
@@ -837,6 +949,115 @@
       label.textContent = `${progress.completed} of ${progress.total} questions completed`;
       bar.setAttribute("aria-valuenow", percent);
     }
+
+    const menuButton = document.getElementById("menu-button");
+const drawer = document.getElementById("navigation-drawer");
+const drawerScrim = document.getElementById("drawer-scrim");
+const drawerCloseButton = document.getElementById("drawer-close-button");
+
+function openDrawer() {
+  drawer.classList.add("open");
+  drawerScrim.classList.add("open");
+  drawer.setAttribute("aria-hidden", "false");
+  menuButton.setAttribute("aria-expanded", "true");
+  drawerCloseButton.focus();
+}
+
+function closeDrawer() {
+  drawer.classList.remove("open");
+  drawerScrim.classList.remove("open");
+  drawer.setAttribute("aria-hidden", "true");
+  menuButton.setAttribute("aria-expanded", "false");
+  menuButton.focus();
+}
+
+menuButton.addEventListener("click", openDrawer);
+drawerCloseButton.addEventListener("click", closeDrawer);
+drawerScrim.addEventListener("click", closeDrawer);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && drawer.classList.contains("open")) {
+    closeDrawer();
+  }
+});
+
+drawer.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", closeDrawer);
+});
   </script>
+
+  <div
+  class="drawer-scrim"
+  id="drawer-scrim"
+  aria-hidden="true"
+></div>
+
+<nav
+  class="navigation-drawer"
+  id="navigation-drawer"
+  aria-label="Primary navigation"
+  aria-hidden="true"
+>
+  <div class="drawer-header">
+    <p class="drawer-title">Arabic Study</p>
+
+    <button
+      class="icon-button"
+      id="drawer-close-button"
+      type="button"
+      aria-label="Close navigation menu"
+    >
+      <span class="material-symbols-rounded" aria-hidden="true">close</span>
+    </button>
+  </div>
+
+  <a class="drawer-item active" href="arabic.html" aria-current="page">
+    <span class="material-symbols-rounded" aria-hidden="true">home</span>
+    <span>Home</span>
+  </a>
+
+  <span class="drawer-section-label">Study</span>
+
+  <a class="drawer-item" href="#study-sets">
+    <span class="material-symbols-rounded" aria-hidden="true">school</span>
+    <span>Study sets</span>
+  </a>
+
+  <a class="drawer-item" href="#class-resources">
+    <span class="material-symbols-rounded" aria-hidden="true">link</span>
+    <span>Resources</span>
+  </a>
+
+  <a class="drawer-item" href="#recent-heading">
+    <span class="material-symbols-rounded" aria-hidden="true">history</span>
+    <span>Recent activity</span>
+  </a>
+
+  <span class="drawer-section-label">More</span>
+
+  <div class="drawer-item coming-soon" aria-disabled="true">
+    <span class="material-symbols-rounded" aria-hidden="true">menu_book</span>
+    <span class="drawer-item-text">
+      Practice
+      <span class="drawer-item-badge">Coming soon</span>
+    </span>
+  </div>
+
+  <div class="drawer-item coming-soon" aria-disabled="true">
+    <span class="material-symbols-rounded" aria-hidden="true">bar_chart</span>
+    <span class="drawer-item-text">
+      Progress
+      <span class="drawer-item-badge">Coming soon</span>
+    </span>
+  </div>
+
+  <div class="drawer-item coming-soon" aria-disabled="true">
+    <span class="material-symbols-rounded" aria-hidden="true">settings</span>
+    <span class="drawer-item-text">
+      Settings
+      <span class="drawer-item-badge">Coming soon</span>
+    </span>
+  </div>
+</nav>
 </body>
 </html>
