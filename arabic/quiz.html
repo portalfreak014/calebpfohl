@@ -18,7 +18,7 @@
     button { cursor:pointer; }
     .material-symbols-rounded { font-family:"Material Symbols Rounded"; font-weight:normal; font-style:normal; font-size:24px; line-height:1; display:inline-block; direction:ltr; white-space:nowrap; font-variation-settings:"FILL" 0,"wght" 500,"GRAD" 0,"opsz" 24; }
     .app {width: min(100%, 760px); height: 100dvh; margin: 0 auto; padding: max(10px, env(safe-area-inset-top)) 16px max(12px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; overflow: hidden;}
-    .topbar { display:grid; grid-template-columns:48px 1fr 48px; align-items:center; min-height:56px; gap:8px; }
+    .topbar { display:grid; grid-template-columns:48px 1fr 48px 48px; align-items:center; min-height:56px; gap:8px; }
     .icon-button { display:grid; place-items:center; width:48px; height:48px; padding:0; border:0; border-radius:50%; color:var(--variant); background:transparent; }
     .icon-button:hover { background:rgb(29 27 32 / .08); }
     .heading { min-width:0; text-align:center; }
@@ -188,36 +188,223 @@
     <header class="topbar" id="topbar">
       <button class="icon-button" id="exit-button" type="button" aria-label="Exit quiz"><span class="material-symbols-rounded" aria-hidden="true">close</span></button>
       <div class="heading"><p class="eyebrow" id="chapter-label">Loading quiz</p><p class="title" id="quiz-title">Arabic Study</p></div>
+      <button class="icon-button" id="change-chapter-button" type="button" aria-label="Change chapter"><span class="material-symbols-rounded" aria-hidden="true">view_list</span></button>
       <button class="icon-button" id="restart-button" type="button" aria-label="Restart chapter"><span class="material-symbols-rounded" aria-hidden="true">refresh</span></button>
     </header>
     <section class="progress-block" id="progress-block" aria-label="Quiz progress"><p class="progress-copy"><span id="progress-text">Loading</span><span id="score-text">0 correct</span></p><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div></section>
     <main>
       <section id="loading-screen" class="screen"><div class="screen-icon"><span class="material-symbols-rounded">progress_activity</span></div><h1>Loading your quiz</h1><p>Getting your study set ready.</p></section>
       <section id="quiz-screen" class="hidden" aria-live="polite"><p class="question-kicker" id="question-kicker"></p><h1 class="prompt" id="prompt" lang="ar" dir="rtl"></h1><div class="choices" id="choices" aria-label="Answer choices"></div><div class="feedback" id="feedback" role="status"></div><div class="action-area"><button class="button primary full" id="next-button" type="button" disabled>Choose an answer</button></div></section>
-      <section id="complete-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">celebration</span></div><h1>Chapter complete</h1><p id="complete-copy"></p><div class="score" id="final-score"></div><button class="button primary full" id="again-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">refresh</span>Practice again</button><a class="button tonal full" href="arabic.html">Back to Arabic Study</a></section>
+      <section id="complete-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">celebration</span></div><h1>Chapter complete</h1><p id="complete-copy"></p><div class="score" id="final-score"></div><button class="button primary full" id="again-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">refresh</span>Practice again</button><button class="button tonal full hidden" id="next-chapter-button" type="button"></button><a class="button tonal full" href="arabic.html">Back to Arabic Study</a></section>
+      <section id="unavailable-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">hourglass_top</span></div><h1>Chapter not available yet</h1><p id="unavailable-copy">This chapter is still being written.</p><a class="button primary full" href="arabic.html#unit6-chapters">Choose another chapter</a></section>
       <section id="error-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">error</span></div><h1>Quiz unavailable</h1><p id="error-copy">We could not load this study set.</p><a class="button primary full" href="arabic.html">Back to Arabic Study</a></section>
     </main>
   </div>
+  <script src="data/units-manifest.js"></script>
+  <script src="progress-store.js"></script>
   <script>
     const params = new URLSearchParams(location.search);
-    const unit = (params.get('unit') || 'unit6').replace(/[^a-zA-Z0-9_-]/g, '');
-    const chapterId = (params.get('chapter') || '').replace(/[^a-zA-Z0-9_-]/g, '');
-    const state = { data:null, chapter:null, questions:[], index:0, score:0, selected:null, answered:false };
+    const unit = (params.get('unit') || (window.UnitsManifest ? window.UnitsManifest.listUnits()[0] : 'unit6') || 'unit6').replace(/[^a-zA-Z0-9_-]/g, '');
+    const requestedChapterId = (params.get('chapter') || '').replace(/[^a-zA-Z0-9_-]/g, '');
+    const state = { data:null, chapter:null, chapterId:null, questions:[], index:0, score:0, selected:null, answered:false, displayToOriginal:{} };
     const $ = id => document.getElementById(id);
     const show = id => $(id).classList.remove('hidden');
     const hide = id => $(id).classList.add('hidden');
-    const storageKey = () => `arabicStudyProgress:${unit}:${chapterId}`;
-    const saveProgress = completed => localStorage.setItem(storageKey(), JSON.stringify({ completed, total:state.questions.length, score:state.score, updatedAt:new Date().toISOString() }));
-    const setError = message => { hide('loading-screen'); hide('quiz-screen'); hide('complete-screen'); hide('progress-block'); hide('topbar'); $('error-copy').textContent = message; show('error-screen'); };
     const shuffle = list => { const copy=[...list]; for(let i=copy.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [copy[i],copy[j]]=[copy[j],copy[i]]; } return copy; };
-    function updateProgress() { const total=state.questions.length || 1; const current=Math.min(state.index+1,total); const percent=Math.round((state.index/total)*100); $('progress-text').textContent = `Question ${current} of ${total}`; $('score-text').textContent = `${state.score} correct`; $('progress-fill').style.width = `${percent}%`; document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', percent); }
-    function renderQuestion() { state.selected=null; state.answered=false; const q=state.questions[state.index]; updateProgress(); $('question-kicker').textContent = 'Choose the English meaning'; $('prompt').textContent = q.arabic; const choices=$('choices'); choices.innerHTML=''; Object.entries(q.choices).forEach(([key,text]) => { const button=document.createElement('button'); button.type='button'; button.className='choice'; button.dataset.key=key; button.innerHTML=`<span class="choice-key">${key}</span><span class="choice-text">${text}</span>`; button.addEventListener('click',()=>selectAnswer(key)); choices.appendChild(button); }); hide('feedback'); $('feedback').className='feedback'; $('next-button').disabled=true; $('next-button').textContent='Choose an answer'; }
-    function selectAnswer(key) { if(state.answered) return; state.selected=key; document.querySelectorAll('.choice').forEach(button=>button.classList.toggle('selected',button.dataset.key===key)); $('next-button').disabled=false; $('next-button').textContent='Check answer'; }
-    function checkAnswer() { const q=state.questions[state.index]; const correct=state.selected===q.answer; state.answered=true; if(correct) state.score+=1; document.querySelectorAll('.choice').forEach(button=>{ const key=button.dataset.key; button.disabled=true; if(key===q.answer) button.classList.add('correct'); else if(key===state.selected) button.classList.add('incorrect'); }); const feedback=$('feedback'); feedback.className=`feedback show ${correct?'good':'bad'}`; const correctText=q.choices[q.answer]; feedback.innerHTML=`<span class="material-symbols-rounded" aria-hidden="true">${correct?'check_circle':'info'}</span><div><strong>${correct?'Correct!':'Not quite.'}</strong>${correct?`“${correctText}” is the correct meaning.`:`The correct answer is ${q.answer}: “${correctText}.”`}</div>`; $('next-button').textContent=state.index===state.questions.length-1?'See results':'Continue'; saveProgress(state.index+1); }
-    function next() { if(!state.selected) return; if(!state.answered) { checkAnswer(); return; } if(state.index<state.questions.length-1) { state.index+=1; renderQuestion(); } else { complete(); } }
-    function complete() { saveProgress(state.questions.length); hide('quiz-screen'); hide('progress-block'); $('final-score').textContent=`${state.score} / ${state.questions.length}`; $('complete-copy').textContent=`You completed ${state.chapter.label}. Keep practicing to make these words stick.`; show('complete-screen'); }
-    function restart() { state.index=0; state.score=0; state.selected=null; state.answered=false; localStorage.removeItem(storageKey()); hide('complete-screen'); show('progress-block'); show('quiz-screen'); renderQuestion(); window.scrollTo({top:0,behavior:'smooth'}); }
-    async function init() { try { const response=await fetch(`data/${unit}.json`,{cache:'no-store'}); if(!response.ok) throw new Error('data file not found'); state.data=await response.json(); const chapters=state.data.chapters || {}; const selectedId=chapterId || Object.keys(chapters)[0]; state.chapter=chapters[selectedId]; if(!state.chapter || !Array.isArray(state.chapter.questions) || !state.chapter.questions.length) throw new Error('chapter not found'); state.questions=shuffle(state.chapter.questions); document.title=`${state.chapter.label} · Arabic Study`; $('quiz-title').textContent=state.data.title || 'Arabic Study'; $('chapter-label').textContent=state.chapter.label; $('exit-button').addEventListener('click',()=>location.href='arabic.html'); $('restart-button').addEventListener('click',restart); $('again-button').addEventListener('click',restart); $('next-button').addEventListener('click',next); hide('loading-screen'); show('quiz-screen'); renderQuestion(); } catch(error) { setError('We could not load this quiz. Make sure the data file exists and the chapter link is correct.'); } }
+
+    function setUnavailable(message) {
+      hide('loading-screen'); hide('quiz-screen'); hide('complete-screen'); hide('error-screen'); hide('progress-block'); hide('topbar');
+      if (message) $('unavailable-copy').textContent = message;
+      show('unavailable-screen');
+    }
+
+    function setError(message) {
+      hide('loading-screen'); hide('quiz-screen'); hide('complete-screen'); hide('unavailable-screen'); hide('progress-block'); hide('topbar');
+      $('error-copy').textContent = message;
+      show('error-screen');
+    }
+
+    function saveProgress(patch) {
+      if (!window.ProgressStore) return;
+      window.ProgressStore.updateChapter(unit, state.chapterId, patch);
+      window.ProgressStore.setLastActive(unit, state.chapterId);
+    }
+
+    function updateProgress() {
+      const total = state.questions.length || 1;
+      const current = Math.min(state.index + 1, total);
+      const percent = Math.round((state.index / total) * 100);
+      $('progress-text').textContent = `Question ${current} of ${total}`;
+      $('score-text').textContent = `${state.score} correct`;
+      $('progress-fill').style.width = `${percent}%`;
+      document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', percent);
+    }
+
+    const LETTER_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+    function shuffleChoicesForQuestion(q) {
+      const originalKeys = Object.keys(q.choices);
+      const shuffledKeys = shuffle(originalKeys);
+      const displayToOriginal = {};
+      shuffledKeys.forEach((originalKey, i) => {
+        displayToOriginal[LETTER_LABELS[i]] = originalKey;
+      });
+      return displayToOriginal;
+    }
+
+    function renderQuestion() {
+      state.selected = null; state.answered = false;
+      const q = state.questions[state.index];
+      state.displayToOriginal = shuffleChoicesForQuestion(q);
+      updateProgress();
+      $('question-kicker').textContent = 'Choose the English meaning';
+      $('prompt').textContent = q.arabic;
+      const choices = $('choices');
+      choices.innerHTML = '';
+      Object.entries(state.displayToOriginal).forEach(([displayKey, originalKey]) => {
+        const text = q.choices[originalKey];
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'choice';
+        button.dataset.key = displayKey;
+        button.innerHTML = `<span class="choice-key">${displayKey}</span><span class="choice-text">${text}</span>`;
+        button.addEventListener('click', () => selectAnswer(displayKey));
+        choices.appendChild(button);
+      });
+      hide('feedback'); $('feedback').className = 'feedback';
+      $('next-button').disabled = true; $('next-button').textContent = 'Choose an answer';
+    }
+
+    function selectAnswer(key) {
+      if (state.answered) return;
+      state.selected = key;
+      document.querySelectorAll('.choice').forEach(button => button.classList.toggle('selected', button.dataset.key === key));
+      $('next-button').disabled = false; $('next-button').textContent = 'Check answer';
+    }
+
+    function checkAnswer() {
+      const q = state.questions[state.index];
+      const correctDisplayKey = Object.keys(state.displayToOriginal).find(
+        (displayKey) => state.displayToOriginal[displayKey] === q.answer
+      );
+      const correct = state.selected === correctDisplayKey;
+      state.answered = true;
+      if (correct) state.score += 1;
+      document.querySelectorAll('.choice').forEach(button => {
+        const key = button.dataset.key;
+        button.disabled = true;
+        if (key === correctDisplayKey) button.classList.add('correct');
+        else if (key === state.selected) button.classList.add('incorrect');
+      });
+      const feedback = $('feedback');
+      feedback.className = `feedback show ${correct ? 'good' : 'bad'}`;
+      const correctText = q.choices[q.answer];
+      feedback.innerHTML = `<span class="material-symbols-rounded" aria-hidden="true">${correct ? 'check_circle' : 'info'}</span><div><strong>${correct ? 'Correct!' : 'Not quite.'}</strong>${correct ? `\u201c${correctText}\u201d is the correct meaning.` : `The correct answer is ${correctDisplayKey}: \u201c${correctText}.\u201d`}</div>`;
+      $('next-button').textContent = state.index === state.questions.length - 1 ? 'See results' : 'Continue';
+      saveProgress({
+        status: 'in_progress',
+        totalQuestions: state.questions.length,
+        answeredCount: state.index + 1,
+        correctCount: state.score,
+        resumeIndex: state.index + 1,
+        latestScore: state.score
+      });
+    }
+
+    function next() {
+      if (!state.selected) return;
+      if (!state.answered) { checkAnswer(); return; }
+      if (state.index < state.questions.length - 1) { state.index += 1; renderQuestion(); }
+      else { complete(); }
+    }
+
+    function complete() {
+      const existing = window.ProgressStore ? window.ProgressStore.getChapter(unit, state.chapterId) : null;
+      const bestScore = Math.max((existing && existing.bestScore) || 0, state.score);
+      saveProgress({
+        status: 'completed',
+        totalQuestions: state.questions.length,
+        answeredCount: state.questions.length,
+        correctCount: state.score,
+        resumeIndex: state.questions.length,
+        latestScore: state.score,
+        bestScore,
+        completedAt: new Date().toISOString()
+      });
+      hide('quiz-screen'); hide('progress-block');
+      $('final-score').textContent = `${state.score} / ${state.questions.length}`;
+      $('complete-copy').textContent = `You completed ${state.chapter.label || state.chapter.title}. Keep practicing to make these words stick.`;
+
+      const nextChapterButton = $('next-chapter-button');
+      const nextChapter = window.UnitsManifest ? window.UnitsManifest.getNextAvailableChapter(unit, state.chapterId) : null;
+      if (nextChapter) {
+        nextChapterButton.textContent = `Start ${nextChapter.title}`;
+        nextChapterButton.classList.remove('hidden');
+        nextChapterButton.onclick = () => {
+          location.href = `quiz.html?unit=${encodeURIComponent(unit)}&chapter=${encodeURIComponent(nextChapter.id)}`;
+        };
+      } else {
+        nextChapterButton.classList.add('hidden');
+      }
+      show('complete-screen');
+    }
+
+    function restart() {
+      state.index = 0; state.score = 0; state.selected = null; state.answered = false;
+      if (window.ProgressStore) window.ProgressStore.resetCurrentAttempt(unit, state.chapterId);
+      hide('complete-screen'); show('progress-block'); show('quiz-screen');
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goToChapterPicker() {
+      location.href = 'arabic.html#unit6-chapters';
+    }
+
+    async function init() {
+      try {
+        const manifestChapter = window.UnitsManifest ? window.UnitsManifest.getChapter(unit, requestedChapterId) : null;
+        if (requestedChapterId && manifestChapter && manifestChapter.available === false) {
+          setUnavailable(manifestChapter.status ? `${manifestChapter.title}: ${manifestChapter.status}.` : 'This chapter is not available yet.');
+          return;
+        }
+
+        const response = await fetch(`data/${unit}.json`, { cache: 'no-store' });
+        if (!response.ok) throw new Error('data file not found');
+        state.data = await response.json();
+        const chapters = state.data.chapters || {};
+        const fallbackId = window.UnitsManifest
+          ? (window.UnitsManifest.getAvailableChapters(unit)[0] || {}).id
+          : Object.keys(chapters)[0];
+        const selectedId = requestedChapterId || fallbackId || Object.keys(chapters)[0];
+        state.chapter = chapters[selectedId];
+        state.chapterId = selectedId;
+
+        if (!state.chapter || !Array.isArray(state.chapter.questions) || !state.chapter.questions.length) {
+          setUnavailable('This chapter has no study data yet.');
+          return;
+        }
+
+        state.questions = shuffle(state.chapter.questions);
+        document.title = `${state.chapter.label || state.chapter.title} \u00b7 Arabic Study`;
+        $('quiz-title').textContent = state.data.title || 'Arabic Study';
+        $('chapter-label').textContent = state.chapter.label || state.chapter.title;
+        $('exit-button').addEventListener('click', () => location.href = 'arabic.html');
+        $('change-chapter-button').addEventListener('click', goToChapterPicker);
+        $('restart-button').addEventListener('click', restart);
+        $('again-button').addEventListener('click', restart);
+        $('next-button').addEventListener('click', next);
+
+        if (window.ProgressStore) window.ProgressStore.setLastActive(unit, state.chapterId);
+
+        hide('loading-screen');
+        show('quiz-screen');
+        renderQuestion();
+      } catch (error) {
+        setError('We could not load this quiz. Make sure the data file exists and the chapter link is correct.');
+      }
+    }
+
     init();
   </script>
 </body>
