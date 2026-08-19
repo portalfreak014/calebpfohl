@@ -55,6 +55,10 @@
   line-height: 1.2;
   text-align: center;
 }
+    .prompt.prompt-en {
+  font-family: "Noto Sans", sans-serif;
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+}
     .choices {
   display: grid;
   gap: 8px;
@@ -78,6 +82,10 @@
     .choice:active:not(:disabled) { transform:scale(.99); }
     .choice-key { display:grid; place-items:center; width:32px; height:32px; border-radius:50%; color:var(--variant); background:var(--surface-high); font-size:.82rem; font-weight:800; }
     .choice-text { font-size:1rem; font-weight:650; line-height:1.35; }
+    .choice-text.choice-text-ar {
+  font-family: "Noto Sans Arabic", sans-serif;
+  font-size: 1.15rem;
+}
     .choice.selected { border-color:var(--primary); background:var(--primary-container); }
     .choice.correct { border-color:var(--success); color:#083d19; background:var(--success-container); }
     .choice.incorrect { border-color:var(--error); color:#601410; background:var(--error-container); }
@@ -95,6 +103,9 @@
     .feedback.good { color:#083d19; background:var(--success-container); }
     .feedback.bad { color:#601410; background:var(--error-container); }
     .feedback strong { display:block; margin-bottom:2px; }
+    .feedback .feedback-ar {
+  font-family: "Noto Sans Arabic", sans-serif;
+}
     .action-area {
   margin-top: auto;
   min-height: 60px;
@@ -194,7 +205,7 @@
     <section class="progress-block" id="progress-block" aria-label="Quiz progress"><p class="progress-copy"><span id="progress-text">Loading</span><span id="score-text">0 correct</span></p><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div></section>
     <main>
       <section id="loading-screen" class="screen"><div class="screen-icon"><span class="material-symbols-rounded">progress_activity</span></div><h1>Loading your quiz</h1><p>Getting your study set ready.</p></section>
-      <section id="quiz-screen" class="hidden" aria-live="polite"><p class="question-kicker" id="question-kicker"></p><h1 class="prompt" id="prompt" lang="ar" dir="rtl"></h1><div class="choices" id="choices" aria-label="Answer choices"></div><div class="feedback" id="feedback" role="status"></div><div class="action-area"><button class="button primary full" id="next-button" type="button" disabled>Choose an answer</button></div></section>
+      <section id="quiz-screen" class="hidden" aria-live="polite"><p class="question-kicker" id="question-kicker"></p><h1 class="prompt" id="prompt"></h1><div class="choices" id="choices" aria-label="Answer choices"></div><div class="feedback" id="feedback" role="status"></div><div class="action-area"><button class="button primary full" id="next-button" type="button" disabled>Choose an answer</button></div></section>
       <section id="complete-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">celebration</span></div><h1>Chapter complete</h1><p id="complete-copy"></p><div class="score" id="final-score"></div><button class="button primary full" id="again-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">refresh</span>Practice again</button><button class="button tonal full hidden" id="next-chapter-button" type="button"></button><a class="button tonal full" href="arabic.html">Back to Arabic Study</a></section>
       <section id="unavailable-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">hourglass_top</span></div><h1>Chapter not available yet</h1><p id="unavailable-copy">This chapter is still being written.</p><a class="button primary full" href="arabic.html#unit6-chapters">Choose another chapter</a></section>
       <section id="error-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">error</span></div><h1>Quiz unavailable</h1><p id="error-copy">We could not load this study set.</p><a class="button primary full" href="arabic.html">Back to Arabic Study</a></section>
@@ -206,11 +217,17 @@
     const params = new URLSearchParams(location.search);
     const unit = (params.get('unit') || (window.UnitsManifest ? window.UnitsManifest.listUnits()[0] : 'unit6') || 'unit6').replace(/[^a-zA-Z0-9_-]/g, '');
     const requestedChapterId = (params.get('chapter') || '').replace(/[^a-zA-Z0-9_-]/g, '');
+    const requestedMode = (params.get('mode') || '').replace(/[^a-zA-Z0-9_-]/g, '');
+    const mode = requestedMode === 'en-to-ar' ? 'en-to-ar' : 'ar-to-en';
     const state = { data:null, chapter:null, chapterId:null, questions:[], index:0, score:0, selected:null, answered:false, displayToOriginal:{} };
     const $ = id => document.getElementById(id);
     const show = id => $(id).classList.remove('hidden');
     const hide = id => $(id).classList.add('hidden');
     const shuffle = list => { const copy=[...list]; for(let i=copy.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [copy[i],copy[j]]=[copy[j],copy[i]]; } return copy; };
+
+    function progressKeyFor(chapterId) {
+      return mode === 'en-to-ar' ? `${chapterId}:en-to-ar` : chapterId;
+    }
 
     function setUnavailable(message) {
       hide('loading-screen'); hide('quiz-screen'); hide('complete-screen'); hide('error-screen'); hide('progress-block'); hide('topbar');
@@ -226,8 +243,9 @@
 
     function saveProgress(patch) {
       if (!window.ProgressStore) return;
-      window.ProgressStore.updateChapter(unit, state.chapterId, patch);
-      window.ProgressStore.setLastActive(unit, state.chapterId);
+      const key = progressKeyFor(state.chapterId);
+      window.ProgressStore.updateChapter(unit, key, patch);
+      window.ProgressStore.setLastActive(unit, key);
     }
 
     function updateProgress() {
@@ -242,32 +260,70 @@
 
     const LETTER_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-    function shuffleChoicesForQuestion(q) {
+    function buildPromptAndChoices(q, allQuestions) {
+      if (mode === 'en-to-ar') {
+        const correctText = q.choices[q.answer];
+        const correctArabic = q.arabic;
+        const distractorPool = allQuestions
+          .filter((other) => other !== q && other.arabic !== correctArabic)
+          .map((other) => other.arabic);
+        const distractors = shuffle(distractorPool).slice(0, 3);
+        const optionTexts = shuffle([correctArabic, ...distractors]);
+        return {
+          promptText: correctText,
+          promptIsArabic: false,
+          optionTexts,
+          correctText: correctArabic,
+          optionIsArabic: true
+        };
+      }
       const originalKeys = Object.keys(q.choices);
-      const shuffledKeys = shuffle(originalKeys);
-      const displayToOriginal = {};
-      shuffledKeys.forEach((originalKey, i) => {
-        displayToOriginal[LETTER_LABELS[i]] = originalKey;
-      });
-      return displayToOriginal;
+      const optionTexts = shuffle(originalKeys).map((key) => q.choices[key]);
+      return {
+        promptText: q.arabic,
+        promptIsArabic: true,
+        optionTexts,
+        correctText: q.choices[q.answer],
+        optionIsArabic: false
+      };
     }
 
     function renderQuestion() {
       state.selected = null; state.answered = false;
       const q = state.questions[state.index];
-      state.displayToOriginal = shuffleChoicesForQuestion(q);
+      const built = buildPromptAndChoices(q, state.questions);
+
+      state.displayToOriginal = {};
+      built.optionTexts.forEach((text, i) => {
+        state.displayToOriginal[LETTER_LABELS[i]] = text;
+      });
+      state.correctText = built.correctText;
+
       updateProgress();
-      $('question-kicker').textContent = 'Choose the English meaning';
-      $('prompt').textContent = q.arabic;
+      const promptEl = $('prompt');
+      if (built.promptIsArabic) {
+        promptEl.classList.remove('prompt-en');
+        promptEl.setAttribute('lang', 'ar');
+        promptEl.setAttribute('dir', 'rtl');
+        $('question-kicker').textContent = 'Choose the English meaning';
+      } else {
+        promptEl.classList.add('prompt-en');
+        promptEl.removeAttribute('lang');
+        promptEl.removeAttribute('dir');
+        $('question-kicker').textContent = 'Choose the Arabic word';
+      }
+      promptEl.textContent = built.promptText;
+
       const choices = $('choices');
       choices.innerHTML = '';
-      Object.entries(state.displayToOriginal).forEach(([displayKey, originalKey]) => {
-        const text = q.choices[originalKey];
+      Object.entries(state.displayToOriginal).forEach(([displayKey, text]) => {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'choice';
         button.dataset.key = displayKey;
-        button.innerHTML = `<span class="choice-key">${displayKey}</span><span class="choice-text">${text}</span>`;
+        const textClass = built.optionIsArabic ? 'choice-text choice-text-ar' : 'choice-text';
+        const langAttr = built.optionIsArabic ? ' lang="ar" dir="rtl"' : '';
+        button.innerHTML = `<span class="choice-key">${displayKey}</span><span class="${textClass}"${langAttr}>${text}</span>`;
         button.addEventListener('click', () => selectAnswer(displayKey));
         choices.appendChild(button);
       });
@@ -283,9 +339,8 @@
     }
 
     function checkAnswer() {
-      const q = state.questions[state.index];
       const correctDisplayKey = Object.keys(state.displayToOriginal).find(
-        (displayKey) => state.displayToOriginal[displayKey] === q.answer
+        (displayKey) => state.displayToOriginal[displayKey] === state.correctText
       );
       const correct = state.selected === correctDisplayKey;
       state.answered = true;
@@ -298,8 +353,10 @@
       });
       const feedback = $('feedback');
       feedback.className = `feedback show ${correct ? 'good' : 'bad'}`;
-      const correctText = q.choices[q.answer];
-      feedback.innerHTML = `<span class="material-symbols-rounded" aria-hidden="true">${correct ? 'check_circle' : 'info'}</span><div><strong>${correct ? 'Correct!' : 'Not quite.'}</strong>${correct ? `\u201c${correctText}\u201d is the correct meaning.` : `The correct answer is ${correctDisplayKey}: \u201c${correctText}.\u201d`}</div>`;
+      const correctTextSpan = mode === 'en-to-ar'
+        ? `<span class="feedback-ar" lang="ar" dir="rtl">${state.correctText}</span>`
+        : `\u201c${state.correctText}\u201d`;
+      feedback.innerHTML = `<span class="material-symbols-rounded" aria-hidden="true">${correct ? 'check_circle' : 'info'}</span><div><strong>${correct ? 'Correct!' : 'Not quite.'}</strong>${correct ? `${correctTextSpan} is correct.` : `The correct answer is ${correctDisplayKey}: ${correctTextSpan}.`}</div>`;
       $('next-button').textContent = state.index === state.questions.length - 1 ? 'See results' : 'Continue';
       saveProgress({
         status: 'in_progress',
@@ -319,7 +376,8 @@
     }
 
     function complete() {
-      const existing = window.ProgressStore ? window.ProgressStore.getChapter(unit, state.chapterId) : null;
+      const key = progressKeyFor(state.chapterId);
+      const existing = window.ProgressStore ? window.ProgressStore.getChapter(unit, key) : null;
       const bestScore = Math.max((existing && existing.bestScore) || 0, state.score);
       saveProgress({
         status: 'completed',
@@ -333,7 +391,8 @@
       });
       hide('quiz-screen'); hide('progress-block');
       $('final-score').textContent = `${state.score} / ${state.questions.length}`;
-      $('complete-copy').textContent = `You completed ${state.chapter.label || state.chapter.title}. Keep practicing to make these words stick.`;
+      const modeLabel = mode === 'en-to-ar' ? 'English-to-Arabic' : 'Arabic-to-English';
+      $('complete-copy').textContent = `You completed ${state.chapter.label || state.chapter.title} (${modeLabel}). Keep practicing to make these words stick.`;
 
       const nextChapterButton = $('next-chapter-button');
       const nextChapter = window.UnitsManifest ? window.UnitsManifest.getNextAvailableChapter(unit, state.chapterId) : null;
@@ -341,7 +400,8 @@
         nextChapterButton.textContent = `Start ${nextChapter.title}`;
         nextChapterButton.classList.remove('hidden');
         nextChapterButton.onclick = () => {
-          location.href = `quiz.html?unit=${encodeURIComponent(unit)}&chapter=${encodeURIComponent(nextChapter.id)}`;
+          const modeParam = mode === 'en-to-ar' ? '&mode=en-to-ar' : '';
+          location.href = `quiz.html?unit=${encodeURIComponent(unit)}&chapter=${encodeURIComponent(nextChapter.id)}${modeParam}`;
         };
       } else {
         nextChapterButton.classList.add('hidden');
@@ -351,7 +411,7 @@
 
     function restart() {
       state.index = 0; state.score = 0; state.selected = null; state.answered = false;
-      if (window.ProgressStore) window.ProgressStore.resetCurrentAttempt(unit, state.chapterId);
+      if (window.ProgressStore) window.ProgressStore.resetCurrentAttempt(unit, progressKeyFor(state.chapterId));
       hide('complete-screen'); show('progress-block'); show('quiz-screen');
       renderQuestion();
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -386,16 +446,17 @@
         }
 
         state.questions = shuffle(state.chapter.questions);
-        document.title = `${state.chapter.label || state.chapter.title} \u00b7 Arabic Study`;
+        const modeSuffix = mode === 'en-to-ar' ? ' (English to Arabic)' : '';
+        document.title = `${state.chapter.label || state.chapter.title}${modeSuffix} \u00b7 Arabic Study`;
         $('quiz-title').textContent = state.data.title || 'Arabic Study';
-        $('chapter-label').textContent = state.chapter.label || state.chapter.title;
+        $('chapter-label').textContent = `${state.chapter.label || state.chapter.title}${modeSuffix}`;
         $('exit-button').addEventListener('click', () => location.href = 'arabic.html');
         $('change-chapter-button').addEventListener('click', goToChapterPicker);
         $('restart-button').addEventListener('click', restart);
         $('again-button').addEventListener('click', restart);
         $('next-button').addEventListener('click', next);
 
-        if (window.ProgressStore) window.ProgressStore.setLastActive(unit, state.chapterId);
+        if (window.ProgressStore) window.ProgressStore.setLastActive(unit, progressKeyFor(state.chapterId));
 
         hide('loading-screen');
         show('quiz-screen');
