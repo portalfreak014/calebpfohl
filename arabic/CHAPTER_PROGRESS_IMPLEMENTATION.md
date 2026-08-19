@@ -412,6 +412,76 @@ Before opening a pull request or merging:
 - The documented merge rules are implemented or clearly marked for the later sync phase.
 - A second unit's JSON file (even a small test fixture) can be dropped into `data/` and added to `UNITS_MANIFEST` without touching `quiz.html`, `arabic.html`, or `progress-store.js`.
 
+## Quiz Direction Mode (English-to-Arabic)
+
+### Purpose
+
+Every question in a chapter's data already pairs one Arabic word with one English meaning (`arabic` + the correct entry in `choices`, identified by `answer`). This section adds a second quiz direction that mirrors that same pairing instead of duplicating it: English-to-Arabic mode shows the English meaning as the prompt and requires selecting the correct Arabic word from among distractor words drawn from the same chapter.
+
+This is a **rendering-direction feature**, not a new content type. It reuses:
+
+- The same `data/{unitId}.json` files, unchanged, per the Content Contract.
+- The same `renderQuiz` shell, `ProgressStore`, and `UnitsManifest`.
+- The same choice-shuffle mechanism already used to randomize on-screen position (see the "Rendering engine" section above).
+
+No new fields are required in `unit6.json` or any future unit's data file. Every question already contains both halves of the pair the reversed direction needs.
+
+### Coverage rule
+
+English-to-Arabic mode covers 100% of a chapter's vocabulary — if a chapter has 20 questions in Arabic-to-English mode, it has the same 20 questions, reversed, in English-to-Arabic mode. There is no minimum-question threshold and no partial coverage; every chapter's full question set is mirrored.
+
+### URL and routing
+
+Add an optional `mode` query parameter, defaulting to the existing behavior when omitted:
+
+```text
+quiz.html?unit=unit6&chapter=ch26                       (defaults to mode=ar-to-en)
+quiz.html?unit=unit6&chapter=ch26&mode=ar-to-en          (explicit, same as default)
+quiz.html?unit=unit6&chapter=ch26&mode=en-to-ar          (new direction)
+```
+
+Sanitize `mode` the same way `unit` and `chapter` are sanitized. Any value other than `ar-to-en` or `en-to-ar` falls back to `ar-to-en`.
+
+### Reversal logic
+
+For each question `q` in the chapter's `questions` array:
+
+- **Arabic-to-English (existing)**: prompt is `q.arabic`. Correct choice is `q.choices[q.answer]`. Distractors are the other entries in `q.choices`.
+- **English-to-Arabic (new)**: prompt is `q.choices[q.answer]` (the correct English meaning — the literal core meaning tied to that word, not a paraphrase). Correct choice is `q.arabic`. Distractors are `arabic` values sampled from the *other* questions in the same chapter's question list.
+
+Distractor sampling for English-to-Arabic mode:
+
+- Exclude the current question's own `arabic` value from the distractor pool.
+- Sample 3 distinct Arabic words at random from the remaining questions in the same chapter.
+- Combine the correct word with the 3 distractors, then shuffle on-screen position using the same shuffle mechanism already applied to Arabic-to-English choices.
+- Because coverage is 100% and chapters are expected to have enough vocabulary for 3 distinct distractors, no fallback path (borrowing from another chapter, reducing choice count) is implemented. If this assumption is ever violated by a very small future chapter, that is a data problem to flag, not something the engine should silently work around.
+
+### Rendering and language attributes
+
+Direction changes which side of the pair needs Arabic typography and RTL handling:
+
+- Arabic-to-English: prompt uses `lang="ar" dir="rtl"` (large Arabic display text). Choices are plain English, LTR.
+- English-to-Arabic: prompt is plain English, LTR. Each choice button's Arabic word uses `lang="ar" dir="rtl"` inline, sized appropriately for a choice row rather than the large prompt display.
+
+The prompt element's `lang`/`dir` attributes must be set per-render based on the active mode, not hardcoded. Choice rows must independently mark up Arabic text with `lang="ar"` regardless of mode, since Arabic can appear either as the large prompt or inside a choice row depending on direction.
+
+### Progress tracking
+
+English-to-Arabic attempts are tracked as a separate chapter record from Arabic-to-English, not merged into the same progress entry. This keeps best-score and completion tracking meaningful per direction rather than conflating two different skills under one number.
+
+`ProgressStore` chapter keys become direction-aware: the existing `chapterId` (e.g. `ch26`) is suffixed with the mode when it is not the default, e.g. `ch26` for Arabic-to-English and `ch26:en-to-ar` for English-to-Arabic. Arabic-to-English keeps its existing unsuffixed key so no migration is needed for progress already recorded before this feature.
+
+`UnitsManifest` chapter entries are unchanged — direction is a quiz-session setting, not a property of the chapter itself. The homepage chapter picker may later offer a way to start either direction per chapter; that UI decision is out of scope for this section and can be added without changing the manifest shape.
+
+### Testing checklist additions
+
+- A chapter's English-to-Arabic quiz contains exactly as many questions as its Arabic-to-English quiz (100% coverage, same chapter).
+- Every English-to-Arabic prompt matches the literal correct meaning from the source question, not a reworded version.
+- Distractor Arabic words are never duplicates of each other or of the correct answer within a single question.
+- Arabic text renders correctly with `lang="ar" dir="rtl"` whether it appears as the large prompt or inside a choice row.
+- Progress for `ch26` (Arabic-to-English) and `ch26:en-to-ar` (English-to-Arabic) are tracked independently; completing one does not affect the other's best score or completion status.
+- `mode` is validated and falls back to `ar-to-en` for missing or invalid values, preserving all existing links that omit `mode` entirely.
+
 ## Implementation Order
 
 1. Add `data/units-manifest.js`.
@@ -423,6 +493,7 @@ Before opening a pull request or merging:
 7. Verify unit-agnosticism with a throwaway second unit fixture (per the Future Readiness checklist item above), then remove the fixture before opening a PR.
 8. Commit on `feature/arabic-chapter-progress`.
 9. Create a draft pull request for review; do not merge without approval.
+10. Implement the English-to-Arabic direction mode described above, reusing the existing engine, and add its testing checklist items to the Navigation/Progress sections before opening a follow-up pull request.
 
 ## Guardrails
 
@@ -433,3 +504,4 @@ Before opening a pull request or merging:
 - Do not promise persistence across devices before account sync exists; local progress belongs to the browser/device.
 - Prefer additive standalone modules and narrow integration changes over a broad rewrite.
 - Do not introduce unit-specific or subject-specific logic into `quiz.html`, `progress-store.js`, or the manifest helper API. If a change only makes sense for Arabic or for Unit 6 specifically, it belongs in a data file or manifest entry, not in shared code.
+- Do not introduce quiz-direction-specific logic outside the single reversal function described above. Both directions must continue to share `ProgressStore`, `UnitsManifest`, and the shuffle mechanism.
