@@ -140,7 +140,8 @@
     .icon-button:focus-visible,
 .button:focus-visible,
 .nav-item:focus-visible,
-.resource-item:focus-visible {
+.resource-item:focus-visible,
+.segment-button:focus-visible {
   outline: 3px solid var(--md-sys-color-primary);
   outline-offset: 2px;
 }
@@ -242,6 +243,37 @@
     }
 
     .text-button:hover { background: rgb(103 80 164 / 0.08); }
+
+    .segmented-control {
+      display: inline-flex;
+      padding: 4px;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: 999px;
+      background: var(--md-sys-color-surface-container);
+      margin-bottom: 16px;
+    }
+
+    .segment-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 40px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--md-sys-color-on-surface-variant);
+      background: transparent;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease;
+    }
+
+    .segment-button.active {
+      color: var(--md-sys-color-on-primary-container);
+      background: var(--md-sys-color-primary-container);
+    }
 
     .continue {
       padding: 20px;
@@ -747,6 +779,14 @@
       <div class="section-heading">
         <h2 id="unit6-chapters-heading">Unit 6 vocabulary</h2>
       </div>
+      <div class="segmented-control" role="group" aria-label="Quiz direction">
+        <button class="segment-button" id="mode-ar-to-en-button" type="button" aria-pressed="true">
+          <span lang="ar" dir="rtl">ع</span>&nbsp;&rarr; English
+        </button>
+        <button class="segment-button" id="mode-en-to-ar-button" type="button" aria-pressed="false">
+          English &rarr;&nbsp;<span lang="ar" dir="rtl">ع</span>
+        </button>
+      </div>
       <div class="study-list" id="chapter-list"></div>
     </section>
 
@@ -1069,11 +1109,59 @@
   <script src="progress-store.js"></script>
   <script>
     const UNIT_ID = "unit6";
+    const MODE_STORAGE_KEY = "arabicStudy.quizDirection";
     const STATUS_LABELS = {
       not_started: "Start",
       in_progress: "Continue",
       completed: "Review"
     };
+
+    function getStoredMode() {
+      try {
+        const stored = localStorage.getItem(MODE_STORAGE_KEY);
+        return stored === "en-to-ar" ? "en-to-ar" : "ar-to-en";
+      } catch (err) {
+        return "ar-to-en";
+      }
+    }
+
+    function setStoredMode(mode) {
+      try {
+        localStorage.setItem(MODE_STORAGE_KEY, mode);
+      } catch (err) {
+        // ignore if storage is unavailable
+      }
+    }
+
+    let currentMode = getStoredMode();
+
+    function progressKeyFor(chapterId) {
+      return currentMode === "en-to-ar" ? `${chapterId}:en-to-ar` : chapterId;
+    }
+
+    function quizUrlFor(unitId, chapterId) {
+      const modeParam = currentMode === "en-to-ar" ? "&mode=en-to-ar" : "";
+      return `quiz.html?unit=${encodeURIComponent(unitId)}&chapter=${encodeURIComponent(chapterId)}${modeParam}`;
+    }
+
+    function updateModeToggleUI() {
+      const arToEnButton = document.getElementById("mode-ar-to-en-button");
+      const enToArButton = document.getElementById("mode-en-to-ar-button");
+      if (!arToEnButton || !enToArButton) return;
+      const isEnToAr = currentMode === "en-to-ar";
+      arToEnButton.classList.toggle("active", !isEnToAr);
+      arToEnButton.setAttribute("aria-pressed", String(!isEnToAr));
+      enToArButton.classList.toggle("active", isEnToAr);
+      enToArButton.setAttribute("aria-pressed", String(isEnToAr));
+    }
+
+    function setMode(mode) {
+      currentMode = mode === "en-to-ar" ? "en-to-ar" : "ar-to-en";
+      setStoredMode(currentMode);
+      updateModeToggleUI();
+      renderChapterList();
+      renderContinueCard();
+    }
 
     function renderChapterList() {
       const listEl = document.getElementById("chapter-list");
@@ -1083,15 +1171,16 @@
 
       listEl.innerHTML = "";
       chapters.forEach((chapter) => {
+        const key = progressKeyFor(chapter.id);
         const chapterProgress = profile && profile.units[UNIT_ID]
-          ? profile.units[UNIT_ID].chapters[chapter.id]
+          ? profile.units[UNIT_ID].chapters[key]
           : null;
         const status = chapterProgress ? chapterProgress.status : "not_started";
 
         const item = document.createElement(chapter.available ? "a" : "div");
         item.className = "study-item" + (chapter.available ? "" : " is-disabled");
         if (chapter.available) {
-          item.href = `quiz.html?unit=${encodeURIComponent(UNIT_ID)}&chapter=${encodeURIComponent(chapter.id)}`;
+          item.href = quizUrlFor(UNIT_ID, chapter.id);
         } else {
           item.setAttribute("aria-disabled", "true");
         }
@@ -1139,22 +1228,24 @@
       let chapterMeta = fallbackChapter;
 
       if (lastActive && lastActive.unitId && lastActive.chapterId) {
-        const stillAvailable = window.UnitsManifest.getChapter(lastActive.unitId, lastActive.chapterId);
+        const rawChapterId = lastActive.chapterId.split(":")[0];
+        const stillAvailable = window.UnitsManifest.getChapter(lastActive.unitId, rawChapterId);
         if (stillAvailable && stillAvailable.available) {
           unitId = lastActive.unitId;
-          chapterId = lastActive.chapterId;
+          chapterId = rawChapterId;
           chapterMeta = stillAvailable;
         }
       }
 
       if (!chapterId) return;
 
-      const quizUrl = `quiz.html?unit=${encodeURIComponent(unitId)}&chapter=${encodeURIComponent(chapterId)}`;
+      const quizUrl = quizUrlFor(unitId, chapterId);
       if (heroButton) heroButton.href = quizUrl;
       if (playLink) playLink.href = quizUrl;
       if (titleEl && chapterMeta) titleEl.textContent = chapterMeta.title;
 
-      const chapterProgress = profile.units[unitId] && profile.units[unitId].chapters[chapterId];
+      const key = progressKeyFor(chapterId);
+      const chapterProgress = profile.units[unitId] && profile.units[unitId].chapters[key];
       if (chapterProgress && chapterProgress.totalQuestions > 0) {
         const percent = Math.max(0, Math.min(100, Math.round((chapterProgress.answeredCount / chapterProgress.totalQuestions) * 100)));
         fill.style.width = percent + "%";
@@ -1167,11 +1258,17 @@
           if (eyebrowEl) eyebrowEl.textContent = "Continue where you left off";
         }
       } else {
+        fill.style.width = "0%";
+        bar.setAttribute("aria-valuenow", "0");
         label.textContent = "Your progress will appear here after your first quiz.";
         if (eyebrowEl) eyebrowEl.textContent = "Most recent set";
       }
     }
 
+    document.getElementById("mode-ar-to-en-button").addEventListener("click", () => setMode("ar-to-en"));
+    document.getElementById("mode-en-to-ar-button").addEventListener("click", () => setMode("en-to-ar"));
+
+    updateModeToggleUI();
     renderChapterList();
     renderContinueCard();
 
