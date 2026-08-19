@@ -937,56 +937,7 @@
     </div>
   </nav>
 
-  <script>
-    const progress = JSON.parse(localStorage.getItem("arabicStudyProgress") || "null");
-    const fill = document.getElementById("progress-fill");
-    const label = document.getElementById("progress-label");
-    const bar = document.querySelector(".progress");
-
-    if (progress && Number.isFinite(progress.completed) && Number.isFinite(progress.total) && progress.total > 0) {
-      const percent = Math.max(0, Math.min(100, Math.round((progress.completed / progress.total) * 100)));
-      fill.style.width = percent + "%";
-      label.textContent = `${progress.completed} of ${progress.total} questions completed`;
-      bar.setAttribute("aria-valuenow", percent);
-    }
-
-    const menuButton = document.getElementById("menu-button");
-const drawer = document.getElementById("navigation-drawer");
-const drawerScrim = document.getElementById("drawer-scrim");
-const drawerCloseButton = document.getElementById("drawer-close-button");
-
-function openDrawer() {
-  drawer.classList.add("open");
-  drawerScrim.classList.add("open");
-  drawer.setAttribute("aria-hidden", "false");
-  menuButton.setAttribute("aria-expanded", "true");
-  drawerCloseButton.focus();
-}
-
-function closeDrawer() {
-  drawer.classList.remove("open");
-  drawerScrim.classList.remove("open");
-  drawer.setAttribute("aria-hidden", "true");
-  menuButton.setAttribute("aria-expanded", "false");
-  menuButton.focus();
-}
-
-menuButton.addEventListener("click", openDrawer);
-drawerCloseButton.addEventListener("click", closeDrawer);
-drawerScrim.addEventListener("click", closeDrawer);
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && drawer.classList.contains("open")) {
-    closeDrawer();
-  }
-});
-
-drawer.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", closeDrawer);
-});
-  </script>
-
-  <div
+   <div
   class="drawer-scrim"
   id="drawer-scrim"
   aria-hidden="true"
@@ -1059,5 +1010,54 @@ drawer.querySelectorAll("a").forEach((link) => {
     </span>
   </div>
 </nav>
+
+  <script>
+    const progress = JSON.parse(localStorage.getItem("arabicStudyProgress") || "null");
+    const fill = document.getElementById("progress-fill");
+    const label = document.getElementById("progress-label");
+    const bar = document.querySelector(".progress");
+
+    if (progress && Number.isFinite(progress.completed) && Number.isFinite(progress.total) && progress.total > 0) {
+      const percent = Math.max(0, Math.min(100, Math.round((progress.completed / progress.total) * 100)));
+      fill.style.width = percent + "%";
+      label.textContent = `${progress.completed} of ${progress.total} questions completed`;
+      bar.setAttribute("aria-valuenow", percent);
+    }
+
+    const menuButton = document.getElementById("menu-button");
+const drawer = document.getElementById("navigation-drawer");
+const drawerScrim = document.getElementById("drawer-scrim");
+const drawerCloseButton = document.getElementById("drawer-close-button");
+
+function openDrawer() {
+  drawer.classList.add("open");
+  drawerScrim.classList.add("open");
+  drawer.setAttribute("aria-hidden", "false");
+  menuButton.setAttribute("aria-expanded", "true");
+  drawerCloseButton.focus();
+}
+
+function closeDrawer() {
+  drawer.classList.remove("open");
+  drawerScrim.classList.remove("open");
+  drawer.setAttribute("aria-hidden", "true");
+  menuButton.setAttribute("aria-expanded", "false");
+  menuButton.focus();
+}
+
+menuButton.addEventListener("click", openDrawer);
+drawerCloseButton.addEventListener("click", closeDrawer);
+drawerScrim.addEventListener("click", closeDrawer);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && drawer.classList.contains("open")) {
+    closeDrawer();
+  }
+});
+
+drawer.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", closeDrawer);
+});
+  </script>
 </body>
 </html>
