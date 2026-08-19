@@ -206,7 +206,7 @@
     const params = new URLSearchParams(location.search);
     const unit = (params.get('unit') || (window.UnitsManifest ? window.UnitsManifest.listUnits()[0] : 'unit6') || 'unit6').replace(/[^a-zA-Z0-9_-]/g, '');
     const requestedChapterId = (params.get('chapter') || '').replace(/[^a-zA-Z0-9_-]/g, '');
-    const state = { data:null, chapter:null, chapterId:null, questions:[], index:0, score:0, selected:null, answered:false };
+    const state = { data:null, chapter:null, chapterId:null, questions:[], index:0, score:0, selected:null, answered:false, displayToOriginal:{} };
     const $ = id => document.getElementById(id);
     const show = id => $(id).classList.remove('hidden');
     const hide = id => $(id).classList.add('hidden');
@@ -240,21 +240,35 @@
       document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', percent);
     }
 
+    const LETTER_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+    function shuffleChoicesForQuestion(q) {
+      const originalKeys = Object.keys(q.choices);
+      const shuffledKeys = shuffle(originalKeys);
+      const displayToOriginal = {};
+      shuffledKeys.forEach((originalKey, i) => {
+        displayToOriginal[LETTER_LABELS[i]] = originalKey;
+      });
+      return displayToOriginal;
+    }
+
     function renderQuestion() {
       state.selected = null; state.answered = false;
       const q = state.questions[state.index];
+      state.displayToOriginal = shuffleChoicesForQuestion(q);
       updateProgress();
       $('question-kicker').textContent = 'Choose the English meaning';
       $('prompt').textContent = q.arabic;
       const choices = $('choices');
       choices.innerHTML = '';
-      Object.entries(q.choices).forEach(([key, text]) => {
+      Object.entries(state.displayToOriginal).forEach(([displayKey, originalKey]) => {
+        const text = q.choices[originalKey];
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'choice';
-        button.dataset.key = key;
-        button.innerHTML = `<span class="choice-key">${key}</span><span class="choice-text">${text}</span>`;
-        button.addEventListener('click', () => selectAnswer(key));
+        button.dataset.key = displayKey;
+        button.innerHTML = `<span class="choice-key">${displayKey}</span><span class="choice-text">${text}</span>`;
+        button.addEventListener('click', () => selectAnswer(displayKey));
         choices.appendChild(button);
       });
       hide('feedback'); $('feedback').className = 'feedback';
@@ -270,19 +284,22 @@
 
     function checkAnswer() {
       const q = state.questions[state.index];
-      const correct = state.selected === q.answer;
+      const correctDisplayKey = Object.keys(state.displayToOriginal).find(
+        (displayKey) => state.displayToOriginal[displayKey] === q.answer
+      );
+      const correct = state.selected === correctDisplayKey;
       state.answered = true;
       if (correct) state.score += 1;
       document.querySelectorAll('.choice').forEach(button => {
         const key = button.dataset.key;
         button.disabled = true;
-        if (key === q.answer) button.classList.add('correct');
+        if (key === correctDisplayKey) button.classList.add('correct');
         else if (key === state.selected) button.classList.add('incorrect');
       });
       const feedback = $('feedback');
       feedback.className = `feedback show ${correct ? 'good' : 'bad'}`;
       const correctText = q.choices[q.answer];
-      feedback.innerHTML = `<span class="material-symbols-rounded" aria-hidden="true">${correct ? 'check_circle' : 'info'}</span><div><strong>${correct ? 'Correct!' : 'Not quite.'}</strong>${correct ? `\u201c${correctText}\u201d is the correct meaning.` : `The correct answer is ${q.answer}: \u201c${correctText}.\u201d`}</div>`;
+      feedback.innerHTML = `<span class="material-symbols-rounded" aria-hidden="true">${correct ? 'check_circle' : 'info'}</span><div><strong>${correct ? 'Correct!' : 'Not quite.'}</strong>${correct ? `\u201c${correctText}\u201d is the correct meaning.` : `The correct answer is ${correctDisplayKey}: \u201c${correctText}.\u201d`}</div>`;
       $('next-button').textContent = state.index === state.questions.length - 1 ? 'See results' : 'Continue';
       saveProgress({
         status: 'in_progress',
