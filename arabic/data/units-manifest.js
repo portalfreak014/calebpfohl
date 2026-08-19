@@ -19,8 +19,8 @@ window.UNITS_MANIFEST = {
       { id: 'ch26', number: 26, title: 'Chapter 26', available: true },
       { id: 'ch27', number: 27, title: 'Chapter 27', available: true },
       { id: 'ch28', number: 28, title: 'Chapter 28', available: true },
-      { id: 'ch29', number: 29, title: 'Chapter 29', available: false, status: 'Coming soon' },
-      { id: 'ch30', number: 30, title: 'Chapter 30', available: false, status: 'Coming soon' }
+      { id: 'ch29', number: 29, title: 'Chapter 29', available: true },
+      { id: 'ch30', number: 30, title: 'Chapter 30', available: true }
     ]
   }
   // Future units are added the same way, e.g.:
