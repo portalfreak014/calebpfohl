@@ -10,1309 +10,148 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      color-scheme: light;
-      --md-sys-color-primary: #6750a4;
-      --md-sys-color-on-primary: #ffffff;
-      --md-sys-color-primary-container: #e9ddff;
-      --md-sys-color-on-primary-container: #21005d;
-      --md-sys-color-secondary-container: #e8def8;
-      --md-sys-color-on-secondary-container: #1d192b;
-      --md-sys-color-surface: #fffbfe;
-      --md-sys-color-surface-container: #f3edf7;
-      --md-sys-color-surface-container-high: #ece6f0;
-      --md-sys-color-on-surface: #1c1b1f;
-      --md-sys-color-on-surface-variant: #49454f;
-      --md-sys-color-outline: #79747e;
-      --md-sys-color-outline-variant: #cac4d0;
-      --md-sys-elevation-1: 0 1px 2px rgb(0 0 0 / 0.30), 0 1px 3px 1px rgb(0 0 0 / 0.15);
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-      --radius-md: 16px;
-    }
-
-    * { box-sizing: border-box; }
-
-    html {
-      min-width: 320px;
-      background: var(--md-sys-color-surface);
-    }
-
-    body {
-      margin: 0;
-      min-height: 100dvh;
-      color: var(--md-sys-color-on-surface);
-      background: var(--md-sys-color-surface);
-      font-family: "Noto Sans", "Noto Sans Arabic", system-ui, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    button, a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    button {
-      font: inherit;
-    }
-
-    .material-symbols-rounded {
-      font-family: "Material Symbols Rounded";
-      font-weight: normal;
-      font-style: normal;
-      font-size: 24px;
-      line-height: 1;
-      letter-spacing: normal;
-      text-transform: none;
-      display: inline-block;
-      white-space: nowrap;
-      word-wrap: normal;
-      direction: ltr;
-      -webkit-font-feature-settings: "liga";
-      -webkit-font-smoothing: antialiased;
-      font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
-    }
-
-    .app {
-      width: min(100%, 760px);
-      min-height: 100dvh;
-      margin: 0 auto;
-      padding: max(16px, env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom));
-    }
-
-    .top-app-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 64px;
-      margin-bottom: 20px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .brand-mark {
-      display: grid;
-      place-items: center;
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      color: var(--md-sys-color-on-primary-container);
-      background: var(--md-sys-color-primary-container);
-    }
-
-    .brand-mark .material-symbols-rounded {
-      font-size: 26px;
-      font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
-    }
-
-    .brand-mark .arabic {
-  font-family: "Noto Sans Arabic", sans-serif;
-  font-size: 1.4rem;
-  font-weight: 800;
-  line-height: 1;
-}
-
-    .brand-copy { line-height: 1.15; }
-
-    .brand-title {
-      margin: 0;
-      font-size: 1rem;
-      font-weight: 700;
-    }
-
-    .brand-subtitle {
-      margin: 4px 0 0;
-      color: var(--md-sys-color-on-surface-variant);
-      font-size: 0.78rem;
-    }
-
-    .icon-button {
-      display: inline-grid;
-      place-items: center;
-      width: 48px;
-      height: 48px;
-      padding: 0;
-      border: 0;
-      border-radius: 50%;
-      color: var(--md-sys-color-on-surface-variant);
-      background: transparent;
-      cursor: pointer;
-    }
-
-    .icon-button:hover { background: rgb(29 27 32 / 0.08); }
-    .icon-button:focus-visible,
-.button:focus-visible,
-.nav-item:focus-visible,
-.resource-item:focus-visible,
-.segment-button:focus-visible {
-  outline: 3px solid var(--md-sys-color-primary);
-  outline-offset: 2px;
-}
-
-    .hero {
-      padding: 24px;
-      border-radius: var(--radius-xl);
-      color: var(--md-sys-color-on-primary-container);
-      background: var(--md-sys-color-primary-container);
-    }
-
-    .eyebrow {
-      margin: 0 0 10px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    h1, h2, h3, p { margin-top: 0; }
-
-    h1 {
-      max-width: 16ch;
-      margin-bottom: 12px;
-      font-size: clamp(2rem, 8vw, 3rem);
-      line-height: 1.12;
-      letter-spacing: -0.04em;
-    }
-
-    .hero p {
-      max-width: 48ch;
-      margin-bottom: 24px;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 48px;
-      padding: 0 24px;
-      border: 0;
-      border-radius: 999px;
-      font-weight: 700;
-      text-decoration: none;
-      cursor: pointer;
-      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
-    }
-
-    .button:active { transform: scale(0.98); }
-
-    .button-primary {
-      color: var(--md-sys-color-on-primary);
-      background: var(--md-sys-color-primary);
-      box-shadow: var(--md-sys-elevation-1);
-    }
-
-    .button-primary:hover { box-shadow: 0 2px 5px rgb(0 0 0 / 0.25); }
-
-    .button-tonal {
-      color: var(--md-sys-color-on-primary-container);
-      background: rgb(255 255 255 / 0.55);
-    }
-
-    .button-tonal:hover { background: rgb(255 255 255 / 0.75); }
-
-    .section { margin-top: 36px; }
-
-    .section-heading {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .section-heading h2 {
-      margin: 0;
-      font-size: 1.35rem;
-      letter-spacing: -0.02em;
-    }
-
-    .text-button {
-      padding: 10px 12px;
-      border: 0;
-      border-radius: 999px;
-      color: var(--md-sys-color-primary);
-      background: transparent;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .text-button:hover { background: rgb(103 80 164 / 0.08); }
-
-    .segmented-control {
-      display: inline-flex;
-      padding: 4px;
-      border: 1px solid var(--md-sys-color-outline-variant);
-      border-radius: 999px;
-      background: var(--md-sys-color-surface-container);
-      margin-bottom: 16px;
-    }
-
-    .segment-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      min-height: 40px;
-      padding: 0 16px;
-      border: 0;
-      border-radius: 999px;
-      color: var(--md-sys-color-on-surface-variant);
-      background: transparent;
-      font-size: 0.86rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 150ms ease, color 150ms ease;
-    }
-
-    .segment-button.active {
-      color: var(--md-sys-color-on-primary-container);
-      background: var(--md-sys-color-primary-container);
-    }
-
-    .continue {
-      padding: 20px;
-      border: 1px solid var(--md-sys-color-outline-variant);
-      border-radius: var(--radius-lg);
-      background: var(--md-sys-color-surface);
-    }
-
-    .continue-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .continue-label {
-      margin: 0 0 6px;
-      color: var(--md-sys-color-on-surface-variant);
-      font-size: 0.86rem;
-      font-weight: 700;
-    }
-
-    .continue-title {
-      margin: 0;
-      font-size: 1.15rem;
-      line-height: 1.3;
-    }
-
-    .continue-top a {
-      display: grid;
-      place-items: center;
-      color: inherit;
-    }
-
-    .progress-copy {
-      margin: 18px 0 10px;
-      color: var(--md-sys-color-on-surface-variant);
-      font-size: 0.9rem;
-    }
-
-    .progress {
-      height: 8px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: var(--md-sys-color-surface-container-high);
-    }
-
-    .progress > span {
-      display: block;
-      width: 0;
-      height: 100%;
-      border-radius: inherit;
-      background: var(--md-sys-color-primary);
-      transition: width 300ms ease;
-    }
-
-    .study-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .study-item {
-      display: grid;
-      grid-template-columns: 48px minmax(0, 1fr) auto;
-      align-items: center;
-      gap: 14px;
-      width: 100%;
-      min-height: 76px;
-      padding: 14px;
-      border: 1px solid transparent;
-      border-radius: var(--radius-md);
-      color: inherit;
-      background: var(--md-sys-color-surface-container);
-      text-align: left;
-      text-decoration: none;
-      transition: background 150ms ease, transform 150ms ease;
-    }
-
-    .study-item:hover {
-      background: var(--md-sys-color-surface-container-high);
-      transform: translateY(-1px);
-    }
-
-    .study-item.is-disabled {
-      cursor: not-allowed;
-      opacity: 0.62;
-      pointer-events: none;
-    }
-
-    .study-item-status {
-      justify-self: end;
-      padding: 3px 10px;
-      border-radius: 999px;
-      color: var(--md-sys-color-on-surface-variant);
-      background: var(--md-sys-color-surface-container-high);
-      font-size: 0.66rem;
-      font-weight: 800;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .study-item-status.status-completed {
-      color: var(--md-sys-color-on-secondary-container);
-      background: var(--md-sys-color-secondary-container);
-    }
-
-    .study-item-status.status-in-progress {
-      color: var(--md-sys-color-on-primary-container);
-      background: var(--md-sys-color-primary-container);
-    }
-
-    .resource-groups {
-  display: grid;
-  gap: 24px;
-}
-
-.resource-group-title {
-  margin: 0 0 10px;
-  color: var(--md-sys-color-on-surface-variant);
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.resource-list {
-  display: grid;
-  gap: 10px;
-}
-
-.resource-item {
-  display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 14px;
-  min-height: 76px;
-  padding: 14px;
-  border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--radius-md);
-  color: inherit;
-  background: var(--md-sys-color-surface);
-  text-decoration: none;
-  transition: background 150ms ease, transform 150ms ease;
-}
-
-.resource-item:hover {
-  background: var(--md-sys-color-surface-container);
-  transform: translateY(-1px);
-}
-
-.resource-icon {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  color: var(--md-sys-color-on-secondary-container);
-  background: var(--md-sys-color-secondary-container);
-}
-
-.resource-title {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.resource-meta {
-  margin: 4px 0 0;
-  color: var(--md-sys-color-on-surface-variant);
-  font-size: 0.84rem;
-  line-height: 1.35;
-}
-
-.external-icon {
-  color: var(--md-sys-color-on-surface-variant);
-  font-size: 18px;
-}
-
-    .study-icon {
-      display: grid;
-      place-items: center;
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      color: var(--md-sys-color-on-secondary-container);
-      background: var(--md-sys-color-secondary-container);
-    }
-
-    .study-icon .arabic {
-      font-family: "Noto Sans Arabic", sans-serif;
-      font-size: 1.25rem;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .study-title {
-      margin: 0;
-      font-weight: 700;
-      line-height: 1.25;
-    }
-
-    .study-meta {
-      margin: 4px 0 0;
-      color: var(--md-sys-color-on-surface-variant);
-      font-size: 0.84rem;
-    }
-
-    .recent {
-      display: grid;
-      gap: 10px;
-    }
-
-    .recent-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 2px;
-      border-bottom: 1px solid var(--md-sys-color-outline-variant);
-    }
-
-    .recent-item:last-child { border-bottom: 0; }
-
-    .recent-title { margin: 0; font-weight: 700; }
-    .recent-meta { margin: 4px 0 0; color: var(--md-sys-color-on-surface-variant); font-size: 0.84rem; }
-    .score { color: var(--md-sys-color-primary); font-weight: 800; }
-
-    .bottom-nav {
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 10;
-      display: flex;
-      justify-content: center;
-      padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
-      border-top: 1px solid var(--md-sys-color-outline-variant);
-      background: rgb(255 251 254 / 0.94);
-      backdrop-filter: blur(16px);
-    }
-
-    .bottom-nav-inner {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(80px, 1fr));
-      width: min(100%, 520px);
-      gap: 4px;
-    }
-
-    .nav-item {
-      display: grid;
-      justify-items: center;
-      gap: 3px;
-      min-height: 56px;
-      padding: 6px 12px;
-      border: 0;
-      border-radius: 16px;
-      color: var(--md-sys-color-on-surface-variant);
-      background: transparent;
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .nav-item.active { color: var(--md-sys-color-on-secondary-container); }
-
-    .nav-item.active .nav-icon {
-      min-width: 64px;
-      padding: 4px 16px;
-      border-radius: 999px;
-      background: var(--md-sys-color-secondary-container);
-    }
-
-    .nav-item.coming-soon {
-  color: color-mix(
-    in srgb,
-    var(--md-sys-color-on-surface-variant) 58%,
-    var(--md-sys-color-surface)
-  );
-  cursor: not-allowed;
-  opacity: 0.72;
-}
-
-.nav-item.coming-soon:disabled {
-  color: color-mix(
-    in srgb,
-    var(--md-sys-color-on-surface-variant) 58%,
-    var(--md-sys-color-surface)
-  );
-  background: transparent;
-}
-
-.nav-item.coming-soon .nav-icon {
-  opacity: 0.72;
-}
-
-.nav-item.coming-soon .coming-soon-label {
-  display: block;
-  margin-top: -1px;
-  color: inherit;
-  font-size: 0.62rem;
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-}
-
-    .empty-note {
-      padding: 16px;
-      border-radius: var(--radius-md);
-      color: var(--md-sys-color-on-surface-variant);
-      background: var(--md-sys-color-surface-container);
-      font-size: 0.92rem;
-      line-height: 1.55;
-    }
-
-    .drawer-scrim {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  opacity: 0;
-  visibility: hidden;
-  background: rgb(28 27 31 / 0.38);
-  transition: opacity 200ms ease, visibility 200ms ease;
-}
-
-.drawer-scrim.open {
-  opacity: 1;
-  visibility: visible;
-}
-
-.navigation-drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 21;
-  width: min(86vw, 360px);
-  padding: max(20px, env(safe-area-inset-top)) 12px 24px;
-  overflow-y: auto;
-  transform: translateX(105%);
-  color: var(--md-sys-color-on-surface);
-  background: var(--md-sys-color-surface-container);
-  box-shadow: -8px 0 24px rgb(0 0 0 / 0.16);
-  transition: transform 250ms ease;
-}
-
-.navigation-drawer.open {
-  transform: translateX(0);
-}
-
-.drawer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 56px;
-  padding: 0 8px 14px 16px;
-}
-
-.drawer-title {
-  margin: 0;
-  font-size: 1.15rem;
-  font-weight: 800;
-}
-
-.drawer-section-label {
-  margin: 20px 16px 8px;
-  color: var(--md-sys-color-on-surface-variant);
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.drawer-item {
-  display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  align-items: center;
-  gap: 14px;
-  min-height: 56px;
-  margin: 2px 0;
-  padding: 0 16px;
-  border-radius: 999px;
-  color: var(--md-sys-color-on-surface);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.drawer-item:hover {
-  background: rgb(103 80 164 / 0.08);
-}
-
-.drawer-item.active {
-  color: var(--md-sys-color-on-secondary-container);
-  background: var(--md-sys-color-secondary-container);
-}
-
-.drawer-item.coming-soon {
-  color: var(--md-sys-color-on-surface-variant);
-  cursor: not-allowed;
-  opacity: 0.62;
-}
-
-.drawer-item.coming-soon .drawer-item-text {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.drawer-item-badge {
-  padding: 3px 8px;
-  border-radius: 999px;
-  color: var(--md-sys-color-on-surface-variant);
-  background: var(--md-sys-color-surface-container-high);
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-    @media (min-width: 700px) {
-      .app { padding: 32px 32px 112px; }
-      .top-app-bar { margin-bottom: 32px; }
-      .hero { padding: 40px; }
-      .continue { padding: 24px; }
-      .study-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-      }
-    }
+    :root { color-scheme: light; --md-sys-color-primary:#6750a4; --md-sys-color-on-primary:#fff; --md-sys-color-primary-container:#e9ddff; --md-sys-color-on-primary-container:#21005d; --md-sys-color-secondary-container:#e8def8; --md-sys-color-on-secondary-container:#1d192b; --md-sys-color-surface:#fffbfe; --md-sys-color-surface-container:#f3edf7; --md-sys-color-surface-container-high:#ece6f0; --md-sys-color-on-surface:#1c1b1f; --md-sys-color-on-surface-variant:#49454f; --md-sys-color-outline:#79747e; --md-sys-color-outline-variant:#cac4d0; --md-sys-elevation-1:0 1px 2px rgb(0 0 0 / .30),0 1px 3px 1px rgb(0 0 0 / .15); --radius-xl:28px; --radius-lg:20px; --radius-md:16px; }
+    * { box-sizing:border-box; }
+    html { min-width:320px; background:var(--md-sys-color-surface); }
+    body { margin:0; min-height:100dvh; color:var(--md-sys-color-on-surface); background:var(--md-sys-color-surface); font-family:"Noto Sans","Noto Sans Arabic",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+    button,a { -webkit-tap-highlight-color:transparent; }
+    button { font:inherit; }
+    .material-symbols-rounded { font-family:"Material Symbols Rounded"; font-weight:normal; font-style:normal; font-size:24px; line-height:1; letter-spacing:normal; text-transform:none; display:inline-block; white-space:nowrap; word-wrap:normal; direction:ltr; -webkit-font-feature-settings:"liga"; -webkit-font-smoothing:antialiased; font-variation-settings:"FILL" 0,"wght" 500,"GRAD" 0,"opsz" 24; }
+    .app { width:min(100%,760px); min-height:100dvh; margin:0 auto; padding:max(16px,env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom)); }
+    .top-app-bar { display:flex; align-items:center; justify-content:space-between; min-height:64px; margin-bottom:20px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width:0; }
+    .brand-mark { display:grid; place-items:center; width:44px; height:44px; border-radius:14px; color:var(--md-sys-color-on-primary-container); background:var(--md-sys-color-primary-container); }
+    .brand-mark .material-symbols-rounded { font-size:26px; font-variation-settings:"FILL" 1,"wght" 500,"GRAD" 0,"opsz" 24; }
+    .brand-mark .arabic { font-family:"Noto Sans Arabic",sans-serif; font-size:1.4rem; font-weight:800; line-height:1; }
+    .brand-copy { line-height:1.15; }
+    .brand-title { margin:0; font-size:1rem; font-weight:700; }
+    .brand-subtitle { margin:4px 0 0; color:var(--md-sys-color-on-surface-variant); font-size:.78rem; }
+    .icon-button { display:inline-grid; place-items:center; width:48px; height:48px; padding:0; border:0; border-radius:50%; color:var(--md-sys-color-on-surface-variant); background:transparent; cursor:pointer; }
+    .icon-button:hover { background:rgb(29 27 32 / .08); }
+    .icon-button:focus-visible,.button:focus-visible,.nav-item:focus-visible,.resource-item:focus-visible,.segment-button:focus-visible { outline:3px solid var(--md-sys-color-primary); outline-offset:2px; }
+    .hero { padding:24px; border-radius:var(--radius-xl); color:var(--md-sys-color-on-primary-container); background:var(--md-sys-color-primary-container); }
+    .eyebrow { margin:0 0 10px; font-size:.82rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { max-width:16ch; margin-bottom:12px; font-size:clamp(2rem,8vw,3rem); line-height:1.12; letter-spacing:-.04em; }
+    .hero p { max-width:48ch; margin-bottom:24px; font-size:1rem; line-height:1.6; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:10px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:0 24px; border:0; border-radius:999px; font-weight:700; text-decoration:none; cursor:pointer; transition:transform 150ms ease,box-shadow 150ms ease,background 150ms ease; }
+    .button:active { transform:scale(.98); }
+    .button-primary { color:var(--md-sys-color-on-primary); background:var(--md-sys-color-primary); box-shadow:var(--md-sys-elevation-1); }
+    .button-primary:hover { box-shadow:0 2px 5px rgb(0 0 0 / .25); }
+    .button-tonal { color:var(--md-sys-color-on-primary-container); background:rgb(255 255 255 / .55); }
+    .button-tonal:hover { background:rgb(255 255 255 / .75); }
+    .section { margin-top:36px; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:16px; }
+    .section-heading h2 { margin:0; font-size:1.35rem; letter-spacing:-.02em; }
+    .text-button { padding:10px 12px; border:0; border-radius:999px; color:var(--md-sys-color-primary); background:transparent; font-weight:700; cursor:pointer; }
+    .text-button:hover { background:rgb(103 80 164 / .08); }
+    .text-button:disabled { color:var(--md-sys-color-on-surface-variant); background:transparent; cursor:not-allowed; opacity:.62; }
+    .segmented-control { display:inline-flex; padding:4px; border:1px solid var(--md-sys-color-outline-variant); border-radius:999px; background:var(--md-sys-color-surface-container); margin-bottom:16px; }
+    .segment-button { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:40px; padding:0 16px; border:0; border-radius:999px; color:var(--md-sys-color-on-surface-variant); background:transparent; font-size:.86rem; font-weight:700; cursor:pointer; transition:background 150ms ease,color 150ms ease; }
+    .segment-button.active { color:var(--md-sys-color-on-primary-container); background:var(--md-sys-color-primary-container); }
+    .continue { padding:20px; border:1px solid var(--md-sys-color-outline-variant); border-radius:var(--radius-lg); background:var(--md-sys-color-surface); }
+    .continue-top { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .continue-label { margin:0 0 6px; color:var(--md-sys-color-on-surface-variant); font-size:.86rem; font-weight:700; }
+    .continue-title { margin:0; font-size:1.15rem; line-height:1.3; }
+    .continue-top a { display:grid; place-items:center; color:inherit; }
+    .progress-copy { margin:18px 0 10px; color:var(--md-sys-color-on-surface-variant); font-size:.9rem; }
+    .progress { height:8px; overflow:hidden; border-radius:999px; background:var(--md-sys-color-surface-container-high); }
+    .progress > span { display:block; width:0; height:100%; border-radius:inherit; background:var(--md-sys-color-primary); transition:width 300ms ease; }
+    .study-list { display:grid; gap:12px; }
+    .study-item { display:grid; grid-template-columns:48px minmax(0,1fr) auto; align-items:center; gap:14px; width:100%; min-height:76px; padding:14px; border:1px solid transparent; border-radius:var(--radius-md); color:inherit; background:var(--md-sys-color-surface-container); text-align:left; text-decoration:none; transition:background 150ms ease,transform 150ms ease; }
+    .study-item:hover { background:var(--md-sys-color-surface-container-high); transform:translateY(-1px); }
+    .study-item.is-disabled { cursor:not-allowed; opacity:.62; pointer-events:none; }
+    .study-item-status { justify-self:end; padding:3px 10px; border-radius:999px; color:var(--md-sys-color-on-surface-variant); background:var(--md-sys-color-surface-container-high); font-size:.66rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; white-space:nowrap; }
+    .study-item-status.status-completed { color:var(--md-sys-color-on-secondary-container); background:var(--md-sys-color-secondary-container); }
+    .study-item-status.status-in-progress { color:var(--md-sys-color-on-primary-container); background:var(--md-sys-color-primary-container); }
+    .resource-groups { display:grid; gap:24px; }
+    .resource-group-title { margin:0 0 10px; color:var(--md-sys-color-on-surface-variant); font-size:.8rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+    .resource-list { display:grid; gap:10px; }
+    .resource-item { display:grid; grid-template-columns:48px minmax(0,1fr) auto; align-items:center; gap:14px; min-height:76px; padding:14px; border:1px solid var(--md-sys-color-outline-variant); border-radius:var(--radius-md); color:inherit; background:var(--md-sys-color-surface); text-decoration:none; transition:background 150ms ease,transform 150ms ease; }
+    .resource-item:hover { background:var(--md-sys-color-surface-container); transform:translateY(-1px); }
+    .resource-item.is-disabled { cursor:not-allowed; opacity:.62; pointer-events:none; }
+    .resource-icon { display:grid; place-items:center; width:48px; height:48px; border-radius:14px; color:var(--md-sys-color-on-secondary-container); background:var(--md-sys-color-secondary-container); }
+    .resource-title { display:flex; align-items:center; gap:6px; margin:0; font-weight:700; line-height:1.25; }
+    .resource-meta { margin:4px 0 0; color:var(--md-sys-color-on-surface-variant); font-size:.84rem; line-height:1.35; }
+    .external-icon { color:var(--md-sys-color-on-surface-variant); font-size:18px; }
+    .study-icon { display:grid; place-items:center; width:48px; height:48px; border-radius:14px; color:var(--md-sys-color-on-secondary-container); background:var(--md-sys-color-secondary-container); }
+    .study-icon .arabic { font-family:"Noto Sans Arabic",sans-serif; font-size:1.25rem; font-weight:800; line-height:1; }
+    .study-title { margin:0; font-weight:700; line-height:1.25; }
+    .study-meta { margin:4px 0 0; color:var(--md-sys-color-on-surface-variant); font-size:.84rem; }
+    .recent { display:grid; gap:10px; }
+    .recent-item { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 2px; border-bottom:1px solid var(--md-sys-color-outline-variant); }
+    .recent-item:last-child { border-bottom:0; }
+    .recent-title { margin:0; font-weight:700; }
+    .recent-meta { margin:4px 0 0; color:var(--md-sys-color-on-surface-variant); font-size:.84rem; }
+    .score { color:var(--md-sys-color-primary); font-weight:800; }
+    .bottom-nav { position:fixed; right:0; bottom:0; left:0; z-index:10; display:flex; justify-content:center; padding:8px 12px calc(8px + env(safe-area-inset-bottom)); border-top:1px solid var(--md-sys-color-outline-variant); background:rgb(255 251 254 / .94); backdrop-filter:blur(16px); }
+    .bottom-nav-inner { display:grid; grid-template-columns:repeat(3,minmax(80px,1fr)); width:min(100%,520px); gap:4px; }
+    .nav-item { display:grid; justify-items:center; gap:3px; min-height:56px; padding:6px 12px; border:0; border-radius:16px; color:var(--md-sys-color-on-surface-variant); background:transparent; font-size:.75rem; font-weight:700; cursor:pointer; }
+    .nav-item.active { color:var(--md-sys-color-on-secondary-container); }
+    .nav-item.active .nav-icon { min-width:64px; padding:4px 16px; border-radius:999px; background:var(--md-sys-color-secondary-container); }
+    .nav-item.coming-soon { color:color-mix(in srgb,var(--md-sys-color-on-surface-variant) 58%,var(--md-sys-color-surface)); cursor:not-allowed; opacity:.72; }
+    .nav-item.coming-soon:disabled { color:color-mix(in srgb,var(--md-sys-color-on-surface-variant) 58%,var(--md-sys-color-surface)); background:transparent; }
+    .nav-item.coming-soon .nav-icon { opacity:.72; }
+    .nav-item.coming-soon .coming-soon-label { display:block; margin-top:-1px; color:inherit; font-size:.62rem; font-weight:600; line-height:1; letter-spacing:.01em; text-transform:uppercase; }
+    .empty-note { padding:16px; border-radius:var(--radius-md); color:var(--md-sys-color-on-surface-variant); background:var(--md-sys-color-surface-container); font-size:.92rem; line-height:1.55; }
+    .drawer-scrim { position:fixed; inset:0; z-index:20; opacity:0; visibility:hidden; background:rgb(28 27 31 / .38); transition:opacity 200ms ease,visibility 200ms ease; }
+    .drawer-scrim.open { opacity:1; visibility:visible; }
+    .navigation-drawer { position:fixed; top:0; right:0; bottom:0; z-index:21; width:min(86vw,360px); padding:max(20px,env(safe-area-inset-top)) 12px 24px; overflow-y:auto; transform:translateX(105%); color:var(--md-sys-color-on-surface); background:var(--md-sys-color-surface-container); box-shadow:-8px 0 24px rgb(0 0 0 / .16); transition:transform 250ms ease; }
+    .navigation-drawer.open { transform:translateX(0); }
+    .drawer-header { display:flex; align-items:center; justify-content:space-between; min-height:56px; padding:0 8px 14px 16px; }
+    .drawer-title { margin:0; font-size:1.15rem; font-weight:800; }
+    .drawer-section-label { margin:20px 16px 8px; color:var(--md-sys-color-on-surface-variant); font-size:.76rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+    .drawer-item { display:grid; grid-template-columns:28px minmax(0,1fr); align-items:center; gap:14px; min-height:56px; margin:2px 0; padding:0 16px; border-radius:999px; color:var(--md-sys-color-on-surface); font-weight:700; text-decoration:none; }
+    .drawer-item:hover { background:rgb(103 80 164 / .08); }
+    .drawer-item.active { color:var(--md-sys-color-on-secondary-container); background:var(--md-sys-color-secondary-container); }
+    .drawer-item.coming-soon { color:var(--md-sys-color-on-surface-variant); cursor:not-allowed; opacity:.62; }
+    .drawer-item.coming-soon .drawer-item-text { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .drawer-item-badge { padding:3px 8px; border-radius:999px; color:var(--md-sys-color-on-surface-variant); background:var(--md-sys-color-surface-container-high); font-size:.66rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; }
+    @media (min-width:700px) { .app { padding:32px 32px 112px; } .top-app-bar { margin-bottom:32px; } .hero { padding:40px; } .continue { padding:24px; } .study-list { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; } }
   </style>
 </head>
 <body>
   <main class="app">
     <header class="top-app-bar">
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true">
-          <span class="arabic" lang="ar">ع</span>
-        </div>
-        <div class="brand-copy">
-          <p class="brand-title">Arabic Study</p>
-          <p class="brand-subtitle" lang="ar" dir="rtl">تعلّم العربية خطوة بخطوة</p>
-        </div>
-      </div>
-      <button
-          class="icon-button"
-          id="menu-button"
-          type="button"
-          aria-label="Open navigation menu"
-          aria-expanded="false"
-          aria-controls="navigation-drawer"
-        >
-      <span class="material-symbols-rounded" aria-hidden="true">menu</span>
-    </button>
+      <div class="brand"><div class="brand-mark" aria-hidden="true"><span class="arabic" lang="ar">ع</span></div><div class="brand-copy"><p class="brand-title">Arabic Study</p><p class="brand-subtitle" lang="ar" dir="rtl">تعلّم العربية خطوة بخطوة</p></div></div>
+      <button class="icon-button" id="menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navigation-drawer"><span class="material-symbols-rounded" aria-hidden="true">menu</span></button>
     </header>
-
-    <section class="hero" aria-labelledby="welcome-heading">
-      <p class="eyebrow">Your study space</p>
-      <h1 id="welcome-heading">Learn Arabic with focus.</h1>
-      <p>Short, clear practice sessions designed for your phone—one question, one step, one win at a time.</p>
-      <div class="hero-actions">
-        <a class="button button-primary" id="hero-continue-button" href="quiz.html">
-          Start studying
-          <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
-        </a>
-        <a class="button button-tonal" href="#unit6-chapters">
-          Choose a chapter
-        </a>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="continue-heading">
-      <div class="section-heading">
-        <h2 id="continue-heading">Continue learning</h2>
-      </div>
-      <article class="continue">
-        <div class="continue-top">
-          <div>
-            <p class="continue-label" id="continue-eyebrow">Most recent set</p>
-            <h3 class="continue-title" id="continue-title">Unit 6 Vocabulary</h3>
-          </div>
-          <a href="quiz.html" id="continue-play-link" aria-label="Continue studying">
-            <span class="material-symbols-rounded" aria-hidden="true">play_circle</span>
-          </a>
-        </div>
-        <p class="progress-copy" id="progress-label">Your progress will appear here after your first quiz.</p>
-        <div class="progress" role="progressbar" aria-labelledby="progress-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <span id="progress-fill"></span>
-        </div>
-      </article>
-    </section>
-
-    <section class="section" id="unit6-chapters" aria-labelledby="unit6-chapters-heading">
-      <div class="section-heading">
-        <h2 id="unit6-chapters-heading">Unit 6 vocabulary</h2>
-      </div>
-      <div class="segmented-control" role="group" aria-label="Quiz direction">
-        <button class="segment-button" id="mode-ar-to-en-button" type="button" aria-pressed="true">
-          <span lang="ar" dir="rtl">ع</span>&nbsp;&rarr; English
-        </button>
-        <button class="segment-button" id="mode-en-to-ar-button" type="button" aria-pressed="false">
-          English &rarr;&nbsp;<span lang="ar" dir="rtl">ع</span>
-        </button>
-      </div>
-      <div class="study-list" id="chapter-list"></div>
-    </section>
-
-    <section class="section" id="study-sets" aria-labelledby="sets-heading">
-      <div class="section-heading">
-        <h2 id="sets-heading">Study sets</h2>
-        <button class="text-button" type="button">View all</button>
-      </div>
-      <div class="study-list">
-        <a class="study-item" href="quiz.html?unit=unit6&chapter=ch26">
-          <span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">أ</span></span>
-          <span>
-            <span class="study-title">Arabic Foundations</span>
-            <span class="study-meta">Alphabet, sounds, and basics</span>
-          </span>
-          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
-        </a>
-        <a class="study-item" href="#">
-          <span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">ج</span></span>
-          <span>
-            <span class="study-title">Grammar</span>
-            <span class="study-meta">Start with Chapter 26 vocabulary</span>
-          </span>
-          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
-        </a>
-        <a class="study-item" href="#">
-          <span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">م</span></span>
-          <span>
-            <span class="study-title">Exam practice</span>
-            <span class="study-meta">Focused review sets and quizzes</span>
-          </span>
-          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
-        </a>
-      </div>
-    </section>
-
-    <section
-  class="section"
-  id="class-resources"
-  aria-labelledby="resources-heading"
->
-  <div class="section-heading">
-    <h2 id="resources-heading">Class resources</h2>
-  </div>
-
-  <div class="resource-groups">
-    <div>
-      <h3 class="resource-group-title">Course tools</h3>
-
-      <div class="resource-list">
-        <a
-          class="resource-item"
-          href="PASTE_COURSE_LINK_HERE"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="resource-icon" aria-hidden="true">
-            <span class="material-symbols-rounded">school</span>
-          </span>
-
-          <span>
-            <span class="resource-title">
-              Course site
-              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
-            </span>
-            <span class="resource-meta">
-              Assignments, announcements, and course materials
-            </span>
-          </span>
-
-          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
-        </a>
-
-        <a
-          class="resource-item"
-          href="PASTE_SHARED_DRIVE_LINK_HERE"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="resource-icon" aria-hidden="true">
-            <span class="material-symbols-rounded">folder</span>
-          </span>
-
-          <span>
-            <span class="resource-title">
-              Shared class files
-              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
-            </span>
-            <span class="resource-meta">
-              Slides, handouts, readings, and reference documents
-            </span>
-          </span>
-
-          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
-        </a>
-      </div>
-    </div>
-
-    <div>
-      <h3 class="resource-group-title">Language tools</h3>
-
-      <div class="resource-list">
-        <a
-          class="resource-item"
-          href="PASTE_DICTIONARY_LINK_HERE"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="resource-icon" aria-hidden="true">
-            <span class="material-symbols-rounded">menu_book</span>
-          </span>
-
-          <span>
-            <span class="resource-title">
-              Arabic dictionary
-              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
-            </span>
-            <span class="resource-meta">
-              Look up vocabulary, roots, definitions, and usage
-            </span>
-          </span>
-
-          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
-        </a>
-
-        <a
-          class="resource-item"
-          href="PASTE_KEYBOARD_LINK_HERE"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="resource-icon" aria-hidden="true">
-            <span class="material-symbols-rounded">keyboard</span>
-          </span>
-
-          <span>
-            <span class="resource-title">
-              Arabic keyboard guide
-              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
-            </span>
-            <span class="resource-meta">
-              Type Arabic characters and practice your keyboard layout
-            </span>
-          </span>
-
-          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
-        </a>
-      </div>
-    </div>
-
-    <div>
-      <h3 class="resource-group-title">Reference & practice</h3>
-
-      <div class="resource-list">
-        <a
-          class="resource-item"
-          href="PASTE_GRAMMAR_LINK_HERE"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="resource-icon" aria-hidden="true">
-            <span class="material-symbols-rounded">article</span>
-          </span>
-
-          <span>
-            <span class="resource-title">
-              Grammar reference
-              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
-            </span>
-            <span class="resource-meta">
-              Review sentence structure, verb forms, and key grammar notes
-            </span>
-          </span>
-
-          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
-        </a>
-
-        <a
-          class="resource-item"
-          href="PASTE_PRACTICE_LINK_HERE"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="resource-icon" aria-hidden="true">
-            <span class="material-symbols-rounded">headphones</span>
-          </span>
-
-          <span>
-            <span class="resource-title">
-              Listening practice
-              <span class="material-symbols-rounded external-icon" aria-hidden="true">open_in_new</span>
-            </span>
-            <span class="resource-meta">
-              Practice comprehension with Arabic audio and video
-            </span>
-          </span>
-
-          <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-    <section class="section" aria-labelledby="recent-heading">
-      <div class="section-heading">
-        <h2 id="recent-heading">Recent activity</h2>
-      </div>
-      <div class="empty-note" id="recent-activity-note">
-        Your completed quizzes and scores will appear here after the first quiz is connected to this new homepage.
-      </div>
-    </section>
+    <section class="hero" aria-labelledby="welcome-heading"><p class="eyebrow">Your study space</p><h1 id="welcome-heading">Learn Arabic with focus.</h1><p>Short, clear practice sessions designed for your phone—one question, one step, one win at a time.</p><div class="hero-actions"><a class="button button-primary" id="hero-continue-button" href="quiz.html">Start studying <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a><a class="button button-tonal" href="#unit6-chapters">Choose a chapter</a></div></section>
+    <section class="section" aria-labelledby="continue-heading"><div class="section-heading"><h2 id="continue-heading">Continue learning</h2></div><article class="continue"><div class="continue-top"><div><p class="continue-label" id="continue-eyebrow">Most recent set</p><h3 class="continue-title" id="continue-title">Unit 6 Vocabulary</h3></div><a href="quiz.html" id="continue-play-link" aria-label="Continue studying"><span class="material-symbols-rounded" aria-hidden="true">play_circle</span></a></div><p class="progress-copy" id="progress-label">Your progress will appear here after your first quiz.</p><div class="progress" role="progressbar" aria-labelledby="progress-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div></article></section>
+    <section class="section" id="unit6-chapters" aria-labelledby="unit6-chapters-heading"><div class="section-heading"><h2 id="unit6-chapters-heading">Unit 6 vocabulary</h2></div><div class="segmented-control" role="group" aria-label="Quiz direction"><button class="segment-button" id="mode-ar-to-en-button" type="button" aria-pressed="true"><span lang="ar" dir="rtl">ع</span>&nbsp;&rarr; English</button><button class="segment-button" id="mode-en-to-ar-button" type="button" aria-pressed="false">English &rarr;&nbsp;<span lang="ar" dir="rtl">ع</span></button></div><div class="study-list" id="chapter-list"></div></section>
+    <section class="section" id="study-sets" aria-labelledby="sets-heading"><div class="section-heading"><h2 id="sets-heading">Study sets</h2><button class="text-button" type="button" disabled aria-disabled="true">Coming soon</button></div><div class="study-list"><div class="study-item is-disabled" aria-disabled="true"><span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">أ</span></span><span><span class="study-title">Arabic Foundations</span><span class="study-meta">Alphabet, sounds, and basics</span></span><span class="study-item-status">Coming soon</span></div><div class="study-item is-disabled" aria-disabled="true"><span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">ج</span></span><span><span class="study-title">Grammar</span><span class="study-meta">Start with Chapter 26 vocabulary</span></span><span class="study-item-status">Coming soon</span></div><div class="study-item is-disabled" aria-disabled="true"><span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">م</span></span><span><span class="study-title">Exam practice</span><span class="study-meta">Focused review sets and quizzes</span></span><span class="study-item-status">Coming soon</span></div></div></section>
+    <section class="section" id="class-resources" aria-labelledby="resources-heading"><div class="section-heading"><h2 id="resources-heading">Class resources</h2></div><div class="resource-groups"><div><h3 class="resource-group-title">Course tools</h3><div class="resource-list"><div class="resource-item is-disabled" aria-disabled="true"><span class="resource-icon" aria-hidden="true"><span class="material-symbols-rounded">school</span></span><span><span class="resource-title">Course site</span><span class="resource-meta">Assignments, announcements, and course materials</span></span><span class="study-item-status">Coming soon</span></div><div class="resource-item is-disabled" aria-disabled="true"><span class="resource-icon" aria-hidden="true"><span class="material-symbols-rounded">folder</span></span><span><span class="resource-title">Shared class files</span><span class="resource-meta">Slides, handouts, readings, and reference documents</span></span><span class="study-item-status">Coming soon</span></div></div></div><div><h3 class="resource-group-title">Language tools</h3><div class="resource-list"><div class="resource-item is-disabled" aria-disabled="true"><span class="resource-icon" aria-hidden="true"><span class="material-symbols-rounded">menu_book</span></span><span><span class="resource-title">Arabic dictionary</span><span class="resource-meta">Look up vocabulary, roots, definitions, and usage</span></span><span class="study-item-status">Coming soon</span></div><div class="resource-item is-disabled" aria-disabled="true"><span class="resource-icon" aria-hidden="true"><span class="material-symbols-rounded">keyboard</span></span><span><span class="resource-title">Arabic keyboard guide</span><span class="resource-meta">Type Arabic characters and practice your keyboard layout</span></span><span class="study-item-status">Coming soon</span></div></div></div><div><h3 class="resource-group-title">Reference &amp; practice</h3><div class="resource-list"><div class="resource-item is-disabled" aria-disabled="true"><span class="resource-icon" aria-hidden="true"><span class="material-symbols-rounded">article</span></span><span><span class="resource-title">Grammar reference</span><span class="resource-meta">Review sentence structure, verb forms, and key grammar notes</span></span><span class="study-item-status">Coming soon</span></div><div class="resource-item is-disabled" aria-disabled="true"><span class="resource-icon" aria-hidden="true"><span class="material-symbols-rounded">headphones</span></span><span><span class="resource-title">Listening practice</span><span class="resource-meta">Practice comprehension with Arabic audio and video</span></span><span class="study-item-status">Coming soon</span></div></div></div></div></section>
+    <section class="section" aria-labelledby="recent-heading"><div class="section-heading"><h2 id="recent-heading">Recent activity</h2></div><div class="empty-note" id="recent-activity-note">Your completed quizzes and scores will appear here after the first quiz is connected to this new homepage.</div></section>
   </main>
-
-  <nav class="bottom-nav" aria-label="Primary navigation">
-    <div class="bottom-nav-inner">
-      <button class="nav-item active" type="button" aria-current="page">
-        <span class="nav-icon material-symbols-rounded" aria-hidden="true">home</span>
-        Home
-      </button>
-      <button
-      class="nav-item coming-soon"
-      type="button"
-      disabled
-      aria-label="Learn — coming soon"
-    >
-      <span class="nav-icon material-symbols-rounded" aria-hidden="true">school</span>
-      <span>Learn</span>
-      <span class="coming-soon-label">Coming soon</span>
-    </button>
-    
-    <button
-      class="nav-item coming-soon"
-      type="button"
-      disabled
-      aria-label="Progress — coming soon"
-    >
-      <span class="nav-icon material-symbols-rounded" aria-hidden="true">bar_chart</span>
-      <span>Progress</span>
-      <span class="coming-soon-label">Coming soon</span>
-    </button>
-    </div>
-  </nav>
-
-   <div
-  class="drawer-scrim"
-  id="drawer-scrim"
-  aria-hidden="true"
-></div>
-
-<nav
-  class="navigation-drawer"
-  id="navigation-drawer"
-  aria-label="Primary navigation"
-  aria-hidden="true"
->
-  <div class="drawer-header">
-    <p class="drawer-title">Arabic Study</p>
-
-    <button
-      class="icon-button"
-      id="drawer-close-button"
-      type="button"
-      aria-label="Close navigation menu"
-    >
-      <span class="material-symbols-rounded" aria-hidden="true">close</span>
-    </button>
-  </div>
-
-  <a class="drawer-item active" href="arabic.html" aria-current="page">
-    <span class="material-symbols-rounded" aria-hidden="true">home</span>
-    <span>Home</span>
-  </a>
-
-  <span class="drawer-section-label">Study</span>
-
-  <a class="drawer-item" href="#unit6-chapters">
-    <span class="material-symbols-rounded" aria-hidden="true">school</span>
-    <span>Study sets</span>
-  </a>
-
-  <a class="drawer-item" href="#class-resources">
-    <span class="material-symbols-rounded" aria-hidden="true">link</span>
-    <span>Resources</span>
-  </a>
-
-  <a class="drawer-item" href="#recent-heading">
-    <span class="material-symbols-rounded" aria-hidden="true">history</span>
-    <span>Recent activity</span>
-  </a>
-
-  <span class="drawer-section-label">More</span>
-
-  <div class="drawer-item coming-soon" aria-disabled="true">
-    <span class="material-symbols-rounded" aria-hidden="true">menu_book</span>
-    <span class="drawer-item-text">
-      Practice
-      <span class="drawer-item-badge">Coming soon</span>
-    </span>
-  </div>
-
-  <div class="drawer-item coming-soon" aria-disabled="true">
-    <span class="material-symbols-rounded" aria-hidden="true">bar_chart</span>
-    <span class="drawer-item-text">
-      Progress
-      <span class="drawer-item-badge">Coming soon</span>
-    </span>
-  </div>
-
-  <div class="drawer-item coming-soon" aria-disabled="true">
-    <span class="material-symbols-rounded" aria-hidden="true">settings</span>
-    <span class="drawer-item-text">
-      Settings
-      <span class="drawer-item-badge">Coming soon</span>
-    </span>
-  </div>
-</nav>
-
+  <nav class="bottom-nav" aria-label="Primary navigation"><div class="bottom-nav-inner"><button class="nav-item active" type="button" aria-current="page"><span class="nav-icon material-symbols-rounded" aria-hidden="true">home</span>Home</button><button class="nav-item coming-soon" type="button" disabled aria-label="Learn — coming soon"><span class="nav-icon material-symbols-rounded" aria-hidden="true">school</span><span>Learn</span><span class="coming-soon-label">Coming soon</span></button><button class="nav-item coming-soon" type="button" disabled aria-label="Progress — coming soon"><span class="nav-icon material-symbols-rounded" aria-hidden="true">bar_chart</span><span>Progress</span><span class="coming-soon-label">Coming soon</span></button></div></nav>
+  <div class="drawer-scrim" id="drawer-scrim" aria-hidden="true"></div>
+  <nav class="navigation-drawer" id="navigation-drawer" aria-label="Primary navigation" aria-hidden="true"><div class="drawer-header"><p class="drawer-title">Arabic Study</p><button class="icon-button" id="drawer-close-button" type="button" aria-label="Close navigation menu"><span class="material-symbols-rounded" aria-hidden="true">close</span></button></div><a class="drawer-item active" href="arabic.html" aria-current="page"><span class="material-symbols-rounded" aria-hidden="true">home</span><span>Home</span></a><span class="drawer-section-label">Study</span><a class="drawer-item" href="#unit6-chapters"><span class="material-symbols-rounded" aria-hidden="true">school</span><span>Study sets</span></a><a class="drawer-item" href="#class-resources"><span class="material-symbols-rounded" aria-hidden="true">link</span><span>Resources</span></a><a class="drawer-item" href="#recent-heading"><span class="material-symbols-rounded" aria-hidden="true">history</span><span>Recent activity</span></a><span class="drawer-section-label">More</span><div class="drawer-item coming-soon" aria-disabled="true"><span class="material-symbols-rounded" aria-hidden="true">menu_book</span><span class="drawer-item-text">Practice <span class="drawer-item-badge">Coming soon</span></span></div><div class="drawer-item coming-soon" aria-disabled="true"><span class="material-symbols-rounded" aria-hidden="true">bar_chart</span><span class="drawer-item-text">Progress <span class="drawer-item-badge">Coming soon</span></span></div><div class="drawer-item coming-soon" aria-disabled="true"><span class="material-symbols-rounded" aria-hidden="true">settings</span><span class="drawer-item-text">Settings <span class="drawer-item-badge">Coming soon</span></span></div></nav>
   <script src="data/units-manifest.js"></script>
   <script src="progress-store.js"></script>
   <script>
     const UNIT_ID = "unit6";
     const MODE_STORAGE_KEY = "arabicStudy.quizDirection";
-    const STATUS_LABELS = {
-      not_started: "Start",
-      in_progress: "Continue",
-      completed: "Review"
-    };
-
-    function getStoredMode() {
-      try {
-        const stored = localStorage.getItem(MODE_STORAGE_KEY);
-        return stored === "en-to-ar" ? "en-to-ar" : "ar-to-en";
-      } catch (err) {
-        return "ar-to-en";
-      }
-    }
-
-    function setStoredMode(mode) {
-      try {
-        localStorage.setItem(MODE_STORAGE_KEY, mode);
-      } catch (err) {
-        // ignore if storage is unavailable
-      }
-    }
-
+    const STATUS_LABELS = { not_started: "Start", in_progress: "Continue", completed: "Review" };
+    function getStoredMode() { try { const stored = localStorage.getItem(MODE_STORAGE_KEY); return stored === "en-to-ar" ? "en-to-ar" : "ar-to-en"; } catch (err) { return "ar-to-en"; } }
+    function setStoredMode(mode) { try { localStorage.setItem(MODE_STORAGE_KEY, mode); } catch (err) {} }
     let currentMode = getStoredMode();
-
-    function progressKeyFor(chapterId) {
-      return currentMode === "en-to-ar" ? `${chapterId}:en-to-ar` : chapterId;
-    }
-
-    function quizUrlFor(unitId, chapterId) {
-      const modeParam = currentMode === "en-to-ar" ? "&mode=en-to-ar" : "";
-      return `quiz.html?unit=${encodeURIComponent(unitId)}&chapter=${encodeURIComponent(chapterId)}${modeParam}`;
-    }
-
-    function updateModeToggleUI() {
-      const arToEnButton = document.getElementById("mode-ar-to-en-button");
-      const enToArButton = document.getElementById("mode-en-to-ar-button");
-      if (!arToEnButton || !enToArButton) return;
-      const isEnToAr = currentMode === "en-to-ar";
-      arToEnButton.classList.toggle("active", !isEnToAr);
-      arToEnButton.setAttribute("aria-pressed", String(!isEnToAr));
-      enToArButton.classList.toggle("active", isEnToAr);
-      enToArButton.setAttribute("aria-pressed", String(isEnToAr));
-    }
-
-    function setMode(mode) {
-      currentMode = mode === "en-to-ar" ? "en-to-ar" : "ar-to-en";
-      setStoredMode(currentMode);
-      updateModeToggleUI();
-      renderChapterList();
-      renderContinueCard();
-    }
-
-    function renderChapterList() {
-      const listEl = document.getElementById("chapter-list");
-      if (!listEl || !window.UnitsManifest) return;
-      const chapters = window.UnitsManifest.listChapters(UNIT_ID);
-      const profile = window.ProgressStore ? window.ProgressStore.getProfile() : null;
-
-      listEl.innerHTML = "";
-      chapters.forEach((chapter) => {
-        const key = progressKeyFor(chapter.id);
-        const chapterProgress = profile && profile.units[UNIT_ID]
-          ? profile.units[UNIT_ID].chapters[key]
-          : null;
-        const status = chapterProgress ? chapterProgress.status : "not_started";
-
-        const item = document.createElement(chapter.available ? "a" : "div");
-        item.className = "study-item" + (chapter.available ? "" : " is-disabled");
-        if (chapter.available) {
-          item.href = quizUrlFor(UNIT_ID, chapter.id);
-        } else {
-          item.setAttribute("aria-disabled", "true");
-        }
-
-        const meta = chapter.available
-          ? (chapterProgress && chapterProgress.totalQuestions
-              ? `${chapterProgress.answeredCount || 0} of ${chapterProgress.totalQuestions} questions`
-              : "Not started yet")
-          : (chapter.status || "Coming soon");
-
-        const statusBadgeClass = chapter.available
-          ? (status === "completed" ? "status-completed" : status === "in_progress" ? "status-in-progress" : "")
-          : "";
-        const statusLabel = chapter.available ? (STATUS_LABELS[status] || "Start") : "Coming soon";
-
-        item.innerHTML = `
-          <span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">${chapter.number}</span></span>
-          <span>
-            <span class="study-title">${chapter.title}</span>
-            <span class="study-meta">${meta}</span>
-          </span>
-          <span class="study-item-status ${statusBadgeClass}">${statusLabel}</span>
-        `;
-        listEl.appendChild(item);
-      });
-    }
-
-    function renderContinueCard() {
-      const fill = document.getElementById("progress-fill");
-      const label = document.getElementById("progress-label");
-      const bar = document.querySelector(".continue .progress");
-      const titleEl = document.getElementById("continue-title");
-      const eyebrowEl = document.getElementById("continue-eyebrow");
-      const playLink = document.getElementById("continue-play-link");
-      const heroButton = document.getElementById("hero-continue-button");
-
-      if (!window.ProgressStore || !window.UnitsManifest) return;
-      const profile = window.ProgressStore.getProfile();
-      const lastActive = profile.lastActive;
-      const availableChapters = window.UnitsManifest.getAvailableChapters(UNIT_ID);
-      const fallbackChapter = availableChapters[0];
-
-      let unitId = UNIT_ID;
-      let chapterId = fallbackChapter ? fallbackChapter.id : null;
-      let chapterMeta = fallbackChapter;
-
-      if (lastActive && lastActive.unitId && lastActive.chapterId) {
-        const rawChapterId = lastActive.chapterId.split(":")[0];
-        const stillAvailable = window.UnitsManifest.getChapter(lastActive.unitId, rawChapterId);
-        if (stillAvailable && stillAvailable.available) {
-          unitId = lastActive.unitId;
-          chapterId = rawChapterId;
-          chapterMeta = stillAvailable;
-        }
-      }
-
-      if (!chapterId) return;
-
-      const quizUrl = quizUrlFor(unitId, chapterId);
-      if (heroButton) heroButton.href = quizUrl;
-      if (playLink) playLink.href = quizUrl;
-      if (titleEl && chapterMeta) titleEl.textContent = chapterMeta.title;
-
-      const key = progressKeyFor(chapterId);
-      const chapterProgress = profile.units[unitId] && profile.units[unitId].chapters[key];
-      if (chapterProgress && chapterProgress.totalQuestions > 0) {
-        const percent = Math.max(0, Math.min(100, Math.round((chapterProgress.answeredCount / chapterProgress.totalQuestions) * 100)));
-        fill.style.width = percent + "%";
-        bar.setAttribute("aria-valuenow", percent);
-        if (chapterProgress.status === "completed") {
-          label.textContent = `Completed — best score ${chapterProgress.bestScore} of ${chapterProgress.totalQuestions}`;
-          if (eyebrowEl) eyebrowEl.textContent = "Last completed";
-        } else {
-          label.textContent = `${chapterProgress.answeredCount} of ${chapterProgress.totalQuestions} questions completed`;
-          if (eyebrowEl) eyebrowEl.textContent = "Continue where you left off";
-        }
-      } else {
-        fill.style.width = "0%";
-        bar.setAttribute("aria-valuenow", "0");
-        label.textContent = "Your progress will appear here after your first quiz.";
-        if (eyebrowEl) eyebrowEl.textContent = "Most recent set";
-      }
-    }
-
+    function progressKeyFor(chapterId) { return currentMode === "en-to-ar" ? `${chapterId}:en-to-ar` : chapterId; }
+    function quizUrlFor(unitId, chapterId) { const modeParam = currentMode === "en-to-ar" ? "&mode=en-to-ar" : ""; return `quiz.html?unit=${encodeURIComponent(unitId)}&chapter=${encodeURIComponent(chapterId)}${modeParam}`; }
+    function updateModeToggleUI() { const arToEnButton = document.getElementById("mode-ar-to-en-button"); const enToArButton = document.getElementById("mode-en-to-ar-button"); if (!arToEnButton || !enToArButton) return; const isEnToAr = currentMode === "en-to-ar"; arToEnButton.classList.toggle("active", !isEnToAr); arToEnButton.setAttribute("aria-pressed", String(!isEnToAr)); enToArButton.classList.toggle("active", isEnToAr); enToArButton.setAttribute("aria-pressed", String(isEnToAr)); }
+    function setMode(mode) { currentMode = mode === "en-to-ar" ? "en-to-ar" : "ar-to-en"; setStoredMode(currentMode); updateModeToggleUI(); renderChapterList(); renderContinueCard(); }
+    function renderChapterList() { const listEl = document.getElementById("chapter-list"); if (!listEl || !window.UnitsManifest) return; const chapters = window.UnitsManifest.listChapters(UNIT_ID); const profile = window.ProgressStore ? window.ProgressStore.getProfile() : null; listEl.innerHTML = ""; chapters.forEach((chapter) => { const key = progressKeyFor(chapter.id); const chapterProgress = profile && profile.units[UNIT_ID] ? profile.units[UNIT_ID].chapters[key] : null; const status = chapterProgress ? chapterProgress.status : "not_started"; const item = document.createElement(chapter.available ? "a" : "div"); item.className = "study-item" + (chapter.available ? "" : " is-disabled"); if (chapter.available) item.href = quizUrlFor(UNIT_ID, chapter.id); else item.setAttribute("aria-disabled", "true"); const meta = chapter.available ? (chapterProgress && chapterProgress.totalQuestions ? `${chapterProgress.answeredCount || 0} of ${chapterProgress.totalQuestions} questions` : "Not started yet") : (chapter.status || "Coming soon"); const statusBadgeClass = chapter.available ? (status === "completed" ? "status-completed" : status === "in_progress" ? "status-in-progress" : "") : ""; const statusLabel = chapter.available ? (STATUS_LABELS[status] || "Start") : "Coming soon"; item.innerHTML = `<span class="study-icon" aria-hidden="true"><span class="arabic" lang="ar">${chapter.number}</span></span><span><span class="study-title">${chapter.title}</span><span class="study-meta">${meta}</span></span><span class="study-item-status ${statusBadgeClass}">${statusLabel}</span>`; listEl.appendChild(item); }); }
+    function renderContinueCard() { const fill = document.getElementById("progress-fill"); const label = document.getElementById("progress-label"); const bar = document.querySelector(".continue .progress"); const titleEl = document.getElementById("continue-title"); const eyebrowEl = document.getElementById("continue-eyebrow"); const playLink = document.getElementById("continue-play-link"); const heroButton = document.getElementById("hero-continue-button"); if (!window.ProgressStore || !window.UnitsManifest) return; const profile = window.ProgressStore.getProfile(); const lastActive = profile.lastActive; const availableChapters = window.UnitsManifest.getAvailableChapters(UNIT_ID); const fallbackChapter = availableChapters[0]; let unitId = UNIT_ID; let chapterId = fallbackChapter ? fallbackChapter.id : null; let chapterMeta = fallbackChapter; if (lastActive && lastActive.unitId && lastActive.chapterId) { const rawChapterId = lastActive.chapterId.split(":")[0]; const stillAvailable = window.UnitsManifest.getChapter(lastActive.unitId, rawChapterId); if (stillAvailable && stillAvailable.available) { unitId = lastActive.unitId; chapterId = rawChapterId; chapterMeta = stillAvailable; } } if (!chapterId) return; const quizUrl = quizUrlFor(unitId, chapterId); if (heroButton) heroButton.href = quizUrl; if (playLink) playLink.href = quizUrl; if (titleEl && chapterMeta) titleEl.textContent = chapterMeta.title; const key = progressKeyFor(chapterId); const chapterProgress = profile.units[unitId] && profile.units[unitId].chapters[key]; if (chapterProgress && chapterProgress.totalQuestions > 0) { const percent = Math.max(0, Math.min(100, Math.round((chapterProgress.answeredCount / chapterProgress.totalQuestions) * 100))); fill.style.width = percent + "%"; bar.setAttribute("aria-valuenow", percent); if (chapterProgress.status === "completed") { label.textContent = `Completed — best score ${chapterProgress.bestScore} of ${chapterProgress.totalQuestions}`; if (eyebrowEl) eyebrowEl.textContent = "Last completed"; } else { label.textContent = `${chapterProgress.answeredCount} of ${chapterProgress.totalQuestions} questions completed`; if (eyebrowEl) eyebrowEl.textContent = "Continue where you left off"; } } else { fill.style.width = "0%"; bar.setAttribute("aria-valuenow", "0"); label.textContent = "Your progress will appear here after your first quiz."; if (eyebrowEl) eyebrowEl.textContent = "Most recent set"; } }
     document.getElementById("mode-ar-to-en-button").addEventListener("click", () => setMode("ar-to-en"));
     document.getElementById("mode-en-to-ar-button").addEventListener("click", () => setMode("en-to-ar"));
-
-    updateModeToggleUI();
-    renderChapterList();
-    renderContinueCard();
-
-    const menuButton = document.getElementById("menu-button");
-const drawer = document.getElementById("navigation-drawer");
-const drawerScrim = document.getElementById("drawer-scrim");
-const drawerCloseButton = document.getElementById("drawer-close-button");
-
-function openDrawer() {
-  drawer.classList.add("open");
-  drawerScrim.classList.add("open");
-  drawer.setAttribute("aria-hidden", "false");
-  menuButton.setAttribute("aria-expanded", "true");
-  drawerCloseButton.focus();
-}
-
-function closeDrawer() {
-  drawer.classList.remove("open");
-  drawerScrim.classList.remove("open");
-  drawer.setAttribute("aria-hidden", "true");
-  menuButton.setAttribute("aria-expanded", "false");
-  menuButton.focus();
-}
-
-menuButton.addEventListener("click", openDrawer);
-drawerCloseButton.addEventListener("click", closeDrawer);
-drawerScrim.addEventListener("click", closeDrawer);
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && drawer.classList.contains("open")) {
-    closeDrawer();
-  }
-});
-
-drawer.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", closeDrawer);
-});
+    updateModeToggleUI(); renderChapterList(); renderContinueCard();
+    const menuButton = document.getElementById("menu-button"); const drawer = document.getElementById("navigation-drawer"); const drawerScrim = document.getElementById("drawer-scrim"); const drawerCloseButton = document.getElementById("drawer-close-button");
+    function openDrawer() { drawer.classList.add("open"); drawerScrim.classList.add("open"); drawer.setAttribute("aria-hidden", "false"); menuButton.setAttribute("aria-expanded", "true"); drawerCloseButton.focus(); }
+    function closeDrawer() { drawer.classList.remove("open"); drawerScrim.classList.remove("open"); drawer.setAttribute("aria-hidden", "true"); menuButton.setAttribute("aria-expanded", "false"); menuButton.focus(); }
+    menuButton.addEventListener("click", openDrawer); drawerCloseButton.addEventListener("click", closeDrawer); drawerScrim.addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape" && drawer.classList.contains("open")) closeDrawer(); });
+    drawer.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeDrawer));
   </script>
 </body>
 </html>
