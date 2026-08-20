@@ -302,7 +302,7 @@
         const queue = readFlagQueue();
         queue.push(payload);
         writeFlagQueue(queue);
-        showSnackbar('Saved to send later');
+        showSnackbar('Word flagged for correction');
       } finally {
         button.disabled = false;
         flushFlagQueue();
