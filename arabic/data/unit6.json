@@ -218,12 +218,12 @@
     { "number": 23, "arabic": "خفّف", "choices": {"A": "to increase", "B": "to improve", "C": "to strengthen", "D": "to lessen/reduce"}, "answer": "D" },
     { "number": 24, "arabic": "عكس", "choices": {"A": "to compare", "B": "to change", "C": "to oppose/reverse", "D": "to return"}, "answer": "C" },
     { "number": 25, "arabic": "مضغ", "choices": {"A": "to chew", "B": "to swallow", "C": "to digest", "D": "to absorb"}, "answer": "A" },
-    { "number": 26, "arabic": "هضم", "choices": {"A": "to absorb", "B": "to produce", "C": "to digest", "D": "to reduce"}, "answer": "C" }
+    { "number": 26, "arabic": "هضم", "choices": {"A": "to absorb", "B": "to produce", "C": "to digest", "D": "to reduce"}, "answer": "C" },
     { "number": 27, "arabic": "جذّاب", "choices": {"A": "violent", "B": "attractive", "C": "opposite", "D": "tired"}, "answer": "B" },
     { "number": 28, "arabic": "حلم", "choices": {"A": "memory", "B": "nightmare", "C": "dream", "D": "idea"}, "answer": "C" },
     { "number": 29, "arabic": "عكسي", "choices": {"A": "direct", "B": "opposite", "C": "similar", "D": "normal"}, "answer": "B" },
     { "number": 30, "arabic": "عنيف", "choices": {"A": "peaceful", "B": "gentle", "C": "violent", "D": "quiet"}, "answer": "C" },
-    { "number": 31, "arabic": "حَرَقَ", "choices": {"A": "to burn", "B": "to heal", "C": "to absorb", "D": "to reduce"}, "answer": "A" },
+    { "number": 31, "arabic": "حَرَقَ", "choices": {"A": "to burn", "B": "to heal", "C": "to absorb", "D": "to reduce"}, "answer": "A" }
   ]
     },
     "ch30": {
