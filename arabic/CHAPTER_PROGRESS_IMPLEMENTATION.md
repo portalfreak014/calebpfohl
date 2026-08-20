@@ -110,8 +110,8 @@ window.UNITS_MANIFEST = {
       { id: 'ch26', number: 26, title: 'Chapter 26', available: true },
       { id: 'ch27', number: 27, title: 'Chapter 27', available: true },
       { id: 'ch28', number: 28, title: 'Chapter 28', available: true },
-      { id: 'ch29', number: 29, title: 'Chapter 29', available: false, status: 'Coming soon' },
-      { id: 'ch30', number: 30, title: 'Chapter 30', available: false, status: 'Coming soon' }
+      { id: 'ch29', number: 29, title: 'Chapter 29', available: true },
+      { id: 'ch30', number: 30, title: 'Chapter 30', available: true }
     ]
   }
   // Future units are added the same way, e.g. unit7: { title: '...', chapters: [...] }
@@ -136,7 +136,6 @@ Rules:
 - A chapter is only `available: true` once its data exists in the corresponding `data/{unitId}.json` and has been tested.
 - Keep the manifest as the homepage's source of truth for chapter cards, status labels, ordering, and next-chapter behavior — for every unit, not just Unit 6.
 - The quiz must still validate that a selected chapter actually exists in the fetched data (per the Content Contract). The manifest is not a replacement for validation.
-- When Chapters 29-30 data is added, switch them to available and add any desired question-count metadata.
 - Do not create a per-unit manifest file (e.g. `unit7-chapters.js`). All units live as entries in the one manifest.
 
 ## Homepage Changes
@@ -150,20 +149,6 @@ Replace the fixed Chapter 26 "Start studying" behavior with either:
 - A **Choose a chapter** action that opens/jumps to a visible Unit 6 chapter section; or
 - A primary button that continues the last active available chapter, plus a clearly visible secondary "Choose chapter" action.
 
-Recommended layout:
-
-```text
-Unit 6 vocabulary
-
-[ Continue Chapter 27 ]  [ Choose chapter ]
-
-[ Chapter 26 | 65 words | Start / Review ]
-[ Chapter 27 | 60 words | Start / Continue ]
-[ Chapter 28 | ...      | Start ]
-[ Chapter 29 | Coming soon ]
-[ Chapter 30 | Coming soon ]
-```
-
 Use large, tappable cards on mobile. Do not hide five chapters inside a dropdown.
 
 ### Homepage progress
@@ -175,7 +160,6 @@ Read the progress profile through `ProgressStore` (defined below). Show:
 - Best score and/or last score if the user completed it.
 - A progress bar for the current/most-recent chapter.
 - A per-chapter status: Not started, In progress, Completed, or Coming soon.
-- Optional recent activity list populated from profile attempt history.
 - Continue behavior should prefer the profile's `lastActive` chapter when it is still available; otherwise it should fall back to Chapter 26.
 
 ## Quiz Changes
@@ -190,72 +174,23 @@ Keep the current query-parameter model:
 quiz.html?unit=unit6&chapter=ch27
 ```
 
-Sanitize both values. If the requested unit/chapter is unknown, missing, unavailable, or has no questions:
-
-1. Do not render an empty or broken quiz.
-2. Show a helpful unavailable screen with a back-to-study action.
-3. Optionally provide a "Choose another chapter" action pointing back to the Unit 6 chapter section.
+Sanitize both values. If the requested unit/chapter is unknown, missing, unavailable, or has no questions, show a helpful unavailable screen with a back-to-study action rather than an empty or broken quiz.
 
 ### Rendering engine
 
-`quiz.html` itself should contain no unit-specific or subject-specific logic. It is a thin shell around one function:
-
-```js
-function renderQuiz(unitData, chapterId, mountEl) {
-  // unitData conforms to the Content Contract above.
-  // Looks up unitData.chapters[chapterId], validates it exists and has
-  // questions, and mounts the interactive quiz into mountEl.
-  // Nothing in this function or its helpers should reference "Arabic",
-  // "vocabulary", or any subject-specific term — only the contract shape.
-}
-```
-
-The shell logic is: read `unit`/`chapter` from the URL, `fetch('data/' + unit + '.json')`, validate the response against the Content Contract, then call `renderQuiz(unitData, chapterId, mountEl)`. This keeps the engine reusable for any future unit, and in principle for non-Arabic content that follows the same contract.
+`quiz.html` itself should contain no unit-specific or subject-specific logic. It is a thin shell: read `unit`/`chapter` from the URL, `fetch('data/' + unit + '.json')`, validate the response against the Content Contract, then render.
 
 ### Header controls
 
-Keep the existing exit button. Add a chapter-switch control that returns to the homepage's Unit 6 chapter picker, for example:
-
-```text
-arabic.html#unit6-chapters
-```
-
-If header space is limited, use an icon/button with an accessible label such as "Change chapter."
+Keep the existing exit button. Add a chapter-switch control that returns to the homepage's Unit 6 chapter picker (`arabic.html#unit6-chapters`).
 
 ### Progress saving
 
-Do not use the old single-purpose chapter storage key directly in quiz code after migration. Instead, call the shared progress module after a question has been checked.
-
-Record progress after each answer rather than only at chapter completion. Store at least:
-
-- Unit ID and chapter ID.
-- Number of answered questions.
-- Total questions in the chapter.
-- Correct answers in the current/latest attempt.
-- Current question index for resuming.
-- Best completed score.
-- Attempt start time, last activity time, and completion time when applicable.
-- Whether the chapter has ever been completed.
-
-Recommended behavior:
-
-- Preserve the current question order only within the active attempt. If exact resumption is desired, persist the shuffled question IDs/order too.
-- On returning to an in-progress quiz, offer "Continue where you left off" or "Start over."
-- The simplest acceptable first release is to resume at the stored question index using a deterministic or persisted question order. Do not claim a quiz can resume accurately if random order is discarded.
-- Restart should create a new attempt state and should not erase historical best-score data.
-- Completion should update the chapter's best score only if the new score is higher.
+Call the shared progress module after each question is checked, not only at chapter completion. Restart creates a new attempt state and keeps historical best-score data. Completion updates the chapter's best score only if the new score is higher.
 
 ### Completion screen
 
-On completion, display:
-
-- Score for the completed attempt.
-- Personal best, if different or useful.
-- Practice again.
-- Back to Unit 6 chapter picker.
-- Start the next available chapter when a next available chapter exists (use `UnitsManifest.getNextAvailableChapter`).
-
-For Chapter 28, do not promise Chapter 29 until its data is present. Link back to chapter selection instead.
+Display score, personal best, practice-again, back-to-picker, and the next available chapter when one exists.
 
 ## Local-First Progress Store
 
@@ -265,56 +200,9 @@ Add a standalone file:
 arabic/progress-store.js
 ```
 
-Use a versioned profile stored under one stable key:
-
-```text
-arabicStudy.profile.v1
-```
-
-Do not store user credentials, tokens, email addresses, or authentication information in this client-only profile.
-
-### Suggested profile shape
-
-```js
-{
-  schemaVersion: 1,
-  userId: null,
-  syncVersion: 0,
-  createdAt: '2026-08-19T00:00:00.000Z',
-  updatedAt: '2026-08-19T00:00:00.000Z',
-  lastActive: {
-    unitId: 'unit6',
-    chapterId: 'ch27',
-    updatedAt: '2026-08-19T00:00:00.000Z'
-  },
-  units: {
-    unit6: {
-      chapters: {
-        ch26: {
-          status: 'in_progress',
-          totalQuestions: 65,
-          answeredCount: 12,
-          correctCount: 9,
-          resumeIndex: 12,
-          questionOrder: [1, 7, 3],
-          bestScore: 52,
-          latestScore: 9,
-          attempts: 2,
-          startedAt: '2026-08-19T00:00:00.000Z',
-          lastActivityAt: '2026-08-19T00:00:00.000Z',
-          completedAt: null
-        }
-      }
-    }
-  }
-}
-```
-
-The exact question-order representation can use stable question numbers or IDs. Avoid depending on array offsets if data may be reordered later. The profile shape is already unit-agnostic: `units` is keyed by unit ID the same way `UNITS_MANIFEST` is, so no changes are needed here as units are added.
+Use a versioned profile stored under one stable key: `arabicStudy.profile.v1`. Do not store user credentials, tokens, email addresses, or authentication information in this client-only profile.
 
 ### Required API
-
-Expose a small, explicit API. A future authentication layer should use these same methods rather than reach into localStorage directly.
 
 ```js
 window.ProgressStore = {
@@ -331,43 +219,13 @@ window.ProgressStore = {
 };
 ```
 
-Implementation requirements:
-
-- Use defensive JSON parsing and return a valid default profile if storage is absent or corrupted.
-- Migrate the existing old chapter keys (for example `arabicStudyProgress:unit6:ch26`) into the new profile once when possible. Do not silently lose established local progress.
-- Keep `schemaVersion` at the top level so future migrations are possible.
-- Update `updatedAt` whenever profile content changes.
-- Use immutable/clone-safe handling when returning objects so callers do not accidentally mutate cached state without saving.
-- Gracefully handle localStorage being unavailable or full; quiz functionality should continue even if progress cannot be saved.
+Implementation requirements: defensive JSON parsing with a valid default profile fallback; migrate legacy chapter keys once; keep `schemaVersion` for future migrations; update `updatedAt` on every change; clone-safe returns; graceful handling if localStorage is unavailable.
 
 ## Future Account Sync Design
 
-No Google, Apple, email, password, database, or backend should be implemented in this phase.
-
-The preparation work is architectural:
-
-```text
-Today
-Quiz/Homepage -> ProgressStore -> browser localStorage
-
-Later
-Quiz/Homepage -> ProgressStore -> local cache
-                               -> authenticated sync adapter -> database
-```
-
-When account support is added:
-
-1. Authenticate a user through the selected provider.
-2. Obtain a stable authenticated user ID from the backend/provider.
-3. Fetch the remote progress profile.
-4. Call `ProgressStore.mergeProfile(remoteProfile)` to combine local and remote state.
-5. Assign `profile.userId` and increment/update `syncVersion` as appropriate.
-6. Persist the merged profile locally and remotely.
-7. Route all later saves through a sync adapter with retry/offline handling.
+The concrete implementation of this phase is specified in the "Account Authentication (Google + Magic Link)" section below. The rules stated here continue to apply.
 
 ### Merge rules
-
-Define predictable rules now:
 
 - `bestScore`: retain the higher value.
 - `attempts`: use the larger value or a safely combined total if attempts can be uniquely identified later.
@@ -377,17 +235,14 @@ Define predictable rules now:
 - `questionOrder` / `resumeIndex`: prefer the state with the most recent `lastActivityAt`.
 - `lastActive`: choose the most recently updated available chapter.
 
-Avoid collecting personally identifying data in the progress object. The future account record should link an authenticated user ID to this profile, not embed credentials in it.
+Avoid collecting personally identifying data in the progress object. The account record should link an authenticated user ID to this profile, not embed credentials in it.
 
 ## Testing Checklist
-
-Before opening a pull request or merging:
 
 ### Navigation
 
 - Homepage exposes Chapters 26-30 without a dropdown.
-- Chapter 26, 27, and 28 links load their intended quiz data.
-- Chapter 29 and 30 show Coming soon and do not create broken quiz links.
+- All chapter links load their intended quiz data.
 - Direct URLs such as `quiz.html?unit=unit6&chapter=ch27` work.
 - Bad URLs show a helpful unavailable state.
 - Quiz header can return users to chapter selection.
@@ -399,18 +254,14 @@ Before opening a pull request or merging:
 - Progress is independent by chapter.
 - Restart resets the active attempt but keeps best-score history.
 - Completion records completion and updates best score correctly.
-- Homepage reflects current progress, recent chapter, and completion status.
 - Existing legacy progress keys migrate without destroying data.
 - The site remains usable if localStorage fails.
 
 ### Future readiness
 
-- No quiz or homepage component accesses the new local-storage key directly; use `ProgressStore`.
-- No quiz or homepage component reaches into `window.UNITS_MANIFEST` directly; use `UnitsManifest`.
+- No quiz or homepage component accesses local-storage keys directly; use `ProgressStore` and `UnitsManifest`.
 - `exportProfile`, `importProfile`, and `mergeProfile` return valid profiles.
 - The profile contains no credentials or personal identifiers.
-- The documented merge rules are implemented or clearly marked for the later sync phase.
-- A second unit's JSON file (even a small test fixture) can be dropped into `data/` and added to `UNITS_MANIFEST` without touching `quiz.html`, `arabic.html`, or `progress-store.js`.
 
 ## Quiz Direction Mode (English-to-Arabic)
 
@@ -418,90 +269,218 @@ Before opening a pull request or merging:
 
 Every question in a chapter's data already pairs one Arabic word with one English meaning (`arabic` + the correct entry in `choices`, identified by `answer`). This section adds a second quiz direction that mirrors that same pairing instead of duplicating it: English-to-Arabic mode shows the English meaning as the prompt and requires selecting the correct Arabic word from among distractor words drawn from the same chapter.
 
-This is a **rendering-direction feature**, not a new content type. It reuses:
-
-- The same `data/{unitId}.json` files, unchanged, per the Content Contract.
-- The same `renderQuiz` shell, `ProgressStore`, and `UnitsManifest`.
-- The same choice-shuffle mechanism already used to randomize on-screen position (see the "Rendering engine" section above).
-
-No new fields are required in `unit6.json` or any future unit's data file. Every question already contains both halves of the pair the reversed direction needs.
+This is a **rendering-direction feature**, not a new content type. No new fields are required in `unit6.json` or any future unit's data file.
 
 ### Coverage rule
 
-English-to-Arabic mode covers 100% of a chapter's vocabulary — if a chapter has 20 questions in Arabic-to-English mode, it has the same 20 questions, reversed, in English-to-Arabic mode. There is no minimum-question threshold and no partial coverage; every chapter's full question set is mirrored.
+English-to-Arabic mode covers 100% of a chapter's vocabulary. There is no minimum-question threshold and no partial coverage.
 
 ### URL and routing
 
-Add an optional `mode` query parameter, defaulting to the existing behavior when omitted:
-
 ```text
-quiz.html?unit=unit6&chapter=ch26                       (defaults to mode=ar-to-en)
-quiz.html?unit=unit6&chapter=ch26&mode=ar-to-en          (explicit, same as default)
-quiz.html?unit=unit6&chapter=ch26&mode=en-to-ar          (new direction)
+quiz.html?unit=unit6&chapter=ch26&mode=ar-to-en   (default)
+quiz.html?unit=unit6&chapter=ch26&mode=en-to-ar   (new direction)
 ```
 
-Sanitize `mode` the same way `unit` and `chapter` are sanitized. Any value other than `ar-to-en` or `en-to-ar` falls back to `ar-to-en`.
+Any value other than `ar-to-en` or `en-to-ar` falls back to `ar-to-en`.
 
 ### Reversal logic
 
-For each question `q` in the chapter's `questions` array:
-
-- **Arabic-to-English (existing)**: prompt is `q.arabic`. Correct choice is `q.choices[q.answer]`. Distractors are the other entries in `q.choices`.
-- **English-to-Arabic (new)**: prompt is `q.choices[q.answer]` (the correct English meaning — the literal core meaning tied to that word, not a paraphrase). Correct choice is `q.arabic`. Distractors are `arabic` values sampled from the *other* questions in the same chapter's question list.
-
-Distractor sampling for English-to-Arabic mode:
-
-- Exclude the current question's own `arabic` value from the distractor pool.
-- Sample 3 distinct Arabic words at random from the remaining questions in the same chapter.
-- Combine the correct word with the 3 distractors, then shuffle on-screen position using the same shuffle mechanism already applied to Arabic-to-English choices.
-- Because coverage is 100% and chapters are expected to have enough vocabulary for 3 distinct distractors, no fallback path (borrowing from another chapter, reducing choice count) is implemented. If this assumption is ever violated by a very small future chapter, that is a data problem to flag, not something the engine should silently work around.
+- **Arabic-to-English**: prompt is `q.arabic`. Correct choice is `q.choices[q.answer]`. Distractors are the other entries in `q.choices`.
+- **English-to-Arabic**: prompt is `q.choices[q.answer]`. Correct choice is `q.arabic`. Distractors are `arabic` values sampled from the other questions in the same chapter, excluding the current question's own word, then shuffled for on-screen position.
 
 ### Rendering and language attributes
 
-Direction changes which side of the pair needs Arabic typography and RTL handling:
-
-- Arabic-to-English: prompt uses `lang="ar" dir="rtl"` (large Arabic display text). Choices are plain English, LTR.
-- English-to-Arabic: prompt is plain English, LTR. Each choice button's Arabic word uses `lang="ar" dir="rtl"` inline, sized appropriately for a choice row rather than the large prompt display.
-
-The prompt element's `lang`/`dir` attributes must be set per-render based on the active mode, not hardcoded. Choice rows must independently mark up Arabic text with `lang="ar"` regardless of mode, since Arabic can appear either as the large prompt or inside a choice row depending on direction.
+Direction changes which side needs Arabic typography and RTL handling. Arabic-to-English: prompt is `lang="ar" dir="rtl"`. English-to-Arabic: prompt is plain English LTR, and each Arabic choice is individually marked `lang="ar" dir="rtl"`.
 
 ### Progress tracking
 
-English-to-Arabic attempts are tracked as a separate chapter record from Arabic-to-English, not merged into the same progress entry. This keeps best-score and completion tracking meaningful per direction rather than conflating two different skills under one number.
-
-`ProgressStore` chapter keys become direction-aware: the existing `chapterId` (e.g. `ch26`) is suffixed with the mode when it is not the default, e.g. `ch26` for Arabic-to-English and `ch26:en-to-ar` for English-to-Arabic. Arabic-to-English keeps its existing unsuffixed key so no migration is needed for progress already recorded before this feature.
-
-`UnitsManifest` chapter entries are unchanged — direction is a quiz-session setting, not a property of the chapter itself. The homepage chapter picker may later offer a way to start either direction per chapter; that UI decision is out of scope for this section and can be added without changing the manifest shape.
+English-to-Arabic attempts are tracked as a separate chapter record: `ch26` for Arabic-to-English, `ch26:en-to-ar` for English-to-Arabic. `UnitsManifest` chapter entries are unchanged; direction is a quiz-session setting.
 
 ### Testing checklist additions
 
-- A chapter's English-to-Arabic quiz contains exactly as many questions as its Arabic-to-English quiz (100% coverage, same chapter).
-- Every English-to-Arabic prompt matches the literal correct meaning from the source question, not a reworded version.
-- Distractor Arabic words are never duplicates of each other or of the correct answer within a single question.
-- Arabic text renders correctly with `lang="ar" dir="rtl"` whether it appears as the large prompt or inside a choice row.
-- Progress for `ch26` (Arabic-to-English) and `ch26:en-to-ar` (English-to-Arabic) are tracked independently; completing one does not affect the other's best score or completion status.
-- `mode` is validated and falls back to `ar-to-en` for missing or invalid values, preserving all existing links that omit `mode` entirely.
+- English-to-Arabic covers exactly the same questions as Arabic-to-English for that chapter.
+- Distractor Arabic words are never duplicates within a single question.
+- Arabic renders correctly with `lang="ar" dir="rtl"` whether as prompt or choice.
+- Progress for the two directions of a chapter are tracked independently.
+
+## Account Authentication (Google + Magic Link)
+
+### Purpose
+
+This section replaces the placeholder "Future Account Sync Design" phase with a concrete implementation. It adds real sign-in so learners can access their progress across devices, using two methods: Google sign-in for users who want it, and passwordless email (magic link) for users who do not want to use a Google account. No passwords are ever stored.
+
+This is the first feature in this document requiring a backend. All backend logic runs as Node.js serverless functions via Netlify Functions, deployed from this same repository — there is no separate server to provision or manage.
+
+Netlify Functions execute as standard Node.js. Writing a file such as `netlify/functions/auth-google-callback.js` with a normal `exports.handler` signature is Node code; Netlify runs it in a Node runtime automatically on every deploy through the same GitHub integration already deploying this site. This is not an alternative to Node and is not related to GitHub Actions (which runs CI/CD scripts, not live API endpoints) — it is Node, running in this repository, deployed the same way every other change in this document has been deployed. No separate Node server, hosting account, or additional deploy pipeline is required.
+
+### Architecture
+
+```text
+Browser (arabic.html / quiz.html)
+  |
+  +-- ProgressStore (existing, unchanged)
+  |
+  +-- Auth client (new, thin wrapper)
+        |
+        +-- Netlify Functions (Node, in netlify/functions/)
+              |
+              +-- Google OAuth callback handler
+              +-- Magic-link request + verify handlers
+              +-- Session issuance
+              |
+              +-- Netlify DB (Postgres)
+                    |
+                    +-- users table
+                    +-- progress table (or JSON profile blob per user)
+```
+
+### Google sign-in setup
+
+1. Create an OAuth 2.0 client ID in Google Cloud Console, scoped to this site's production and Netlify preview domains.
+2. Store the client ID and client secret as Netlify environment variables (`GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`). Never commit these to the repository.
+3. Add a Netlify Function (e.g. `netlify/functions/auth-google-callback.js`) that completes the OAuth redirect flow and issues a session.
+4. On successful sign-in, the function returns a stable Google-provided user ID. This becomes `profile.userId` in the existing `ProgressStore` schema.
+
+### Magic-link email setup
+
+1. User submits their email address in a lightweight sign-in form (no password field).
+2. A Netlify Function (e.g. `netlify/functions/auth-magic-link-request.js`) generates a signed, time-limited token tied to that email address and stores a pending-verification record.
+3. The same function sends an email containing a link back to the site with the token, via a transactional email API (a service such as Resend, Postmark, or SendGrid — the specific provider is an implementation choice made when this is built, not fixed here). The provider's API key is stored as a Netlify environment variable, never committed.
+4. When the user clicks the link, a verification function (e.g. `netlify/functions/auth-magic-link-verify.js`) checks the token, and if valid and not expired, issues a session and returns a stable user ID derived from the verified email address.
+5. Magic links expire after a short window (a reasonable default is 15 minutes) and are single-use. A used or expired token must fail verification with a clear "request a new link" message, not a silent failure.
+
+### Session handling
+
+- Sessions are represented by a signed, httpOnly session cookie or token issued by the relevant auth function, not by storing credentials client-side.
+- The browser's auth client checks for an existing valid session on page load and, if present, treats the user as signed in without requiring them to sign in again.
+- Signing out clears the session token and does not delete local `ProgressStore` data — a signed-out user keeps their local-only progress, consistent with the existing local-first design.
+
+### Data storage
+
+Add to Netlify DB (Postgres):
+
+- A `users` table: stable user ID, auth method (`google` or `magic-link`), email (for magic-link users) or Google account identifier, `createdAt`.
+- A `progress` table or column: the user's merged `ProgressStore`-shaped profile, keyed by user ID, updated on sync.
+
+### Sync behavior
+
+On successful sign-in:
+
+1. Fetch the remote profile for that user ID from Netlify DB, if one exists.
+2. Call the existing `ProgressStore.mergeProfile(remoteProfile)` to combine local and remote state, using the merge rules already defined above. Those rules are unchanged by this section.
+3. Persist the merged profile back to Netlify DB via a Netlify Function.
+4. On every subsequent progress update during the session, sync the change to the backend using the same merge-then-save pattern, with reasonable retry/offline handling — if the sync call fails, keep the local save and retry later rather than blocking the quiz.
+
+### Rules
+
+- Do not implement password-based authentication. Google and magic-link are the only two sign-in methods.
+- Do not store credentials, tokens, or session secrets in client-side code, `localStorage`, or the repository. All secrets are Netlify environment variables.
+- Do not require sign-in to use the quiz. Anonymous, local-only progress must continue to work exactly as it does today.
+- Magic-link tokens must be single-use and expire. Do not issue non-expiring links.
+- The existing `ProgressStore` API is not changed by this feature. Auth is an additive layer that calls this existing API; it does not replace it.
+
+### Testing checklist additions
+
+- A new user can sign in with Google and a `users` record is created with a stable ID.
+- A new user can request a magic link, receive an email, and sign in by clicking it.
+- An expired or already-used magic link fails verification with a clear message.
+- Local progress made before signing in is preserved and merged correctly after sign-in, not overwritten.
+- Signing out preserves local `ProgressStore` data and does not sign the user into someone else's session.
+- The quiz remains fully usable, with local-only progress, for a user who never signs in.
+
+## Content Quality Control
+
+### Purpose
+
+Arabic vocabulary content must be verified as accurate — word, transliteration if present, and English meaning — before it is treated as trustworthy. This section adds two things: a lightweight verification-tracking convention for content, and a permanent flag-a-question feature so any user can report a question they believe is incorrect. Reported flags must reach a place the site owner will actually see them, not disappear into a single user's local storage.
+
+### Content verification tracking
+
+Extend the Content Contract's question shape (additive, optional field, no change to any existing required field):
+
+```json
+{
+  "arabic": "عرض",
+  "choices": { "A": "to show", "B": "...", "C": "...", "D": "..." },
+  "answer": "A",
+  "verified": true
+}
+```
+
+Rules:
+
+- `verified` is optional. Its absence is treated as not-yet-verified, not as incorrect.
+- Setting `verified: true` is a manual, deliberate action after a human review of that word, its meaning, and its distractors — not a default and not something the quiz engine sets automatically.
+- The quiz engine does not currently need to display verification status to learners. This field exists so verification progress can be tracked and queried without needing a separate document. Surfacing this in the UI is a future, separate decision.
+
+### Flag-a-question feature
+
+Add a flag control to the quiz screen in `quiz.html`, available on every question regardless of sign-in status:
+
+- A small, unobtrusive icon button near the question with an accessible label such as "Report this question."
+- Tapping it opens a minimal inline confirmation, optionally allowing the user to select a reason (e.g. "Arabic looks wrong," "English meaning seems off," "Answer choices are confusing") or leave it blank.
+- Submitting a flag does not interrupt the quiz; the user continues answering normally.
+
+### Flag data captured
+
+- Unit ID, chapter ID, and the question's identifying data (the `arabic` text and the `answer` key at minimum).
+- The selected reason, if any.
+- The current quiz mode (`ar-to-en` or `en-to-ar`), since a flag raised in one direction may point to a distractor-selection issue specific to that direction rather than the underlying word pair.
+- The signed-in user ID if signed in, or a clear `anonymous` marker if not. Flagging must work fully for anonymous users.
+- A timestamp.
+
+### Flag delivery
+
+- A Netlify Function (e.g. `netlify/functions/report-question-flag.js`) receives the flag submission from the browser.
+- The function appends a row to a Google Sheet using the Google Sheets API, authenticated with a dedicated Google service account created for this purpose.
+- The service account's credentials are stored as a Netlify environment variable (e.g. `GOOGLE_SHEETS_SERVICE_ACCOUNT_KEY`) and are never committed to the repository. This is a separate credential from the Google OAuth client used for sign-in.
+- The target spreadsheet ID is also stored as a Netlify environment variable, not hardcoded in client or function code.
+- If the Sheets API call fails, the function should still return a success response to the user's flag submission if the flag was otherwise durably queued or retried server-side, rather than surfacing backend failures to the learner mid-quiz.
+
+### Rules
+
+- Flagging must never block or interrupt quiz progress. It is fire-and-forget from the learner's perspective.
+- Flag data is written to the Google Sheet, not to `ProgressStore` or `localStorage`.
+- Do not require sign-in to flag a question.
+- Do not display other users' flags or flag counts to learners.
+
+### Testing checklist additions
+
+- Flagging a question while signed out succeeds and appears in the Google Sheet marked `anonymous`.
+- Flagging a question while signed in includes the correct user ID in the logged row.
+- Flagging works identically in both quiz directions, and the logged row correctly records which direction was active.
+- Flagging does not disable the Next/Check answer button or otherwise interrupt the current attempt.
+- A `verified: true` question and an unverified question render and function identically to the learner at this stage.
 
 ## Implementation Order
 
 1. Add `data/units-manifest.js`.
 2. Add and manually test `progress-store.js` in isolation.
-3. Integrate the progress store and the unit-agnostic `renderQuiz()` function into `quiz.html` while preserving existing question rendering and feedback behavior.
+3. Integrate the progress store and the rendering engine into `quiz.html`.
 4. Add the homepage chapter picker and progress display in `arabic.html`, driven by `UnitsManifest`.
-5. Manually test Chapters 26-28 plus unavailable Chapters 29-30 on mobile and desktop widths.
+5. Manually test all chapters on mobile and desktop widths.
 6. Verify browser refresh/restart/resume behavior.
-7. Verify unit-agnosticism with a throwaway second unit fixture (per the Future Readiness checklist item above), then remove the fixture before opening a PR.
-8. Commit on `feature/arabic-chapter-progress`.
-9. Create a draft pull request for review; do not merge without approval.
-10. Implement the English-to-Arabic direction mode described above, reusing the existing engine, and add its testing checklist items to the Navigation/Progress sections before opening a follow-up pull request.
+7. Verify unit-agnosticism with a throwaway second unit fixture, then remove it before opening a PR.
+8. Implement the English-to-Arabic direction mode, reusing the existing engine.
+9. Set up Netlify Functions scaffolding and the Google OAuth client, then implement Google sign-in per the Account Authentication section.
+10. Implement magic-link email sign-in, including the transactional email provider integration.
+11. Set up Netlify DB and wire up profile sync (fetch, merge, persist) for both sign-in methods.
+12. Add the `verified` field convention to the Content Contract and begin tracking verification status for existing chapters.
+13. Implement the flag-a-question feature in `quiz.html`, the Google Sheets logging Netlify Function, and the dedicated Sheets service account credential.
+14. Test account authentication, sync, and the flag feature per their testing checklists before opening a pull request.
 
 ## Guardrails
 
 - Preserve the current Material-style mobile design.
 - Preserve Arabic Unicode and `lang="ar"` / `dir="rtl"` handling.
 - Do not overwrite or regenerate `unit6.json` unless explicitly required and separately reviewed.
-- Do not add authentication, tracking, analytics, or external services in this phase.
-- Do not promise persistence across devices before account sync exists; local progress belongs to the browser/device.
+- Do not add authentication, tracking, analytics, or external services in phases before this document specifies them.
 - Prefer additive standalone modules and narrow integration changes over a broad rewrite.
-- Do not introduce unit-specific or subject-specific logic into `quiz.html`, `progress-store.js`, or the manifest helper API. If a change only makes sense for Arabic or for Unit 6 specifically, it belongs in a data file or manifest entry, not in shared code.
-- Do not introduce quiz-direction-specific logic outside the single reversal function described above. Both directions must continue to share `ProgressStore`, `UnitsManifest`, and the shuffle mechanism.
+- Do not introduce unit-specific or subject-specific logic into `quiz.html`, `progress-store.js`, or the manifest helper API.
+- Do not introduce quiz-direction-specific logic outside the single reversal function. Both directions share `ProgressStore`, `UnitsManifest`, and the shuffle mechanism.
+- Do not implement password-based login. Google and magic-link only.
+- Do not store any authentication secret, API key, or service account credential in the repository. All such values are Netlify environment variables.
+- Do not make sign-in a requirement for using the quiz or for flagging a question.
+- Do not surface flag data or verification status as a public-facing feature without a separate, explicit decision to do so.
+- Do not let a failed backend sync (auth sync or flag logging) block or degrade the core quiz experience; both must fail gracefully.
