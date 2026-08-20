@@ -2,16 +2,18 @@
 
 ## Status Summary
 
-Legend: ✅ Done and live on `main` | ⏳ Planned, not yet implemented
+Legend: ✅ Done and live on `main` | ⏳ Planned, not yet implemented | ⚠️ Known issue
 
 | Section | Status |
 |---|---|
 | Content Contract | ✅ Done |
 | Units and Chapters Manifest | ✅ Done |
 | Homepage Changes | ✅ Done |
-| Quiz Changes | ✅ Done |
+| Quiz Changes | ✅ Done (see known issue below) |
 | Local-First Progress Store | ✅ Done |
 | Quiz Direction Mode (English-to-Arabic) | ✅ Done |
+| Known Issue: Quiz Does Not Resume from Saved Progress | ⚠️ Confirmed likely cause, not yet fixed |
+| Known Vocabulary (Mark as Known) | ⏳ Planned |
 | Account Authentication (Google + Magic Link) | ⏳ Planned |
 | Content Quality Control | ⏳ Planned |
 
@@ -177,7 +179,9 @@ Read the progress profile through `ProgressStore` (defined below). Show:
 - A per-chapter status: Not started, In progress, Completed, or Coming soon.
 - Continue behavior should prefer the profile's `lastActive` chapter when it is still available; otherwise it should fall back to Chapter 26.
 
-## Quiz Changes ✅ Done
+Note: the homepage correctly displays saved progress (e.g. "12 of 65 questions"), but see the Known Issue below — tapping through to continue does not currently resume at that point.
+
+## Quiz Changes ✅ Done (see known issue below)
 
 Update `arabic/quiz.html`.
 
@@ -265,7 +269,7 @@ Avoid collecting personally identifying data in the progress object. The account
 ### Progress
 
 - [x] Answering a question creates/updates one versioned profile.
-- [ ] Reloading resumes or clearly offers to resume the active chapter. *(implemented; not yet manually re-verified after the direction-toggle and Chapter 29/30 changes)*
+- [ ] Reloading resumes or clearly offers to resume the active chapter. **Confirmed broken — see Known Issue section below.**
 - [x] Progress is independent by chapter.
 - [x] Restart resets the active attempt but keeps best-score history.
 - [x] Completion records completion and updates best score correctly.
@@ -318,6 +322,93 @@ English-to-Arabic attempts are tracked as a separate chapter record: `ch26` for 
 - [x] Distractor Arabic words are never duplicates within a single question.
 - [x] Arabic renders correctly with `lang="ar" dir="rtl"` whether as prompt or choice.
 - [ ] Progress for the two directions of a chapter are tracked independently. *(implemented via suffixed keys; not yet manually re-verified since Chapters 29/30 were unlocked)*
+
+## Known Issue: Quiz Does Not Resume from Saved Progress
+
+### Description
+
+A tester reported that the homepage chapter card correctly displays progress (e.g. "12 of 65 questions completed"), but tapping that card to continue does not resume the quiz at question 12 — it restarts at question 1.
+
+### Likely root cause
+
+`ProgressStore` correctly records `answeredCount` and `resumeIndex` as each question is answered, and the homepage correctly reads and displays those values. However, `quiz.html`'s `init()` function does not read `resumeIndex` on load — `renderQuestion()` is always called starting from `state.index = 0`. The progress *display* was implemented; the progress *resume* was not. This is a real gap, not a display bug, and it directly contradicts the Progress Saving rule already stated above: "On returning to an in-progress quiz, offer 'Continue where you left off' or 'Start over.'"
+
+### Status
+
+⏳ Confirmed as a likely root cause based on code review; not yet fixed. Awaiting a clearer repro description from the original tester before making a change, since the exact trigger ("during 6th hour") is not yet understood and a different or additional bug may also be involved.
+
+### Fix scope (once confirmed)
+
+- `quiz.html`'s `init()` should check `ProgressStore.getChapter(unit, progressKeyFor(chapterId))` for an existing `in_progress` record before rendering.
+- If one exists, either resume directly at `resumeIndex` or present a "Continue where you left off" / "Start over" choice per the existing (already documented, not yet implemented) rule. `state.score` must also be restored to `correctCount` in the resumed case, not reset to 0.
+- If restoring exact question order matters, this depends on `questionOrder` being persisted, which the profile schema already supports but `quiz.html` does not currently populate.
+
+## Known Vocabulary (Mark as Known)
+
+### Purpose
+
+Add a per-word "mark as known" control, similar to the flag-a-question feature and to patterns already established by other vocabulary tools (e.g. Memrise, Anki, Quizlet). Marking a word as known lets a learner later filter or focus practice on words they have not yet marked, rather than repeatedly drilling vocabulary they have already mastered.
+
+This is learner-facing personalization data, distinct from the flag-a-question feature (which reports content problems to the site owner) and from `verified` (which tracks content-accuracy review). All three are per-question metadata, but serve different purposes and audiences, and none should be merged into one field or one storage location.
+
+### Data model
+
+Known-word status is learner-specific state and belongs in `ProgressStore`, alongside chapter progress, not in the content JSON (`unit6.json` must never be modified per-learner) and not in the Google Sheet used for flags (that is for the site owner, not learner personalization).
+
+Extend the profile shape with a per-chapter set of known question identifiers:
+
+```js
+units: {
+  unit6: {
+    chapters: {
+      ch26: {
+        // ...existing chapter progress fields unchanged...
+        knownQuestions: ['12', '37']  // identifiers of questions marked known
+      }
+    }
+  }
+}
+```
+
+Rules:
+
+- `knownQuestions` is additive to the existing chapter progress shape; it does not replace or interact with `status`, `bestScore`, `resumeIndex`, or any other existing field.
+- Because questions do not currently have a stable ID field, the identifier used here should be the same identifying data already used for flagging (e.g. the `arabic` text, or an explicit stable ID if one is added to the Content Contract later). This should be decided once, consistently, and reused by both the flag feature and known-word tracking rather than inventing a second identifier scheme.
+- Marking a word as known or unknown is a toggle, not a one-way action. A learner can un-mark a word.
+- Known-word status is tracked per quiz direction the same way chapter progress is (a word marked known in Arabic-to-English does not need to imply it is known in English-to-Arabic), for consistency with how the rest of this document already separates the two directions. This mirrors the `ch26` / `ch26:en-to-ar` key pattern already in use.
+
+### `ProgressStore` API additions
+
+```js
+window.ProgressStore = {
+  // ...existing methods unchanged...
+  markQuestionKnown(unitId, chapterId, questionIdentifier),
+  markQuestionUnknown(unitId, chapterId, questionIdentifier),
+  isQuestionKnown(unitId, chapterId, questionIdentifier),
+  getKnownQuestions(unitId, chapterId)
+};
+```
+
+### Quiz behavior
+
+- Add a small "mark as known" control on the quiz screen, visually distinct from the flag control so the two are never confused.
+- A quiz session can optionally be started in a "focus mode" that excludes already-known questions from that chapter's question set, in either direction. This is an additive filtering option on top of the existing shuffle-and-render flow — it does not change how a single question is rendered or scored.
+- The homepage chapter card may show a known-word count alongside existing progress metadata (e.g. "40 of 65 known") as a future enhancement; this is not required for the initial version of this feature.
+
+### Rules
+
+- Do not write known-word status to `unit6.json` or any content file. It is learner-specific and belongs only in `ProgressStore`.
+- Do not merge known-word data with flag data or `verified` data. They serve different purposes and different audiences.
+- Marking a word as known must never affect scoring, completion status, or best-score tracking for that chapter.
+- This feature requires no backend and works fully for anonymous, non-signed-in users, consistent with the rest of the local-first design. Once Account Authentication exists, known-word data syncs the same way the rest of the profile does, via the existing `mergeProfile` mechanism.
+
+### Testing checklist additions
+
+- Marking a word as known persists across a page reload.
+- Un-marking a previously known word correctly removes it from `knownQuestions`.
+- Focus mode (if implemented) correctly excludes known words without breaking the 100%-coverage guarantee of English-to-Arabic mode for the remaining words.
+- Known-word status for `ch26` and `ch26:en-to-ar` are tracked independently.
+- Marking a word as known does not alter `bestScore`, `status`, or any other existing progress field for that chapter.
 
 ## Account Authentication (Google + Magic Link) ⏳ Planned
 
@@ -475,15 +566,17 @@ Add a flag control to the quiz screen in `quiz.html`, available on every questio
 3. [x] Integrate the progress store and the rendering engine into `quiz.html`.
 4. [x] Add the homepage chapter picker and progress display in `arabic.html`, driven by `UnitsManifest`.
 5. [ ] Manually test all chapters on mobile and desktop widths. *(chapters are live; cross-device manual pass not yet confirmed)*
-6. [ ] Verify browser refresh/restart/resume behavior. *(implemented; not yet manually re-confirmed post-toggle)*
+6. [ ] Verify browser refresh/restart/resume behavior. **Confirmed broken — see Known Issue section.**
 7. [ ] Verify unit-agnosticism with a throwaway second unit fixture, then remove it before opening a PR. *(not yet performed)*
 8. [x] Implement the English-to-Arabic direction mode, reusing the existing engine.
-9. [ ] Set up Netlify Functions scaffolding and the Google OAuth client, then implement Google sign-in per the Account Authentication section.
-10. [ ] Implement magic-link email sign-in, including the transactional email provider integration.
-11. [ ] Set up Netlify DB and wire up profile sync (fetch, merge, persist) for both sign-in methods.
-12. [ ] Add the `verified` field convention to the Content Contract and begin tracking verification status for existing chapters.
-13. [ ] Implement the flag-a-question feature in `quiz.html`, the Google Sheets logging Netlify Function, and the dedicated Sheets service account credential.
-14. [ ] Test account authentication, sync, and the flag feature per their testing checklists before opening a pull request.
+9. [ ] Fix the quiz-resume bug described in the Known Issue section, once the tester's repro is fully understood.
+10. [ ] Implement the Known Vocabulary (Mark as Known) feature.
+11. [ ] Set up Netlify Functions scaffolding and the Google OAuth client, then implement Google sign-in per the Account Authentication section.
+12. [ ] Implement magic-link email sign-in, including the transactional email provider integration.
+13. [ ] Set up Netlify DB and wire up profile sync (fetch, merge, persist) for both sign-in methods.
+14. [ ] Add the `verified` field convention to the Content Contract and begin tracking verification status for existing chapters.
+15. [ ] Implement the flag-a-question feature in `quiz.html`, the Google Sheets logging Netlify Function, and the dedicated Sheets service account credential.
+16. [ ] Test account authentication, sync, and the flag feature per their testing checklists before opening a pull request.
 
 ## Guardrails
 
@@ -499,3 +592,5 @@ Add a flag control to the quiz screen in `quiz.html`, available on every questio
 - Do not make sign-in a requirement for using the quiz or for flagging a question.
 - Do not surface flag data or verification status as a public-facing feature without a separate, explicit decision to do so.
 - Do not let a failed backend sync (auth sync or flag logging) block or degrade the core quiz experience; both must fail gracefully.
+- Do not write known-word status to any content JSON file; it is learner-specific state and belongs only in `ProgressStore`.
+- Do not merge known-word data with flag data or `verified` data — they serve different purposes and different audiences.
