@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root { --primary:#6750a4; --on-primary:#fff; --primary-container:#e9ddff; --on-primary-container:#21005d; --surface:#fffbfe; --surface-low:#f7f2fa; --surface-high:#ece6f0; --on-surface:#1c1b1f; --variant:#49454f; --outline:#79747e; --outline-variant:#cac4d0; --success:#146c2e; --success-container:#b9f8c8; --error:#ba1a1a; --error-container:#ffdad6; --radius-lg:28px; --radius-md:18px; }
+    :root { --primary:#6750a4; --on-primary:#fff; --primary-container:#e9ddff; --on-primary-container:#21005d; --surface:#fffbfe; --surface-low:#f7f2fa; --surface-high:#ece6f0; --on-surface:#1c1b1f; --variant:#49454f; --outline:#79747e; --outline-variant:#cac4d0; --success:#146c2e; --success-container:#b9f8c8; --error:#ba1a1a; --error-container:#ffdad6; --known:#146c2e; --known-container:#b9f8c8; --radius-lg:28px; --radius-md:18px; }
     * { box-sizing:border-box; }
     html,body { min-width:320px; min-height:100%; }
     body { margin:0; color:var(--on-surface); background:var(--surface); font-family:"Noto Sans","Noto Sans Arabic",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
@@ -46,7 +46,35 @@
 #quiz-screen.hidden {
   display: none;
 }
-    .question-kicker { margin:0 0 14px; color:var(--variant); font-size:.9rem; font-weight:700; }
+    .question-kicker-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 14px;
+}
+    .question-kicker { margin:0; color:var(--variant); font-size:.9rem; font-weight:700; }
+    .known-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 2px solid var(--outline-variant);
+  border-radius: 999px;
+  color: var(--variant);
+  background: var(--surface);
+  font-size: .78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+    .known-toggle .material-symbols-rounded { font-size: 18px; }
+    .known-toggle.is-known {
+  border-color: var(--known);
+  color: var(--known);
+  background: var(--known-container);
+}
+    .known-toggle.is-known .material-symbols-rounded { font-variation-settings:"FILL" 1,"wght" 500,"GRAD" 0,"opsz" 20; }
     .prompt {
   margin: 0 0 14px;
   font-family: "Noto Sans Arabic", "Noto Sans", sans-serif;
@@ -159,7 +187,7 @@
     margin-top: 8px;
   }
 
-  .question-kicker {
+  .question-kicker-row {
     margin-bottom: 8px;
   }
 
@@ -205,7 +233,16 @@
     <section class="progress-block" id="progress-block" aria-label="Quiz progress"><p class="progress-copy"><span id="progress-text">Loading</span><span id="score-text">0 correct</span></p><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div></section>
     <main>
       <section id="loading-screen" class="screen"><div class="screen-icon"><span class="material-symbols-rounded">progress_activity</span></div><h1>Loading your quiz</h1><p>Getting your study set ready.</p></section>
-      <section id="quiz-screen" class="hidden" aria-live="polite"><p class="question-kicker" id="question-kicker"></p><h1 class="prompt" id="prompt"></h1><div class="choices" id="choices" aria-label="Answer choices"></div><div class="feedback" id="feedback" role="status"></div><div class="action-area"><button class="button primary full" id="next-button" type="button" disabled>Choose an answer</button></div></section>
+      <section id="quiz-screen" class="hidden" aria-live="polite">
+        <div class="question-kicker-row">
+          <p class="question-kicker" id="question-kicker"></p>
+          <button class="known-toggle" id="known-toggle" type="button" aria-pressed="false">
+            <span class="material-symbols-rounded" aria-hidden="true" id="known-toggle-icon">check_circle</span>
+            <span id="known-toggle-label">Mark as known</span>
+          </button>
+        </div>
+        <h1 class="prompt" id="prompt"></h1><div class="choices" id="choices" aria-label="Answer choices"></div><div class="feedback" id="feedback" role="status"></div><div class="action-area"><button class="button primary full" id="next-button" type="button" disabled>Choose an answer</button></div>
+      </section>
       <section id="complete-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">celebration</span></div><h1>Chapter complete</h1><p id="complete-copy"></p><div class="score" id="final-score"></div><button class="button primary full" id="again-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">refresh</span>Practice again</button><button class="button tonal full hidden" id="next-chapter-button" type="button"></button><a class="button tonal full" href="arabic.html">Back to Arabic Study</a></section>
       <section id="unavailable-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">hourglass_top</span></div><h1>Chapter not available yet</h1><p id="unavailable-copy">This chapter is still being written.</p><a class="button primary full" href="arabic.html#unit6-chapters">Choose another chapter</a></section>
       <section id="error-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">error</span></div><h1>Quiz unavailable</h1><p id="error-copy">We could not load this study set.</p><a class="button primary full" href="arabic.html">Back to Arabic Study</a></section>
@@ -227,6 +264,13 @@
 
     function progressKeyFor(chapterId) {
       return mode === 'en-to-ar' ? `${chapterId}:en-to-ar` : chapterId;
+    }
+
+    // The word's Arabic text is its identifier for known-word tracking,
+    // consistent with the identifier convention used by the flag-a-question
+    // feature. See "Known Vocabulary" in CHAPTER_PROGRESS_IMPLEMENTATION.md.
+    function wordIdFor(question) {
+      return question.arabic;
     }
 
     function setUnavailable(message) {
@@ -288,6 +332,32 @@
       };
     }
 
+    function updateKnownToggle() {
+      const q = state.questions[state.index];
+      const wordId = wordIdFor(q);
+      const known = window.ProgressStore
+        ? window.ProgressStore.isWordKnown(unit, progressKeyFor(state.chapterId), wordId)
+        : false;
+      const toggle = $('known-toggle');
+      const icon = $('known-toggle-icon');
+      const label = $('known-toggle-label');
+      toggle.classList.toggle('is-known', known);
+      toggle.setAttribute('aria-pressed', known ? 'true' : 'false');
+      icon.textContent = known ? 'check_circle' : 'radio_button_unchecked';
+      label.textContent = known ? 'Known' : 'Mark as known';
+    }
+
+    function toggleKnown() {
+      if (!window.ProgressStore) return;
+      const q = state.questions[state.index];
+      const wordId = wordIdFor(q);
+      const key = progressKeyFor(state.chapterId);
+      const currentlyKnown = window.ProgressStore.isWordKnown(unit, key, wordId);
+      if (currentlyKnown) window.ProgressStore.markWordUnknown(unit, key, wordId);
+      else window.ProgressStore.markWordKnown(unit, key, wordId);
+      updateKnownToggle();
+    }
+
     function renderQuestion() {
       state.selected = null; state.answered = false;
       const q = state.questions[state.index];
@@ -300,6 +370,7 @@
       state.correctText = built.correctText;
 
       updateProgress();
+      updateKnownToggle();
       const promptEl = $('prompt');
       if (built.promptIsArabic) {
         promptEl.classList.remove('prompt-en');
@@ -358,6 +429,13 @@
         : `\u201c${state.correctText}\u201d`;
       feedback.innerHTML = `<span class="material-symbols-rounded" aria-hidden="true">${correct ? 'check_circle' : 'info'}</span><div><strong>${correct ? 'Correct!' : 'Not quite.'}</strong>${correct ? `${correctTextSpan} is correct.` : `The correct answer is ${correctDisplayKey}: ${correctTextSpan}.`}</div>`;
       $('next-button').textContent = state.index === state.questions.length - 1 ? 'See results' : 'Continue';
+
+      const q = state.questions[state.index];
+      if (window.ProgressStore) {
+        window.ProgressStore.recordAnswer(unit, progressKeyFor(state.chapterId), wordIdFor(q), correct);
+      }
+      updateKnownToggle();
+
       saveProgress({
         status: 'in_progress',
         totalQuestions: state.questions.length,
@@ -455,6 +533,7 @@
         $('restart-button').addEventListener('click', restart);
         $('again-button').addEventListener('click', restart);
         $('next-button').addEventListener('click', next);
+        $('known-toggle').addEventListener('click', toggleKnown);
 
         if (window.ProgressStore) window.ProgressStore.setLastActive(unit, progressKeyFor(state.chapterId));
 
