@@ -28,118 +28,39 @@
     .progress-copy { display:flex; justify-content:space-between; gap:12px; margin:0 0 8px; color:var(--variant); font-size:.83rem; font-weight:700; }
     .progress { height:8px; overflow:hidden; border-radius:999px; background:var(--surface-high); }
     .progress > span { display:block; width:0; height:100%; border-radius:inherit; background:var(--primary); transition:width 220ms ease; }
-    main {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 14px 0 8px;
-}
-    #quiz-screen {
-  min-height: 0;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-}
-
-#quiz-screen.hidden {
-  display: none;
-}
-    .question-kicker-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin: 0 0 14px;
-}
+    .review-all-link { display:inline-flex; align-items:center; gap:4px; margin:8px 4px 0; padding:0; border:0; background:transparent; color:var(--primary); font-size:.78rem; font-weight:700; text-decoration:underline; text-decoration-color:transparent; transition:text-decoration-color 150ms ease; }
+    .review-all-link:hover { text-decoration-color:var(--primary); }
+    .review-all-link .material-symbols-rounded { font-size:16px; }
+    main { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; padding: 14px 0 8px; }
+    #quiz-screen { min-height: 0; display: flex; flex: 1; flex-direction: column; }
+    #quiz-screen.hidden { display: none; }
+    .question-kicker-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 14px; }
     .question-kicker { margin:0; color:var(--variant); font-size:.9rem; font-weight:700; }
-    .known-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border: 2px solid var(--outline-variant);
-  border-radius: 999px;
-  color: var(--variant);
-  background: var(--surface);
-  font-size: .78rem;
-  font-weight: 700;
-  white-space: nowrap;
-  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
-}
+    .known-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 2px solid var(--outline-variant); border-radius: 999px; color: var(--variant); background: var(--surface); font-size: .78rem; font-weight: 700; white-space: nowrap; transition: background 150ms ease, border-color 150ms ease, color 150ms ease; }
     .known-toggle .material-symbols-rounded { font-size: 18px; }
-    .known-toggle.is-known {
-  border-color: var(--known);
-  color: var(--known);
-  background: var(--known-container);
-}
+    .known-toggle.is-known { border-color: var(--known); color: var(--known); background: var(--known-container); }
     .known-toggle.is-known .material-symbols-rounded { font-variation-settings:"FILL" 1,"wght" 500,"GRAD" 0,"opsz" 20; }
-    .prompt {
-  margin: 0 0 14px;
-  font-family: "Noto Sans Arabic", "Noto Sans", sans-serif;
-  font-size: clamp(2rem, 7vw, 3.25rem);
-  font-weight: 700;
-  line-height: 1.2;
-  text-align: center;
-}
-    .prompt.prompt-en {
-  font-family: "Noto Sans", sans-serif;
-  font-size: clamp(1.5rem, 6vw, 2.5rem);
-}
-    .choices {
-  display: grid;
-  gap: 8px;
-}
-    .choice {
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  min-height: 54px;
-  padding: 10px 14px;
-  border: 2px solid var(--outline-variant);
-  border-radius: var(--radius-md);
-  color: var(--on-surface);
-  background: var(--surface);
-  text-align: left;
-  transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
-}
+    .known-toggle:disabled { opacity:.7; cursor:default; }
+    .prompt { margin: 0 0 14px; font-family: "Noto Sans Arabic", "Noto Sans", sans-serif; font-size: clamp(2rem, 7vw, 3.25rem); font-weight: 700; line-height: 1.2; text-align: center; }
+    .prompt.prompt-en { font-family: "Noto Sans", sans-serif; font-size: clamp(1.5rem, 6vw, 2.5rem); }
+    .choices { display: grid; gap: 8px; }
+    .choice { display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 10px 14px; border: 2px solid var(--outline-variant); border-radius: var(--radius-md); color: var(--on-surface); background: var(--surface); text-align: left; transition: background 150ms ease, border-color 150ms ease, transform 150ms ease; }
     .choice:hover:not(:disabled) { background:var(--surface-low); }
     .choice:active:not(:disabled) { transform:scale(.99); }
     .choice-key { display:grid; place-items:center; width:32px; height:32px; border-radius:50%; color:var(--variant); background:var(--surface-high); font-size:.82rem; font-weight:800; }
     .choice-text { font-size:1rem; font-weight:650; line-height:1.35; }
-    .choice-text.choice-text-ar {
-  font-family: "Noto Sans Arabic", sans-serif;
-  font-size: 1.15rem;
-}
+    .choice-text.choice-text-ar { font-family: "Noto Sans Arabic", sans-serif; font-size: 1.15rem; }
     .choice.selected { border-color:var(--primary); background:var(--primary-container); }
     .choice.correct { border-color:var(--success); color:#083d19; background:var(--success-container); }
     .choice.incorrect { border-color:var(--error); color:#601410; background:var(--error-container); }
     .choice:disabled { cursor:default; }
-    .feedback {
-  display: none;
-  align-items: flex-start;
-  gap: 10px;
-  margin-top: 10px;
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
-  line-height: 1.35;
-}
+    .feedback { display: none; align-items: flex-start; gap: 10px; margin-top: 10px; padding: 12px 14px; border-radius: var(--radius-md); line-height: 1.35; }
     .feedback.show { display:flex; }
     .feedback.good { color:#083d19; background:var(--success-container); }
     .feedback.bad { color:#601410; background:var(--error-container); }
     .feedback strong { display:block; margin-bottom:2px; }
-    .feedback .feedback-ar {
-  font-family: "Noto Sans Arabic", sans-serif;
-}
-    .action-area {
-  margin-top: auto;
-  min-height: 60px;
-  padding-top: 10px;
-  flex-shrink: 0;
-}
+    .feedback .feedback-ar { font-family: "Noto Sans Arabic", sans-serif; }
+    .action-area { margin-top: auto; min-height: 60px; padding-top: 10px; flex-shrink: 0; }
     .button { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:52px; padding:0 24px; border:0; border-radius:999px; font-weight:800; text-decoration:none; }
     .button.full { width:100%; }
     .button.primary { color:var(--on-primary); background:var(--primary); box-shadow:0 1px 3px rgb(0 0 0 / .25); }
@@ -154,71 +75,8 @@
     .screen .button + .button { margin-top:12px; }
     .hidden { display:none !important; }
     :focus-visible { outline:3px solid var(--primary); outline-offset:3px; }
-    @media (min-width: 700px) {
-  .app {
-    padding: 20px 32px;
-  }
-
-  main {
-    padding: 18px 0 10px;
-  }
-
-  .choice {
-    min-height: 58px;
-    padding: 12px 18px;
-  }
-}
-    @media (max-height: 720px) {
-  .app {
-    padding-top: max(8px, env(safe-area-inset-top));
-    padding-bottom: max(8px, env(safe-area-inset-bottom));
-  }
-
-  .topbar {
-    min-height: 48px;
-  }
-
-  .icon-button {
-    width: 44px;
-    height: 44px;
-  }
-
-  .progress-block {
-    margin-top: 8px;
-  }
-
-  .question-kicker-row {
-    margin-bottom: 8px;
-  }
-
-  .prompt {
-    margin-bottom: 10px;
-    font-size: clamp(1.85rem, 7vw, 2.75rem);
-  }
-
-  .choices {
-    gap: 7px;
-  }
-
-  .choice {
-    min-height: 48px;
-    padding: 8px 12px;
-  }
-
-  .feedback {
-    margin-top: 8px;
-    padding: 10px 12px;
-  }
-
-  .action-area {
-    min-height: 56px;
-    padding-top: 8px;
-  }
-
-  .button {
-    min-height: 48px;
-  }
-}
+    @media (min-width: 700px) { .app { padding: 20px 32px; } main { padding: 18px 0 10px; } .choice { min-height: 58px; padding: 12px 18px; } }
+    @media (max-height: 720px) { .app { padding-top: max(8px, env(safe-area-inset-top)); padding-bottom: max(8px, env(safe-area-inset-bottom)); } .topbar { min-height: 48px; } .icon-button { width: 44px; height: 44px; } .progress-block { margin-top: 8px; } .question-kicker-row { margin-bottom: 8px; } .prompt { margin-bottom: 10px; font-size: clamp(1.85rem, 7vw, 2.75rem); } .choices { gap: 7px; } .choice { min-height: 48px; padding: 8px 12px; } .feedback { margin-top: 8px; padding: 10px 12px; } .action-area { min-height: 56px; padding-top: 8px; } .button { min-height: 48px; } }
     @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; } }
   </style>
 </head>
@@ -230,7 +88,11 @@
       <button class="icon-button" id="change-chapter-button" type="button" aria-label="Change chapter"><span class="material-symbols-rounded" aria-hidden="true">view_list</span></button>
       <button class="icon-button" id="restart-button" type="button" aria-label="Restart chapter"><span class="material-symbols-rounded" aria-hidden="true">refresh</span></button>
     </header>
-    <section class="progress-block" id="progress-block" aria-label="Quiz progress"><p class="progress-copy"><span id="progress-text">Loading</span><span id="score-text">0 correct</span></p><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div></section>
+    <section class="progress-block" id="progress-block" aria-label="Quiz progress">
+      <p class="progress-copy"><span id="progress-text">Loading</span><span id="score-text">0 correct</span></p>
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div>
+      <button class="review-all-link" id="review-all-link" type="button"><span class="material-symbols-rounded" aria-hidden="true">restart_alt</span><span>Review all words (including known)</span></button>
+    </section>
     <main>
       <section id="loading-screen" class="screen"><div class="screen-icon"><span class="material-symbols-rounded">progress_activity</span></div><h1>Loading your quiz</h1><p>Getting your study set ready.</p></section>
       <section id="quiz-screen" class="hidden" aria-live="polite">
@@ -244,6 +106,13 @@
         <h1 class="prompt" id="prompt"></h1><div class="choices" id="choices" aria-label="Answer choices"></div><div class="feedback" id="feedback" role="status"></div><div class="action-area"><button class="button primary full" id="next-button" type="button" disabled>Choose an answer</button></div>
       </section>
       <section id="complete-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">celebration</span></div><h1>Chapter complete</h1><p id="complete-copy"></p><div class="score" id="final-score"></div><button class="button primary full" id="again-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">refresh</span>Practice again</button><button class="button tonal full hidden" id="next-chapter-button" type="button"></button><a class="button tonal full" href="arabic.html">Back to Arabic Study</a></section>
+      <section id="done-screen" class="screen hidden">
+        <div class="screen-icon"><span class="material-symbols-rounded">military_tech</span></div>
+        <h1>You know every word here</h1>
+        <p id="done-copy">Every word in this chapter is marked as known. Review them all again anytime, or head back and pick another chapter.</p>
+        <button class="button primary full" id="review-all-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">restart_alt</span>Review all words</button>
+        <a class="button tonal full" href="arabic.html#unit6-chapters">Choose another chapter</a>
+      </section>
       <section id="unavailable-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">hourglass_top</span></div><h1>Chapter not available yet</h1><p id="unavailable-copy">This chapter is still being written.</p><a class="button primary full" href="arabic.html#unit6-chapters">Choose another chapter</a></section>
       <section id="error-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">error</span></div><h1>Quiz unavailable</h1><p id="error-copy">We could not load this study set.</p><a class="button primary full" href="arabic.html">Back to Arabic Study</a></section>
     </main>
@@ -256,7 +125,9 @@
     const requestedChapterId = (params.get('chapter') || '').replace(/[^a-zA-Z0-9_-]/g, '');
     const requestedMode = (params.get('mode') || '').replace(/[^a-zA-Z0-9_-]/g, '');
     const mode = requestedMode === 'en-to-ar' ? 'en-to-ar' : 'ar-to-en';
-    const state = { data:null, chapter:null, chapterId:null, questions:[], index:0, score:0, selected:null, answered:false, displayToOriginal:{} };
+    const reviewAll = params.get('review') === 'all';
+    const KNOWN_ADVANCE_DELAY_MS = 1500;
+    const state = { data:null, chapter:null, chapterId:null, allQuestions:[], questions:[], index:0, score:0, selected:null, answered:false, displayToOriginal:{}, knownAdvanceTimer:null };
     const $ = id => document.getElementById(id);
     const show = id => $(id).classList.remove('hidden');
     const hide = id => $(id).classList.add('hidden');
@@ -266,23 +137,32 @@
       return mode === 'en-to-ar' ? `${chapterId}:en-to-ar` : chapterId;
     }
 
-    // The word's Arabic text is its identifier for known-word tracking,
-    // consistent with the identifier convention used by the flag-a-question
-    // feature. See "Known Vocabulary" in CHAPTER_PROGRESS_IMPLEMENTATION.md.
     function wordIdFor(question) {
       return question.arabic;
     }
 
+    function reviewAllUrl() {
+      const modeParam = mode === 'en-to-ar' ? '&mode=en-to-ar' : '';
+      return `quiz.html?unit=${encodeURIComponent(unit)}&chapter=${encodeURIComponent(state.chapterId)}${modeParam}&review=all`;
+    }
+
     function setUnavailable(message) {
-      hide('loading-screen'); hide('quiz-screen'); hide('complete-screen'); hide('error-screen'); hide('progress-block'); hide('topbar');
+      hide('loading-screen'); hide('quiz-screen'); hide('complete-screen'); hide('done-screen'); hide('error-screen'); hide('progress-block'); hide('topbar');
       if (message) $('unavailable-copy').textContent = message;
       show('unavailable-screen');
     }
 
     function setError(message) {
-      hide('loading-screen'); hide('quiz-screen'); hide('complete-screen'); hide('unavailable-screen'); hide('progress-block'); hide('topbar');
+      hide('loading-screen'); hide('quiz-screen'); hide('complete-screen'); hide('done-screen'); hide('unavailable-screen'); hide('progress-block'); hide('topbar');
       $('error-copy').textContent = message;
       show('error-screen');
+    }
+
+    function setAllKnownDone() {
+      hide('loading-screen'); hide('quiz-screen'); hide('complete-screen'); hide('unavailable-screen'); hide('error-screen'); hide('progress-block');
+      const modeLabel = mode === 'en-to-ar' ? 'English-to-Arabic' : 'Arabic-to-English';
+      $('done-copy').textContent = `Every word in ${state.chapter.label || state.chapter.title} (${modeLabel}) is marked as known. Review them all again anytime, or head back and pick another chapter.`;
+      show('done-screen');
     }
 
     function saveProgress(patch) {
@@ -341,24 +221,41 @@
       const toggle = $('known-toggle');
       const icon = $('known-toggle-icon');
       const label = $('known-toggle-label');
+      toggle.disabled = false;
       toggle.classList.toggle('is-known', known);
       toggle.setAttribute('aria-pressed', known ? 'true' : 'false');
       icon.textContent = known ? 'check_circle' : 'radio_button_unchecked';
       label.textContent = known ? 'Known' : 'Mark as known';
     }
 
+    function advanceAfterKnown() {
+      if (state.index < state.questions.length - 1) { state.index += 1; renderQuestion(); }
+      else { complete(); }
+    }
+
     function toggleKnown() {
       if (!window.ProgressStore) return;
+      if (state.knownAdvanceTimer) { clearTimeout(state.knownAdvanceTimer); state.knownAdvanceTimer = null; }
       const q = state.questions[state.index];
       const wordId = wordIdFor(q);
       const key = progressKeyFor(state.chapterId);
       const currentlyKnown = window.ProgressStore.isWordKnown(unit, key, wordId);
-      if (currentlyKnown) window.ProgressStore.markWordUnknown(unit, key, wordId);
-      else window.ProgressStore.markWordKnown(unit, key, wordId);
+      if (currentlyKnown) {
+        window.ProgressStore.markWordUnknown(unit, key, wordId);
+        updateKnownToggle();
+        return;
+      }
+      window.ProgressStore.markWordKnown(unit, key, wordId);
       updateKnownToggle();
+      $('known-toggle').disabled = true;
+      state.knownAdvanceTimer = setTimeout(() => {
+        state.knownAdvanceTimer = null;
+        advanceAfterKnown();
+      }, KNOWN_ADVANCE_DELAY_MS);
     }
 
     function renderQuestion() {
+      if (state.knownAdvanceTimer) { clearTimeout(state.knownAdvanceTimer); state.knownAdvanceTimer = null; }
       state.selected = null; state.answered = false;
       const q = state.questions[state.index];
       const built = buildPromptAndChoices(q, state.questions);
@@ -487,16 +384,38 @@
       show('complete-screen');
     }
 
-    function restart() {
+    function buildActiveQuestionSet() {
+      if (reviewAll || !window.ProgressStore) return state.allQuestions;
+      const key = progressKeyFor(state.chapterId);
+      const knownWords = window.ProgressStore.getKnownWords(unit, key);
+      return state.allQuestions.filter((q) => !(knownWords[wordIdFor(q)] && knownWords[wordIdFor(q)].known));
+    }
+
+    function startSessionOrShowDone() {
+      state.questions = buildActiveQuestionSet();
       state.index = 0; state.score = 0; state.selected = null; state.answered = false;
-      if (window.ProgressStore) window.ProgressStore.resetCurrentAttempt(unit, progressKeyFor(state.chapterId));
-      hide('complete-screen'); show('progress-block'); show('quiz-screen');
+      if (state.questions.length === 0) {
+        setAllKnownDone();
+        return;
+      }
+      hide('done-screen'); show('progress-block'); show('quiz-screen');
+      $('review-all-link').classList.toggle('hidden', reviewAll);
       renderQuestion();
+    }
+
+    function restart() {
+      if (window.ProgressStore) window.ProgressStore.resetCurrentAttempt(unit, progressKeyFor(state.chapterId));
+      hide('complete-screen');
+      startSessionOrShowDone();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function goToChapterPicker() {
       location.href = 'arabic.html#unit6-chapters';
+    }
+
+    function goToReviewAll() {
+      location.href = reviewAllUrl();
     }
 
     async function init() {
@@ -523,7 +442,7 @@
           return;
         }
 
-        state.questions = shuffle(state.chapter.questions);
+        state.allQuestions = shuffle(state.chapter.questions);
         const modeSuffix = mode === 'en-to-ar' ? ' (English to Arabic)' : '';
         document.title = `${state.chapter.label || state.chapter.title}${modeSuffix} \u00b7 Arabic Study`;
         $('quiz-title').textContent = state.data.title || 'Arabic Study';
@@ -534,12 +453,13 @@
         $('again-button').addEventListener('click', restart);
         $('next-button').addEventListener('click', next);
         $('known-toggle').addEventListener('click', toggleKnown);
+        $('review-all-link').addEventListener('click', goToReviewAll);
+        $('review-all-button').addEventListener('click', goToReviewAll);
 
         if (window.ProgressStore) window.ProgressStore.setLastActive(unit, progressKeyFor(state.chapterId));
 
         hide('loading-screen');
-        show('quiz-screen');
-        renderQuestion();
+        startSessionOrShowDone();
       } catch (error) {
         setError('We could not load this quiz. Make sure the data file exists and the chapter link is correct.');
       }
