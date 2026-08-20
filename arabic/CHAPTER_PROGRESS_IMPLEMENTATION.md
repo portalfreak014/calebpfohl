@@ -12,7 +12,7 @@ Legend: ✅ Done and live on `main` | ⏳ Planned, not yet implemented
 | Quiz Changes | ✅ Done |
 | Local-First Progress Store | ✅ Done (schema updated by Known Vocabulary section below) |
 | Quiz Direction Mode (English-to-Arabic) | ✅ Done |
-| Known Vocabulary (Mark as Known) | ⏳ Planned — supersedes prior resume-bug issue |
+| Known Vocabulary (Mark as Known) | ✅ Done — supersedes prior resume-bug issue |
 | Account Authentication (Google + Magic Link) | ⏳ Planned — intentionally sequenced after Known Vocabulary |
 | Content Quality Control | ⏳ Planned |
 
@@ -46,25 +46,25 @@ Rules: file location `arabic/data/{unitId}.json`; `chapters` keyed by chapter ID
 
 `arabic/arabic.html` has a chapter-card picker at `#unit6-chapters`, a Continue card reading from `ProgressStore`, and a global direction toggle (Arabic-to-English / English-to-Arabic) persisted in `localStorage` that updates chapter links, status badges, and the Continue card.
 
-Note: the homepage's progress display will change from "X of Y questions answered" to "X of Y words known" once the Known Vocabulary section below ships.
+Note: the homepage's progress display will change from "X of Y questions answered" to "X of Y words known" once the Known Vocabulary section below ships. This homepage change is still outstanding — arabic.html has not yet been updated.
 
 ## Quiz Changes ✅ Done
 
-`arabic/quiz.html` reads `unit`/`chapter`/`mode` from the URL, validates against the fetched JSON, renders questions with shuffled choice position, saves progress after each answer, and shows a completion screen with a next-chapter link.
+`arabic/quiz.html` reads `unit`/`chapter`/`mode` from the URL, validates against the fetched JSON, renders questions with shuffled choice position, saves progress after each answer, and shows a completion screen with a next-chapter link. Now also includes the "Mark as known" toggle and per-word recordAnswer wiring (see Known Vocabulary section below).
 
 ## Local-First Progress Store ✅ Done
 
-`arabic/progress-store.js` exposes `window.ProgressStore` with `getProfile`, `saveProfile`, `getChapter`, `updateChapter`, `setLastActive`, `resetCurrentAttempt`, `exportProfile`, `importProfile`, `mergeProfile`, `clearLocalProfile`. Stored under one versioned key, `arabicStudy.profile.v1`, with legacy-key migration and defensive parsing. This schema is extended by the Known Vocabulary section below.
+`arabic/progress-store.js` exposes `window.ProgressStore` with `getProfile`, `saveProfile`, `getChapter`, `updateChapter`, `setLastActive`, `resetCurrentAttempt`, `recordAnswer`, `markWordKnown`, `markWordUnknown`, `isWordKnown`, `getKnownWordCount`, `getKnownWords`, `exportProfile`, `importProfile`, `mergeProfile`, `clearLocalProfile`. Stored under one versioned key, `arabicStudy.profile.v1`, with legacy-key migration and defensive parsing.
 
 ### Merge rules (for future account sync)
 
-- `bestScore`: retain the higher value. `lastActivityAt`/`completedAt`: retain the most recent. `status`: completed > in-progress > not-started. `lastActive`: most recently updated available chapter. No personally identifying data belongs in the progress object.
+- `bestScore`: retain the higher value. `lastActivityAt`/`completedAt`: retain the most recent. `status`: completed > in-progress > not-started. `lastActive`: most recently updated available chapter. `knownWords`: merged monotonically per word (known status never reverts during a merge; streak takes the max). No personally identifying data belongs in the progress object.
 
 ## Quiz Direction Mode (English-to-Arabic) ✅ Done
 
 `quiz.html?...&mode=en-to-ar` reverses the prompt/answer roles: the correct English meaning becomes the prompt, the Arabic word becomes the correct choice, and distractors are Arabic words sampled from other questions in the same chapter. Covers 100% of a chapter's vocabulary. Tracked as a separate `ProgressStore` record (`ch26:en-to-ar`) from the default direction. `lang`/`dir` attributes flip correctly between prompt and choices depending on direction.
 
-## Known Vocabulary (Mark as Known)
+## Known Vocabulary (Mark as Known) ✅ Done
 
 ### Purpose
 
@@ -129,10 +129,10 @@ Rules:
 Every learner starts at 0 known words under this system, including learners who had high scores under the old session-based model. This is a deliberate decision, not an oversight: the old model never recorded *which specific words* were answered correctly, only aggregate counts (`correctCount`, `bestScore`), so there is no way to accurately reconstruct per-word history. Rather than fabricate a starting known-count that might not reflect reality, the cutover is clean.
 
 - The old `bestScore`, `attempts`, and `completedAt` fields are preserved and remain visible as a separate "past best score" stat, not deleted and not merged into the new known-word count.
-- The homepage's chapter progress display switches from "X of Y questions answered" to "X of Y words known," reading from `knownWords`, once this feature ships.
+- The homepage's chapter progress display switches from "X of Y questions answered" to "X of Y words known," reading from `knownWords`, once this feature ships. This homepage change is still outstanding.
 - This should be communicated clearly in the UI at cutover (e.g. a brief note that known-word tracking is new and starts fresh) so a returning learner is not confused by a lower number than they remember.
 
-### `ProgressStore` API additions
+### `ProgressStore` API additions ✅ Implemented
 
 ```js
 window.ProgressStore = {
@@ -148,11 +148,12 @@ window.ProgressStore = {
 
 - `recordAnswer` is called by `quiz.html` after each question is checked, replacing direct manipulation of streaks from quiz code. It increments or resets the relevant word's streak and sets `known: true` with `source: "streak"` if the streak reaches 2.
 - `markWordKnown` / `markWordUnknown` implement the manual override described above and always set `source` accordingly.
+- Live on `main` in `arabic/progress-store.js`.
 
-### Quiz behavior
+### Quiz behavior ✅ Implemented
 
-- Add a small, unobtrusive "mark as known" control on the quiz screen, visually distinct from the flag control so the two are never confused by a learner.
-- A quiz session can optionally be started in a "focus mode" that excludes already-known words from that chapter's question set, in either direction. This is an additive filtering option on top of the existing shuffle-and-render flow.
+- A "Mark as known" pill control sits next to the question kicker on the quiz screen, visually distinct from any future flag control so the two are never confused by a learner. Live on `main` in `arabic/quiz.html`.
+- Not yet implemented: a "focus mode" that would let a quiz session start with already-known words excluded from that chapter's question set, in either direction. This remains a future additive option on top of the existing shuffle-and-render flow.
 - Because there is no meaningful session position to resume (progress is per-word, not per-slot), a quiz session simply starts fresh each time. The prior plan to resume at a saved question index is retired; see the Known Issue section below, which this section supersedes.
 
 ### Rules
@@ -164,15 +165,17 @@ window.ProgressStore = {
 - This feature requires no backend and works fully for anonymous, non-signed-in users, consistent with the rest of the local-first design. Once Account Authentication exists, known-word data syncs the same way the rest of the profile does, via the existing `mergeProfile` mechanism.
 - Do not implement any form of retroactive grandfathering that infers per-word history from old aggregate scores. If old scores are surfaced at all, they must be clearly labeled as a separate, historical stat, not folded into the new known-word count.
 
-### Testing checklist additions
+### Testing checklist
 
-- A word's streak increments on a correct answer and resets to 0 on an incorrect answer.
-- A word becomes known only after two consecutive correct answers with no incorrect answer between them, not after one.
-- Manually marking a word known sets it to known immediately, regardless of streak.
-- Manually un-marking a word resets both `known` and `streak` to their initial state.
-- Known-word counts and streaks for `ch26` and `ch26:en-to-ar` are tracked independently.
-- A returning user with old `bestScore` data sees 0 known words at cutover, with the old score still visible separately, not blended into the new count.
-- Focus mode (if implemented) correctly excludes known words without breaking the 100%-coverage guarantee of English-to-Arabic mode for the remaining words.
+- [ ] A word's streak increments on a correct answer and resets to 0 on an incorrect answer.
+- [ ] A word becomes known only after two consecutive correct answers with no incorrect answer between them, not after one.
+- [ ] Manually marking a word known sets it to known immediately, regardless of streak.
+- [ ] Manually un-marking a word resets both `known` and `streak` to their initial state.
+- [ ] Known-word counts and streaks for `ch26` and `ch26:en-to-ar` are tracked independently.
+- [ ] A returning user with old `bestScore` data sees 0 known words at cutover, with the old score still visible separately, not blended into the new count.
+- [ ] Focus mode (not yet built) correctly excludes known words without breaking the 100%-coverage guarantee of English-to-Arabic mode for the remaining words, once implemented.
+
+This checklist has not yet been manually run against the live site; see Implementation Order step 8.
 
 ## Known Issue: Quiz Does Not Resume from Saved Progress — Superseded
 
@@ -180,7 +183,7 @@ This issue, as originally described (resuming at a saved linear question index w
 
 ## Account Authentication (Google + Magic Link) ⏳ Planned
 
-Intentionally sequenced after Known Vocabulary ships and is verified locally, so `mergeProfile()` only needs to handle one finished profile shape rather than being updated twice.
+Intentionally sequenced after Known Vocabulary shipped and is manually verified, so `mergeProfile()` only needs to handle one finished profile shape rather than being updated twice.
 
 ### Purpose
 
@@ -243,8 +246,8 @@ Optional `verified: true` field added to a question once a human has reviewed th
 4. [x] Add the homepage chapter picker and progress display, driven by `UnitsManifest`.
 5. [ ] Manually test all chapters on mobile and desktop widths.
 6. [x] Implement the English-to-Arabic direction mode.
-7. [ ] Implement the Known Vocabulary (Mark as Known) system: per-word streak tracking, manual override, clean 0-based cutover, homepage display change from question-count to known-word-count.
-8. [ ] Manually verify the known-word system (streak increments/resets correctly, manual override works, per-direction independence, cutover shows 0 with old score preserved separately) before moving on.
+7. [x] Implement the Known Vocabulary (Mark as Known) system: per-word streak tracking, manual override, and clean 0-based cutover, in progress-store.js and quiz.html. Homepage display change from question-count to known-word-count is still outstanding (arabic.html not yet updated).
+8. [ ] Manually verify the known-word system on calebpfohl.com (streak increments/resets correctly, manual override works, per-direction independence, cutover shows 0 with old score preserved separately) before moving on.
 9. [ ] Set up Netlify Functions scaffolding and the Google OAuth client; implement Google sign-in.
 10. [ ] Implement magic-link email sign-in.
 11. [ ] Set up Netlify DB and wire up profile sync for both sign-in methods, including the known-word fields.
