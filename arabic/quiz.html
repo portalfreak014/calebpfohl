@@ -297,12 +297,12 @@
 
       try {
         await sendFlag(payload);
-        showSnackbar('Word flagged');
+        showSnackbar('Word flagged for correction, thank you!');
       } catch (error) {
         const queue = readFlagQueue();
         queue.push(payload);
         writeFlagQueue(queue);
-        showSnackbar('Word flagged for correction');
+        showSnackbar('Word flagged for correction, thank you!');
       } finally {
         button.disabled = false;
         flushFlagQueue();
