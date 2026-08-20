@@ -9,6 +9,7 @@
   const STORAGE_KEY = 'arabicStudy.profile.v1';
   const SCHEMA_VERSION = 1;
   const LEGACY_KEY_PREFIX = 'arabicStudyProgress:';
+  const KNOWN_STREAK_THRESHOLD = 2;
 
   function nowIso() {
     return new Date().toISOString();
@@ -81,7 +82,8 @@
           attempts: 1,
           startedAt: legacy.updatedAt || nowIso(),
           lastActivityAt: legacy.updatedAt || nowIso(),
-          completedAt: legacy.completed >= legacy.total && legacy.total > 0 ? legacy.updatedAt : null
+          completedAt: legacy.completed >= legacy.total && legacy.total > 0 ? legacy.updatedAt : null,
+          knownWords: {}
         };
       }
     } catch (err) {
@@ -123,10 +125,22 @@
         attempts: 0,
         startedAt: ts,
         lastActivityAt: ts,
-        completedAt: null
+        completedAt: null,
+        knownWords: {}
       };
     }
+    if (!profile.units[unitId].chapters[chapterId].knownWords) {
+      profile.units[unitId].chapters[chapterId].knownWords = {};
+    }
     return profile.units[unitId].chapters[chapterId];
+  }
+
+  function ensureKnownWordEntry(chapter, wordId) {
+    if (!chapter.knownWords) chapter.knownWords = {};
+    if (!chapter.knownWords[wordId]) {
+      chapter.knownWords[wordId] = { known: false, streak: 0, source: null };
+    }
+    return chapter.knownWords[wordId];
   }
 
   function getChapter(unitId, chapterId) {
@@ -162,8 +176,82 @@
     chapter.attempts = (chapter.attempts || 0) + 1;
     chapter.startedAt = nowIso();
     chapter.lastActivityAt = nowIso();
+    // knownWords is intentionally left untouched: restarting a quiz attempt
+    // must never reset per-word known/streak state.
     saveProfile(profile);
     return clone(chapter);
+  }
+
+  /**
+   * Records the outcome of answering a single word and applies the
+   * two-attempt confirmation rule: a word is marked known automatically
+   * once its correct-streak reaches KNOWN_STREAK_THRESHOLD (2), and any
+   * incorrect answer resets that streak to 0. Never touches bestScore,
+   * status, or any other existing chapter-level field.
+   */
+  function recordAnswer(unitId, chapterId, wordId, wasCorrect) {
+    const profile = getProfile();
+    const chapter = ensureUnitChapter(profile, unitId, chapterId);
+    const entry = ensureKnownWordEntry(chapter, wordId);
+
+    if (wasCorrect) {
+      entry.streak = (entry.streak || 0) + 1;
+      if (!entry.known && entry.streak >= KNOWN_STREAK_THRESHOLD) {
+        entry.known = true;
+        entry.source = 'streak';
+      }
+    } else {
+      entry.streak = 0;
+      // An incorrect answer never un-marks a word that is already known
+      // (whether by streak or manual override); it only affects the streak
+      // counter used for future automatic marking.
+    }
+
+    chapter.lastActivityAt = nowIso();
+    saveProfile(profile);
+    return clone(entry);
+  }
+
+  function markWordKnown(unitId, chapterId, wordId) {
+    const profile = getProfile();
+    const chapter = ensureUnitChapter(profile, unitId, chapterId);
+    const entry = ensureKnownWordEntry(chapter, wordId);
+    entry.known = true;
+    entry.source = 'manual';
+    chapter.lastActivityAt = nowIso();
+    saveProfile(profile);
+    return clone(entry);
+  }
+
+  function markWordUnknown(unitId, chapterId, wordId) {
+    const profile = getProfile();
+    const chapter = ensureUnitChapter(profile, unitId, chapterId);
+    const entry = ensureKnownWordEntry(chapter, wordId);
+    entry.known = false;
+    entry.streak = 0;
+    entry.source = null;
+    chapter.lastActivityAt = nowIso();
+    saveProfile(profile);
+    return clone(entry);
+  }
+
+  function isWordKnown(unitId, chapterId, wordId) {
+    const profile = getProfile();
+    const chapter = profile.units[unitId] && profile.units[unitId].chapters[chapterId];
+    if (!chapter || !chapter.knownWords || !chapter.knownWords[wordId]) return false;
+    return !!chapter.knownWords[wordId].known;
+  }
+
+  function getKnownWords(unitId, chapterId) {
+    const profile = getProfile();
+    const chapter = profile.units[unitId] && profile.units[unitId].chapters[chapterId];
+    if (!chapter || !chapter.knownWords) return {};
+    return clone(chapter.knownWords);
+  }
+
+  function getKnownWordCount(unitId, chapterId) {
+    const knownWords = getKnownWords(unitId, chapterId);
+    return Object.keys(knownWords).filter((wordId) => knownWords[wordId].known).length;
   }
 
   function exportProfile() {
@@ -174,6 +262,24 @@
     if (!profile || typeof profile !== 'object' || !profile.units) return getProfile();
     saveProfile(profile);
     return getProfile();
+  }
+
+  function mergeKnownWords(localWords, remoteWords) {
+    const merged = clone(localWords || {});
+    Object.keys(remoteWords || {}).forEach((wordId) => {
+      const remoteEntry = remoteWords[wordId];
+      const localEntry = merged[wordId];
+      if (!localEntry) {
+        merged[wordId] = clone(remoteEntry);
+        return;
+      }
+      merged[wordId] = {
+        known: !!(localEntry.known || remoteEntry.known),
+        streak: Math.max(localEntry.streak || 0, remoteEntry.streak || 0),
+        source: localEntry.known ? localEntry.source : (remoteEntry.known ? remoteEntry.source : null)
+      };
+    });
+    return merged;
   }
 
   function mergeProfile(remoteProfile) {
@@ -189,6 +295,9 @@
         const localChapter = merged.units[unitId].chapters[chapterId];
         if (!localChapter) {
           merged.units[unitId].chapters[chapterId] = clone(remote);
+          if (!merged.units[unitId].chapters[chapterId].knownWords) {
+            merged.units[unitId].chapters[chapterId].knownWords = {};
+          }
           return;
         }
         const statusRank = { completed: 2, in_progress: 1, not_started: 0 };
@@ -204,7 +313,8 @@
           questionOrder: (remote.lastActivityAt || '') > (localChapter.lastActivityAt || '')
             ? remote.questionOrder : localChapter.questionOrder,
           resumeIndex: (remote.lastActivityAt || '') > (localChapter.lastActivityAt || '')
-            ? remote.resumeIndex : localChapter.resumeIndex
+            ? remote.resumeIndex : localChapter.resumeIndex,
+          knownWords: mergeKnownWords(localChapter.knownWords, remote.knownWords)
         };
       });
     });
@@ -236,6 +346,12 @@
     updateChapter,
     setLastActive,
     resetCurrentAttempt,
+    recordAnswer,
+    markWordKnown,
+    markWordUnknown,
+    isWordKnown,
+    getKnownWordCount,
+    getKnownWords,
     exportProfile,
     importProfile,
     mergeProfile,
