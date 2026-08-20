@@ -1,5 +1,20 @@
 # Unit Navigation and Progress (Unit-Agnostic)
 
+## Status Summary
+
+Legend: ✅ Done and live on `main` | ⏳ Planned, not yet implemented
+
+| Section | Status |
+|---|---|
+| Content Contract | ✅ Done |
+| Units and Chapters Manifest | ✅ Done |
+| Homepage Changes | ✅ Done |
+| Quiz Changes | ✅ Done |
+| Local-First Progress Store | ✅ Done |
+| Quiz Direction Mode (English-to-Arabic) | ✅ Done |
+| Account Authentication (Google + Magic Link) | ⏳ Planned |
+| Content Quality Control | ⏳ Planned |
+
 ## Purpose
 
 This document describes the intended implementation for expanding the Arabic quiz experience from a Chapter 26-only entry point into an easy-to-navigate, multi-chapter experience — designed from the outset to be unit-agnostic. Adding a new unit later (Unit 7, Unit 8, etc.) should require adding a content file and a manifest entry, not new HTML pages or engine changes. It also defines a local-first learner-progress design that can later connect to Google, Apple, email/password, or another account provider without rewriting quiz logic.
@@ -10,7 +25,7 @@ This work belongs on the isolated branch:
 feature/arabic-chapter-progress
 ```
 
-Do not merge into `main` until the feature has been tested and explicitly approved.
+The chapter navigation, progress, and English-to-Arabic direction work below has since been merged to `main` and is live in production.
 
 ## Current Findings
 
@@ -24,18 +39,16 @@ arabic/
     unit6.json
 ```
 
-Known behavior:
+Known behavior at the time this document was first written:
 
 - `arabic.html` is the study homepage.
-- Its hero "Start studying" link currently opens `quiz.html?unit=unit6&chapter=ch26` directly.
-- `quiz.html` already reads `unit` and `chapter` from URL query parameters.
+- Its hero "Start studying" link opened `quiz.html?unit=unit6&chapter=ch26` directly (fixed prior to this work).
+- `quiz.html` already read `unit` and `chapter` from URL query parameters.
 - `quiz.html` fetches `data/${unit}.json` and selects a chapter from the file's `chapters` object.
-- The quiz currently stores a small, chapter-specific local-storage object under a key like `arabicStudyProgress:unit6:ch26`.
-- The supplied `unit6.json` includes at least `ch26`, `ch27`, and `ch28`; Chapters 29 and 30 should be displayed as unavailable until their question data is added.
+- The quiz stored a small, chapter-specific local-storage object under a key like `arabicStudyProgress:unit6:ch26` (superseded by `ProgressStore`).
+- The supplied `unit6.json` includes `ch26` through `ch30`; all five are now marked available.
 
-Important: preserve all existing question content in `arabic/data/unit6.json`. The intended first implementation does not require rewriting that file.
-
-## Content Contract
+## Content Contract ✅ Done
 
 Every unit's JSON file must conform to the same shape, regardless of subject matter. This is what makes the quiz engine unit-agnostic: the engine renders whatever conforms to this contract, without knowing what unit or subject it belongs to.
 
@@ -80,8 +93,8 @@ Arabic homepage
         +-- Chapter 26 -> quiz.html?unit=unit6&chapter=ch26
         +-- Chapter 27 -> quiz.html?unit=unit6&chapter=ch27
         +-- Chapter 28 -> quiz.html?unit=unit6&chapter=ch28
-        +-- Chapter 29 -> unavailable / Coming soon
-        +-- Chapter 30 -> unavailable / Coming soon
+        +-- Chapter 29 -> quiz.html?unit=unit6&chapter=ch29
+        +-- Chapter 30 -> quiz.html?unit=unit6&chapter=ch30
 
 Quiz page
   |
@@ -92,7 +105,7 @@ Quiz page
   +-- presents next available chapter after completion when appropriate
 ```
 
-## Units and Chapters Manifest
+## Units and Chapters Manifest ✅ Done
 
 Add a single standalone JavaScript file, unit-agnostic by design:
 
@@ -133,12 +146,12 @@ window.UnitsManifest = {
 
 Rules:
 
-- A chapter is only `available: true` once its data exists in the corresponding `data/{unitId}.json` and has been tested.
+- A chapter is only `available: true` once its data exists in the corresponding `data/{unitId}.json` and has been tested. All five Unit 6 chapters meet this bar and are marked available.
 - Keep the manifest as the homepage's source of truth for chapter cards, status labels, ordering, and next-chapter behavior — for every unit, not just Unit 6.
 - The quiz must still validate that a selected chapter actually exists in the fetched data (per the Content Contract). The manifest is not a replacement for validation.
 - Do not create a per-unit manifest file (e.g. `unit7-chapters.js`). All units live as entries in the one manifest.
 
-## Homepage Changes
+## Homepage Changes ✅ Done
 
 Update `arabic/arabic.html`.
 
@@ -151,6 +164,8 @@ Replace the fixed Chapter 26 "Start studying" behavior with either:
 
 Use large, tappable cards on mobile. Do not hide five chapters inside a dropdown.
 
+Also implemented: a global segmented-control toggle above the chapter list for switching between Arabic-to-English and English-to-Arabic direction, persisted in `localStorage` and applied to chapter links, status badges, and the Continue card.
+
 ### Homepage progress
 
 Read the progress profile through `ProgressStore` (defined below). Show:
@@ -162,7 +177,7 @@ Read the progress profile through `ProgressStore` (defined below). Show:
 - A per-chapter status: Not started, In progress, Completed, or Coming soon.
 - Continue behavior should prefer the profile's `lastActive` chapter when it is still available; otherwise it should fall back to Chapter 26.
 
-## Quiz Changes
+## Quiz Changes ✅ Done
 
 Update `arabic/quiz.html`.
 
@@ -192,7 +207,7 @@ Call the shared progress module after each question is checked, not only at chap
 
 Display score, personal best, practice-again, back-to-picker, and the next available chapter when one exists.
 
-## Local-First Progress Store
+## Local-First Progress Store ✅ Done
 
 Add a standalone file:
 
@@ -241,29 +256,29 @@ Avoid collecting personally identifying data in the progress object. The account
 
 ### Navigation
 
-- Homepage exposes Chapters 26-30 without a dropdown.
-- All chapter links load their intended quiz data.
-- Direct URLs such as `quiz.html?unit=unit6&chapter=ch27` work.
-- Bad URLs show a helpful unavailable state.
-- Quiz header can return users to chapter selection.
+- [x] Homepage exposes Chapters 26-30 without a dropdown.
+- [x] All chapter links load their intended quiz data.
+- [x] Direct URLs such as `quiz.html?unit=unit6&chapter=ch27` work.
+- [x] Bad URLs show a helpful unavailable state.
+- [x] Quiz header can return users to chapter selection.
 
 ### Progress
 
-- Answering a question creates/updates one versioned profile.
-- Reloading resumes or clearly offers to resume the active chapter.
-- Progress is independent by chapter.
-- Restart resets the active attempt but keeps best-score history.
-- Completion records completion and updates best score correctly.
-- Existing legacy progress keys migrate without destroying data.
-- The site remains usable if localStorage fails.
+- [x] Answering a question creates/updates one versioned profile.
+- [ ] Reloading resumes or clearly offers to resume the active chapter. *(implemented; not yet manually re-verified after the direction-toggle and Chapter 29/30 changes)*
+- [x] Progress is independent by chapter.
+- [x] Restart resets the active attempt but keeps best-score history.
+- [x] Completion records completion and updates best score correctly.
+- [ ] Existing legacy progress keys migrate without destroying data. *(migration code shipped; not yet manually verified against a real legacy-key browser profile)*
+- [x] The site remains usable if localStorage fails (defensive handling implemented).
 
 ### Future readiness
 
-- No quiz or homepage component accesses local-storage keys directly; use `ProgressStore` and `UnitsManifest`.
-- `exportProfile`, `importProfile`, and `mergeProfile` return valid profiles.
-- The profile contains no credentials or personal identifiers.
+- [x] No quiz or homepage component accesses local-storage keys directly; use `ProgressStore` and `UnitsManifest`.
+- [x] `exportProfile`, `importProfile`, and `mergeProfile` return valid profiles.
+- [x] The profile contains no credentials or personal identifiers.
 
-## Quiz Direction Mode (English-to-Arabic)
+## Quiz Direction Mode (English-to-Arabic) ✅ Done
 
 ### Purpose
 
@@ -299,12 +314,12 @@ English-to-Arabic attempts are tracked as a separate chapter record: `ch26` for 
 
 ### Testing checklist additions
 
-- English-to-Arabic covers exactly the same questions as Arabic-to-English for that chapter.
-- Distractor Arabic words are never duplicates within a single question.
-- Arabic renders correctly with `lang="ar" dir="rtl"` whether as prompt or choice.
-- Progress for the two directions of a chapter are tracked independently.
+- [x] English-to-Arabic covers exactly the same questions as Arabic-to-English for that chapter.
+- [x] Distractor Arabic words are never duplicates within a single question.
+- [x] Arabic renders correctly with `lang="ar" dir="rtl"` whether as prompt or choice.
+- [ ] Progress for the two directions of a chapter are tracked independently. *(implemented via suffixed keys; not yet manually re-verified since Chapters 29/30 were unlocked)*
 
-## Account Authentication (Google + Magic Link)
+## Account Authentication (Google + Magic Link) ⏳ Planned
 
 ### Purpose
 
@@ -337,18 +352,18 @@ Browser (arabic.html / quiz.html)
 
 ### Google sign-in setup
 
-1. Create an OAuth 2.0 client ID in Google Cloud Console, scoped to this site's production and Netlify preview domains.
-2. Store the client ID and client secret as Netlify environment variables (`GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`). Never commit these to the repository.
-3. Add a Netlify Function (e.g. `netlify/functions/auth-google-callback.js`) that completes the OAuth redirect flow and issues a session.
-4. On successful sign-in, the function returns a stable Google-provided user ID. This becomes `profile.userId` in the existing `ProgressStore` schema.
+- [ ] Create an OAuth 2.0 client ID in Google Cloud Console, scoped to this site's production and Netlify preview domains.
+- [ ] Store the client ID and client secret as Netlify environment variables (`GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`). Never commit these to the repository.
+- [ ] Add a Netlify Function (e.g. `netlify/functions/auth-google-callback.js`) that completes the OAuth redirect flow and issues a session.
+- [ ] On successful sign-in, the function returns a stable Google-provided user ID. This becomes `profile.userId` in the existing `ProgressStore` schema.
 
 ### Magic-link email setup
 
-1. User submits their email address in a lightweight sign-in form (no password field).
-2. A Netlify Function (e.g. `netlify/functions/auth-magic-link-request.js`) generates a signed, time-limited token tied to that email address and stores a pending-verification record.
-3. The same function sends an email containing a link back to the site with the token, via a transactional email API (a service such as Resend, Postmark, or SendGrid — the specific provider is an implementation choice made when this is built, not fixed here). The provider's API key is stored as a Netlify environment variable, never committed.
-4. When the user clicks the link, a verification function (e.g. `netlify/functions/auth-magic-link-verify.js`) checks the token, and if valid and not expired, issues a session and returns a stable user ID derived from the verified email address.
-5. Magic links expire after a short window (a reasonable default is 15 minutes) and are single-use. A used or expired token must fail verification with a clear "request a new link" message, not a silent failure.
+- [ ] User submits their email address in a lightweight sign-in form (no password field).
+- [ ] A Netlify Function (e.g. `netlify/functions/auth-magic-link-request.js`) generates a signed, time-limited token tied to that email address and stores a pending-verification record.
+- [ ] The same function sends an email containing a link back to the site with the token, via a transactional email API (a service such as Resend, Postmark, or SendGrid — the specific provider is an implementation choice made when this is built, not fixed here). The provider's API key is stored as a Netlify environment variable, never committed.
+- [ ] When the user clicks the link, a verification function (e.g. `netlify/functions/auth-magic-link-verify.js`) checks the token, and if valid and not expired, issues a session and returns a stable user ID derived from the verified email address.
+- [ ] Magic links expire after a short window (a reasonable default is 15 minutes) and are single-use. A used or expired token must fail verification with a clear "request a new link" message, not a silent failure.
 
 ### Session handling
 
@@ -382,14 +397,14 @@ On successful sign-in:
 
 ### Testing checklist additions
 
-- A new user can sign in with Google and a `users` record is created with a stable ID.
-- A new user can request a magic link, receive an email, and sign in by clicking it.
-- An expired or already-used magic link fails verification with a clear message.
-- Local progress made before signing in is preserved and merged correctly after sign-in, not overwritten.
-- Signing out preserves local `ProgressStore` data and does not sign the user into someone else's session.
-- The quiz remains fully usable, with local-only progress, for a user who never signs in.
+- [ ] A new user can sign in with Google and a `users` record is created with a stable ID.
+- [ ] A new user can request a magic link, receive an email, and sign in by clicking it.
+- [ ] An expired or already-used magic link fails verification with a clear message.
+- [ ] Local progress made before signing in is preserved and merged correctly after sign-in, not overwritten.
+- [ ] Signing out preserves local `ProgressStore` data and does not sign the user into someone else's session.
+- [ ] The quiz remains fully usable, with local-only progress, for a user who never signs in.
 
-## Content Quality Control
+## Content Quality Control ⏳ Planned
 
 ### Purpose
 
@@ -418,9 +433,9 @@ Rules:
 
 Add a flag control to the quiz screen in `quiz.html`, available on every question regardless of sign-in status:
 
-- A small, unobtrusive icon button near the question with an accessible label such as "Report this question."
-- Tapping it opens a minimal inline confirmation, optionally allowing the user to select a reason (e.g. "Arabic looks wrong," "English meaning seems off," "Answer choices are confusing") or leave it blank.
-- Submitting a flag does not interrupt the quiz; the user continues answering normally.
+- [ ] A small, unobtrusive icon button near the question with an accessible label such as "Report this question."
+- [ ] Tapping it opens a minimal inline confirmation, optionally allowing the user to select a reason (e.g. "Arabic looks wrong," "English meaning seems off," "Answer choices are confusing") or leave it blank.
+- [ ] Submitting a flag does not interrupt the quiz; the user continues answering normally.
 
 ### Flag data captured
 
@@ -432,11 +447,11 @@ Add a flag control to the quiz screen in `quiz.html`, available on every questio
 
 ### Flag delivery
 
-- A Netlify Function (e.g. `netlify/functions/report-question-flag.js`) receives the flag submission from the browser.
-- The function appends a row to a Google Sheet using the Google Sheets API, authenticated with a dedicated Google service account created for this purpose.
-- The service account's credentials are stored as a Netlify environment variable (e.g. `GOOGLE_SHEETS_SERVICE_ACCOUNT_KEY`) and are never committed to the repository. This is a separate credential from the Google OAuth client used for sign-in.
-- The target spreadsheet ID is also stored as a Netlify environment variable, not hardcoded in client or function code.
-- If the Sheets API call fails, the function should still return a success response to the user's flag submission if the flag was otherwise durably queued or retried server-side, rather than surfacing backend failures to the learner mid-quiz.
+- [ ] A Netlify Function (e.g. `netlify/functions/report-question-flag.js`) receives the flag submission from the browser.
+- [ ] The function appends a row to a Google Sheet using the Google Sheets API, authenticated with a dedicated Google service account created for this purpose.
+- [ ] The service account's credentials are stored as a Netlify environment variable (e.g. `GOOGLE_SHEETS_SERVICE_ACCOUNT_KEY`) and are never committed to the repository. This is a separate credential from the Google OAuth client used for sign-in.
+- [ ] The target spreadsheet ID is also stored as a Netlify environment variable, not hardcoded in client or function code.
+- [ ] If the Sheets API call fails, the function should still return a success response to the user's flag submission if the flag was otherwise durably queued or retried server-side, rather than surfacing backend failures to the learner mid-quiz.
 
 ### Rules
 
@@ -447,28 +462,28 @@ Add a flag control to the quiz screen in `quiz.html`, available on every questio
 
 ### Testing checklist additions
 
-- Flagging a question while signed out succeeds and appears in the Google Sheet marked `anonymous`.
-- Flagging a question while signed in includes the correct user ID in the logged row.
-- Flagging works identically in both quiz directions, and the logged row correctly records which direction was active.
-- Flagging does not disable the Next/Check answer button or otherwise interrupt the current attempt.
-- A `verified: true` question and an unverified question render and function identically to the learner at this stage.
+- [ ] Flagging a question while signed out succeeds and appears in the Google Sheet marked `anonymous`.
+- [ ] Flagging a question while signed in includes the correct user ID in the logged row.
+- [ ] Flagging works identically in both quiz directions, and the logged row correctly records which direction was active.
+- [ ] Flagging does not disable the Next/Check answer button or otherwise interrupt the current attempt.
+- [ ] A `verified: true` question and an unverified question render and function identically to the learner at this stage.
 
 ## Implementation Order
 
-1. Add `data/units-manifest.js`.
-2. Add and manually test `progress-store.js` in isolation.
-3. Integrate the progress store and the rendering engine into `quiz.html`.
-4. Add the homepage chapter picker and progress display in `arabic.html`, driven by `UnitsManifest`.
-5. Manually test all chapters on mobile and desktop widths.
-6. Verify browser refresh/restart/resume behavior.
-7. Verify unit-agnosticism with a throwaway second unit fixture, then remove it before opening a PR.
-8. Implement the English-to-Arabic direction mode, reusing the existing engine.
-9. Set up Netlify Functions scaffolding and the Google OAuth client, then implement Google sign-in per the Account Authentication section.
-10. Implement magic-link email sign-in, including the transactional email provider integration.
-11. Set up Netlify DB and wire up profile sync (fetch, merge, persist) for both sign-in methods.
-12. Add the `verified` field convention to the Content Contract and begin tracking verification status for existing chapters.
-13. Implement the flag-a-question feature in `quiz.html`, the Google Sheets logging Netlify Function, and the dedicated Sheets service account credential.
-14. Test account authentication, sync, and the flag feature per their testing checklists before opening a pull request.
+1. [x] Add `data/units-manifest.js`.
+2. [x] Add and manually test `progress-store.js` in isolation.
+3. [x] Integrate the progress store and the rendering engine into `quiz.html`.
+4. [x] Add the homepage chapter picker and progress display in `arabic.html`, driven by `UnitsManifest`.
+5. [ ] Manually test all chapters on mobile and desktop widths. *(chapters are live; cross-device manual pass not yet confirmed)*
+6. [ ] Verify browser refresh/restart/resume behavior. *(implemented; not yet manually re-confirmed post-toggle)*
+7. [ ] Verify unit-agnosticism with a throwaway second unit fixture, then remove it before opening a PR. *(not yet performed)*
+8. [x] Implement the English-to-Arabic direction mode, reusing the existing engine.
+9. [ ] Set up Netlify Functions scaffolding and the Google OAuth client, then implement Google sign-in per the Account Authentication section.
+10. [ ] Implement magic-link email sign-in, including the transactional email provider integration.
+11. [ ] Set up Netlify DB and wire up profile sync (fetch, merge, persist) for both sign-in methods.
+12. [ ] Add the `verified` field convention to the Content Contract and begin tracking verification status for existing chapters.
+13. [ ] Implement the flag-a-question feature in `quiz.html`, the Google Sheets logging Netlify Function, and the dedicated Sheets service account credential.
+14. [ ] Test account authentication, sync, and the flag feature per their testing checklists before opening a pull request.
 
 ## Guardrails
 
