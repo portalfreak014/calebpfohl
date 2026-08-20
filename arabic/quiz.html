@@ -73,6 +73,30 @@
     .screen p { max-width:42ch; margin:0 auto 24px; color:var(--variant); line-height:1.55; }
     .score { margin:24px 0; color:var(--primary); font-size:3.2rem; font-weight:800; line-height:1; }
     .screen .button + .button { margin-top:12px; }
+        .question-actions { display:flex; align-items:center; gap:6px; flex-shrink:0; }
+    .flag-button { display:grid; place-items:center; width:36px; height:36px; padding:0; border:0; border-radius:50%; color:var(--variant); background:transparent; }
+    .flag-button:hover:not(:disabled) { background:rgb(29 27 32 / .08); }
+    .flag-button:disabled { opacity:.55; cursor:default; }
+
+    .snackbar {
+      position:fixed;
+      left:50%;
+      bottom:max(20px, env(safe-area-inset-bottom));
+      z-index:10;
+      max-width:calc(100% - 32px);
+      padding:12px 16px;
+      border-radius:12px;
+      color:#fff;
+      background:#323036;
+      box-shadow:0 4px 14px rgb(0 0 0 / .24);
+      font-size:.9rem;
+      font-weight:700;
+      opacity:0;
+      pointer-events:none;
+      transform:translate(-50%, 16px);
+      transition:opacity 180ms ease, transform 180ms ease;
+    }
+    .snackbar.show { opacity:1; transform:translate(-50%, 0); }
     .hidden { display:none !important; }
     :focus-visible { outline:3px solid var(--primary); outline-offset:3px; }
     @media (min-width: 700px) { .app { padding: 20px 32px; } main { padding: 18px 0 10px; } .choice { min-height: 58px; padding: 12px 18px; } }
@@ -97,12 +121,19 @@
       <section id="loading-screen" class="screen"><div class="screen-icon"><span class="material-symbols-rounded">progress_activity</span></div><h1>Loading your quiz</h1><p>Getting your study set ready.</p></section>
       <section id="quiz-screen" class="hidden" aria-live="polite">
         <div class="question-kicker-row">
-          <p class="question-kicker" id="question-kicker"></p>
-          <button class="known-toggle" id="known-toggle" type="button" aria-pressed="false">
-            <span class="material-symbols-rounded" aria-hidden="true" id="known-toggle-icon">check_circle</span>
-            <span id="known-toggle-label">Mark as known</span>
-          </button>
-        </div>
+  <p class="question-kicker" id="question-kicker"></p>
+
+  <div class="question-actions">
+    <button class="flag-button" id="flag-button" type="button" aria-label="Flag this word" title="Flag this word">
+      <span class="material-symbols-rounded" aria-hidden="true">flag</span>
+    </button>
+
+    <button class="known-toggle" id="known-toggle" type="button" aria-pressed="false">
+      <span class="material-symbols-rounded" aria-hidden="true" id="known-toggle-icon">check_circle</span>
+      <span id="known-toggle-label">Mark as known</span>
+    </button>
+  </div>
+</div>
         <h1 class="prompt" id="prompt"></h1><div class="choices" id="choices" aria-label="Answer choices"></div><div class="feedback" id="feedback" role="status"></div><div class="action-area"><button class="button primary full" id="next-button" type="button" disabled>Choose an answer</button></div>
       </section>
       <section id="complete-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">celebration</span></div><h1>Chapter complete</h1><p id="complete-copy"></p><div class="score" id="final-score"></div><button class="button primary full" id="again-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">refresh</span>Practice again</button><button class="button tonal full hidden" id="next-chapter-button" type="button"></button><a class="button tonal full" href="arabic.html">Back to Arabic Study</a></section>
@@ -117,6 +148,7 @@
       <section id="error-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">error</span></div><h1>Quiz unavailable</h1><p id="error-copy">We could not load this study set.</p><a class="button primary full" href="arabic.html">Back to Arabic Study</a></section>
     </main>
   </div>
+  <div class="snackbar" id="snackbar" role="status" aria-live="polite"></div>
   <script src="data/units-manifest.js"></script>
   <script src="progress-store.js"></script>
   <script>
@@ -182,6 +214,101 @@
       document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', percent);
     }
 
+        const FLAG_QUEUE_KEY = 'arabicStudy.anonymousFlagQueue.v1';
+    const FLAG_ENDPOINT = '/api/report-question-flag';
+    const FLAG_SNACKBAR_DURATION_MS = 2500;
+    let snackbarTimer = null;
+
+    function readFlagQueue() {
+      try {
+        const queue = JSON.parse(localStorage.getItem(FLAG_QUEUE_KEY) || '[]');
+        return Array.isArray(queue) ? queue.slice(0, 50) : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function writeFlagQueue(queue) {
+      try {
+        localStorage.setItem(FLAG_QUEUE_KEY, JSON.stringify(queue.slice(0, 50)));
+      } catch (error) {
+        // The quiz still works if the anonymous retry queue cannot be saved.
+      }
+    }
+
+    function showSnackbar(message) {
+      const snackbar = $('snackbar');
+      snackbar.textContent = message;
+      snackbar.classList.add('show');
+      if (snackbarTimer) clearTimeout(snackbarTimer);
+      snackbarTimer = setTimeout(() => {
+        snackbar.classList.remove('show');
+      }, FLAG_SNACKBAR_DURATION_MS);
+    }
+
+    function currentFlagPayload() {
+      const q = state.questions[state.index];
+      return {
+        timestamp: new Date().toISOString(),
+        unitId: unit,
+        chapterId: state.chapterId,
+        mode,
+        arabic: q.arabic,
+        correctAnswer: q.choices[q.answer]
+      };
+    }
+
+    async function sendFlag(payload) {
+      const response = await fetch(FLAG_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error('Flag endpoint unavailable.');
+      }
+    }
+
+    async function flushFlagQueue() {
+      const queue = readFlagQueue();
+      if (!queue.length) return;
+
+      const remaining = [];
+
+      for (const payload of queue) {
+        try {
+          await sendFlag(payload);
+        } catch (error) {
+          remaining.push(payload);
+          break;
+        }
+      }
+
+      writeFlagQueue(remaining);
+    }
+
+    async function flagCurrentWord() {
+      const button = $('flag-button');
+      if (button.disabled) return;
+
+      button.disabled = true;
+      const payload = currentFlagPayload();
+
+      try {
+        await sendFlag(payload);
+        showSnackbar('Word flagged');
+      } catch (error) {
+        const queue = readFlagQueue();
+        queue.push(payload);
+        writeFlagQueue(queue);
+        showSnackbar('Saved to send later');
+      } finally {
+        button.disabled = false;
+        flushFlagQueue();
+      }
+    }
+    
     const LETTER_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
     function buildPromptAndChoices(q, allQuestions) {
@@ -453,10 +580,13 @@
         $('again-button').addEventListener('click', restart);
         $('next-button').addEventListener('click', next);
         $('known-toggle').addEventListener('click', toggleKnown);
+        $('flag-button').addEventListener('click', flagCurrentWord);
         $('review-all-link').addEventListener('click', goToReviewAll);
         $('review-all-button').addEventListener('click', goToReviewAll);
 
         if (window.ProgressStore) window.ProgressStore.setLastActive(unit, progressKeyFor(state.chapterId));
+
+        flushFlagQueue();
 
         hide('loading-screen');
         startSessionOrShowDone();
