@@ -1,501 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-NDCR97CD');</script>
-    <!-- End Google Tag Manager -->
-    <title>Caleb Pfohl</title>
-    <link rel="icon" href="favicon.png" type="image/png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            overflow-x: hidden; /* Prevent horizontal scrollbar */
-            padding: 0 20px; /* Added padding to the left and right of the entire site */
-            /*max-width: 500px; Restrict page width on desktop */
-            margin: 0 auto; /* Center the content */
-            margin-top: 0; /* Remove default margin at the top */
-        }
-        
-        header {
-            position: relative;
-            text-align: center;
-            background-color: #f4f4f4; /* Background color for the header */
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-left: 25px; /* Add left padding */
-            padding-right: 25px; /* Add right padding */
-            transition: padding 0.3s ease; /* Smooth transition for padding */
-            border-radius: 80px; /* Completely rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
-            margin-top: 20px; /* Added margin for separation from the sections below */
-        }
-
-        h1 {
-            color: #444; /* Dark gray for the font color */
-            margin-right: 10px; /* Adjusted margin for spacing */
-            font-size: 30px;
-            transition: font-size 0.3s ease; /* Smooth transition for font size */
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            right: -100%; /* Initial position off the screen */
-            height: 100%;
-            width: 100%;
-            background-color: #333;
-            padding: 20px;
-            box-sizing: border-box;
-            z-index: 1; /* Ensure menu appears above other elements */
-            transition: right 0.3s ease-in-out; /* Smooth transition for the right property */
-            text-align: center; /* Center align the items in the nav menu */
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px;
-            margin: 10px 0;
-            display: block;
-            font-size: 20px; /* Adjusted font size */
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center; /* Center align the social icons */
-            margin-top: 20px; /* Added margin to bring it up */
-        }
-
-        .social-icons a {
-            display: inline-block;
-            margin: 0 10px; /* Adjusted margin for more spacing */
-        }
-
-        .social-icons img {
-            width: 24px; /* Adjusted width for smaller icons */
-            height: 24px; /* Adjusted height for smaller icons */
-        }
-
-        .hamburger-container {
-            cursor: pointer;
-            z-index: 2; /* Ensure hamburger icon appears above other elements */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            padding-right: 20px; /* Added padding to the right for the hamburger icon */
-        }
-
-        .hamburger-icon {
-            width: 30px; /* Adjust as needed */
-            height: 3px;
-            background-color: #444; /* Dark gray for initial state */
-            margin: 10px 0; /* Increased margin for more space between lines */
-            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Smooth transition for transform and background-color properties */
-        }
-
-        /* Pseudo-elements to create additional lines for the "X" effect */
-        .hamburger-icon::before,
-        .hamburger-icon::after {
-            content: '';
-            display: block;
-            width: 30px;
-            height: 3px;
-            background-color: #444; /* Dark gray for initial state */
-            position: absolute;
-            transition: transform 0.3s ease-in-out; /* Smooth transition for the transform property */
-        }
-
-        .hamburger-icon::before {
-            transform: translateY(-10px); /* Positioning for the top line of the "X" */
-        }
-
-        .hamburger-icon::after {
-            transform: translateY(10px); /* Positioning for the bottom line of the "X" */
-        }
-
-        .hamburger-icon.active {
-            background-color: #fff; /* White color when active */
-            transform: rotate(-45deg); /* Rotate the central line of the "X" */
-        }
-
-        .hamburger-icon.active::before,
-        .hamburger-icon.active::after {
-            background-color: #fff; /* White color when active */
-            transform: rotate(90deg); /* Rotate pseudo-elements to complete the "X" */
-        }
-
-        .hero-image-frame {
-            display: inline-block;
-            padding: 12px;
-            border-radius: 24px;              /* MD3-style rounded shape [web:1][web:2] */
-            background-color: #fff;
-            border: 4px solid #000;           /* thick cartoony outline */
-            box-shadow:
-                0 4px 8px rgba(0, 0, 0, 0.18),
-                0 8px 16px rgba(0, 0, 0, 0.24); /* MD3-ish elevated card [web:3][web:10] */
-            position: relative;
-            overflow: hidden;                 /* keep “fuzzy” effect clipped to the shape */
-        }
-
-        /* optional: slightly “fuzzy” inner edge using a pseudo-element */
-        .hero-image-frame::before {
-            content: "";
-            position: absolute;
-            inset: 4px;
-            border-radius: 18px;
-            box-shadow: 0 0 12px rgba(0, 0, 0, 0.25); /* soft inner fuzz [web:6][web:8] */
-            pointer-events: none;
-        }
-
-        /* Mobile Styles */
-        @media only screen and (max-width: 600px) {
-            header, section {
-                padding: 10px;
-            }
-
-            h1 {
-                margin-right: 5px; /* Adjusted margin for spacing on mobile */
-            }
-
-            .hamburger-container {
-                top: 20px;
-                padding-right: 10px; /* Adjusted padding for mobile */
-            }
-
-            .social-icons img {
-                width: 20px; /* Adjusted width for smaller icons on mobile */
-                height: 20px; /* Adjusted height for smaller icons on mobile */
-            }
-
-            /* Reduce padding and font size when the menu is active */
-            .header-content.active {
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-
-            h1.active {
-                font-size: 18px;
-            }
-        }
-
-        /* Hero Section Styles */
-        .hero-section {
-            display: flex;
-            position: relative;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 50px; /* Adjust as needed */
-        }
-
-        .hero-content {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-            line-height: 1.5; /* Adjust line height for space between lines */
-        }
-
-        .main-text {
-            font-size: 2em;
-            font-weight: bold;
-            color: #333; /* Adjust the color as needed */
-            margin-bottom: 20px; /* Adjust vertical margin for space below */
-        }
-
-        .subtext {
-            font-size: 1.2em;
-            color: #555; /* Adjust the color as needed */
-            margin-bottom: 30px;
-        }
-
-        .cta-button {
-            background-color: #6FA4FF; /* Material Design 3 color */
-            color: #fff;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            text-decoration: none;
-            border-radius: 40px;
-            transition: background-color 0.3s ease-in-out;
-            display: inline-block;
-            text-align: center;
-            width: auto; /* Ensure the button width adjusts based on content */
-            max-width: 130px; /* Adjust the max-width as needed */
-        }
-
-        .cta-button:hover {
-            background-color: #5C8CEB; /* Darker shade on hover */
-        }
-
-        .hero-image-container {
-            position: relative;
-            perspective: 1000px; /* Define the perspective for 3D transforms */
-        }
-
-        /* keep your existing hero-image styles, but remove padding from the img itself if you want the border tight */
-        .hero-image {
-            max-width: 60%;
-            height: auto;
-            width: auto;
-            max-height: 70vh;
-            display: block;
-            margin: 0 auto;
-            padding: 0; /* override previous 20px if you want */
-        }
-
-        .hero-sticker {
-            max-width: 60%;
-            height: auto;
-            max-height: 70vh;
-            display: block;
-            margin: 0 auto;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.25)); /* MD3-ish elevation [web:3] */
-        }
-        
-        /* optional: slight wobble to make it feel cartoony */
-        .hero-sticker:hover {
-            transform: translateY(-2px);
-            transition: transform 120ms ease-out;
-        }
-
-
-        /* Mobile Styles */
-        @media only screen and (max-width: 600px) {
-            .hero-section {
-                flex-direction: column-reverse; /* Reverse the order for mobile */
-            }
-
-            .hero-content,
-            .hero-image {
-                max-width: 100%; /* Adjust as needed for mobile */
-            }
-        }
-
-        .dynamic-subtext {
-            font-size: 1.2em;
-            color: #555; /* Adjust the color as needed */
-            margin-bottom: 30px;
-            white-space: pre; /* Preserve whitespace for line breaks */
-            display: inline-block;
-        }
-
-        .close-icon {
-            width: 30px;
-            height: 3px;
-            background-color: #fff;
-            position: absolute;
-            transition: opacity 0.3s ease; /* Smooth transition for opacity */
-            opacity: 0; /* Initially invisible */
-        }
-
-        .close-icon::before,
-        .close-icon::after {
-            content: '';
-            display: block;
-            width: 30px;
-            height: 3px;
-            background-color: #fff;
-            position: absolute;
-            transition: opacity 0.3s ease; /* Smooth transition for opacity */
-            opacity: 0; /* Initially invisible */
-        }
-
-        .close-icon::before {
-            transform: rotate(-45deg);
-            top: 12px;
-        }
-
-        .close-icon::after {
-            transform: rotate(45deg);
-            top: 12px;
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NDCR97CD');</script>
+  <!-- End Google Tag Manager -->
+  <title>Caleb Pfohl — Digital Creative</title>
+  <meta name="description" content="Caleb Pfohl creates web experiences, digital campaigns, graphics, and content.">
+  <meta name="theme-color" content="#f9f9ff">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0..1,0&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #005ac1; --on-primary: #ffffff; --primary-container: #d9e2ff; --on-primary-container: #001a41;
+      --surface: #f9f9ff; --surface-container: #ededf5; --surface-container-high: #e7e8ef;
+      --on-surface: #1a1b20; --on-surface-variant: #44474f; --outline: #74777f;
+      --radius-xl: 28px; --radius-md: 16px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--on-surface); background: var(--surface); font-family: Roboto, Arial, sans-serif; line-height: 1.5; }
+    a { color: inherit; }
+    .material-symbols-rounded { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .skip-link { position: absolute; top: -4rem; left: 1rem; z-index: 20; padding: .75rem 1rem; color: var(--on-primary); background: var(--primary); border-radius: 0 0 12px 12px; }
+    .skip-link:focus { top: 0; }
+    .topbar { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(20px); background: color-mix(in srgb, var(--surface) 88%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--outline) 20%, transparent); }
+    .nav-wrap { width: min(1180px, calc(100% - 2rem)); min-height: 76px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand { font-size: 1.25rem; font-weight: 900; text-decoration: none; letter-spacing: -.02em; }
+    .desktop-nav { display: flex; align-items: center; gap: .35rem; }
+    .desktop-nav a, .drawer a { padding: .65rem .9rem; color: var(--on-surface-variant); font-weight: 700; text-decoration: none; border-radius: 999px; }
+    .desktop-nav a:hover, .desktop-nav a:focus-visible { color: var(--on-primary-container); background: var(--primary-container); outline: none; }
+    .icon-button { display: none; width: 48px; height: 48px; place-items: center; padding: 0; color: var(--on-surface); background: transparent; border: 0; border-radius: 50%; cursor: pointer; }
+    .icon-button:hover, .icon-button:focus-visible { background: var(--surface-container-high); outline: none; }
+    .drawer { position: fixed; inset: 0 auto 0 0; z-index: 30; width: min(330px, 85vw); padding: 1.1rem; display: flex; flex-direction: column; gap: .45rem; background: var(--surface); box-shadow: 8px 0 30px rgba(0,0,0,.2); transform: translateX(-105%); transition: transform 220ms ease; }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .drawer a { border-radius: var(--radius-md); }
+    .drawer a:hover, .drawer a:focus-visible { color: var(--on-primary-container); background: var(--primary-container); outline: none; }
+    .scrim { position: fixed; inset: 0; z-index: 20; opacity: 0; visibility: hidden; background: rgba(0,0,0,.42); transition: opacity 220ms ease, visibility 220ms ease; }
+    .scrim.visible { opacity: 1; visibility: visible; }
+    main { overflow: hidden; }
+    .hero { width: min(1180px, calc(100% - 2rem)); min-height: calc(100svh - 76px); margin: auto; display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: clamp(2rem, 6vw, 6rem); padding: clamp(3rem, 8vw, 7rem) 0; }
+    .eyebrow { display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1rem; padding: .5rem .8rem; color: var(--on-primary-container); background: var(--primary-container); border-radius: 999px; font-weight: 700; }
+    h1 { max-width: 11ch; margin: 0; font-size: clamp(3.1rem, 7vw, 6.4rem); line-height: .98; letter-spacing: -.065em; }
+    .hero-copy { max-width: 54ch; margin: 1.5rem 0 2rem; color: var(--on-surface-variant); font-size: clamp(1.05rem, 2vw, 1.3rem); }
+    .rotator { display: inline-flex; min-width: 13ch; color: var(--primary); font-weight: 900; }
+    .actions { display: flex; flex-wrap: wrap; gap: .8rem; }
+    .button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: 0 1.35rem; font-weight: 700; text-decoration: none; border: 1px solid transparent; border-radius: 999px; transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease; }
+    .button:hover { transform: translateY(-2px); }
+    .button:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+    .button.primary { color: var(--on-primary); background: var(--primary); box-shadow: 0 3px 6px rgba(0,43,93,.24); }
+    .button.primary:hover { box-shadow: 0 6px 12px rgba(0,43,93,.28); }
+    .button.secondary { color: var(--primary); border-color: var(--outline); }
+    .button.secondary:hover { background: var(--primary-container); }
+    .hero-art { position: relative; display: grid; place-items: center; }
+    .hero-art::before { content: ''; position: absolute; width: min(40vw, 460px); aspect-ratio: 1; border-radius: 50%; background: var(--primary-container); }
+    .sticker { position: relative; width: min(100%, 440px); padding: clamp(.7rem, 2vw, 1rem); background: #fff; border: 7px solid #171717; border-radius: 64px; box-shadow: 0 18px 40px rgba(0,0,0,.22); transform: rotate(3deg); transition: transform 220ms ease; }
+    .sticker:hover { transform: rotate(0deg) translateY(-6px); }
+    .sticker img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; border-radius: 48px; }
+    .section { width: min(1180px, calc(100% - 2rem)); margin: auto; padding: clamp(4.5rem, 9vw, 8rem) 0; }
+    .section-heading { max-width: 650px; margin-bottom: 2rem; }
+    h2 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.08; letter-spacing: -.04em; }
+    .section-heading p { margin: .85rem 0 0; color: var(--on-surface-variant); font-size: 1.1rem; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .card { min-height: 220px; padding: 1.6rem; background: var(--surface-container); border-radius: var(--radius-xl); }
+    .card .material-symbols-rounded { display: grid; width: 48px; height: 48px; place-items: center; margin-bottom: 1.6rem; color: var(--on-primary-container); background: var(--primary-container); border-radius: 16px; }
+    .card h3 { margin: 0 0 .5rem; font-size: 1.25rem; }
+    .card p { margin: 0; color: var(--on-surface-variant); }
+    .contact-card { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: clamp(1.6rem, 5vw, 3.5rem); background: var(--primary-container); border-radius: var(--radius-xl); }
+    .contact-card h2, .contact-card p { color: var(--on-primary-container); }
+    .contact-card p { max-width: 55ch; margin: .75rem 0 0; }
+    .contact-card .button { flex: 0 0 auto; }
+    footer { padding: 2rem 1rem 2.5rem; text-align: center; color: var(--on-surface-variant); font-size: .9rem; }
+    footer p { margin: .35rem 0; }
+    footer a { color: var(--primary); }
+    .socials { display: flex; justify-content: center; gap: .35rem; margin: 1rem 0; }
+    .socials a { display: grid; width: 42px; height: 42px; place-items: center; padding: .55rem; border-radius: 50%; }
+    .socials a:hover, .socials a:focus-visible { background: var(--surface-container-high); outline: none; }
+    .socials img { width: 22px; height: 22px; object-fit: contain; }
+    @media (max-width: 760px) { .desktop-nav { display: none; } .icon-button { display: grid; } .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 4rem; text-align: center; } h1, .hero-copy { margin-left: auto; margin-right: auto; } .eyebrow { margin-left: auto; margin-right: auto; } .actions { justify-content: center; } .hero-art { order: -1; } .hero-art::before { width: min(82vw, 420px); } .sticker { width: min(78vw, 380px); border-radius: 48px; } .sticker img { border-radius: 36px; } .cards { grid-template-columns: 1fr; } .contact-card { align-items: flex-start; flex-direction: column; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
+  </style>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDCR97CD"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <header>
-        <div class="header-content">
-            <h1>Caleb Pfohl</h1>
-            <div class="hamburger-container" onclick="toggleNav();">
-                <div class="hamburger-icon" id="hamburgerIcon"></div>
-                <div class="close-icon" id="closeIcon"></div>
-            </div>
-        </div>
-    </header>
-
-    <nav id="navbar">
-        <div class="header-content">
-            <h1 style="color: #f8f8ff;">Caleb Pfohl</h1>
-        </div>
-        <a href="#home">Home</a>
-        <a href="#features">Features</a>
-        <a href="#contact">Contact</a>
-        <div class="social-icons">
-            <a href="https://tiktok.com/@calebpfohl" target="_blank"><img src="tiktok.png" alt="TikTok"></a>
-            <a href="https://twitter.com/calebpfohl" target="_blank"><img src="twitter.png" alt="Twitter"></a>
-            <a href="https://instagram.com/calebpfohl" target="_blank"><img src="instagram.png" alt="Instagram"></a>
-            <a href="https://discord.gg/gRJS4k2czD" target="_blank"><img src="discord.png" alt="Discord"></a>
-        </div>
-    </nav>
-    <div class="hero-section">
-        <div class="hero-content">
-            <div class="main-text">I Make Stuff.</div>
-            <div class="dynamic-subtext" id="dynamicSubtext"></div>
-            <a href="mailto:hello@calebpfohl.com" class="cta-button" target="_blank">Contact Me</a>
-        </div>
-            <div class="hero-image-container">
-              <svg class="hero-sticker" viewBox="0 0 400 400">
-                <!-- white sticker background with thick black outline -->
-                <rect x="10" y="10" width="380" height="380"
-                      rx="70" ry="70"
-                      fill="#ffffff"
-                      stroke="#000000"
-                      stroke-width="10" />
-                <!-- your PNG placed inside -->
-                <image xlink:href="hero2enhanced.png"
-                       x="40" y="40" width="320" height="320"
-                       preserveAspectRatio="xMidYMid meet"
-                       id="heroImage" />
-              </svg>
-            </div>
-
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDCR97CD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="topbar">
+    <div class="nav-wrap">
+      <a class="brand" href="#home" aria-label="Caleb Pfohl home">Caleb Pfohl</a>
+      <nav class="desktop-nav" aria-label="Primary navigation"><a href="#home">Home</a><a href="#work">What I do</a><a href="#contact">Contact</a></nav>
+      <button class="icon-button" id="menuButton" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation menu"><span class="material-symbols-rounded">menu</span></button>
     </div>
-    
-
-    <section>
-        <h2>Features or Highlights</h2>
-        <p>Highlight some key features or points about your website.</p>
+  </header>
+  <div class="scrim" id="scrim" aria-hidden="true"></div>
+  <nav class="drawer" id="mobileNav" aria-label="Mobile navigation">
+    <div class="drawer-header"><span class="brand">Caleb Pfohl</span><button class="icon-button" id="closeButton" type="button" aria-label="Close navigation menu"><span class="material-symbols-rounded">close</span></button></div>
+    <a href="#home">Home</a><a href="#work">What I do</a><a href="#contact">Contact</a>
+  </nav>
+  <main id="main-content">
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow"><span class="material-symbols-rounded">auto_awesome</span> Digital creative</p>
+        <h1 id="hero-title">I make stuff that connects.</h1>
+        <p class="hero-copy">I build thoughtful digital experiences through <span class="rotator" id="rotator" aria-live="polite">web design</span>.</p>
+        <div class="actions"><a class="button primary" href="mailto:hello@calebpfohl.com"><span class="material-symbols-rounded">mail</span> Get in touch</a><a class="button secondary" href="#work">Explore my work <span class="material-symbols-rounded">arrow_downward</span></a></div>
+      </div>
+      <div class="hero-art"><div class="sticker"><img src="hero2enhanced.png" alt="Illustrated portrait of Caleb Pfohl"></div></div>
     </section>
-
-    <!-- Hero Section -->
-
-    <section>
-        <h2>Get Started</h2>
-        <p>Provide a call-to-action or links to navigate to other sections/pages.</p>
-        <a href="#contact">Contact Us</a>
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="section-heading"><h2 id="work-title">Ideas, made useful.</h2><p>From a first concept to a polished presence, I combine visual craft with clear, practical communication.</p></div>
+      <div class="cards">
+        <article class="card"><span class="material-symbols-rounded">code</span><h3>Web design</h3><p>Responsive, accessible websites designed to feel simple and work beautifully.</p></article>
+        <article class="card"><span class="material-symbols-rounded">campaign</span><h3>Digital marketing</h3><p>Focused messaging and campaigns that help the right people discover your work.</p></article>
+        <article class="card"><span class="material-symbols-rounded">palette</span><h3>Creative content</h3><p>Brand-aligned graphic design and social content that stops the scroll.</p></article>
+      </div>
     </section>
-
-    <footer>
-        <p>&copy; 2024 Caleb Pfohl. All rights reserved. Website by <a href="https://virtualinsanityllc.com/">Virtual Insanity LLC</a>.</p>
-    </footer>
-    <script>
-        function toggleNav() {
-            var nav = document.getElementById('navbar');
-            var hamburgerIcon = document.getElementById('hamburgerIcon');
-            var closeIcon = document.getElementById('closeIcon');
-            var headerContent = document.querySelector('.header-content');
-            var h1 = document.querySelector('h1');
-
-            // Toggle the 'active' class for the hamburger icon and close icon
-            hamburgerIcon.classList.toggle('active');
-            closeIcon.classList.toggle('active');
-
-            // Toggle the 'active' class for header content and h1
-            headerContent.classList.toggle('active');
-            h1.classList.toggle('active');
-
-            // Toggle the position of the navigation menu to slide it in from the right
-            nav.style.right = (nav.style.right === '0px') ? '-100%' : '0px';
-        }
-    </script>
-   <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const phrases = [
-        "Web Design",
-        "Digital Marketing",
-        "Graphic Design",
-        "Content Creation",
-        "Social Media"
-    ];
-
-    const dynamicSubtext = document.getElementById("dynamicSubtext");
-
-    const TYPING_SPEED = 100;   // ms per character when typing
-    const DELETING_SPEED = 60;  // ms per character when deleting
-    const PAUSE_AT_FULL = 1200; // pause when phrase is fully typed
-    const PAUSE_AT_EMPTY = 400; // pause when phrase is fully deleted
-
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-
-    function tick() {
-        const current = phrases[phraseIndex];
-
-        if (isDeleting) {
-            // delete one character
-            charIndex--;
-            dynamicSubtext.textContent = current.substring(0, charIndex);
-
-            if (charIndex <= 0) {
-                // finished deleting, move to next phrase
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                setTimeout(tick, PAUSE_AT_EMPTY);
-            } else {
-                setTimeout(tick, DELETING_SPEED);
-            }
-        } else {
-            // type one character
-            charIndex++;
-            dynamicSubtext.textContent = current.substring(0, charIndex);
-
-            if (charIndex === current.length) {
-                // finished typing, pause, then start deleting
-                isDeleting = true;
-                setTimeout(tick, PAUSE_AT_FULL);
-            } else {
-                setTimeout(tick, TYPING_SPEED);
-            }
-        }
-    }
-
-    // start the loop
-    tick();
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const heroSticker = document.querySelector(".hero-sticker");
-
-    document.addEventListener("mousemove", function (event) {
-        const rect = heroSticker.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const deltaX = (x - centerX) / centerX;
-        const deltaY = (y - centerY) / centerY;
-
-        heroSticker.style.transform =
-            `rotateY(${deltaX * 10}deg) rotateX(${-deltaY * 10}deg)`;
-        heroSticker.style.transformStyle = "preserve-3d";
-    });
-
-    heroSticker.addEventListener("mouseleave", function () {
-        heroSticker.style.transform = "rotateY(0deg) rotateX(0deg)";
-    });
-});
-</script>
-
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="contact-card"><div><h2 id="contact-title">Have an idea?</h2><p>Let’s make something clear, compelling, and genuinely useful.</p></div><a class="button primary" href="mailto:hello@calebpfohl.com"><span class="material-symbols-rounded">send</span> Contact me</a></div>
+    </section>
+  </main>
+  <footer>
+    <div class="socials"><a href="https://tiktok.com/@calebpfohl" target="_blank" rel="noopener noreferrer" aria-label="Caleb Pfohl on TikTok"><img src="tiktok.png" alt=""></a><a href="https://twitter.com/calebpfohl" target="_blank" rel="noopener noreferrer" aria-label="Caleb Pfohl on Twitter"><img src="twitter.png" alt=""></a><a href="https://instagram.com/calebpfohl" target="_blank" rel="noopener noreferrer" aria-label="Caleb Pfohl on Instagram"><img src="instagram.png" alt=""></a><a href="https://discord.gg/gRJS4k2czD" target="_blank" rel="noopener noreferrer" aria-label="Caleb Pfohl on Discord"><img src="discord.png" alt=""></a></div>
+    <p>© <span id="year"></span> Caleb Pfohl. All rights reserved.</p><p>Website by <a href="https://virtualinsanityllc.com/" target="_blank" rel="noopener noreferrer">Virtual Insanity LLC</a>.</p>
+  </footer>
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const closeButton = document.getElementById('closeButton');
+    const drawer = document.getElementById('mobileNav');
+    const scrim = document.getElementById('scrim');
+    const drawerLinks = drawer.querySelectorAll('a');
+    function setMenu(open) { drawer.classList.toggle('open', open); scrim.classList.toggle('visible', open); menuButton.setAttribute('aria-expanded', String(open)); document.body.style.overflow = open ? 'hidden' : ''; if (open) closeButton.focus(); else menuButton.focus(); }
+    menuButton.addEventListener('click', () => setMenu(true));
+    closeButton.addEventListener('click', () => setMenu(false));
+    scrim.addEventListener('click', () => setMenu(false));
+    drawerLinks.forEach(link => link.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && drawer.classList.contains('open')) setMenu(false); });
+    const phrases = ['web design', 'digital marketing', 'graphic design', 'content creation', 'social media'];
+    const rotator = document.getElementById('rotator'); let phrase = 0;
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setInterval(() => { phrase = (phrase + 1) % phrases.length; rotator.animate([{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-.35em)' }, { opacity: 0, transform: 'translateY(.35em)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 420, easing: 'ease-out' }); rotator.textContent = phrases[phrase]; }, 2600); }
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
