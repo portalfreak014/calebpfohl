@@ -22,12 +22,18 @@ window.UNITS_MANIFEST = {
       { id: 'ch29', number: 29, title: 'Chapter 29', available: true },
       { id: 'ch30', number: 30, title: 'Chapter 30', available: true }
     ]
+  },
+  unit7: {
+    title: 'Unit 7 Vocabulary',
+    chapters: [
+      { id: 'ch31', number: 31, title: 'Chapter 31', available: true }
+    ]
   }
   // Future units are added the same way, e.g.:
-  // unit7: {
-  //   title: 'Unit 7 Vocabulary',
+  // unit8: {
+  //   title: 'Unit 8 Vocabulary',
   //   chapters: [
-  //     { id: 'ch31', number: 31, title: 'Chapter 31', available: true }
+  //     { id: 'ch36', number: 36, title: 'Chapter 36', available: true }
   //   ]
   // }
 };
