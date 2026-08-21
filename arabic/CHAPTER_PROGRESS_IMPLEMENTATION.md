@@ -18,6 +18,7 @@ Legend: ✅ Done and live on `main` | ⏳ Planned, not yet implemented
 | Site Attribution Footer | ✅ Done |
 | Unit 6 Supplementary Vocabulary (sticky-note set) | ⏳ Planned — draft transcription in progress, not yet in a content file or wired into the site |
 | Classmate Feedback & Feature Requests | ⏳ Planned — triage and scoping not yet started |
+| Unit 7 (Chapter 31 Vocabulary) | ✅ Done — content, manifest, and homepage picker all live |
 | Account Authentication (Google + Magic Link) | ⏳ Planned — intentionally sequenced after Known Vocabulary |
 
 ## Purpose
@@ -350,6 +351,12 @@ These three, from Wadnizak, describe problems that may originate in older conten
 - [ ] A single gamification direction (cards vs. evolving companion, or a reconciled combination) has been chosen before implementation begins.
 - [ ] The hint-before-wrong interaction with known-word streaks has been explicitly decided and written into the Known Vocabulary section before `quiz.html` is changed.
 
+## Unit 7 (Chapter 31 Vocabulary) ✅ Done
+
+`arabic/data/unit7.json` and the `unit7` entry in `arabic/data/units-manifest.js` are live on `main`, following the exact Content Contract and manifest shape used for Unit 6. Chapter 31 (`ch31`) is marked `available: true` with all 45 vocabulary questions. No engine changes were required — `quiz.html`, `progress-store.js`, and the manifest helper API worked immediately for `quiz.html?unit=unit7&chapter=ch31`, confirming the unit-agnostic design goal from the Purpose section holds in practice.
+
+`arabic.html` was updated to add a `#unit7-chapters` picker section mirroring `#unit6-chapters`. The previously hardcoded `UNIT_ID` constant was generalized to `UNIT_IDS = ["unit6", "unit7"]`, and the chapter-list renderer was parameterized (`renderChapterListForUnit`/`renderAllChapterLists`) rather than duplicated, so a future Unit 8 needs only a new array entry and a new `#unit8-chapters` section, not new rendering logic. The Continue card's fallback-chapter logic was also updated to check each unit in `UNIT_IDS` order rather than defaulting to Unit 6 alone. A navigation-drawer link for Unit 7 vocabulary was added alongside the existing (now relabeled) Unit 6 link.
+
 ## Implementation Order
 
 1. [x] Add `data/units-manifest.js`.
@@ -365,11 +372,12 @@ These three, from Wadnizak, describe problems that may originate in older conten
 11. [x] Add homepage Coming Soon states for Study Sets and Class Resources.
 12. [x] Add the site attribution footer.
 13. [ ] Transcribe, review, and finalize the Unit 6 supplementary vocabulary (sticky notes + whiteboard phrase) into a new content file, then wire it into the homepage and quiz as its own study set.
-14. [ ] Set up Netlify Functions scaffolding and the Google OAuth client; implement Google sign-in.
-15. [ ] Implement magic-link email sign-in.
-16. [ ] Set up Netlify DB and wire up profile sync for both sign-in methods, including the known-word fields.
-17. [ ] Add the `verified` field convention and begin tracking verification status.
-18. [ ] Test account authentication and sync per its checklist before opening a pull request.
+14. [x] Add Unit 7 (Chapter 31 vocabulary) content file, manifest entry, and homepage chapter picker.
+15. [ ] Set up Netlify Functions scaffolding and the Google OAuth client; implement Google sign-in.
+16. [ ] Implement magic-link email sign-in.
+17. [ ] Set up Netlify DB and wire up profile sync for both sign-in methods, including the known-word fields.
+18. [ ] Add the `verified` field convention and begin tracking verification status.
+19. [ ] Test account authentication and sync per its checklist before opening a pull request.
 
 ## Guardrails
 
