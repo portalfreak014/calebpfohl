@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Madame Devaux — ongoing spiritual guidance for life’s biggest chapters.">
+  <title>Madame Devaux — Guidance for the life you are actually living</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --md-sys-color-primary: #b51b61;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-primary-container: #ffd9e7;
+      --md-sys-color-on-primary-container: #3b001d;
+      --md-sys-color-secondary: #765568;
+      --md-sys-color-secondary-container: #ffd9e8;
+      --md-sys-color-tertiary: #7d4e00;
+      --md-sys-color-tertiary-container: #ffddb6;
+      --md-sys-color-surface: #fff8fa;
+      --md-sys-color-surface-container: #f9edf1;
+      --md-sys-color-surface-container-high: #f3e7eb;
+      --md-sys-color-surface-variant: #f2e2e7;
+      --md-sys-color-on-surface: #22191d;
+      --md-sys-color-on-surface-variant: #514348;
+      --md-sys-color-outline: #827278;
+      --md-sys-color-outline-variant: #d5c1c8;
+      --md-sys-color-error: #ba1a1a;
+      --md-sys-elevation-1: 0 1px 2px rgba(52,24,37,.16), 0 2px 6px rgba(52,24,37,.08);
+      --md-sys-elevation-2: 0 3px 8px rgba(52,24,37,.14), 0 8px 20px rgba(52,24,37,.08);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-pill: 999px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--md-sys-color-on-surface); background: var(--md-sys-color-surface); font-family: "DM Sans", Arial, sans-serif; line-height: 1.55; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    .skip { position:absolute; left:-999px; top:auto; }
+    .skip:focus { left: 16px; top: 16px; z-index: 99; padding: 12px 16px; border-radius: 10px; background: white; box-shadow: var(--md-sys-elevation-2); }
+    .container { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; color:var(--md-sys-color-primary); font-size:.78rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+    .eyebrow::before { content:""; width:22px; height:2px; border-radius:2px; background:currentColor; }
+    h1,h2,h3,p { margin-top:0; }
+    h1,h2 { font-family:"Playfair Display", Georgia, serif; letter-spacing:-.035em; }
+    h1 { font-size:clamp(3.2rem,7.2vw,6.7rem); line-height:.95; font-weight:600; }
+    h2 { font-size:clamp(2rem,4vw,3.55rem); line-height:1.02; font-weight:600; }
+    h3 { font-size:1.16rem; line-height:1.25; }
+    .body-lg { font-size:clamp(1.06rem,1.55vw,1.28rem); max-width:58ch; color:var(--md-sys-color-on-surface-variant); }
+    .topbar { position:sticky; top:0; z-index:20; background:rgba(255,248,250,.86); backdrop-filter:blur(16px); border-bottom:1px solid rgba(130,114,120,.2); }
+    .nav { min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand { display:flex; align-items:center; gap:10px; font-size:1.04rem; font-weight:700; letter-spacing:.02em; }
+    .mark { width:32px; height:32px; display:grid; place-items:center; border-radius:50% 50% 48% 48%; background:linear-gradient(140deg,#ff5da1,#bf2670); color:white; font-family:"Playfair Display",serif; font-size:19px; box-shadow:var(--md-sys-elevation-1); }
+    .navlinks { display:flex; align-items:center; gap:25px; font-size:.92rem; color:var(--md-sys-color-on-surface-variant); }
+    .navlinks a:hover { color:var(--md-sys-color-primary); }
+    .button { min-height:44px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:0 21px; border:none; border-radius:var(--radius-pill); font-size:.93rem; font-weight:700; letter-spacing:.01em; transition:transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .button:hover { transform:translateY(-2px); box-shadow:var(--md-sys-elevation-2); }
+    .button:active { transform:translateY(0); }
+    .button.primary { background:var(--md-sys-color-primary); color:white; }
+    .button.tonal { background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container); }
+    .button.outline { background:transparent; color:var(--md-sys-color-primary); border:1px solid var(--md-sys-color-outline); }
+    .hero { position:relative; overflow:hidden; min-height:670px; display:grid; align-items:center; padding:90px 0 76px; }
+    .hero::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 82% 18%,rgba(255,101,177,.52),transparent 22%),radial-gradient(circle at 22% 86%,rgba(116,184,255,.42),transparent 25%),linear-gradient(135deg,#fff7f9 10%,#ffe7f3 44%,#e4cfff 100%); }
+    .hero-grid { position:relative; display:grid; grid-template-columns:1.1fr .9fr; align-items:center; gap:48px; }
+    .hero-copy h1 { margin:16px 0 24px; max-width:790px; }
+    .hero-copy h1 em { color:var(--md-sys-color-primary); font-style:italic; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:31px; }
+    .hero-note { margin-top:22px; color:var(--md-sys-color-on-surface-variant); font-size:.88rem; }
+    .hero-art { position:relative; min-height:440px; }
+    .shape { position:absolute; border-radius:var(--radius-xl); }
+    .shape.main { inset:40px 12px 30px 74px; background:linear-gradient(150deg,#7bc2ff,#d879ed 48%,#ff64b7); box-shadow:0 30px 70px rgba(112,42,89,.25); transform:rotate(5deg); }
+    .shape.paper { width:300px; min-height:255px; right:0; top:80px; padding:29px; background:rgba(255,253,254,.86); border:1px solid rgba(255,255,255,.8); box-shadow:var(--md-sys-elevation-2); backdrop-filter:blur(10px); transform:rotate(-5deg); }
+    .shape.paper h3 { margin:18px 0 9px; font-family:"Playfair Display",serif; font-size:1.8rem; letter-spacing:-.04em; }
+    .shape.paper p { font-size:.92rem; color:var(--md-sys-color-on-surface-variant); }
+    .mini { display:inline-flex; padding:7px 10px; border-radius:var(--radius-pill); background:#ffdef0; color:#881148; font-size:.75rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+    .orbit { width:126px; height:126px; right:228px; top:18px; border-radius:50%; border:1px solid rgba(255,255,255,.9); background:rgba(255,255,255,.2); }
+    .orbit::after { content:""; position:absolute; width:18px; height:18px; border-radius:50%; background:#fff5ba; right:0; top:29px; box-shadow:0 0 0 8px rgba(255,255,255,.18); }
+    .quote-bubble { position:absolute; bottom:0; left:0; width:255px; padding:20px 22px; border-radius:22px 22px 22px 5px; background:var(--md-sys-color-primary); color:white; box-shadow:var(--md-sys-elevation-2); font-size:1rem; line-height:1.35; }
+    section { padding:100px 0; }
+    .section-head { display:grid; grid-template-columns:.82fr 1.18fr; gap:60px; margin-bottom:38px; align-items:start; }
+    .section-head h2 { margin:10px 0 0; }
+    .section-head p { margin:20px 0 0; color:var(--md-sys-color-on-surface-variant); max-width:56ch; }
+    .soft { background:linear-gradient(135deg,#fff4f8,#f0e9ff); }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .card { border-radius:var(--radius-xl); background:var(--md-sys-color-surface); border:1px solid var(--md-sys-color-outline-variant); padding:28px; }
+    .card.elevated { border:none; box-shadow:var(--md-sys-elevation-1); }
+    .num { width:40px; height:40px; display:grid; place-items:center; border-radius:14px; background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container); font-weight:700; margin-bottom:20px; }
+    .card p { margin:0; color:var(--md-sys-color-on-surface-variant); font-size:.95rem; }
+    .statement { max-width:990px; margin:auto; padding:60px clamp(28px,7vw,90px); text-align:center; border-radius:var(--radius-xl); background:linear-gradient(125deg,#3b153c,#8c1f65 52%,#ee4c9c); color:white; box-shadow:0 28px 60px rgba(115,25,75,.23); }
+    .statement .eyebrow { color:#ffd4e6; }
+    .statement h2 { margin:16px auto 0; max-width:22ch; color:white; }
+    .offers { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
+    .offer { display:flex; flex-direction:column; min-height:345px; padding:30px; border-radius:var(--radius-xl); background:var(--md-sys-color-surface); border:1px solid var(--md-sys-color-outline-variant); }
+    .offer.featured { background:linear-gradient(155deg,#ffecf5,#e8d9ff); border:2px solid #ee5c9f; box-shadow:var(--md-sys-elevation-2); transform:translateY(-12px); }
+    .offer-label { font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--md-sys-color-primary); }
+    .offer h3 { margin:14px 0 10px; font-family:"Playfair Display",serif; font-size:2rem; letter-spacing:-.04em; }
+    .offer p { color:var(--md-sys-color-on-surface-variant); margin-bottom:24px; }
+    .offer .button { margin-top:auto; align-self:flex-start; }
+    .scope { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+    .scope-box { padding:30px; border-radius:var(--radius-xl); background:var(--md-sys-color-surface-container); }
+    .scope-box h3 { margin:0 0 14px; color:var(--md-sys-color-primary); }
+    .scope-box ul { margin:0; padding-left:20px; color:var(--md-sys-color-on-surface-variant); }
+    .scope-box li + li { margin-top:10px; }
+    .disclaimer { margin-top:25px; padding:24px 27px; border-left:5px solid var(--md-sys-color-primary); border-radius:0 var(--radius-lg) var(--radius-lg) 0; background:#fff0f6; color:var(--md-sys-color-on-surface-variant); font-size:.91rem; }
+    .cta { position:relative; overflow:hidden; padding:90px 0; background:linear-gradient(135deg,#5daeff,#c786eb 53%,#ff66bd); color:#fff; }
+    .cta::before,.cta::after { content:""; position:absolute; border:1px solid rgba(255,255,255,.4); border-radius:50%; }
+    .cta::before { width:510px; height:510px; right:-130px; top:-300px; }
+    .cta::after { width:260px; height:260px; left:-80px; bottom:-155px; }
+    .cta-grid { position:relative; display:grid; grid-template-columns:1fr auto; gap:30px; align-items:center; }
+    .cta h2 { color:white; margin:12px 0; max-width:17ch; }
+    .cta p { max-width:55ch; margin:0; color:rgba(255,255,255,.91); }
+    .cta .button { background:white; color:#9d1657; }
+    footer { padding:30px 0 42px; background:#281627; color:#f8eaf2; }
+    .footer-row { display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:.87rem; }
+    .footer-row p { margin:0; color:#d8bfce; }
+    .dialog { position:fixed; inset:0; z-index:50; display:none; place-items:center; padding:20px; background:rgba(38,20,35,.48); }
+    .dialog.open { display:grid; }
+    .dialog-panel { width:min(520px,100%); border-radius:28px; padding:32px; background:var(--md-sys-color-surface); box-shadow:0 24px 75px rgba(37,15,31,.35); position:relative; }
+    .close { position:absolute; top:13px; right:14px; width:42px; height:42px; border:none; border-radius:50%; font-size:25px; color:var(--md-sys-color-on-surface); background:transparent; }
+    .dialog-panel h2 { font-size:2rem; margin:8px 0 12px; }
+    .dialog-panel p { color:var(--md-sys-color-on-surface-variant); }
+    .form { display:grid; gap:14px; margin-top:20px; }
+    label { font-size:.88rem; font-weight:700; }
+    input { width:100%; padding:14px 15px; border:1px solid var(--md-sys-color-outline); border-radius:12px; background:white; font:inherit; }
+    input:focus { outline:3px solid rgba(181,27,97,.25); border-color:var(--md-sys-color-primary); }
+    .success { display:none; margin-top:14px; padding:12px; border-radius:12px; background:#d5f6d6; color:#103f17; font-size:.92rem; }
+    .success.show { display:block; }
+    @media(max-width:850px) { .navlinks { display:none; } .hero { min-height:auto; padding:74px 0 64px; } .hero-grid,.section-head,.scope,.cta-grid { grid-template-columns:1fr; gap:28px; } .hero-art { min-height:340px; max-width:500px; width:100%; } .steps,.offers { grid-template-columns:1fr; } .offer.featured { transform:none; } .cta-grid { text-align:left; } }
+    @media(max-width:500px) { .container { width:min(100% - 28px,1160px); } .nav { min-height:66px; } .nav .button { padding:0 15px; font-size:.82rem; } h1 { font-size:3.05rem; } section { padding:72px 0; } .hero-art { min-height:285px; } .shape.main { inset:30px 4px 28px 40px; } .shape.paper { width:245px; min-height:212px; top:50px; padding:22px; } .shape.paper h3 { font-size:1.45rem; } .orbit { right:180px; width:92px; height:92px; } .quote-bubble { width:205px; padding:15px; font-size:.9rem; } .footer-row { flex-direction:column; align-items:flex-start; } }
+  </style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="Madame Devaux home"><span class="mark">M</span> Madame DeVaux</a>
+    <nav class="navlinks" aria-label="Primary navigation"><a href="#approach">Approach</a><a href="#guidance">Guidance</a><a href="#scope">Scope</a></nav>
+    <button class="button primary" data-open="book">Explore guidance</button>
+  </div>
+</header>
+<main id="main">
+  <section class="hero" id="top">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Spiritual guidance, reimagined</span>
+        <h1>Guidance for the life you are <em>actually</em> living.</h1>
+        <p class="body-lg">Not a one-time answer. A continuing space for spiritual clarity, self-trust, and grounded support as your life unfolds.</p>
+        <div class="hero-actions"><button class="button primary" data-open="book">Explore guidance sessions <span aria-hidden="true">→</span></button><a class="button outline" href="#guidance">How it works</a></div>
+        <p class="hero-note">Guidance, not predictions. Reflection, not guarantees.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="shape main"></div><div class="shape orbit"></div>
+        <div class="shape paper"><span class="mini">A space to return</span><h3>Life does not end when the session does.</h3><p>Come back as the question changes, the chapter develops, and you need a steadier place to reflect.</p></div>
+        <div class="quote-bubble">“The work is how you meet your life afterward.”</div>
+      </div>
+    </div>
+  </section>
+  <section id="approach">
+    <div class="container">
+      <div class="section-head"><div><span class="eyebrow">The approach</span><h2>This is not a one-session experience.</h2></div><p>A single session can offer perspective. Ongoing guidance gives you a place to return as real life changes—so you can reflect, integrate, and make your next decision from a steadier place.</p></div>
+      <div class="steps"><article class="card elevated"><div class="num">01</div><h3>See the pattern</h3><p>Name what is happening beneath the surface, beyond the noise and urgency of the moment.</p></article><article class="card elevated"><div class="num">02</div><h3>Return to yourself</h3><p>Strengthen your relationship with intuition, discernment, and the part of you that already knows what matters.</p></article><article class="card elevated"><div class="num">03</div><h3>Take the next step</h3><p>Leave with a grounded way forward—without pretending you need every answer at once.</p></article></div>
+    </div>
+  </section>
+  <section class="soft"><div class="container"><div class="statement"><span class="eyebrow">The Madame DeVaux difference</span><h2>The cards are a doorway. The work is how you meet your life afterward.</h2></div></div></section>
+  <section id="guidance"><div class="container"><div class="section-head"><div><span class="eyebrow">Ways to begin</span><h2>Support that meets you where you are.</h2></div><p>Choose a single moment of clarity, a return visit when life shifts, or a structured container for a chapter that deserves deeper attention.</p></div><div class="offers"><article class="offer"><span class="offer-label">Start here</span><h3>Clarity Session</h3><p>For the question that has been taking up too much space. Come for reflection, perspective, and a grounded next step.</p><button class="button tonal" data-open="book">Learn more</button></article><article class="offer featured"><span class="offer-label">Signature offering</span><h3>The Return</h3><p><b>Ongoing Spiritual Guidance.</b> A multi-session space for patterns, choices, emotions, relationships, and life transitions that cannot be resolved in one conversation.</p><button class="button primary" data-open="book">Explore The Return</button></article><article class="offer"><span class="offer-label">For returning clients</span><h3>Return Session</h3><p>For integrating new developments, revisiting a prior question, or returning to a life chapter with fresh perspective.</p><button class="button tonal" data-open="book">Learn more</button></article></div></div></section>
+  <section id="scope"><div class="container"><div class="section-head"><div><span class="eyebrow">Clear & compassionate</span><h2>Guidance with honest scope.</h2></div><p>Spiritual guidance is most powerful when it is clear about what it can offer: reflection, insight, emotional grounding, and support for your own decision-making.</p></div><div class="scope"><div class="scope-box"><h3>This space can help you</h3><ul><li>Explore patterns and choices shaping a life chapter.</li><li>Find clarity for your next grounded step.</li><li>Build self-trust and a stronger relationship with intuition.</li><li>Navigate uncertainty with reflective support.</li></ul></div><div class="scope-box"><h3>This space does not do</h3><ul><li>Guarantee a legal, financial, relationship, or health outcome.</li><li>Predict how another person, court, or institution will act.</li><li>Replace licensed medical, legal, mental-health, or crisis care.</li></ul></div></div><div class="disclaimer"><strong>A note on scope:</strong> Madame DeVaux’s sessions are spiritual and reflective in nature. They are not therapy, legal advice, crisis intervention, or a substitute for licensed medical, mental-health, legal, or domestic-violence professionals. If you are experiencing abuse, threats, stalking, or immediate danger, prioritize local emergency services, a domestic-violence organization, legal counsel, and a personalized safety plan.</div></div></section>
+  <section class="cta"><div class="container cta-grid"><div><span class="eyebrow" style="color:#ffe0f0">Begin where you are</span><h2>Come back to the table.</h2><p>Your life is not a one-session question. Begin with the support that meets this chapter honestly and thoughtfully.</p></div><button class="button" data-open="book">Explore guidance <span aria-hidden="true">→</span></button></div></section>
+</main>
+<footer><div class="container footer-row"><a class="brand" href="#top"><span class="mark">M</span> Madame DeVaux</a><p>© 2026 Madame DeVaux · Spiritual guidance for life’s biggest chapters.</p></div></footer>
+<div class="dialog" id="book" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><div class="dialog-panel"><button class="close" data-close aria-label="Close dialog">×</button><span class="eyebrow">Reference interaction</span><h2 id="dialog-title">Explore guidance</h2><p>This demo form represents the handoff to a Shopify booking or product page. Connect it to the appropriate booking link in the real implementation.</p><form class="form" id="interest-form"><div><label for="name">Your name</label><input id="name" required placeholder="Your name"></div><div><label for="email">Email address</label><input id="email" required type="email" placeholder="you@example.com"></div><button class="button primary" type="submit">Request details</button></form><div class="success" id="success">Thank you—this demo has captured your interest. In Shopify, this would redirect or send the inquiry to Hannah.</div></div></div>
+<script>
+  const dialog=document.getElementById('book'), form=document.getElementById('interest-form'), success=document.getElementById('success');
+  document.querySelectorAll('[data-open="book"]').forEach(btn=>btn.addEventListener('click',()=>{dialog.classList.add('open');document.getElementById('name').focus()}));
+  document.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>dialog.classList.remove('open')));
+  dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.classList.remove('open')});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')dialog.classList.remove('open')});
+  form.addEventListener('submit',e=>{e.preventDefault();success.classList.add('show');form.reset()});
+</script>
+</body>
+</html>
