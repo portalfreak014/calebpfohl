@@ -13,14 +13,17 @@ Legend: ✅ Done and live on `main` | ⏳ Planned, not yet implemented
 | Local-First Progress Store | ✅ Done (schema updated by Known Vocabulary section below) |
 | Quiz Direction Mode (English-to-Arabic) | ✅ Done |
 | Known Vocabulary (Mark as Known) | ✅ Done — supersedes prior resume-bug issue |
+| Content Quality Control (Anonymous Flagging) | ✅ Done — Google Sheets logging live on `main` |
+| Homepage Coming Soon States (Study Sets, Class Resources) | ✅ Done — intentionally disabled pending future release |
+| Site Attribution Footer | ✅ Done |
+| Unit 6 Supplementary Vocabulary (sticky-note set) | ⏳ Planned — draft transcription in progress, not yet in a content file or wired into the site |
 | Account Authentication (Google + Magic Link) | ⏳ Planned — intentionally sequenced after Known Vocabulary |
-| Content Quality Control | ⏳ Planned |
 
 ## Purpose
 
 This document describes the intended implementation for expanding the Arabic quiz experience from a Chapter 26-only entry point into an easy-to-navigate, multi-chapter experience — designed from the outset to be unit-agnostic. Adding a new unit later (Unit 7, Unit 8, etc.) should require adding a content file and a manifest entry, not new HTML pages or engine changes. It also defines a local-first learner-progress design that can later connect to Google, Apple, email/password, or another account provider without rewriting quiz logic.
 
-The chapter navigation, progress, and English-to-Arabic direction work below has been merged to `main` and is live in production.
+The chapter navigation, progress, English-to-Arabic direction, known-vocabulary, anonymous flagging, homepage Coming Soon states, and attribution footer work below has been merged to `main` and is live in production.
 
 ## Content Contract ✅ Done
 
@@ -46,11 +49,25 @@ Rules: file location `arabic/data/{unitId}.json`; `chapters` keyed by chapter ID
 
 `arabic/arabic.html` has a chapter-card picker at `#unit6-chapters`, a Continue card reading from `ProgressStore`, and a global direction toggle (Arabic-to-English / English-to-Arabic) persisted in `localStorage` that updates chapter links, status badges, and the Continue card.
 
-Note: the homepage's progress display will change from "X of Y questions answered" to "X of Y words known" once the Known Vocabulary section below ships. This homepage change is still outstanding — arabic.html has not yet been updated.
+Note: the homepage's progress display will change from "X of Y questions answered" to "X of Y words known" once that display change ships. This homepage display change is still outstanding — arabic.html has not yet been updated for it. (This is separate from the Coming Soon and footer changes below, which are done.)
+
+### Coming Soon states (Study Sets, Class Resources) ✅ Done
+
+- The **Study Sets** section (all cards and the "View all" control) is intentionally inert: muted styling, `pointer-events: none`, `aria-disabled="true"`, and a visible "Coming soon" badge on each item.
+- The **Class Resources** section (all cards across every group) is intentionally inert with the same treatment: muted styling, non-interactive, "Coming soon" badge, and no `target="_blank"` links until real URLs are ready.
+- Card title/meta text uses `display: block` on `.study-title`, `.study-meta`, `.resource-title`, `.resource-meta` so text does not run together on narrow screens.
+- Unit 6 chapter cards, the Continue card, the direction toggle, bottom navigation, and the navigation drawer are unaffected and remain fully active.
+- This is a deliberate, temporary UI state, not a bug — these sections will be re-enabled once real study-set and class-resource content exists.
+
+### Site attribution footer ✅ Done
+
+- A short, centered footer sits at the bottom of `arabic/arabic.html`, above the fixed bottom navigation, using the existing muted on-surface-variant color and a top divider consistent with the Material-style design language already in use.
+- Text: "Created by Caleb Pfohl · Designed with Google Material Design 3 · Built with Perplexity Pro".
+- Purely presentational; does not affect `ProgressStore`, quiz logic, or any data model.
 
 ## Quiz Changes ✅ Done
 
-`arabic/quiz.html` reads `unit`/`chapter`/`mode` from the URL, validates against the fetched JSON, renders questions with shuffled choice position, saves progress after each answer, and shows a completion screen with a next-chapter link. Now also includes the "Mark as known" toggle and per-word recordAnswer wiring (see Known Vocabulary section below).
+`arabic/quiz.html` reads `unit`/`chapter`/`mode` from the URL, validates against the fetched JSON, renders questions with shuffled choice position, saves progress after each answer, and shows a completion screen with a next-chapter link. Also includes the "Mark as known" toggle and per-word recordAnswer wiring (see Known Vocabulary section below), and the anonymous flag control (see Content Quality Control section below).
 
 ## Local-First Progress Store ✅ Done
 
@@ -129,7 +146,7 @@ Rules:
 Every learner starts at 0 known words under this system, including learners who had high scores under the old session-based model. This is a deliberate decision, not an oversight: the old model never recorded *which specific words* were answered correctly, only aggregate counts (`correctCount`, `bestScore`), so there is no way to accurately reconstruct per-word history. Rather than fabricate a starting known-count that might not reflect reality, the cutover is clean.
 
 - The old `bestScore`, `attempts`, and `completedAt` fields are preserved and remain visible as a separate "past best score" stat, not deleted and not merged into the new known-word count.
-- The homepage's chapter progress display switches from "X of Y questions answered" to "X of Y words known," reading from `knownWords`, once this feature ships. This homepage change is still outstanding.
+- The homepage's chapter progress display switches from "X of Y questions answered" to "X of Y words known," reading from `knownWords`, once this feature ships. This homepage display change is still outstanding.
 - This should be communicated clearly in the UI at cutover (e.g. a brief note that known-word tracking is new and starts fresh) so a returning learner is not confused by a lower number than they remember.
 
 ### `ProgressStore` API additions ✅ Implemented
@@ -152,7 +169,7 @@ window.ProgressStore = {
 
 ### Quiz behavior ✅ Implemented
 
-- A "Mark as known" pill control sits next to the question kicker on the quiz screen, visually distinct from any future flag control so the two are never confused by a learner. Live on `main` in `arabic/quiz.html`.
+- A "Mark as known" pill control sits next to the question kicker on the quiz screen, visually distinct from the flag control so the two are never confused by a learner. Live on `main` in `arabic/quiz.html`.
 - Not yet implemented: a "focus mode" that would let a quiz session start with already-known words excluded from that chapter's question set, in either direction. This remains a future additive option on top of the existing shuffle-and-render flow.
 - Because there is no meaningful session position to resume (progress is per-word, not per-slot), a quiz session simply starts fresh each time. The prior plan to resume at a saved question index is retired; see the Known Issue section below, which this section supersedes.
 
@@ -181,9 +198,41 @@ This checklist has not yet been manually run against the live site; see Implemen
 
 This issue, as originally described (resuming at a saved linear question index within a reshuffled session), is superseded by the Known Vocabulary (Mark as Known) section above. Per-word known tracking removes the need for session-position resumption entirely: a session can start fresh every time because progress is tracked per word, not per slot in a shuffled list. No fix to session-position resumption will be implemented; this is a deliberate design change, not an open bug.
 
+## Content Quality Control (Anonymous Flagging) ✅ Done
+
+### Purpose
+
+Tracks Arabic content accuracy and lets any user report a question they believe is wrong, without requiring sign-in. Flagging is anonymous-only by design; there is no signed-in identity concept anywhere in this feature.
+
+### Content verification tracking ⏳ Planned
+
+Optional `verified: true` field, to be added to a question once a human has reviewed the word, meaning, and distractors. Absence means not-yet-verified, not incorrect. Not shown to learners. Not yet implemented.
+
+### Flag-a-question feature ✅ Implemented
+
+- A flag icon sits next to the "Mark as known" control on the quiz screen, visually distinct from it, available regardless of anything else on the page. Submitting never interrupts the quiz.
+- Captures: unit ID, chapter ID, quiz mode, the Arabic text, and the correct answer, plus a timestamp. There is no signed-in/anonymous identity field — every report is anonymous.
+- `netlify/functions/report-question-flag.js` appends a row to a Google Sheet ("Flags" tab) via the Sheets API, using a dedicated Google service account (separate from any future OAuth credential), with the service account key and spreadsheet ID stored as Netlify environment variables, never committed.
+- If the endpoint call fails or is unreachable, the report is stored in a local retry queue (`arabicStudy.anonymousFlagQueue.v1` in `localStorage`, capped at 50 entries) instead of being lost. The queue is flushed automatically on quiz load and after each subsequent flag action.
+- Learner feedback: a snackbar reads "Word flagged for correction, thank you!" on successful delivery. When a report is only queued locally (delivery failed), the UI should show a distinct message such as "Saved to send later" so a queued report is never presented as already delivered. As of the latest commit on `main`, both paths currently show the same success message; this discrepancy is noted as a follow-up, not yet corrected.
+- `googleapis` was added as a dependency in `package.json` alongside the existing `@netlify/blobs` dependency to support the Sheets API call.
+
+### Rules
+
+- Flagging never blocks the quiz and never requires sign-in — it is anonymous-only, full stop. Flag data goes to the Sheet, never to `ProgressStore` or `localStorage` (aside from the transient local retry queue, which only exists to survive a failed network call and is cleared once delivered). Flags and verification status are never shown publicly to learners.
+
+### Testing checklist
+
+- [x] Flagging works without sign-in and without any identity field.
+- [ ] Flagging works identically in both quiz directions and records which was active.
+- [x] Flagging never disables the answer/next button.
+- [x] A submitted flag appears as a new row in the `Flags` tab of the configured Google Sheet.
+- [ ] A failed submission is queued locally and successfully retried once the endpoint is reachable again.
+- [ ] The success message and the queued/offline message are made visibly distinct (see note above).
+
 ## Account Authentication (Google + Magic Link) ⏳ Planned
 
-Intentionally sequenced after Known Vocabulary shipped and is manually verified, so `mergeProfile()` only needs to handle one finished profile shape rather than being updated twice.
+Intentionally sequenced after Known Vocabulary shipped and is manually verified, so `mergeProfile()` only needs to handle one finished profile shape rather than being updated twice. Not started; no auth-related code exists in the repository yet.
 
 ### Purpose
 
@@ -212,31 +261,42 @@ On sign-in: fetch remote profile, call the existing `ProgressStore.mergeProfile(
 - [ ] Local progress made before sign-in merges correctly afterward, not overwritten.
 - [ ] Signing out preserves local progress. The quiz remains fully usable for a user who never signs in.
 
-## Content Quality Control ⏳ Planned
+## Unit 6 Supplementary Vocabulary (Sticky-Note Set) ⏳ Planned
 
 ### Purpose
 
-Tracks Arabic content accuracy and lets any user report a question they believe is wrong, without requiring sign-in.
+A supplementary vocabulary set for Unit 6, sourced from handwritten sticky notes and a whiteboard phrase, in addition to (not replacing) the existing Chapter 26–30 content in `unit6.json`. Intended to become its own selectable study set once transcribed and reviewed, rather than being merged into the existing chapters.
 
-### Content verification tracking
+### Status
 
-Optional `verified: true` field added to a question once a human has reviewed the word, meaning, and distractors. Absence means not-yet-verified, not incorrect. Not shown to learners at this stage.
+- Transcription is in progress and manual, not automated. Photos of the sticky notes and a whiteboard were provided; handwriting is being transcribed entry-by-entry rather than through OCR/screenscraping, since automated extraction was not reliable enough for accurate Arabic transcription.
+- One confirmed entry so far, corrected by the user from the whiteboard photo:
 
-### Flag-a-question feature
+```json
+{
+  "arabic": "ابتعد عن",
+  "english": "stay away from; move away from",
+  "type": "verb phrase",
+  "source": "whiteboard",
+  "needsReview": false
+}
+```
 
-- [ ] A flag icon on the quiz screen, available regardless of sign-in status, with an optional reason (e.g. "Arabic looks wrong," "English meaning seems off"). Submitting never interrupts the quiz.
-- [ ] Captures: unit/chapter/question identifier, reason, quiz mode, signed-in user ID or `anonymous`, timestamp.
-- [ ] `netlify/functions/report-question-flag.js` appends a row to a Google Sheet via the Sheets API, using a dedicated Google service account (separate credential from OAuth), with the service account key and spreadsheet ID as Netlify environment variables. A Sheets API failure must not surface as a learner-facing error if the flag was otherwise durably queued.
+- The remaining sticky-note vocabulary (five sticky notes of individual words/phrases, largely exam-review vocabulary such as verbs and abstract nouns) has not yet been transcribed into a draft JSON file. Each entry will be drafted with an explicit `needsReview` flag so uncertain handwriting/translation can be corrected before anything is added to a content file or the live site.
+- No new content file has been created yet. `unit6.json` has not been modified for this feature and must not be modified directly — this will be a separate supplementary file, consistent with the Content Contract's one-file-per-unit shape, or a clearly separated chapter/set within it, to be decided when the transcription is finalized.
 
 ### Rules
 
-- Flagging never blocks the quiz and never requires sign-in. Flag data goes to the Sheet, never to `ProgressStore` or `localStorage`. Flags and verification status are never shown publicly to learners.
+- Do not write draft or unreviewed vocabulary into `unit6.json` or any file already live on `main`.
+- Every transcribed entry must be reviewed and corrected by the user before it is wired into the quiz engine or homepage.
+- Source sticky-note/whiteboard vocabulary follows the same Content Contract shape as existing units once finalized — no special-cased engine logic for this set.
 
-### Testing checklist additions
+### Testing checklist
 
-- [ ] Anonymous and signed-in flags both log correctly with the right identity marker.
-- [ ] Flagging works identically in both quiz directions and records which was active.
-- [ ] Flagging never disables the answer/next button.
+- [ ] All sticky-note and whiteboard vocabulary is transcribed into a draft JSON with `needsReview` flags.
+- [ ] User has reviewed and corrected all draft entries.
+- [ ] Finalized supplementary vocabulary is added as a new, clearly labeled study set without modifying existing Unit 6 chapters.
+- [ ] The new set appears correctly in both quiz directions once wired in.
 
 ## Implementation Order
 
@@ -246,14 +306,18 @@ Optional `verified: true` field added to a question once a human has reviewed th
 4. [x] Add the homepage chapter picker and progress display, driven by `UnitsManifest`.
 5. [ ] Manually test all chapters on mobile and desktop widths.
 6. [x] Implement the English-to-Arabic direction mode.
-7. [x] Implement the Known Vocabulary (Mark as Known) system: per-word streak tracking, manual override, and clean 0-based cutover, in progress-store.js and quiz.html. Homepage display change from question-count to known-word-count is still outstanding (arabic.html not yet updated).
+7. [x] Implement the Known Vocabulary (Mark as Known) system: per-word streak tracking, manual override, and clean 0-based cutover, in progress-store.js and quiz.html. Homepage display change from question-count to known-word-count is still outstanding (arabic.html not yet updated for that specific display change).
 8. [ ] Manually verify the known-word system on calebpfohl.com (streak increments/resets correctly, manual override works, per-direction independence, cutover shows 0 with old score preserved separately) before moving on.
-9. [ ] Set up Netlify Functions scaffolding and the Google OAuth client; implement Google sign-in.
-10. [ ] Implement magic-link email sign-in.
-11. [ ] Set up Netlify DB and wire up profile sync for both sign-in methods, including the known-word fields.
-12. [ ] Add the `verified` field convention and begin tracking verification status.
-13. [ ] Implement the flag-a-question feature and Google Sheets logging.
-14. [ ] Test account authentication, sync, and the flag feature per their checklists before opening a pull request.
+9. [x] Implement the anonymous flag-a-question feature and Google Sheets logging (`netlify/functions/report-question-flag.js`, `googleapis` dependency, local retry queue).
+10. [ ] Manually verify the deployed flag endpoint end-to-end: Google Sheet row creation, retry queue behavior on failure, and distinct success vs. queued learner messaging.
+11. [x] Add homepage Coming Soon states for Study Sets and Class Resources.
+12. [x] Add the site attribution footer.
+13. [ ] Transcribe, review, and finalize the Unit 6 supplementary vocabulary (sticky notes + whiteboard phrase) into a new content file, then wire it into the homepage and quiz as its own study set.
+14. [ ] Set up Netlify Functions scaffolding and the Google OAuth client; implement Google sign-in.
+15. [ ] Implement magic-link email sign-in.
+16. [ ] Set up Netlify DB and wire up profile sync for both sign-in methods, including the known-word fields.
+17. [ ] Add the `verified` field convention and begin tracking verification status.
+18. [ ] Test account authentication and sync per its checklist before opening a pull request.
 
 ## Guardrails
 
@@ -264,8 +328,9 @@ Optional `verified: true` field added to a question once a human has reviewed th
 - No unit-specific or subject-specific logic in `quiz.html`, `progress-store.js`, or the manifest helper API.
 - No quiz-direction-specific logic outside the single reversal function.
 - No password-based login — Google and magic-link only. No secrets committed to the repository.
-- Sign-in is never required to use the quiz or to flag a question.
+- Sign-in is never required to use the quiz or to flag a question. Flagging is anonymous-only; no identity field of any kind should be added to the flag payload.
 - No public surfacing of flag data or verification status without a separate explicit decision.
 - Backend failures (auth sync, flag logging) must fail gracefully, never blocking the quiz.
 - Known-word status lives only in `ProgressStore`, never in content JSON, never merged with flag or `verified` data.
 - No retroactive grandfathering of per-word history from old aggregate scores. A single correct answer never marks a word known on its own — two consecutive correct attempts, or a manual override, are required.
+- Draft/unreviewed vocabulary (e.g. the sticky-note supplementary set) must never be committed into a file already live on `main` until the user has reviewed and corrected every entry.
