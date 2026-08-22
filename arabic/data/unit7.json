@@ -6,51 +6,501 @@
       "number": 31,
       "title": "Chapter 31",
       "questions": [
-        { "arabic": "احتلَّ / يحتل / احتلال", "english": "to occupy", "type": "verb" },
-        { "arabic": "أخضع / يخضع / إخضاع", "english": "to subject; to subjugate", "type": "verb" },
-        { "arabic": "أدرك / يُدرك / إدراك", "english": "to realize", "type": "verb" },
-        { "arabic": "ازدهر / يزدهر / ازدهار", "english": "to flourish", "type": "verb" },
-        { "arabic": "أصلح / يصلح / إصلاح", "english": "to reform", "type": "verb" },
-        { "arabic": "اهتمام / اهتمامات", "english": "concern(s)", "type": "noun" },
-        { "arabic": "أهمية", "english": "importance", "type": "noun" },
-        { "arabic": "بعثة / بعثات", "english": "scholarship(s)", "type": "noun" },
-        { "arabic": "تأمَّل / يتأمل / تأمُّل", "english": "to reflect, meditate", "type": "verb" },
-        { "arabic": "تصميم / تصميمات - تصاميم", "english": "design(s)", "type": "noun" },
-        { "arabic": "تعلَّق / يتعلّق / تعلُّق", "english": "to relate to", "type": "verb" },
-        { "arabic": "تفاعل / تفاعلات", "english": "interaction(s)", "type": "noun" },
-        { "arabic": "جذري", "english": "radical", "type": "adjective" },
-        { "arabic": "حاسم", "english": "decisive", "type": "adjective" },
-        { "arabic": "حِصة / حِصص", "english": "portion(s), allocation(s)", "type": "noun" },
-        { "arabic": "خريج", "english": "graduate", "type": "noun" },
-        { "arabic": "خلق / يخلق / خلق", "english": "to create", "type": "verb" },
-        { "arabic": "رسم / رسوم تشكيلية", "english": "visual/fine arts", "type": "noun" },
-        { "arabic": "رِضى", "english": "satisfaction", "type": "noun" },
-        { "arabic": "رَضي / يَرْضى / رِضى", "english": "to be satisfied", "type": "verb" },
-        { "arabic": "زخرف / يزخرف / زخرفة", "english": "to ornament, decorate", "type": "verb" },
-        { "arabic": "سائد", "english": "predominant", "type": "adjective" },
-        { "arabic": "ضبط / ضوابط", "english": "control(s), regulation(s)", "type": "noun" },
-        { "arabic": "طاقة استيعابية / طاقات", "english": "capacity(ies)", "type": "noun" },
-        { "arabic": "طُموح / طموحات", "english": "ambition(s)", "type": "noun" },
-        { "arabic": "طَوَّرَ / يُطَوِّرُ / تَطوير", "english": "to develop, improve", "type": "verb" },
-        { "arabic": "عقبة / عقبات", "english": "obstacle(s)", "type": "noun" },
-        { "arabic": "على سبيل المثال", "english": "as an example", "type": "phrase" },
-        { "arabic": "فن / فنون", "english": "art(s)", "type": "noun" },
-        { "arabic": "قادر", "english": "able", "type": "adjective" },
-        { "arabic": "قدرة / قدرات", "english": "ability(ies)", "type": "noun" },
-        { "arabic": "قطاع عام", "english": "public sector", "type": "noun" },
-        { "arabic": "كمن (في) / يكمن / كمون", "english": "to be hidden in, latent", "type": "verb" },
-        { "arabic": "لبى / يلبي / تلبية", "english": "to respond", "type": "verb" },
-        { "arabic": "متخصص", "english": "specialist", "type": "noun" },
-        { "arabic": "مثقف", "english": "educated", "type": "adjective" },
-        { "arabic": "مشروع / مشاريع", "english": "project(s)", "type": "noun" },
-        { "arabic": "مَشَى / يمشِى / مَشْى", "english": "to go together", "type": "verb" },
-        { "arabic": "منهج / مناهج", "english": "curriculum(a)", "type": "noun" },
-        { "arabic": "مهمة / مهام - مهمات", "english": "mission(s)", "type": "noun" },
-        { "arabic": "نَقَّحَ / يُنَقِّحُ / تَنقيح", "english": "to revise, improve, refine", "type": "verb" },
-        { "arabic": "هيّأ / يُهيِّ / تهيئة", "english": "to prepare", "type": "verb" },
-        { "arabic": "تواصل / يتواصل / تواصل", "english": "to communicate", "type": "verb" },
-        { "arabic": "واكب / يواكب / مواكبة", "english": "to occur at the same time", "type": "verb" },
-        { "arabic": "ينبغي", "english": "must", "type": "verb" }
+        {
+          "number": 1,
+          "arabic": "احتلَّ / يحتل / احتلال",
+          "choices": {
+            "A": "to prepare",
+            "B": "to realize",
+            "C": "to occupy",
+            "D": "to reflect, meditate"
+          },
+          "answer": "C"
+        },
+        {
+          "number": 2,
+          "arabic": "أخضع / يخضع / إخضاع",
+          "choices": {
+            "A": "must",
+            "B": "design(s)",
+            "C": "scholarship(s)",
+            "D": "to subject; to subjugate"
+          },
+          "answer": "D"
+        },
+        {
+          "number": 3,
+          "arabic": "أدرك / يُدرك / إدراك",
+          "choices": {
+            "A": "to be hidden in, latent",
+            "B": "decisive",
+            "C": "to realize",
+            "D": "radical"
+          },
+          "answer": "C"
+        },
+        {
+          "number": 4,
+          "arabic": "ازدهر / يزدهر / ازدهار",
+          "choices": {
+            "A": "to flourish",
+            "B": "to relate to",
+            "C": "educated",
+            "D": "predominant"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 5,
+          "arabic": "أصلح / يصلح / إصلاح",
+          "choices": {
+            "A": "to reform",
+            "B": "scholarship(s)",
+            "C": "mission(s)",
+            "D": "portion(s), allocation(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 6,
+          "arabic": "اهتمام / اهتمامات",
+          "choices": {
+            "A": "concern(s)",
+            "B": "ability(ies)",
+            "C": "specialist",
+            "D": "art(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 7,
+          "arabic": "أهمية",
+          "choices": {
+            "A": "public sector",
+            "B": "importance",
+            "C": "graduate",
+            "D": "to communicate"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 8,
+          "arabic": "بعثة / بعثات",
+          "choices": {
+            "A": "to prepare",
+            "B": "scholarship(s)",
+            "C": "curriculum(a)",
+            "D": "able"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 9,
+          "arabic": "تأمَّل / يتأمل / تأمُّل",
+          "choices": {
+            "A": "to reflect, meditate",
+            "B": "to occur at the same time",
+            "C": "public sector",
+            "D": "design(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 10,
+          "arabic": "تصميم / تصميمات - تصاميم",
+          "choices": {
+            "A": "design(s)",
+            "B": "to develop, improve",
+            "C": "interaction(s)",
+            "D": "obstacle(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 11,
+          "arabic": "تعلَّق / يتعلّق / تعلُّق",
+          "choices": {
+            "A": "educated",
+            "B": "to relate to",
+            "C": "ambition(s)",
+            "D": "control(s), regulation(s)"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 12,
+          "arabic": "تفاعل / تفاعلات",
+          "choices": {
+            "A": "interaction(s)",
+            "B": "to be satisfied",
+            "C": "capacity(ies)",
+            "D": "to communicate"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 13,
+          "arabic": "جذري",
+          "choices": {
+            "A": "predominant",
+            "B": "radical",
+            "C": "to create",
+            "D": "visual/fine arts"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 14,
+          "arabic": "حاسم",
+          "choices": {
+            "A": "decisive",
+            "B": "to respond",
+            "C": "graduate",
+            "D": "to ornament, decorate"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 15,
+          "arabic": "حِصة / حِصص",
+          "choices": {
+            "A": "to be hidden in, latent",
+            "B": "portion(s), allocation(s)",
+            "C": "project(s)",
+            "D": "satisfaction"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 16,
+          "arabic": "خريج",
+          "choices": {
+            "A": "graduate",
+            "B": "as an example",
+            "C": "to develop, improve",
+            "D": "mission(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 17,
+          "arabic": "خلق / يخلق / خلق",
+          "choices": {
+            "A": "curriculum(a)",
+            "B": "importance",
+            "C": "to create",
+            "D": "public sector"
+          },
+          "answer": "C"
+        },
+        {
+          "number": 18,
+          "arabic": "رسم / رسوم تشكيلية",
+          "choices": {
+            "A": "visual/fine arts",
+            "B": "to subject; to subjugate",
+            "C": "ability(ies)",
+            "D": "to reform"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 19,
+          "arabic": "رِضى",
+          "choices": {
+            "A": "scholarship(s)",
+            "B": "satisfaction",
+            "C": "to occupy",
+            "D": "specialist"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 20,
+          "arabic": "رَضي / يَرْضى / رِضى",
+          "choices": {
+            "A": "to be satisfied",
+            "B": "control(s), regulation(s)",
+            "C": "ambition(s)",
+            "D": "radical"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 21,
+          "arabic": "زخرف / يزخرف / زخرفة",
+          "choices": {
+            "A": "design(s)",
+            "B": "to ornament, decorate",
+            "C": "educated",
+            "D": "concern(s)"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 22,
+          "arabic": "سائد",
+          "choices": {
+            "A": "predominant",
+            "B": "to develop, improve",
+            "C": "public sector",
+            "D": "to be hidden in, latent"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 23,
+          "arabic": "ضبط / ضوابط",
+          "choices": {
+            "A": "interaction(s)",
+            "B": "control(s), regulation(s)",
+            "C": "to communicate",
+            "D": "graduate"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 24,
+          "arabic": "طاقة استيعابية / طاقات",
+          "choices": {
+            "A": "capacity(ies)",
+            "B": "to prepare",
+            "C": "as an example",
+            "D": "to relate to"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 25,
+          "arabic": "طُموح / طموحات",
+          "choices": {
+            "A": "mission(s)",
+            "B": "ambition(s)",
+            "C": "to occupy",
+            "D": "decisive"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 26,
+          "arabic": "طَوَّرَ / يُطَوِّرُ / تَطوير",
+          "choices": {
+            "A": "to develop, improve",
+            "B": "radical",
+            "C": "scholarship(s)",
+            "D": "project(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 27,
+          "arabic": "عقبة / عقبات",
+          "choices": {
+            "A": "to communicate",
+            "B": "obstacle(s)",
+            "C": "able",
+            "D": "importance"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 28,
+          "arabic": "على سبيل المثال",
+          "choices": {
+            "A": "as an example",
+            "B": "to be satisfied",
+            "C": "specialist",
+            "D": "portion(s), allocation(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 29,
+          "arabic": "فن / فنون",
+          "choices": {
+            "A": "curriculum(a)",
+            "B": "art(s)",
+            "C": "to occur at the same time",
+            "D": "to subject; to subjugate"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 30,
+          "arabic": "قادر",
+          "choices": {
+            "A": "public sector",
+            "B": "to reform",
+            "C": "able",
+            "D": "to go together"
+          },
+          "answer": "C"
+        },
+        {
+          "number": 31,
+          "arabic": "قدرة / قدرات",
+          "choices": {
+            "A": "ability(ies)",
+            "B": "to create",
+            "C": "graduate",
+            "D": "design(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 32,
+          "arabic": "قطاع عام",
+          "choices": {
+            "A": "predominant",
+            "B": "mission(s)",
+            "C": "public sector",
+            "D": "to relate to"
+          },
+          "answer": "C"
+        },
+        {
+          "number": 33,
+          "arabic": "كمن (في) / يكمن / كمون",
+          "choices": {
+            "A": "to be hidden in, latent",
+            "B": "concern(s)",
+            "C": "curriculum(a)",
+            "D": "to occupy"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 34,
+          "arabic": "لبى / يلبي / تلبية",
+          "choices": {
+            "A": "specialist",
+            "B": "to respond",
+            "C": "to reflect, meditate",
+            "D": "obstacle(s)"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 35,
+          "arabic": "متخصص",
+          "choices": {
+            "A": "specialist",
+            "B": "decisive",
+            "C": "to be satisfied",
+            "D": "art(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 36,
+          "arabic": "مثقف",
+          "choices": {
+            "A": "to develop, improve",
+            "B": "radical",
+            "C": "educated",
+            "D": "capacity(ies)"
+          },
+          "answer": "C"
+        },
+        {
+          "number": 37,
+          "arabic": "مشروع / مشاريع",
+          "choices": {
+            "A": "project(s)",
+            "B": "to be hidden in, latent",
+            "C": "ambition(s)",
+            "D": "to prepare"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 38,
+          "arabic": "مَشَى / يمشِى / مَشْى",
+          "choices": {
+            "A": "importance",
+            "B": "to go together",
+            "C": "interaction(s)",
+            "D": "to occur at the same time"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 39,
+          "arabic": "منهج / مناهج",
+          "choices": {
+            "A": "curriculum(a)",
+            "B": "portion(s), allocation(s)",
+            "C": "able",
+            "D": "to revise, improve, refine"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 40,
+          "arabic": "مهمة / مهام - مهمات",
+          "choices": {
+            "A": "visual/fine arts",
+            "B": "mission(s)",
+            "C": "to communicate",
+            "D": "satisfaction"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 41,
+          "arabic": "نَقَّحَ / يُنَقِّحُ / تَنقيح",
+          "choices": {
+            "A": "to revise, improve, refine",
+            "B": "obstacle(s)",
+            "C": "art(s)",
+            "D": "scholarship(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 42,
+          "arabic": "هيّأ / يُهيِّ / تهيئة",
+          "choices": {
+            "A": "project(s)",
+            "B": "to prepare",
+            "C": "public sector",
+            "D": "predominant"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 43,
+          "arabic": "تواصل / يتواصل / تواصل",
+          "choices": {
+            "A": "to communicate",
+            "B": "ability(ies)",
+            "C": "to reform",
+            "D": "design(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 44,
+          "arabic": "واكب / يواكب / مواكبة",
+          "choices": {
+            "A": "to occur at the same time",
+            "B": "graduate",
+            "C": "concern(s)",
+            "D": "to be hidden in, latent"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 45,
+          "arabic": "ينبغي",
+          "choices": {
+            "A": "to develop, improve",
+            "B": "must",
+            "C": "to flourish",
+            "D": "decisive"
+          },
+          "answer": "B"
+        }
       ]
     }
   }
