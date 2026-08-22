@@ -502,6 +502,771 @@
           "answer": "B"
         }
       ]
+    },
+    "ch32": {
+      "number": 32,
+      "title": "Chapter 32",
+      "questions": [
+        {
+          "number": 1,
+          "arabic": "أتم / يتم / إتمام",
+          "choices": {
+            "A": "to be disciplined",
+            "B": "to complete",
+            "C": "to deal with",
+            "D": "to entice, to provide incentive"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 2,
+          "arabic": "احْتَجَّ / يَحْتَجُّ / احْتِجاج",
+          "choices": {
+            "A": "to protest",
+            "B": "guardian(s)",
+            "C": "except",
+            "D": "symbolic"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 3,
+          "arabic": "احتمال",
+          "choices": {
+            "A": "seriousness",
+            "B": "probability",
+            "C": "noise, outcry",
+            "D": "to resort to"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 4,
+          "arabic": "أخذ بعين الاعتبار / يأخذ / أخذ",
+          "choices": {
+            "A": "to take into consideration",
+            "B": "unified, uniform",
+            "C": "psychological",
+            "D": "quarrel"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 5,
+          "arabic": "ارْتَقى ب / يَرْتَقي / ارْتِقاء",
+          "choices": {
+            "A": "absolute",
+            "B": "to upgrade, advance",
+            "C": "factor(s)",
+            "D": "deprived"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 6,
+          "arabic": "استأذن / يستأذن / استئذان",
+          "choices": {
+            "A": "to ask permission",
+            "B": "life experience",
+            "C": "to give up, forego",
+            "D": "tolerant"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 7,
+          "arabic": "اسْتَجابَ / يَسْتَجِيبُ / استجابة",
+          "choices": {
+            "A": "principle(s)",
+            "B": "friendly",
+            "C": "to respond",
+            "D": "to evaluate"
+          },
+          "answer": "C"
+        },
+        {
+          "number": 8,
+          "arabic": "استدعى / يستدعي / استدعاء",
+          "choices": {
+            "A": "choice(s)",
+            "B": "to call up, to summon",
+            "C": "mind(s)",
+            "D": "to dismiss"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 9,
+          "arabic": "اعتدى (على) / يعتدي / اعتداء",
+          "choices": {
+            "A": "background",
+            "B": "to assault",
+            "C": "flexibility",
+            "D": "as"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 10,
+          "arabic": "انتقم / ينتقم / انتقام",
+          "choices": {
+            "A": "to take revenge",
+            "B": "standard, level",
+            "C": "phenomenon(a)",
+            "D": "increasing"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 11,
+          "arabic": "انْضَبَط / يَنْضَبِط / انْضِباط",
+          "choices": {
+            "A": "decidedly, definitely",
+            "B": "to be disciplined",
+            "C": "experiment, experience(s)",
+            "D": "problem(s), issue(s)"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 12,
+          "arabic": "انْطَبَقَ / يَنْطَبِقُ / انْطِباق",
+          "choices": {
+            "A": "mental ability",
+            "B": "to open up",
+            "C": "to be applicable to",
+            "D": "troublemaker"
+          },
+          "answer": "C"
+        },
+        {
+          "number": 13,
+          "arabic": "انْفَتَحَ / يَنْفَتِحُ / انفتاح",
+          "choices": {
+            "A": "to open up",
+            "B": "evil(s)",
+            "C": "spirit of participation, partnership",
+            "D": "to handle, to treat"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 14,
+          "arabic": "بمثابة",
+          "choices": {
+            "A": "to look forward to",
+            "B": "as",
+            "C": "to stab",
+            "D": "falling behind"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 15,
+          "arabic": "بيئة / بيئات",
+          "choices": {
+            "A": "environment(s)",
+            "B": "violence",
+            "C": "to support",
+            "D": "incentive(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 16,
+          "arabic": "تجربة / تجارب",
+          "choices": {
+            "A": "experiment, experience(s)",
+            "B": "absolute (complete) freedom",
+            "C": "to deprive",
+            "D": "behavior, conduct"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 17,
+          "arabic": "تجربة حياتية",
+          "choices": {
+            "A": "to quarrel",
+            "B": "life experience",
+            "C": "to refresh, to relax",
+            "D": "equally, likewise"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 18,
+          "arabic": "تشاجر / يتشاجر / تشاجر",
+          "choices": {
+            "A": "to quarrel",
+            "B": "symbolic",
+            "C": "quarrel",
+            "D": "guardian(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 19,
+          "arabic": "تَطَلَّعَ / يَتَطَلَّعُ / تَطَلُّع",
+          "choices": {
+            "A": "factor(s)",
+            "B": "to deal with",
+            "C": "to look forward to",
+            "D": "probability"
+          },
+          "answer": "C"
+        },
+        {
+          "number": 20,
+          "arabic": "تَعامَل مع / يَتَعامَل / تَعامُل",
+          "choices": {
+            "A": "to deal with",
+            "B": "noise, outcry",
+            "C": "mind(s)",
+            "D": "previously, beforehand"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 21,
+          "arabic": "تفاقم / يتفاقم / تفاقم",
+          "choices": {
+            "A": "to get worse, deteriorate",
+            "B": "seriousness",
+            "C": "except",
+            "D": "principle(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 22,
+          "arabic": "تَنَاسَبَ / يَتَناسَبُ / تَنَاسُب",
+          "choices": {
+            "A": "to be suited for/to be suitable",
+            "B": "deprived",
+            "C": "choice(s)",
+            "D": "to dismiss"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 23,
+          "arabic": "تنازل (عن) / يتنازل / تنازل",
+          "choices": {
+            "A": "unified, uniform",
+            "B": "to give up, forego",
+            "C": "friendly",
+            "D": "standard, level"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 24,
+          "arabic": "جدية",
+          "choices": {
+            "A": "seriousness",
+            "B": "to evaluate",
+            "C": "mind(s)",
+            "D": "increasing"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 25,
+          "arabic": "حتماً",
+          "choices": {
+            "A": "decidedly, definitely",
+            "B": "phenomenon(a)",
+            "C": "tolerant",
+            "D": "to resort to"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 26,
+          "arabic": "حرم / يحرم / حرمان",
+          "choices": {
+            "A": "background",
+            "B": "to deprive",
+            "C": "factor(s)",
+            "D": "symbolic"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 27,
+          "arabic": "حرية مطلقة",
+          "choices": {
+            "A": "quarrel",
+            "B": "absolute (complete) freedom",
+            "C": "troublemaker",
+            "D": "to take into consideration"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 28,
+          "arabic": "حصَّل / يُحَصِّل / تَحْصيل علمي",
+          "choices": {
+            "A": "as",
+            "B": "mental ability",
+            "C": "to achieve, achievement",
+            "D": "to be disciplined"
+          },
+          "answer": "C"
+        },
+        {
+          "number": 29,
+          "arabic": "حفَّزَ / يحفِّز / تحفيز",
+          "choices": {
+            "A": "to entice, to provide incentive",
+            "B": "evil(s)",
+            "C": "falling behind",
+            "D": "guardian(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 30,
+          "arabic": "حياتيّ",
+          "choices": {
+            "A": "to do with life",
+            "B": "violence",
+            "C": "to take revenge",
+            "D": "problem(s), issue(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 31,
+          "arabic": "خلفية",
+          "choices": {
+            "A": "to protest",
+            "B": "background",
+            "C": "to stab",
+            "D": "psychological"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 32,
+          "arabic": "خيار / خيارات",
+          "choices": {
+            "A": "choice(s)",
+            "B": "to open up",
+            "C": "probability",
+            "D": "unified, uniform"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 33,
+          "arabic": "دافِع / دوافع",
+          "choices": {
+            "A": "to support",
+            "B": "incentive(s)",
+            "C": "noise, outcry",
+            "D": "except"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 34,
+          "arabic": "رمزيّ",
+          "choices": {
+            "A": "symbolic",
+            "B": "to be applicable to",
+            "C": "quarrel",
+            "D": "deprived"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 35,
+          "arabic": "روَّح / يُرَوِّحُ / ترويح",
+          "choices": {
+            "A": "principle(s)",
+            "B": "to refresh, to relax",
+            "C": "mind(s)",
+            "D": "to call up, to summon"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 36,
+          "arabic": "روح المشاركة",
+          "choices": {
+            "A": "spirit of participation, partnership",
+            "B": "flexibility",
+            "C": "to complete",
+            "D": "absolute"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 37,
+          "arabic": "سَانَد / يُسَانِدُ / مُسَانَدَة",
+          "choices": {
+            "A": "to take into consideration",
+            "B": "to support",
+            "C": "factor(s)",
+            "D": "to be suited for/to be suitable"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 38,
+          "arabic": "سلوك",
+          "choices": {
+            "A": "behavior, conduct",
+            "B": "to protest",
+            "C": "standard, level",
+            "D": "seriousness"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 39,
+          "arabic": "شر / شرور",
+          "choices": {
+            "A": "evil(s)",
+            "B": "to ask permission",
+            "C": "tolerant",
+            "D": "increasing"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 40,
+          "arabic": "ضجة",
+          "choices": {
+            "A": "to give up, forego",
+            "B": "noise, outcry",
+            "C": "mental ability",
+            "D": "friendly"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 41,
+          "arabic": "طعن / يطعن / طعن",
+          "choices": {
+            "A": "to stab",
+            "B": "choice(s)",
+            "C": "deprived",
+            "D": "phenomenon(a)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 42,
+          "arabic": "ظاهرة / ظواهر",
+          "choices": {
+            "A": "to evaluate",
+            "B": "phenomenon(a)",
+            "C": "background",
+            "D": "to take revenge"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 43,
+          "arabic": "عالَج / يُعالِجُ / مُعالَجَة - عِلاج",
+          "choices": {
+            "A": "absolute",
+            "B": "to handle, to treat",
+            "C": "psychological",
+            "D": "experiment, experience(s)"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 44,
+          "arabic": "عامل / عوامل",
+          "choices": {
+            "A": "factor(s)",
+            "B": "to dismiss",
+            "C": "as",
+            "D": "probability"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 45,
+          "arabic": "عدا",
+          "choices": {
+            "A": "guardian(s)",
+            "B": "except",
+            "C": "to complete",
+            "D": "violence"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 46,
+          "arabic": "عراك",
+          "choices": {
+            "A": "symbolic",
+            "B": "quarrel",
+            "C": "to take into consideration",
+            "D": "unified, uniform"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 47,
+          "arabic": "عقل / عقول",
+          "choices": {
+            "A": "mind(s)",
+            "B": "to look forward to",
+            "C": "tolerant",
+            "D": "noise, outcry"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 48,
+          "arabic": "على السواء",
+          "choices": {
+            "A": "to open up",
+            "B": "equally, likewise",
+            "C": "deprived",
+            "D": "principle(s)"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 49,
+          "arabic": "عنف",
+          "choices": {
+            "A": "violence",
+            "B": "to be applicable to",
+            "C": "choice(s)",
+            "D": "falling behind"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 50,
+          "arabic": "فَصَلَ / يَفْصِلُ / فَصْل",
+          "choices": {
+            "A": "to evaluate",
+            "B": "to dismiss",
+            "C": "incentive(s)",
+            "D": "experiment, experience(s)"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 51,
+          "arabic": "قدرة عقلية",
+          "choices": {
+            "A": "mental ability",
+            "B": "to support",
+            "C": "absolute",
+            "D": "to protest"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 52,
+          "arabic": "قضية / قضايا",
+          "choices": {
+            "A": "guardian(s)",
+            "B": "problem(s), issue(s)",
+            "C": "symbolic",
+            "D": "to deal with"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 53,
+          "arabic": "قيَّم / يقيِّم / تقييم",
+          "choices": {
+            "A": "to evaluate",
+            "B": "seriousness",
+            "C": "factor(s)",
+            "D": "life experience"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 54,
+          "arabic": "لَجَأ إلى / يَلْجَأُ / لُجوء",
+          "choices": {
+            "A": "deprived",
+            "B": "to resort to",
+            "C": "tolerant",
+            "D": "standard, level"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 55,
+          "arabic": "لم يكد",
+          "choices": {
+            "A": "increasing",
+            "B": "no sooner than, as soon as …",
+            "C": "to support",
+            "D": "phenomenon(a)"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 56,
+          "arabic": "مبدأ / مبادئ",
+          "choices": {
+            "A": "principle(s)",
+            "B": "to achieve, achievement",
+            "C": "noise, outcry",
+            "D": "except"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 57,
+          "arabic": "متخلف",
+          "choices": {
+            "A": "falling behind",
+            "B": "to be suited for/to be suitable",
+            "C": "choice(s)",
+            "D": "to take revenge"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 58,
+          "arabic": "متزايدة",
+          "choices": {
+            "A": "increasing",
+            "B": "background",
+            "C": "to give up, forego",
+            "D": "mental ability"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 59,
+          "arabic": "متسامح",
+          "choices": {
+            "A": "tolerant",
+            "B": "quarrel",
+            "C": "to dismiss",
+            "D": "probability"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 60,
+          "arabic": "محروم",
+          "choices": {
+            "A": "deprived",
+            "B": "absolute",
+            "C": "to open up",
+            "D": "incentive(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 61,
+          "arabic": "مرونة",
+          "choices": {
+            "A": "flexibility",
+            "B": "symbolic",
+            "C": "to complete",
+            "D": "factor(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 62,
+          "arabic": "مسبقا",
+          "choices": {
+            "A": "previously, beforehand",
+            "B": "to protest",
+            "C": "guardian(s)",
+            "D": "evil(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 63,
+          "arabic": "مستوى",
+          "choices": {
+            "A": "standard, level",
+            "B": "to resort to",
+            "C": "falling behind",
+            "D": "except"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 64,
+          "arabic": "مشاغب",
+          "choices": {
+            "A": "troublemaker",
+            "B": "to be disciplined",
+            "C": "choice(s)",
+            "D": "psychological"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 65,
+          "arabic": "مطلق",
+          "choices": {
+            "A": "absolute",
+            "B": "to take into consideration",
+            "C": "seriousness",
+            "D": "probability"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 66,
+          "arabic": "موحد",
+          "choices": {
+            "A": "unified, uniform",
+            "B": "to look forward to",
+            "C": "life experience",
+            "D": "mind(s)"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 67,
+          "arabic": "نفسي",
+          "choices": {
+            "A": "psychological",
+            "B": "noise, outcry",
+            "C": "to evaluate",
+            "D": "increasing"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 68,
+          "arabic": "وديّ",
+          "choices": {
+            "A": "friendly",
+            "B": "to be applicable to",
+            "C": "background",
+            "D": "symbolic"
+          },
+          "answer": "A"
+        },
+        {
+          "number": 69,
+          "arabic": "ولي أمر / أولياء أمور",
+          "choices": {
+            "A": "to upgrade, advance",
+            "B": "psychological",
+            "C": "guardian(s)",
+            "D": "seriousness"
+          },
+          "answer": "C"
+        }
+      ]
     }
   }
 }

@@ -26,7 +26,8 @@ window.UNITS_MANIFEST = {
   unit7: {
     title: 'Unit 7 Vocabulary',
     chapters: [
-      { id: 'ch31', number: 31, title: 'Chapter 31', available: true }
+      { id: 'ch31', number: 31, title: 'Chapter 31', available: true },
+      { id: 'ch32', number: 32, title: 'Chapter 32', available: true }
     ]
   }
   // Future units are added the same way, e.g.:
