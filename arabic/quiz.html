@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NDCR97CD');</script>
+  <!-- End Google Tag Manager -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#6750A4">
   <meta name="description" content="A mobile-first Arabic study quiz.">
@@ -105,6 +108,9 @@
   </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDCR97CD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   <div class="app">
     <header class="topbar" id="topbar">
       <button class="icon-button" id="exit-button" type="button" aria-label="Exit quiz"><span class="material-symbols-rounded" aria-hidden="true">close</span></button>
@@ -164,6 +170,7 @@
     const show = id => $(id).classList.remove('hidden');
     const hide = id => $(id).classList.add('hidden');
     const shuffle = list => { const copy=[...list]; for(let i=copy.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [copy[i],copy[j]]=[copy[j],copy[i]]; } return copy; };
+    function trackEvent(name, params) { window.dataLayer = window.dataLayer || []; window.dataLayer.push(Object.assign({ event: name }, params || {})); }
 
     function progressKeyFor(chapterId) {
       return mode === 'en-to-ar' ? `${chapterId}:en-to-ar` : chapterId;
@@ -294,6 +301,7 @@
 
       button.disabled = true;
       const payload = currentFlagPayload();
+      trackEvent('word_flagged', { unit_id: unit, chapter_id: state.chapterId, mode });
 
       try {
         await sendFlag(payload);
@@ -374,6 +382,7 @@
       }
       window.ProgressStore.markWordKnown(unit, key, wordId);
       updateKnownToggle();
+      trackEvent('word_marked_known', { unit_id: unit, chapter_id: state.chapterId, mode, source: 'manual' });
       $('known-toggle').disabled = true;
       state.knownAdvanceTimer = setTimeout(() => {
         state.knownAdvanceTimer = null;
@@ -419,7 +428,7 @@
         const textClass = built.optionIsArabic ? 'choice-text choice-text-ar' : 'choice-text';
         const langAttr = built.optionIsArabic ? ' lang="ar" dir="rtl"' : '';
         button.innerHTML = `<span class="choice-key">${displayKey}</span><span class="${textClass}"${langAttr}>${text}</span>`;
-        button.addEventListener('click', () => selectAnswer(displayKey));
+        button.addEventListener('click', () => { trackEvent('answer_selected', { unit_id: unit, chapter_id: state.chapterId, mode }); selectAnswer(displayKey); });
         choices.appendChild(button);
       });
       hide('feedback'); $('feedback').className = 'feedback';
@@ -459,6 +468,7 @@
         window.ProgressStore.recordAnswer(unit, progressKeyFor(state.chapterId), wordIdFor(q), correct);
       }
       updateKnownToggle();
+      trackEvent('answer_checked', { unit_id: unit, chapter_id: state.chapterId, mode, correct });
 
       saveProgress({
         status: 'in_progress',
@@ -492,6 +502,7 @@
         completedAt: new Date().toISOString()
       });
       hide('quiz-screen'); hide('progress-block');
+      trackEvent('chapter_completed', { unit_id: unit, chapter_id: state.chapterId, mode, score: state.score, total: state.questions.length });
       $('final-score').textContent = `${state.score} / ${state.questions.length}`;
       const modeLabel = mode === 'en-to-ar' ? 'English-to-Arabic' : 'Arabic-to-English';
       $('complete-copy').textContent = `You completed ${state.chapter.label || state.chapter.title} (${modeLabel}). Keep practicing to make these words stick.`;
