@@ -18,8 +18,9 @@ Legend: ✅ Done and live on `main` | ⏳ Planned, not yet implemented
 | Site Attribution Footer | ✅ Done |
 | Unit 6 Supplementary Vocabulary (sticky-note set) | ⏳ Planned — draft transcription in progress, not yet in a content file or wired into the site |
 | Classmate Feedback & Feature Requests | ⏳ Planned — triage and scoping not yet started |
-| Unit 7 (Chapter 31 Vocabulary) | ✅ Done — content, manifest, and homepage picker all live |
+| Unit 7 (Chapters 31–32 Vocabulary) | ✅ Done — content, manifest, and homepage picker all live |
 | Account Authentication (Google + Magic Link) | ⏳ Planned — intentionally sequenced after Known Vocabulary |
+| Mobile App Store Distribution (Google Play + Apple App Store) | ⏳ Planned — Play Store developer fee paid; Apple Developer Program enrollment not yet started |
 
 ## Purpose
 
@@ -351,11 +352,64 @@ These three, from Wadnizak, describe problems that may originate in older conten
 - [ ] A single gamification direction (cards vs. evolving companion, or a reconciled combination) has been chosen before implementation begins.
 - [ ] The hint-before-wrong interaction with known-word streaks has been explicitly decided and written into the Known Vocabulary section before `quiz.html` is changed.
 
-## Unit 7 (Chapter 31 Vocabulary) ✅ Done
+## Unit 7 (Chapters 31–32 Vocabulary) ✅ Done
 
-`arabic/data/unit7.json` and the `unit7` entry in `arabic/data/units-manifest.js` are live on `main`, following the exact Content Contract and manifest shape used for Unit 6. Chapter 31 (`ch31`) is marked `available: true` with all 45 vocabulary questions. No engine changes were required — `quiz.html`, `progress-store.js`, and the manifest helper API worked immediately for `quiz.html?unit=unit7&chapter=ch31`, confirming the unit-agnostic design goal from the Purpose section holds in practice.
+`arabic/data/unit7.json` and the `unit7` entry in `arabic/data/units-manifest.js` are live on `main`, following the exact Content Contract and manifest shape used for Unit 6. Chapter 31 (`ch31`, 45 questions) and Chapter 32 (`ch32`, 69 questions) are both marked `available: true`. No engine changes were required to add either chapter — `quiz.html`, `progress-store.js`, and the manifest helper API worked immediately once each chapter's data existed, confirming the unit-agnostic design goal from the Purpose section holds in practice, including for a second chapter added after the fact.
 
-`arabic.html` was updated to add a `#unit7-chapters` picker section mirroring `#unit6-chapters`. The previously hardcoded `UNIT_ID` constant was generalized to `UNIT_IDS = ["unit6", "unit7"]`, and the chapter-list renderer was parameterized (`renderChapterListForUnit`/`renderAllChapterLists`) rather than duplicated, so a future Unit 8 needs only a new array entry and a new `#unit8-chapters` section, not new rendering logic. The Continue card's fallback-chapter logic was also updated to check each unit in `UNIT_IDS` order rather than defaulting to Unit 6 alone. A navigation-drawer link for Unit 7 vocabulary was added alongside the existing (now relabeled) Unit 6 link.
+`arabic.html` was updated to add a `#unit7-chapters` picker section mirroring `#unit6-chapters`. The previously hardcoded `UNIT_ID` constant was generalized to `UNIT_IDS = ["unit6", "unit7"]`, and the chapter-list renderer was parameterized (`renderChapterListForUnit`/`renderAllChapterLists`) rather than duplicated, so a future Unit 8 needs only a new array entry and a new `#unit8-chapters` section, not new rendering logic. The Continue card's fallback-chapter logic was also updated to check each unit in `UNIT_IDS` order rather than defaulting to Unit 6 alone. A navigation-drawer link for Unit 7 vocabulary was added alongside the existing (now relabeled) Unit 6 link. Chapter 32 required no further homepage changes — it appears automatically in the existing `#unit7-chapters` list once added to the manifest.
+
+### Content format correction (Chapter 31 launch bug)
+
+Chapter 31 initially shipped with a mismatched content shape (`arabic`/`english`/`type` fields with no answer choices) instead of the actual required shape used by `quiz.html` and matching `unit6.json`: `number`, `arabic`, a `choices` object keyed `A`–`D`, and an `answer` field naming the correct key. This caused a "Quiz unavailable" error for every learner clicking into Chapter 31 from the homepage, since the quiz engine had nothing to render. The fix regenerated all 45 Chapter 31 questions in the correct format, with 3 distractor choices per question sampled from other Chapter 31 vocabulary, and this correction shipped as its own commit before Chapter 32 was added. Chapter 32 was built directly in the correct format from the start.
+
+### Rules
+
+- Every new chapter's questions must be authored directly in the `number`/`arabic`/`choices`(`A`–`D`)/`answer` shape used by `unit6.json` — never in an intermediate or simplified shape — since `quiz.html` has no fallback rendering path for a differently-shaped question object.
+- Distractor choices should be sampled from vocabulary within the same chapter, consistent with how Chapters 26–31 and 32 were built, so no engine change is needed to support a new chapter's answer options.
+- Multi-word vocabulary with closely related meanings within the same chapter (e.g. "quarrel" the noun vs. "to quarrel" the verb, both present in Chapter 32) should be spot-checked after generation, since random distractor sampling can occasionally produce a technically-wrong-but-plausible-sounding decoy pair.
+
+## Mobile App Store Distribution (Google Play + Apple App Store) ⏳ Planned
+
+### Purpose
+
+Package the existing mobile-first web app for distribution through the Google Play Store and Apple App Store, so it can be installed like a native app rather than only accessed via browser at calebpfohl.com. This is a distribution and packaging layer on top of the existing site — it does not imply a rewrite. The current Material Design 3, mobile-first `arabic.html`/`quiz.html` experience is designed to translate directly into a wrapped app via a WebView-based or PWA-to-native packaging approach (e.g. Trusted Web Activity for Android, a WKWebView wrapper or Capacitor/Cordova-style shell for iOS), rather than being rebuilt as a separate native codebase.
+
+### Status
+
+- **Google Play**: the one-time $25 Google Play Developer registration fee has been paid. No app listing, build, or submission has been created yet.
+- **Apple App Store**: the $99/year Apple Developer Program enrollment has not yet been started. Planned for approximately one month out from this entry, not urgent.
+- Because of this sequencing, Google Play is the first target platform; iOS/App Store work is intentionally deferred until the Apple Developer account exists.
+
+### Setup — Google Play (first target)
+
+- [ ] Decide the packaging approach: Trusted Web Activity (wraps the existing PWA/site with minimal native shell code, preferred if the site already has a working manifest/service worker) vs. a full WebView wrapper (e.g. via Capacitor).
+- [ ] Add/verify a PWA manifest (`manifest.json`) and app icons for `arabic.html`, since a Trusted Web Activity depends on the site already behaving like an installable PWA.
+- [ ] Create the app listing in Google Play Console: title, description, screenshots (mobile-first design should translate well here), content rating questionnaire, privacy policy URL.
+- [ ] A privacy policy is required for Play Store submission regardless of packaging approach — must account for `localStorage`-based `ProgressStore` data and the anonymous flag-reporting feature, even though neither collects personally identifying data today.
+- [ ] Build and sign the release bundle (`.aab`), upload to a closed/internal testing track first, then promote to production after testing.
+
+### Setup — Apple App Store (deferred ~1 month)
+
+- [ ] Enroll in the Apple Developer Program ($99/year) — not yet started.
+- [ ] Decide the iOS packaging approach once enrolled — likely the same shell technology chosen for Android (e.g. Capacitor) to avoid maintaining two separate native wrappers, rather than a from-scratch Swift/WKWebView app, unless a from-scratch shell turns out to be simpler for App Review purposes.
+- [ ] App Store submissions have historically applied extra scrutiny to "thin WebView wrapper" apps; the app should include enough native-feeling chrome (already partially satisfied by the existing bottom nav / navigation drawer) to avoid a rejection on those grounds. This should be revisited against current App Store Review Guidelines once enrollment is active, since guidelines can change.
+- [ ] Same privacy policy and content rating requirements apply, plus Apple's separate App Privacy "nutrition label" questionnaire in App Store Connect.
+
+### Rules
+
+- No native rewrite of `arabic.html`/`quiz.html`/`progress-store.js` — the packaged app should load the same live site (or a bundled snapshot of it), not a separate maintained codebase, to avoid the two-codebase drift this document's unit-agnostic design has otherwise avoided.
+- `ProgressStore`'s local-first design (see above) must keep working unmodified inside whichever WebView/shell technology is chosen; if the packaging approach can't reliably persist `localStorage` between app launches, that is a blocking issue to resolve before submission, not an acceptable regression.
+- Do not begin Apple App Store setup work until the Apple Developer Program enrollment is active — no point drafting store-specific assets against guidelines that may not be current by the time enrollment happens.
+- A privacy policy must be published and linked before either store submission; it must accurately describe the local-only nature of `ProgressStore` and the anonymous nature of the flag-reporting feature, consistent with the Guardrails elsewhere in this document.
+- Google Play submission should not block on Apple Developer enrollment — the two platforms are sequenced independently, Play first.
+
+### Testing checklist
+
+- [ ] Site has a valid PWA manifest and passes Lighthouse's installability checks, if Trusted Web Activity is the chosen approach.
+- [ ] Packaged Android build correctly persists `ProgressStore` data (known words, chapter progress) across app restarts, not just across page reloads in a browser tab.
+- [ ] Play Store internal testing track build installs and runs correctly on at least one physical Android device before promoting to production.
+- [ ] Privacy policy page is published, linked from both the site footer and the store listings, and accurately reflects current data practices at time of submission.
+- [ ] (Once Apple enrollment is active) iOS build correctly persists `ProgressStore` data across app restarts using the same shell technology validated on Android.
 
 ## Implementation Order
 
@@ -372,12 +426,16 @@ These three, from Wadnizak, describe problems that may originate in older conten
 11. [x] Add homepage Coming Soon states for Study Sets and Class Resources.
 12. [x] Add the site attribution footer.
 13. [ ] Transcribe, review, and finalize the Unit 6 supplementary vocabulary (sticky notes + whiteboard phrase) into a new content file, then wire it into the homepage and quiz as its own study set.
-14. [x] Add Unit 7 (Chapter 31 vocabulary) content file, manifest entry, and homepage chapter picker.
-15. [ ] Set up Netlify Functions scaffolding and the Google OAuth client; implement Google sign-in.
-16. [ ] Implement magic-link email sign-in.
-17. [ ] Set up Netlify DB and wire up profile sync for both sign-in methods, including the known-word fields.
-18. [ ] Add the `verified` field convention and begin tracking verification status.
-19. [ ] Test account authentication and sync per its checklist before opening a pull request.
+14. [x] Add Unit 7 Chapter 31 vocabulary content file, manifest entry, and homepage chapter picker.
+15. [x] Fix Chapter 31's content format bug (missing multiple-choice `choices`/`answer` fields) that caused "Quiz unavailable."
+16. [x] Add Unit 7 Chapter 32 vocabulary (69 questions) to the existing `unit7.json` and manifest, in the corrected format from the start.
+17. [ ] Set up Netlify Functions scaffolding and the Google OAuth client; implement Google sign-in.
+18. [ ] Implement magic-link email sign-in.
+19. [ ] Set up Netlify DB and wire up profile sync for both sign-in methods, including the known-word fields.
+20. [ ] Add the `verified` field convention and begin tracking verification status.
+21. [ ] Test account authentication and sync per its checklist before opening a pull request.
+22. [ ] Set up the Google Play Console listing and submit an internal testing build (Play Store developer fee already paid).
+23. [ ] Enroll in the Apple Developer Program (planned ~1 month out), then begin iOS packaging and App Store listing work.
 
 ## Guardrails
 
@@ -394,3 +452,5 @@ These three, from Wadnizak, describe problems that may originate in older conten
 - Known-word status lives only in `ProgressStore`, never in content JSON, never merged with flag or `verified` data.
 - No retroactive grandfathering of per-word history from old aggregate scores. A single correct answer never marks a word known on its own — two consecutive correct attempts, or a manual override, are required.
 - Draft/unreviewed vocabulary (e.g. the sticky-note supplementary set) must never be committed into a file already live on `main` until the user has reviewed and corrected every entry.
+- Every new chapter's questions must be authored in the correct `number`/`arabic`/`choices`/`answer` shape from the start — the Chapter 31 format bug should not recur.
+- The mobile app store packaging effort must wrap the existing live site rather than fork it into a separately maintained codebase.
