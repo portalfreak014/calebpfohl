@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NDCR97CD');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6750A4">
+  <meta name="description" content="Editable project documentation and notes for the Arabic study app.">
+  <title>Project Docs — Arabic Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: light; --md-sys-color-primary:#6750a4; --md-sys-color-on-primary:#fff; --md-sys-color-primary-container:#e9ddff; --md-sys-color-on-primary-container:#21005d; --md-sys-color-secondary-container:#e8def8; --md-sys-color-on-secondary-container:#1d192b; --md-sys-color-surface:#fffbfe; --md-sys-color-surface-container:#f3edf7; --md-sys-color-surface-container-high:#ece6f0; --md-sys-color-on-surface:#1c1b1f; --md-sys-color-on-surface-variant:#49454f; --md-sys-color-outline:#79747e; --md-sys-color-outline-variant:#cac4d0; --md-sys-elevation-1:0 1px 2px rgb(0 0 0 / .30),0 1px 3px 1px rgb(0 0 0 / .15); --radius-xl:28px; --radius-lg:20px; --radius-md:16px; }
+    * { box-sizing:border-box; }
+    html { min-width:320px; background:var(--md-sys-color-surface); }
+    body { margin:0; min-height:100dvh; color:var(--md-sys-color-on-surface); background:var(--md-sys-color-surface); font-family:"Noto Sans","Noto Sans Arabic",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+    button,a { -webkit-tap-highlight-color:transparent; }
+    button { font:inherit; }
+    .material-symbols-rounded { font-family:"Material Symbols Rounded"; font-weight:normal; font-style:normal; font-size:24px; line-height:1; letter-spacing:normal; text-transform:none; display:inline-block; white-space:nowrap; word-wrap:normal; direction:ltr; -webkit-font-feature-settings:"liga"; -webkit-font-smoothing:antialiased; font-variation-settings:"FILL" 0,"wght" 500,"GRAD" 0,"opsz" 24; }
+    .app { width:min(100%,760px); min-height:100dvh; margin:0 auto; padding:max(16px,env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom)); }
+    .top-app-bar { display:flex; align-items:center; justify-content:space-between; min-height:64px; margin-bottom:20px; gap:12px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width:0; }
+    .brand-mark { display:grid; place-items:center; width:44px; height:44px; border-radius:14px; color:var(--md-sys-color-on-primary-container); background:var(--md-sys-color-primary-container); flex-shrink:0; }
+    .brand-mark .material-symbols-rounded { font-size:26px; font-variation-settings:"FILL" 1,"wght" 500,"GRAD" 0,"opsz" 24; }
+    .brand-copy { line-height:1.15; min-width:0; }
+    .brand-title { margin:0; font-size:1rem; font-weight:700; }
+    .brand-subtitle { margin:4px 0 0; color:var(--md-sys-color-on-surface-variant); font-size:.78rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .icon-button { display:inline-grid; place-items:center; width:48px; height:48px; padding:0; border:0; border-radius:50%; color:var(--md-sys-color-on-surface-variant); background:transparent; cursor:pointer; flex-shrink:0; }
+    .icon-button:hover { background:rgb(29 27 32 / .08); }
+    .icon-button:focus-visible,.button:focus-visible,.nav-item:focus-visible,.doc-link:focus-visible,.editor-tab:focus-visible { outline:3px solid var(--md-sys-color-primary); outline-offset:2px; }
+    .hero { padding:24px; border-radius:var(--radius-xl); color:var(--md-sys-color-on-primary-container); background:var(--md-sys-color-primary-container); }
+    .eyebrow { margin:0 0 10px; font-size:.82rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { max-width:20ch; margin-bottom:12px; font-size:clamp(1.7rem,7vw,2.4rem); line-height:1.15; letter-spacing:-.03em; }
+    .hero p { max-width:56ch; margin-bottom:20px; font-size:.96rem; line-height:1.6; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:10px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:0 24px; border:0; border-radius:999px; font-weight:700; text-decoration:none; cursor:pointer; transition:transform 150ms ease,box-shadow 150ms ease,background 150ms ease; }
+    .button:active { transform:scale(.98); }
+    .button-primary { color:var(--md-sys-color-on-primary); background:var(--md-sys-color-primary); box-shadow:var(--md-sys-elevation-1); }
+    .button-primary:hover { box-shadow:0 2px 5px rgb(0 0 0 / .25); }
+    .button:disabled { cursor:not-allowed; opacity:.5; }
+    .section { margin-top:32px; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:14px; flex-wrap:wrap; }
+    .section-heading h2 { margin:0; font-size:1.25rem; letter-spacing:-.02em; }
+    .text-button { padding:10px 12px; border:0; border-radius:999px; color:var(--md-sys-color-primary); background:transparent; font-weight:700; cursor:pointer; font-size:.86rem; }
+    .text-button:hover { background:rgb(103 80 164 / .08); }
+    .doc-picker { display:grid; gap:10px; margin-bottom:20px; }
+    .doc-link { display:grid; grid-template-columns:44px minmax(0,1fr) auto; align-items:center; gap:14px; width:100%; min-height:64px; padding:12px 14px; border:1px solid transparent; border-radius:var(--radius-md); color:inherit; background:var(--md-sys-color-surface-container); text-align:left; cursor:pointer; transition:background 150ms ease,transform 150ms ease; font:inherit; }
+    .doc-link:hover { background:var(--md-sys-color-surface-container-high); transform:translateY(-1px); }
+    .doc-link.active { background:var(--md-sys-color-primary-container); }
+    .doc-link.active .doc-link-icon { color:var(--md-sys-color-on-primary-container); background:rgb(255 255 255 / .55); }
+    .doc-link-icon { display:grid; place-items:center; width:44px; height:44px; border-radius:14px; color:var(--md-sys-color-on-secondary-container); background:var(--md-sys-color-secondary-container); flex-shrink:0; }
+    .doc-link-title { margin:0; font-weight:700; line-height:1.25; font-size:.94rem; }
+    .doc-link-meta { margin:3px 0 0; color:var(--md-sys-color-on-surface-variant); font-size:.78rem; }
+    .doc-link-status { justify-self:end; padding:3px 10px; border-radius:999px; color:var(--md-sys-color-on-surface-variant); background:var(--md-sys-color-surface-container-high); font-size:.62rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; white-space:nowrap; }
+    .doc-link-status.status-done { color:var(--md-sys-color-on-secondary-container); background:var(--md-sys-color-secondary-container); }
+    .editor-card { border:1px solid var(--md-sys-color-outline-variant); border-radius:var(--radius-lg); background:var(--md-sys-color-surface); overflow:hidden; }
+    .editor-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-bottom:1px solid var(--md-sys-color-outline-variant); flex-wrap:wrap; }
+    .editor-toolbar-title { display:flex; align-items:center; gap:10px; min-width:0; }
+    .editor-toolbar-title h3 { margin:0; font-size:1rem; font-weight:800; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .editor-tabs { display:inline-flex; padding:4px; border:1px solid var(--md-sys-color-outline-variant); border-radius:999px; background:var(--md-sys-color-surface-container); }
+    .editor-tab { display:inline-flex; align-items:center; gap:6px; min-height:36px; padding:0 14px; border:0; border-radius:999px; color:var(--md-sys-color-on-surface-variant); background:transparent; font-size:.8rem; font-weight:700; cursor:pointer; transition:background 150ms ease,color 150ms ease; }
+    .editor-tab.active { color:var(--md-sys-color-on-primary-container); background:var(--md-sys-color-primary-container); }
+    .editor-body { padding:16px; }
+    #doc-textarea { width:100%; min-height:320px; padding:14px; border:1px solid var(--md-sys-color-outline-variant); border-radius:var(--radius-md); color:var(--md-sys-color-on-surface); background:var(--md-sys-color-surface-container); font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace; font-size:.86rem; line-height:1.6; resize:vertical; }
+    #doc-textarea:focus { outline:3px solid var(--md-sys-color-primary); outline-offset:1px; }
+    #doc-preview { min-height:320px; line-height:1.65; font-size:.94rem; }
+    #doc-preview h1, #doc-preview h2, #doc-preview h3 { line-height:1.3; letter-spacing:-.01em; }
+    #doc-preview h1 { font-size:1.4rem; margin:0 0 12px; }
+    #doc-preview h2 { font-size:1.15rem; margin:24px 0 10px; }
+    #doc-preview h3 { font-size:1rem; margin:18px 0 8px; }
+    #doc-preview p { margin:0 0 12px; }
+    #doc-preview ul, #doc-preview ol { margin:0 0 12px; padding-left:22px; }
+    #doc-preview li { margin-bottom:6px; }
+    #doc-preview code { padding:2px 6px; border-radius:6px; background:var(--md-sys-color-surface-container-high); font-size:.85em; }
+    #doc-preview pre { padding:14px; border-radius:var(--radius-md); background:var(--md-sys-color-surface-container-high); overflow-x:auto; }
+    #doc-preview pre code { padding:0; background:none; }
+    #doc-preview table { width:100%; margin:0 0 16px; border-collapse:collapse; font-size:.88rem; }
+    #doc-preview th, #doc-preview td { padding:8px 10px; border:1px solid var(--md-sys-color-outline-variant); text-align:left; }
+    #doc-preview th { background:var(--md-sys-color-surface-container); font-weight:800; }
+    #doc-preview a { color:var(--md-sys-color-primary); font-weight:600; }
+    .editor-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px; border-top:1px solid var(--md-sys-color-outline-variant); flex-wrap:wrap; }
+    .save-status { display:flex; align-items:center; gap:6px; color:var(--md-sys-color-on-surface-variant); font-size:.8rem; }
+    .save-status .material-symbols-rounded { font-size:18px; }
+    .save-status.saved { color:#2e7d32; }
+    .editor-actions { display:flex; gap:8px; }
+    .banner-note { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; border-radius:var(--radius-md); background:var(--md-sys-color-secondary-container); color:var(--md-sys-color-on-secondary-container); font-size:.82rem; line-height:1.55; margin-bottom:20px; }
+    .banner-note .material-symbols-rounded { font-size:20px; flex-shrink:0; margin-top:1px; }
+    .bottom-nav { position:fixed; right:0; bottom:0; left:0; z-index:10; display:flex; justify-content:center; padding:8px 12px calc(8px + env(safe-area-inset-bottom)); border-top:1px solid var(--md-sys-color-outline-variant); background:rgb(255 251 254 / .94); backdrop-filter:blur(16px); }
+    .bottom-nav-inner { display:grid; grid-template-columns:repeat(3,minmax(80px,1fr)); width:min(100%,520px); gap:4px; }
+    .nav-item { display:grid; justify-items:center; gap:3px; min-height:56px; padding:6px 12px; border:0; border-radius:16px; color:var(--md-sys-color-on-surface-variant); background:transparent; font-size:.75rem; font-weight:700; cursor:pointer; text-decoration:none; }
+    .nav-item.active { color:var(--md-sys-color-on-secondary-container); }
+    .nav-item.active .nav-icon { min-width:64px; padding:4px 16px; border-radius:999px; background:var(--md-sys-color-secondary-container); }
+    .nav-item.coming-soon { color:color-mix(in srgb,var(--md-sys-color-on-surface-variant) 58%,var(--md-sys-color-surface)); cursor:not-allowed; opacity:.72; }
+    .nav-item.coming-soon .coming-soon-label { display:block; margin-top:-1px; color:inherit; font-size:.62rem; font-weight:600; line-height:1; letter-spacing:.01em; text-transform:uppercase; }
+    .site-credit { margin-top:36px; padding:18px 0 4px; border-top:1px solid var(--md-sys-color-outline-variant); color:var(--md-sys-color-on-surface-variant); font-size:.75rem; line-height:1.5; text-align:center; }
+    @media (min-width:700px) { .app { padding:32px 32px 112px; } .top-app-bar { margin-bottom:32px; } .hero { padding:40px; } .doc-picker { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; } }
+  </style>
+</head>
+<body>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDCR97CD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <main class="app">
+    <header class="top-app-bar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span class="material-symbols-rounded">description</span></div>
+        <div class="brand-copy"><p class="brand-title">Project Docs</p><p class="brand-subtitle">Editable notes, stored on this device</p></div>
+      </div>
+      <a class="icon-button" href="arabic.html" aria-label="Back to home"><span class="material-symbols-rounded" aria-hidden="true">home</span></a>
+    </header>
+
+    <section class="hero" aria-labelledby="docs-heading">
+      <p class="eyebrow">Project documentation</p>
+      <h1 id="docs-heading">Read, edit, and keep your own notes.</h1>
+      <p>Browse the current project docs, then edit any page. Your edits save automatically to this browser, the same private, local storage used for your quiz progress — no account, no sign-in.</p>
+      <div class="hero-actions">
+        <button class="button button-primary" id="reset-doc-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">restart_alt</span>Reset this page to original</button>
+      </div>
+    </section>
+
+    <div class="banner-note" role="note">
+      <span class="material-symbols-rounded" aria-hidden="true">info</span>
+      <span>Edits here are saved only on this device/browser, exactly like your quiz progress — they are not shared with other visitors and won't sync across devices. Use "Reset this page to original" to discard your edits and restore the published version below.</span>
+    </div>
+
+    <section class="section" aria-labelledby="doc-picker-heading">
+      <div class="section-heading"><h2 id="doc-picker-heading">Pages</h2></div>
+      <div class="doc-picker" id="doc-picker"></div>
+    </section>
+
+    <section class="section" aria-labelledby="editor-heading">
+      <div class="section-heading"><h2 id="editor-heading" style="position:absolute;left:-9999px;">Editor</h2></div>
+      <div class="editor-card">
+        <div class="editor-toolbar">
+          <div class="editor-toolbar-title">
+            <span class="material-symbols-rounded" aria-hidden="true">article</span>
+            <h3 id="editor-doc-title">README</h3>
+          </div>
+          <div class="editor-tabs" role="group" aria-label="View mode">
+            <button class="editor-tab active" id="tab-preview" type="button" aria-pressed="true">Preview</button>
+            <button class="editor-tab" id="tab-edit" type="button" aria-pressed="false">Edit</button>
+          </div>
+        </div>
+        <div class="editor-body">
+          <div id="doc-preview"></div>
+          <textarea id="doc-textarea" style="display:none;" spellcheck="false" aria-label="Document source (Markdown)"></textarea>
+        </div>
+        <div class="editor-footer">
+          <span class="save-status" id="save-status"><span class="material-symbols-rounded" aria-hidden="true">cloud_done</span><span id="save-status-text">Saved to this device</span></span>
+          <div class="editor-actions">
+            <button class="text-button" id="copy-doc-button" type="button">Copy Markdown</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-credit">
+      Created by Caleb Pfohl · Designed with Google Material Design 3 · Built with Perplexity Pro
+    </footer>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Primary navigation">
+    <div class="bottom-nav-inner">
+      <a class="nav-item" href="arabic.html"><span class="nav-icon material-symbols-rounded" aria-hidden="true">home</span>Home</a>
+      <button class="nav-item active" type="button" aria-current="page"><span class="nav-icon material-symbols-rounded" aria-hidden="true">description</span>Docs</button>
+      <button class="nav-item coming-soon" type="button" disabled aria-label="Progress — coming soon"><span class="nav-icon material-symbols-rounded" aria-hidden="true">bar_chart</span><span>Progress</span><span class="coming-soon-label">Coming soon</span></button>
+    </div>
+  </nav>
+
+  <script src="progress-store.js"></script>
+  <script>
+    const DOCS = [
+      {
+        id: "readme",
+        title: "README — Status & Index",
+        meta: "Status table, purpose, guardrails",
+        status: "done",
+        icon: "checklist",
+        content: "# Arabic Study App — Documentation Index\n\nThis directory replaces the single monolithic `CHAPTER_PROGRESS_IMPLEMENTATION.md` file, which had grown too large (50KB+, 10+ incremental commits) to safely read and edit as one unit. Each shipped feature now has its own small, stable file; only `README.md` (this file) and `CHANGELOG.md` change often, and both stay small by design.\n\n## Legend\n✅ Done and live on `main` | ⏳ Planned, not yet implemented\n\n## Status Summary\n\n| Section | Status |\n|---|---|\n| Content Contract | ✅ Done |\n| Units and Chapters Manifest | ✅ Done |\n| Homepage Changes | ✅ Done |\n| Quiz Changes | ✅ Done |\n| Local-First Progress Store | ✅ Done (schema updated by Known Vocabulary) |\n| Quiz Direction Mode (English-to-Arabic) | ✅ Done |\n| Known Vocabulary (Mark as Known) | ✅ Done — supersedes prior resume-bug issue |\n| Content Quality Control (Anonymous Flagging) | ✅ Done — Google Sheets logging live on `main` |\n| Homepage Coming Soon States (Study Sets, Class Resources) | ✅ Done — intentionally disabled pending future release |\n| Site Attribution Footer | ✅ Done |\n| Unit 6 Supplementary Vocabulary (sticky-note set) | ⏳ Planned — draft transcription in progress |\n| Classmate Feedback & Feature Requests | ⏳ Planned — triage and scoping not yet started |\n| Unit 7 (Chapters 31–32 Vocabulary) | ✅ Done — content, manifest, homepage picker live; Ch31 vocab gap-fill done 2026-08-24 |\n| Picture Matching Game Mode | ⏳ Planned — foundational scaffolding requested 2026-08-24, blocked on source file access |\n| Per-unit Vocab QC Lists | ⏳ Planned — requested 2026-08-24 |\n| Account Authentication (Google + Magic Link) | ⏳ Planned — sequenced after Known Vocabulary |\n| Mobile App Store Distribution (Google Play + Apple App Store) | ⏳ Planned — Play Store fee paid; Apple enrollment not started |\n| Analytics (Google Tag Manager + GA4) | ✅ Done — GTM live; GA4 tag/Enhanced Measurement config still outstanding |\n\n## This page (`docs.html`)\n\nThis interactive page lets you browse and edit any doc directly in the browser. Edits save automatically to this device's local storage — the same storage used for quiz progress (`ProgressStore`) — so they persist across reloads on this browser only. Use \"Reset this page to original\" to discard your edits.\n"
+      },
+      {
+        id: "changelog",
+        title: "Changelog",
+        meta: "Dated history of changes",
+        status: "done",
+        icon: "history",
+        content: "# Changelog\n\nDated, append-only history of implementation work. New entries go at the top.\n\n---\n\n## 2026-08-24 — Interactive docs page + documentation split + Chapter 31 vocab gap-fill\n\n- Built `arabic/docs.html`, an interactive, editable rendering of these docs, styled to match `arabic.html`. Edits save to `localStorage` under `arabicStudy.docs.v1.*` keys — same storage mechanism as `ProgressStore`, separate namespace. Per-device only, not a shared multi-user real-time document.\n- Split the single `CHAPTER_PROGRESS_IMPLEMENTATION.md` into small per-feature files.\n- Fixed Chapter 31 vocabulary gap in `unit7.json`: added 3 missing terms as questions 46–48. Commit `1161f7e`.\n"
+      },
+      {
+        id: "content-contract",
+        title: "Content Contract & Manifest",
+        meta: "Unit/chapter JSON shape rules",
+        status: "done",
+        icon: "rule",
+        content: "# Content Contract & Units/Chapters Manifest\n\n## Content Contract ✅ Done\n\nEvery unit's JSON file must conform to the same shape.\n\n```\n{\n  \"unitId\": \"unit6\",\n  \"title\": \"Unit 6 Vocabulary\",\n  \"chapters\": { \"ch26\": { \"number\": 26, \"title\": \"Chapter 26\", \"questions\": [] } }\n}\n```\n\n## Units and Chapters Manifest ✅ Done\n\n`arabic/data/units-manifest.js` holds `window.UNITS_MANIFEST` and a `window.UnitsManifest` helper API.\n"
+      },
+      {
+        id: "homepage",
+        title: "Homepage",
+        meta: "arabic.html structure & footer",
+        status: "done",
+        icon: "home",
+        content: "# Homepage (`arabic/arabic.html`)\n\n## Homepage Changes ✅ Done\n\nChapter-card picker, Continue card from `ProgressStore`, global direction toggle persisted in `localStorage`.\n\n## Coming Soon states ✅ Done\n\nStudy Sets and Class Resources are intentionally inert with a \"Coming soon\" badge.\n\n## Site attribution footer ✅ Done\n\n\"Created by Caleb Pfohl · Designed with Google Material Design 3 · Built with Perplexity Pro\".\n"
+      },
+      {
+        id: "quiz-engine",
+        title: "Quiz Engine & Progress",
+        meta: "quiz.html + ProgressStore",
+        status: "done",
+        icon: "quiz",
+        content: "# Quiz Engine & Progress Store\n\n## Quiz Changes ✅ Done\n\n`arabic/quiz.html` reads `unit`/`chapter`/`mode` from the URL, renders questions, saves progress.\n\n## Local-First Progress Store ✅ Done\n\n`arabic/progress-store.js` exposes `window.ProgressStore` (`getProfile`, `recordAnswer`, `markWordKnown`, `mergeProfile`, and more), stored under `arabicStudy.profile.v1`.\n\n## Quiz Direction Mode ✅ Done\n\n`quiz.html?...&mode=en-to-ar` reverses the prompt/answer roles.\n"
+      },
+      {
+        id: "known-vocabulary",
+        title: "Known Vocabulary",
+        meta: "Mark-as-known streak system",
+        status: "done",
+        icon: "psychology",
+        content: "# Known Vocabulary (Mark as Known) ✅ Done\n\n## Purpose\n\nReplace \"12 of 65 questions answered\" with \"12 of 65 words known\" — per-word, durable.\n\n## Two-attempt rule\n\nA word becomes known only after two separate correct attempts with no incorrect answer in between.\n\n## Manual override\n\nA learner can manually mark a word known/unknown at any time.\n\n## Rules\n\nDo not write known-word status to content JSON. A single correct answer never marks a word known alone.\n"
+      },
+      {
+        id: "content-quality",
+        title: "Content Quality Control",
+        meta: "Anonymous flagging",
+        status: "done",
+        icon: "flag",
+        content: "# Content Quality Control (Anonymous Flagging) ✅ Done\n\n## Purpose\n\nLets any user report a question they believe is wrong, without sign-in.\n\n## Flag-a-question feature ✅ Implemented\n\nCaptures unit/chapter/mode/text/answer + timestamp, no identity field. Logs to a Google Sheet with a local retry queue on failure.\n\n## Rules\n\nFlagging never blocks the quiz and never requires sign-in.\n"
+      },
+      {
+        id: "account-auth",
+        title: "Account Authentication",
+        meta: "Google + magic link (planned)",
+        status: "planned",
+        icon: "lock_open",
+        content: "# Account Authentication (Google + Magic Link) ⏳ Planned\n\nNot started. Adds Google OAuth and magic-link email sign-in via Netlify Functions.\n\n## Rules\n\nNo password-based auth. No secrets in client code. Sign-in never required to use the quiz.\n"
+      },
+      {
+        id: "unit6-supplement",
+        title: "Unit 6 Supplementary Vocab",
+        meta: "Sticky-note set (planned)",
+        status: "planned",
+        icon: "sticky_note_2",
+        content: "# Unit 6 Supplementary Vocabulary (Sticky-Note Set) ⏳ Planned\n\nA supplementary set sourced from handwritten sticky notes and a whiteboard phrase. Transcription in progress. `unit6.json` has not been modified for this feature.\n\n## Rules\n\nDo not write draft/unreviewed vocabulary into any file already live on `main`.\n"
+      },
+      {
+        id: "unit7-vocabulary",
+        title: "Unit 7 Vocabulary",
+        meta: "Chapters 31–32, gap-fill log",
+        status: "done",
+        icon: "menu_book",
+        content: "# Unit 7 (Chapters 31–32 Vocabulary) ✅ Done\n\nChapter 31 and Chapter 32 (69 questions) are both live and `available: true`.\n\n## Chapter 31 vocabulary gap-fill (2026-08-24) ✅ Done\n\n3 missing terms added as questions 46–48:\n\n| # | Arabic | English |\n|---|---|---|\n| 46 | حَظِيَ (بـ) / يَحْظى / حُظْوة | to enjoy, receive, be granted |\n| 47 | لا بُدَّ من | it is necessary, there's no avoiding |\n| 48 | حاصل | occurring, taking place |\n\nCommit `1161f7e`. Chapter 31 now totals 48 questions.\n"
+      },
+      {
+        id: "mobile-app",
+        title: "Mobile App Distribution",
+        meta: "Play Store + App Store (planned)",
+        status: "planned",
+        icon: "smartphone",
+        content: "# Mobile App Store Distribution ⏳ Planned\n\nPackage the existing web app for Google Play and Apple App Store, without a rewrite.\n\n## Status\n\nGoogle Play $25 fee paid. Apple $99/year enrollment not started.\n"
+      },
+      {
+        id: "analytics",
+        title: "Analytics",
+        meta: "GTM + GA4",
+        status: "done",
+        icon: "monitoring",
+        content: "# Analytics (Google Tag Manager + GA4) ✅ Done\n\nGTM container `GTM-NDCR97CD` is live on `arabic.html` and `quiz.html`. Seven custom events push to `dataLayer`.\n\n## Rules\n\nNo third-party analytics library. `trackEvent()` calls never block the underlying action.\n"
+      },
+      {
+        id: "matching-game",
+        title: "Picture Matching Game",
+        meta: "New study mode (planned)",
+        status: "planned",
+        icon: "extension",
+        content: "# Picture Matching / Mix-and-Match Game Mode ⏳ Planned\n\nA new study mode, selectable per chapter — a card-matching game using pictures. Should carry a \"New!\" badge.\n\n## Status: not started\n\nBlocked on getting readable access to `quiz.html`, `arabic.html`, `units-manifest.js`, `progress-store.js` — paste their contents directly to unblock.\n"
+      },
+      {
+        id: "vocab-qc-lists",
+        title: "Vocab QC Lists",
+        meta: "Per-unit review lists (planned)",
+        status: "planned",
+        icon: "fact_check",
+        content: "# Per-Unit Vocabulary QC Lists ⏳ Planned\n\nGenerate a plain Arabic+English list per unit/chapter, pulled from the JSON files. Read-only, low-risk; blocked only on scheduling.\n"
+      },
+      {
+        id: "classmate-feedback",
+        title: "Classmate Feedback",
+        meta: "Feature request backlog",
+        status: "planned",
+        icon: "forum",
+        content: "# Classmate Feedback & Feature Requests ⏳ Planned\n\nRaw feature suggestions from classmates (Wadnizak, Horne, Joseph, Sorto, Hannah).\n\n## New: mini-games\n\n- [ ] Hangman mini-game (Horne).\n- [ ] Numbers speed game (Hannah).\n- [ ] Picture matching game — see its own doc page.\n\n## New: gamification\n\n- [ ] Lotería-style collectible cards (Sorto).\n- [ ] Evolving companion/hero (Sorto).\n"
+      }
+    ];
+
+    const DOCS_STORAGE_PREFIX = "arabicStudy.docs.v1.";
+    const LAST_DOC_KEY = "arabicStudy.docs.v1.lastOpen";
+
+    function getDocOverride(docId) {
+      try { return localStorage.getItem(DOCS_STORAGE_PREFIX + docId); } catch (err) { return null; }
+    }
+    function setDocOverride(docId, content) {
+      try { localStorage.setItem(DOCS_STORAGE_PREFIX + docId, content); return true; } catch (err) { return false; }
+    }
+    function clearDocOverride(docId) {
+      try { localStorage.removeItem(DOCS_STORAGE_PREFIX + docId); } catch (err) {}
+    }
+    function hasOverride(docId) { return getDocOverride(docId) !== null; }
+    function getDocContent(doc) { const override = getDocOverride(doc.id); return override !== null ? override : doc.content; }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function renderMarkdown(md) {
+      const lines = md.replace(/\r\n/g, "\n").split("\n");
+      let html = "";
+      let i = 0;
+      let inCode = false;
+      let codeBuffer = [];
+      let listBuffer = [];
+      let listType = null;
+      let tableBuffer = [];
+
+      function flushList() {
+        if (!listBuffer.length) return;
+        const tag = listType === "ol" ? "ol" : "ul";
+        html += "<" + tag + ">" + listBuffer.map(function (li) { return "<li>" + inlineMd(li) + "</li>"; }).join("") + "</" + tag + ">";
+        listBuffer = [];
+        listType = null;
+      }
+      function flushTable() {
+        if (tableBuffer.length < 2) { tableBuffer = []; return; }
+        function splitRow(row) {
+          return row.split("|").map(function (c) { return c.trim(); }).filter(function (c, idx, arr) { return !(idx === 0 && c === "") && !(idx === arr.length - 1 && c === ""); });
+        }
+        const headerCells = splitRow(tableBuffer[0]);
+        const rows = tableBuffer.slice(2).map(splitRow);
+        html += "<table><thead><tr>" + headerCells.map(function (c) { return "<th>" + inlineMd(c) + "</th>"; }).join("") + "</tr></thead><tbody>";
+        rows.forEach(function (r) { html += "<tr>" + r.map(function (c) { return "<td>" + inlineMd(c) + "</td>"; }).join("") + "</tr>"; });
+        html += "</tbody></table>";
+        tableBuffer = [];
+      }
+      function inlineMd(text) {
+        let t = escapeHtml(text);
+        t = t.replace(/`([^`]+)`/g, "<code>$1</code>");
+        t = t.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+        t = t.replace(/\[([^\]]+)\]\(([^)]+)\)/g, "<a href=\"$2\">$1</a>");
+        return t;
+      }
+
+      while (i < lines.length) {
+        const line = lines[i];
+        if (line.trim().indexOf("```") === 0) {
+          if (!inCode) { inCode = true; codeBuffer = []; }
+          else { html += "<pre><code>" + escapeHtml(codeBuffer.join("\n")) + "</code></pre>"; inCode = false; }
+          i++; continue;
+        }
+        if (inCode) { codeBuffer.push(line); i++; continue; }
+
+        if (/^\s*\|.*\|\s*$/.test(line)) { tableBuffer.push(line); i++; continue; }
+        if (tableBuffer.length) flushTable();
+
+        const headingMatch = line.match(/^(#{1,3})\s+(.*)$/);
+        if (headingMatch) {
+          flushList();
+          const level = headingMatch[1].length;
+          html += "<h" + level + ">" + inlineMd(headingMatch[2]) + "</h" + level + ">";
+          i++; continue;
+        }
+        const ulMatch = line.match(/^[-*]\s+(?:\[[ xX]\]\s+)?(.*)$/);
+        const olMatch = line.match(/^\d+\.\s+(?:\[[ xX]\]\s+)?(.*)$/);
+        if (ulMatch) {
+          if (listType && listType !== "ul") flushList();
+          listType = "ul"; listBuffer.push(ulMatch[1]); i++; continue;
+        }
+        if (olMatch) {
+          if (listType && listType !== "ol") flushList();
+          listType = "ol"; listBuffer.push(olMatch[1]); i++; continue;
+        }
+        flushList();
+        if (line.trim() === "---") { html += "<hr>"; i++; continue; }
+        if (line.trim() === "") { i++; continue; }
+        html += "<p>" + inlineMd(line) + "</p>";
+        i++;
+      }
+      flushList();
+      flushTable();
+      if (inCode) html += "<pre><code>" + escapeHtml(codeBuffer.join("\n")) + "</code></pre>";
+      return html;
+    }
+
+    let activeDocId = (function () {
+      try { return localStorage.getItem(LAST_DOC_KEY) || DOCS[0].id; } catch (err) { return DOCS[0].id; }
+    })();
+    let saveTimer = null;
+
+    function trackEvent(name, params) { window.dataLayer = window.dataLayer || []; window.dataLayer.push(Object.assign({ event: name }, params || {})); }
+
+    function renderDocPicker() {
+      const picker = document.getElementById("doc-picker");
+      picker.innerHTML = "";
+      DOCS.forEach(function (doc) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "doc-link" + (doc.id === activeDocId ? " active" : "");
+        const edited = hasOverride(doc.id);
+        const statusClass = doc.status === "done" ? "status-done" : "";
+        const statusLabel = edited ? "Edited" : (doc.status === "done" ? "Done" : "Planned");
+        btn.innerHTML = "<span class=\"doc-link-icon\" aria-hidden=\"true\"><span class=\"material-symbols-rounded\">" + doc.icon + "</span></span><span><span class=\"doc-link-title\">" + escapeHtml(doc.title) + "</span><span class=\"doc-link-meta\">" + escapeHtml(doc.meta) + "</span></span><span class=\"doc-link-status " + statusClass + "\">" + statusLabel + "</span>";
+        btn.addEventListener("click", function () { openDoc(doc.id); });
+        picker.appendChild(btn);
+      });
+    }
+
+    function openDoc(docId) {
+      activeDocId = docId;
+      try { localStorage.setItem(LAST_DOC_KEY, docId); } catch (err) {}
+      const doc = DOCS.find(function (d) { return d.id === docId; });
+      document.getElementById("editor-doc-title").textContent = doc.title;
+      const content = getDocContent(doc);
+      document.getElementById("doc-textarea").value = content;
+      document.getElementById("doc-preview").innerHTML = renderMarkdown(content);
+      updateSaveStatus();
+      renderDocPicker();
+      trackEvent("doc_opened", { doc_id: docId });
+    }
+
+    function updateSaveStatus() {
+      const doc = DOCS.find(function (d) { return d.id === activeDocId; });
+      const statusEl = document.getElementById("save-status");
+      const textEl = document.getElementById("save-status-text");
+      if (hasOverride(doc.id)) {
+        statusEl.classList.add("saved");
+        textEl.textContent = "Your edits are saved on this device";
+      } else {
+        statusEl.classList.remove("saved");
+        textEl.textContent = "Showing published version";
+      }
+    }
+
+    function setViewMode(mode) {
+      const previewTab = document.getElementById("tab-preview");
+      const editTab = document.getElementById("tab-edit");
+      const previewEl = document.getElementById("doc-preview");
+      const textarea = document.getElementById("doc-textarea");
+      const isEdit = mode === "edit";
+      previewTab.classList.toggle("active", !isEdit);
+      previewTab.setAttribute("aria-pressed", String(!isEdit));
+      editTab.classList.toggle("active", isEdit);
+      editTab.setAttribute("aria-pressed", String(isEdit));
+      previewEl.style.display = isEdit ? "none" : "block";
+      textarea.style.display = isEdit ? "block" : "none";
+      if (isEdit) textarea.focus();
+    }
+
+    document.getElementById("tab-preview").addEventListener("click", function () { setViewMode("preview"); });
+    document.getElementById("tab-edit").addEventListener("click", function () {
+      setViewMode("edit");
+      trackEvent("doc_edit_opened", { doc_id: activeDocId });
+    });
+
+    document.getElementById("doc-textarea").addEventListener("input", function (event) {
+      const value = event.target.value;
+      document.getElementById("doc-preview").innerHTML = renderMarkdown(value);
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(function () {
+        setDocOverride(activeDocId, value);
+        updateSaveStatus();
+        renderDocPicker();
+      }, 400);
+    });
+
+    document.getElementById("reset-doc-button").addEventListener("click", function () {
+      const doc = DOCS.find(function (d) { return d.id === activeDocId; });
+      if (!hasOverride(doc.id)) return;
+      if (!window.confirm("Discard your edits to \"" + doc.title + "\" and restore the published version? This cannot be undone.")) return;
+      clearDocOverride(doc.id);
+      trackEvent("doc_reset", { doc_id: doc.id });
+      openDoc(doc.id);
+    });
+
+    document.getElementById("copy-doc-button").addEventListener("click", function () {
+      const textarea = document.getElementById("doc-textarea");
+      navigator.clipboard.writeText(textarea.value).then(function () {
+        const btn = document.getElementById("copy-doc-button");
+        const original = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(function () { btn.textContent = original; }, 1500);
+      }).catch(function () {});
+    });
+
+    renderDocPicker();
+    openDoc(activeDocId);
+  </script>
+</body>
+</html>
