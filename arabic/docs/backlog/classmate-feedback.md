@@ -20,11 +20,11 @@ These three, from Wadnizak, describe problems that may originate in older conten
 
 ## New: mini-games and alternate practice modes
 
-- [ ] **Hangman mini-game (Horne).** A separate game mode using existing vocabulary as the word bank.
+- [x] **Picture matching game.** Shipped 2026-08-24 as a standalone engine at `arabic/match.html`, with 2 sets for Chapter 31 and a "New!" badge. See [matching-game.md](../features/matching-game.md) for the full writeup. This satisfies the spirit of a "mini-game using existing vocabulary" request, though it was built as its own request rather than tied to a specific classmate name.
+- [ ] **Hangman mini-game (Horne).** A separate game mode using existing vocabulary as the word bank. Not started; could reuse the same standalone-page pattern established by `match.html` (its own HTML file, X-to-close topbar, own `localStorage` namespace).
 - [ ] **Numbers speed game (Hannah).** A timed drill mode specifically for number vocabulary/recognition speed.
 - [ ] **Quizlet-style "Learn" mode (Joseph).** Presents several word meanings at once rather than one question at a time.
 - [ ] **Vocabulary-in-context / example sentences (Joseph).** Show each word used in a full sentence, not just an isolated word/definition pair — conceptually similar to Language Reactor's sentence-level, in-context language exposure (Joseph).
-- [ ] **Picture matching game.** See [matching-game.md](../features/matching-game.md) — requested separately on 2026-08-24, scaffolding not yet started.
 
 ## New: hint-before-wrong behavior
 
@@ -38,11 +38,11 @@ These three, from Wadnizak, describe problems that may originate in older conten
 
 ## Rules
 
-- None of the items in this section should be implemented without first being scoped into their own dedicated doc (data model, rules, testing checklist), the same way Known Vocabulary and Anonymous Flagging were.
+- None of the items in this section should be implemented without first being scoped into their own dedicated doc (data model, rules, testing checklist), the same way Known Vocabulary, Anonymous Flagging, and the Matching Game were.
 - The three content-accuracy items (question-count mismatch, missing years, Crusades naming) should be triaged first, separately from the mini-game/gamification ideas, since they may be simple content-data corrections rather than new features.
-- Any new mini-game or practice mode must reuse the existing Content Contract and `UnitsManifest` rather than introducing a parallel content format.
+- Any new mini-game or practice mode must reuse an existing Content Contract (quiz or matching-set) rather than introducing a parallel content format, unless a genuinely new shape is justified and documented.
 - Any hint-before-wrong change must not silently change how `ProgressStore.recordAnswer` scores a streak; the interaction between hints and the two-attempt known-word rule must be explicitly decided and documented before implementation.
-- Gamification rewards (cards, evolving companion) are presentation-layer motivation features and must not be used as a substitute for or stored inside `knownWords`, `bestScore`, or other existing progress fields — if they need their own state, it should be additive and clearly separated.
+- Gamification rewards (cards, evolving companion) are presentation-layer motivation features and must not be used as a substitute for or stored inside `knownWords`, `bestScore`, `matchProgress`, or other existing progress fields — if they need their own state, it should be additive and clearly separated.
 
 ## Testing checklist
 

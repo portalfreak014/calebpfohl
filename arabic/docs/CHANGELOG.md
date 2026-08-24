@@ -4,12 +4,19 @@ Dated, append-only history of implementation work. New entries go at the top. Th
 
 ---
 
-## 2026-08-24 — Documentation split + Chapter 31 vocab gap-fill
+## 2026-08-24 (later) — Matching game engine shipped + nav/UX tweaks
+
+- Shipped `arabic/match.html`, a generic, reusable matching-game engine: tap an Arabic term, then tap its English match; correct pairs lock in green, wrong picks flash red and reset. Per-set progress (matched count, mistakes) saves to `localStorage` under `arabicStudy.matchProgress.v1.*` — its own namespace, separate from `ProgressStore`. Fires `dataLayer` events (`match_set_selected`, `match_pair_correct`, `match_pair_incorrect`, `match_set_completed`) following the existing analytics pattern. See [features/matching-game.md](features/matching-game.md).
+- Defined a new **Matching Set Content Contract** (`setId`/`title`/`unit`/`chapter`/`sourcePage`/`pairs[]`), mirroring the quiz unit Content Contract. Converted the attached `Chapter_31_Pages_31.5_31.6_Vocabulary_Sheets.pdf` worksheet into two matching sets — "The Syrian Virtual University" and "Academic Institutes in Iraq," 12 pairs each — saved as standalone files at `arabic/data/match-sets/ch31-set1.json` and `ch31-set2.json`. This establishes a repeatable pipeline: future worksheet PDFs can be converted into the same JSON shape and added to `match.html`'s set list with no engine changes.
+- Added `arabic/docs.html`, an interactive, editable rendering of the split documentation, styled to match `arabic.html`. Edits save to `localStorage` under `arabicStudy.docs.v1.*` keys — its own namespace, separate from `ProgressStore` and from the match-game progress keys. Per-device only, not a shared multi-user real-time document (that would require a backend, which this site intentionally does not have). See [features/interactive-docs-page.md](features/interactive-docs-page.md).
+- UX tweak: `arabic.html`'s bottom nav now has 4 tabs — Home, **Match** (new, with a "New!" pill), Learn (coming soon), Progress (coming soon) — and the navigation drawer gained a "Matching game" entry (same New! badge) plus a "Project docs" link to `docs.html` that hadn't been wired in yet.
+- UX tweak: `match.html` was restyled to match `quiz.html`'s focused-task pattern — a topbar with an X button (closes back to `arabic.html`) and a centered title, no persistent bottom nav — instead of the home hub's bottom-nav-plus-drawer pattern. This distinction (hub pages use bottom nav; focused single-task pages use X-to-close) is now a documented convention, see `README.md` Guardrails.
+
+## 2026-08-24 — Interactive docs page + documentation split + Chapter 31 vocab gap-fill
 
 - Split the single `CHAPTER_PROGRESS_IMPLEMENTATION.md` (50KB+, 10+ incremental commits, too large to safely reconstruct via commit-diff replay) into `arabic/docs/README.md` (index + status + guardrails) plus one small file per feature under `arabic/docs/features/` and `arabic/docs/backlog/`. Every sentence from the original file was preserved during the split, just re-filed by topic. The original `CHAPTER_PROGRESS_IMPLEMENTATION.md` file itself is left in place as a historical artifact; new edits should target the split docs instead.
 - Fixed Chapter 31 vocabulary gap in `unit7.json`: added 3 missing terms (تحظى, لا بُدَّ من, حاصل) as questions 46–48, found via a word-by-word QC pass against the source textbook passage. See [features/unit7-vocabulary.md](features/unit7-vocabulary.md). Commit `1161f7e`.
 - Requested (not yet started): per-unit vocab QC lists — see [features/vocab-qc-lists.md](features/vocab-qc-lists.md).
-- Requested (not yet started): picture matching/mix-and-match game mode with a "New!" badge — see [features/matching-game.md](features/matching-game.md). Blocked on getting readable access to `quiz.html`, `arabic.html`, `units-manifest.js`, `progress-store.js`.
 
 ---
 
@@ -41,5 +48,7 @@ Dated, append-only history of implementation work. New entries go at the top. Th
 24. [x] Add the GTM-NDCR97CD container to arabic.html and quiz.html, matching index.html.
 25. [x] Add lightweight dataLayer event tracking (direction_toggle, chapter_card_click, answer_selected, answer_checked, word_flagged, word_marked_known, chapter_completed).
 26. [ ] Configure a GA4 tag inside the GTM container to actually forward page views and the seven custom events to a GA4 property; enable Enhanced Measurement for scroll-depth signal.
-27. [ ] Generate per-unit vocab QC lists (added 2026-08-24, see item above).
-28. [ ] Unblock file access and scaffold the picture matching game mode + "New!" badge (added 2026-08-24, see item above).
+27. [ ] Generate per-unit vocab QC lists.
+28. [x] Build the picture matching game mode (`match.html`) foundation, with 2 matching sets for Chapter 31, a "New!" badge, and dataLayer event tracking.
+29. [x] Build an interactive, editable docs.html page for browsing/editing project documentation.
+30. [x] Add "Match" to the homepage bottom nav and drawer; restyle match.html with a quiz.html-style X-to-close topbar instead of a bottom nav.

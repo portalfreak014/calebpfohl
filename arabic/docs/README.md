@@ -1,6 +1,6 @@
 # Arabic Study App — Documentation Index
 
-This directory replaces the single monolithic `CHAPTER_PROGRESS_IMPLEMENTATION.md` file, which had grown too large (50KB+, 10+ incremental commits) to safely read and edit as one unit. Each shipped feature now has its own small, stable file; only `STATUS.md` and `CHANGELOG.md` change often, and both stay small by design.
+This directory replaces the single monolithic `CHAPTER_PROGRESS_IMPLEMENTATION.md` file, which had grown too large (50KB+, 10+ incremental commits) to safely read and edit as one unit. Each shipped feature now has its own small, stable file; only `README.md` (this file) and `CHANGELOG.md` change often, and both stay small by design.
 
 ## Legend
 ✅ Done and live on `main` | ⏳ Planned, not yet implemented
@@ -22,7 +22,8 @@ This directory replaces the single monolithic `CHAPTER_PROGRESS_IMPLEMENTATION.m
 | Unit 6 Supplementary Vocabulary (sticky-note set) | ⏳ Planned — draft transcription in progress | [unit6-supplementary-vocab.md](features/unit6-supplementary-vocab.md) |
 | Classmate Feedback & Feature Requests | ⏳ Planned — triage and scoping not yet started | [classmate-feedback.md](backlog/classmate-feedback.md) |
 | Unit 7 (Chapters 31–32 Vocabulary) | ✅ Done — content, manifest, homepage picker live; Ch31 vocab gap-fill done 2026-08-24 | [unit7-vocabulary.md](features/unit7-vocabulary.md) |
-| Picture Matching Game Mode | ⏳ Planned — foundational scaffolding requested 2026-08-24, blocked on source file access | [matching-game.md](features/matching-game.md) |
+| Interactive Docs Page (`docs.html`) | ✅ Done — editable, per-device local notes over the split docs | [interactive-docs-page.md](features/interactive-docs-page.md) |
+| Picture Matching Game Mode (`match.html`) | ✅ Done — foundational engine live, 2 matching sets for Ch31, "New!" badge in nav | [matching-game.md](features/matching-game.md) |
 | Per-unit Vocab QC Lists | ⏳ Planned — requested 2026-08-24 | [vocab-qc-lists.md](features/vocab-qc-lists.md) |
 | Account Authentication (Google + Magic Link) | ⏳ Planned — sequenced after Known Vocabulary | [account-authentication.md](features/account-authentication.md) |
 | Mobile App Store Distribution (Google Play + Apple App Store) | ⏳ Planned — Play Store fee paid; Apple enrollment not started | [mobile-app-distribution.md](features/mobile-app-distribution.md) |
@@ -52,6 +53,8 @@ The chapter navigation, progress, English-to-Arabic direction, known-vocabulary,
 - Every new chapter's questions must be authored in the correct `number`/`arabic`/`choices`/`answer` shape from the start — the Chapter 31 format bug should not recur.
 - The mobile app store packaging effort must wrap the existing live site rather than fork it into a separately maintained codebase.
 - Every current and future page under `arabic/` must carry the identical GTM container snippet if it should be included in analytics; this is not automatic.
+- Any new standalone page (e.g. `docs.html`, `match.html`) that is a focused single-task screen (not the home hub) should use the `quiz.html`-style topbar (X-to-close, centered title, no persistent bottom nav) rather than the home hub's bottom nav + drawer pattern.
+- Any new experimental/foundational feature added to the home hub's bottom nav or drawer should carry a visible "New!" badge (gradient pill, distinct from the "Coming soon" badge) until it graduates out of the experimental phase.
 
 ## Why this split happened (2026-08-24)
 
