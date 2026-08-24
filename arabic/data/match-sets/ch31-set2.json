@@ -1,0 +1,21 @@
+{
+  "setId": "ch31-set2",
+  "title": "Academic Institutes in Iraq",
+  "unit": "unit7",
+  "chapter": "ch31",
+  "sourcePage": "31.6",
+  "pairs": [
+    { "arabic": "معاهد المعلمين", "english": "teacher-training institutes" },
+    { "arabic": "الفنون الجميلة", "english": "fine arts" },
+    { "arabic": "موزعة على", "english": "distributed among" },
+    { "arabic": "خريجو الدراسة المتوسطة", "english": "graduates of intermediate school" },
+    { "arabic": "تستغرق", "english": "to take (a period of time)" },
+    { "arabic": "الطاقة الاستيعابية", "english": "capacity / enrollment capacity" },
+    { "arabic": "قابلة للتغيير", "english": "subject to change" },
+    { "arabic": "إعداد المعلمين", "english": "training / preparation of teachers" },
+    { "arabic": "تخريج المعلمين", "english": "graduating or producing teachers" },
+    { "arabic": "أقسام متعددة", "english": "multiple departments" },
+    { "arabic": "الرسم التشكيلي", "english": "visual / plastic arts" },
+    { "arabic": "الزخرفة", "english": "ornamentation / decorative art" }
+  ]
+}

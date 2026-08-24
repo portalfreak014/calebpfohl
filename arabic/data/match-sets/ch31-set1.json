@@ -1,0 +1,21 @@
+{
+  "setId": "ch31-set1",
+  "title": "The Syrian Virtual University",
+  "unit": "unit7",
+  "chapter": "ch31",
+  "sourcePage": "31.5",
+  "pairs": [
+    { "arabic": "افتتاح", "english": "opening / inauguration" },
+    { "arabic": "الجامعة الافتراضية", "english": "virtual university" },
+    { "arabic": "الحصول على", "english": "to obtain" },
+    { "arabic": "بواسطة", "english": "by means of" },
+    { "arabic": "تتمتّع بـ", "english": "to possess / enjoy" },
+    { "arabic": "التنوّع", "english": "diversity" },
+    { "arabic": "الاختصاص", "english": "field of specialization" },
+    { "arabic": "شبكة", "english": "network" },
+    { "arabic": "دعم تقني", "english": "technical support" },
+    { "arabic": "التواصل", "english": "to communicate / communication" },
+    { "arabic": "المراجع الورقية", "english": "paper references" },
+    { "arabic": "التراث العربي", "english": "Heritage of the Arab world" }
+  ]
+}

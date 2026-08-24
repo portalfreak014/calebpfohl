@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NDCR97CD');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6750A4">
+  <meta name="description" content="Match Arabic vocabulary to its English meaning.">
+  <title>Match — Arabic Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: light; --md-sys-color-primary:#6750a4; --md-sys-color-on-primary:#fff; --md-sys-color-primary-container:#e9ddff; --md-sys-color-on-primary-container:#21005d; --md-sys-color-secondary-container:#e8def8; --md-sys-color-on-secondary-container:#1d192b; --md-sys-color-surface:#fffbfe; --md-sys-color-surface-container:#f3edf7; --md-sys-color-surface-container-high:#ece6f0; --md-sys-color-on-surface:#1c1b1f; --md-sys-color-on-surface-variant:#49454f; --md-sys-color-outline:#79747e; --md-sys-color-outline-variant:#cac4d0; --md-sys-elevation-1:0 1px 2px rgb(0 0 0 / .30),0 1px 3px 1px rgb(0 0 0 / .15); --radius-xl:28px; --radius-lg:20px; --radius-md:16px; --color-success:#2e7d32; --color-success-bg:#e6f4e9; --color-error:#b3261e; --color-error-bg:#fce8e6; }
+    * { box-sizing:border-box; }
+    html { min-width:320px; background:var(--md-sys-color-surface); }
+    body { margin:0; min-height:100dvh; color:var(--md-sys-color-on-surface); background:var(--md-sys-color-surface); font-family:"Noto Sans","Noto Sans Arabic",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+    button,a { -webkit-tap-highlight-color:transparent; }
+    button { font:inherit; }
+    .material-symbols-rounded { font-family:"Material Symbols Rounded"; font-weight:normal; font-style:normal; font-size:24px; line-height:1; letter-spacing:normal; text-transform:none; display:inline-block; white-space:nowrap; word-wrap:normal; direction:ltr; -webkit-font-feature-settings:"liga"; -webkit-font-smoothing:antialiased; font-variation-settings:"FILL" 0,"wght" 500,"GRAD" 0,"opsz" 24; }
+    .app { width:min(100%,760px); min-height:100dvh; margin:0 auto; padding:max(16px,env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom)); }
+    .top-app-bar { display:flex; align-items:center; justify-content:space-between; min-height:64px; margin-bottom:16px; gap:12px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width:0; }
+    .brand-mark { display:grid; place-items:center; width:44px; height:44px; border-radius:14px; color:var(--md-sys-color-on-primary-container); background:var(--md-sys-color-primary-container); flex-shrink:0; }
+    .brand-copy { line-height:1.15; min-width:0; }
+    .brand-title { margin:0; font-size:1rem; font-weight:700; display:flex; align-items:center; gap:8px; }
+    .brand-subtitle { margin:4px 0 0; color:var(--md-sys-color-on-surface-variant); font-size:.78rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .icon-button { display:inline-grid; place-items:center; width:48px; height:48px; padding:0; border:0; border-radius:50%; color:var(--md-sys-color-on-surface-variant); background:transparent; cursor:pointer; flex-shrink:0; }
+    .icon-button:hover { background:rgb(29 27 32 / .08); }
+    .icon-button:focus-visible,.button:focus-visible,.nav-item:focus-visible,.match-tile:focus-visible,.set-link:focus-visible { outline:3px solid var(--md-sys-color-primary); outline-offset:2px; }
+    .new-badge { display:inline-flex; align-items:center; padding:2px 9px; border-radius:999px; color:#fff; background:linear-gradient(135deg,#7c4dff,#ff4081); font-size:.62rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+    .hero { padding:24px; border-radius:var(--radius-xl); color:var(--md-sys-color-on-primary-container); background:var(--md-sys-color-primary-container); }
+    .eyebrow { margin:0 0 10px; font-size:.82rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { max-width:20ch; margin-bottom:8px; font-size:clamp(1.6rem,7vw,2.2rem); line-height:1.15; letter-spacing:-.03em; }
+    .hero p { max-width:56ch; margin-bottom:0; font-size:.94rem; line-height:1.55; }
+    .section { margin-top:28px; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:14px; flex-wrap:wrap; }
+    .section-heading h2 { margin:0; font-size:1.2rem; letter-spacing:-.02em; }
+    .set-picker { display:grid; gap:10px; }
+    .set-link { display:grid; grid-template-columns:44px minmax(0,1fr) auto; align-items:center; gap:14px; width:100%; min-height:64px; padding:12px 14px; border:1px solid transparent; border-radius:var(--radius-md); color:inherit; background:var(--md-sys-color-surface-container); text-align:left; cursor:pointer; transition:background 150ms ease,transform 150ms ease; font:inherit; }
+    .set-link:hover { background:var(--md-sys-color-surface-container-high); transform:translateY(-1px); }
+    .set-link.active { background:var(--md-sys-color-primary-container); }
+    .set-icon { display:grid; place-items:center; width:44px; height:44px; border-radius:14px; color:var(--md-sys-color-on-secondary-container); background:var(--md-sys-color-secondary-container); flex-shrink:0; }
+    .set-title { margin:0; font-weight:700; line-height:1.25; font-size:.94rem; }
+    .set-meta { margin:3px 0 0; color:var(--md-sys-color-on-surface-variant); font-size:.78rem; }
+    .set-status { justify-self:end; padding:3px 10px; border-radius:999px; color:var(--md-sys-color-on-surface-variant); background:var(--md-sys-color-surface-container-high); font-size:.62rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; white-space:nowrap; }
+    .set-status.status-complete { color:var(--color-success); background:var(--color-success-bg); }
+    .game-card { border:1px solid var(--md-sys-color-outline-variant); border-radius:var(--radius-lg); background:var(--md-sys-color-surface); padding:20px; }
+    .game-stats { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
+    .stat-pill { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; background:var(--md-sys-color-surface-container); color:var(--md-sys-color-on-surface-variant); font-size:.8rem; font-weight:700; }
+    .stat-pill .material-symbols-rounded { font-size:16px; }
+    .stat-pill.stat-good { color:var(--color-success); background:var(--color-success-bg); }
+    .board { display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; }
+    .board-col-label { grid-column:1 / -1; margin:0 0 4px; color:var(--md-sys-color-on-surface-variant); font-size:.72rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .match-tile { display:flex; align-items:center; min-height:56px; padding:12px 14px; border:2px solid var(--md-sys-color-outline-variant); border-radius:var(--radius-md); background:var(--md-sys-color-surface-container); color:var(--md-sys-color-on-surface); cursor:pointer; font-size:.9rem; line-height:1.3; text-align:left; transition:border-color 150ms ease,background 150ms ease,transform 100ms ease; }
+    .match-tile[lang="ar"] { font-family:"Noto Sans Arabic",sans-serif; direction:rtl; text-align:right; font-size:1.02rem; }
+    .match-tile:hover:not(.is-matched):not(:disabled) { border-color:var(--md-sys-color-primary); transform:translateY(-1px); }
+    .match-tile.is-selected { border-color:var(--md-sys-color-primary); background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container); }
+    .match-tile.is-matched { border-color:var(--color-success); background:var(--color-success-bg); color:var(--color-success); cursor:default; opacity:.75; }
+    .match-tile.is-wrong { border-color:var(--color-error); background:var(--color-error-bg); color:var(--color-error); animation:shake 300ms ease; }
+    .match-tile:disabled { cursor:default; }
+    @keyframes shake { 0%,100% { transform:translateX(0); } 25% { transform:translateX(-4px); } 75% { transform:translateX(4px); } }
+    .complete-panel { display:none; text-align:center; padding:32px 16px; }
+    .complete-panel.visible { display:block; }
+    .complete-panel .material-symbols-rounded { font-size:48px; color:var(--color-success); margin-bottom:12px; font-variation-settings:"FILL" 1; }
+    .complete-panel h3 { margin:0 0 8px; font-size:1.3rem; }
+    .complete-panel p { margin:0 0 20px; color:var(--md-sys-color-on-surface-variant); }
+    .complete-actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+    .button { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:0 20px; border:0; border-radius:999px; font-weight:700; text-decoration:none; cursor:pointer; transition:transform 150ms ease,box-shadow 150ms ease,background 150ms ease; font-size:.88rem; }
+    .button:active { transform:scale(.98); }
+    .button-primary { color:var(--md-sys-color-on-primary); background:var(--md-sys-color-primary); box-shadow:var(--md-sys-elevation-1); }
+    .button-tonal { color:var(--md-sys-color-on-primary-container); background:var(--md-sys-color-secondary-container); }
+    .text-button { padding:8px 12px; border:0; border-radius:999px; color:var(--md-sys-color-primary); background:transparent; font-weight:700; cursor:pointer; font-size:.84rem; }
+    .text-button:hover { background:rgb(103 80 164 / .08); }
+    .bottom-nav { position:fixed; right:0; bottom:0; left:0; z-index:10; display:flex; justify-content:center; padding:8px 12px calc(8px + env(safe-area-inset-bottom)); border-top:1px solid var(--md-sys-color-outline-variant); background:rgb(255 251 254 / .94); backdrop-filter:blur(16px); }
+    .bottom-nav-inner { display:grid; grid-template-columns:repeat(3,minmax(80px,1fr)); width:min(100%,520px); gap:4px; }
+    .nav-item { display:grid; justify-items:center; gap:3px; min-height:56px; padding:6px 12px; border:0; border-radius:16px; color:var(--md-sys-color-on-surface-variant); background:transparent; font-size:.75rem; font-weight:700; cursor:pointer; text-decoration:none; }
+    .nav-item.active { color:var(--md-sys-color-on-secondary-container); }
+    .nav-item.active .nav-icon { min-width:64px; padding:4px 16px; border-radius:999px; background:var(--md-sys-color-secondary-container); }
+    .site-credit { margin-top:36px; padding:18px 0 4px; border-top:1px solid var(--md-sys-color-outline-variant); color:var(--md-sys-color-on-surface-variant); font-size:.75rem; line-height:1.5; text-align:center; }
+    @media (min-width:700px) { .app { padding:32px 32px 112px; } .top-app-bar { margin-bottom:24px; } .hero { padding:36px; } .set-picker { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; } }
+  </style>
+</head>
+<body>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDCR97CD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <main class="app">
+    <header class="top-app-bar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span class="material-symbols-rounded">extension</span></div>
+        <div class="brand-copy"><p class="brand-title">Match<span class="new-badge">New!</span></p><p class="brand-subtitle">Tap a term, then tap its match</p></div>
+      </div>
+      <a class="icon-button" href="arabic.html" aria-label="Back to home"><span class="material-symbols-rounded" aria-hidden="true">home</span></a>
+    </header>
+
+    <section class="hero" aria-labelledby="match-heading">
+      <p class="eyebrow"><span class="material-symbols-rounded" aria-hidden="true">extension</span>Matching game <span class="new-badge">New!</span></p>
+      <h1 id="match-heading">Match the vocabulary.</h1>
+      <p>Tap an Arabic term on the left, then tap its English meaning on the right. A foundational, experimental study mode — more matching sets are added over time as new vocabulary sheets are converted.</p>
+    </section>
+
+    <section class="section" aria-labelledby="set-picker-heading">
+      <div class="section-heading"><h2 id="set-picker-heading">Matching sets</h2></div>
+      <div class="set-picker" id="set-picker"></div>
+    </section>
+
+    <section class="section" aria-labelledby="game-heading">
+      <div class="section-heading"><h2 id="game-heading" style="position:absolute;left:-9999px;">Game board</h2></div>
+      <div class="game-card">
+        <div class="game-stats">
+          <span class="stat-pill" id="stat-matched"><span class="material-symbols-rounded" aria-hidden="true">check_circle</span><span id="stat-matched-text">0 of 0 matched</span></span>
+          <span class="stat-pill" id="stat-mistakes"><span class="material-symbols-rounded" aria-hidden="true">replay</span><span id="stat-mistakes-text">0 mistakes</span></span>
+          <button class="text-button" id="shuffle-button" type="button">Shuffle &amp; restart</button>
+        </div>
+        <div class="board-col-label"><span lang="ar" dir="rtl" style="text-align:right;">العربية</span><span>English</span></div>
+        <div class="board" id="board"></div>
+        <div class="complete-panel" id="complete-panel">
+          <span class="material-symbols-rounded" aria-hidden="true">emoji_events</span>
+          <h3>Set complete!</h3>
+          <p id="complete-summary">You matched all pairs.</p>
+          <div class="complete-actions">
+            <button class="button button-primary" id="play-again-button" type="button">Play again</button>
+            <button class="button button-tonal" id="next-set-button" type="button">Next set</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-credit">
+      Created by Caleb Pfohl · Designed with Google Material Design 3 · Built with Perplexity Pro
+    </footer>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Primary navigation">
+    <div class="bottom-nav-inner">
+      <a class="nav-item" href="arabic.html"><span class="nav-icon material-symbols-rounded" aria-hidden="true">home</span>Home</a>
+      <a class="nav-item" href="docs.html"><span class="nav-icon material-symbols-rounded" aria-hidden="true">description</span>Docs</a>
+      <button class="nav-item active" type="button" aria-current="page"><span class="nav-icon material-symbols-rounded" aria-hidden="true">extension</span>Match</button>
+    </div>
+  </nav>
+
+  <script src="progress-store.js"></script>
+  <script>
+    const MATCH_SETS = [
+      {
+        setId: "ch31-set1",
+        title: "The Syrian Virtual University",
+        unit: "unit7",
+        chapter: "ch31",
+        sourcePage: "31.5",
+        pairs: [
+        { arabic: "افتتاح", english: "opening / inauguration" },
+        { arabic: "الجامعة الافتراضية", english: "virtual university" },
+        { arabic: "الحصول على", english: "to obtain" },
+        { arabic: "بواسطة", english: "by means of" },
+        { arabic: "تتمتّع بـ", english: "to possess / enjoy" },
+        { arabic: "التنوّع", english: "diversity" },
+        { arabic: "الاختصاص", english: "field of specialization" },
+        { arabic: "شبكة", english: "network" },
+        { arabic: "دعم تقني", english: "technical support" },
+        { arabic: "التواصل", english: "to communicate / communication" },
+        { arabic: "المراجع الورقية", english: "paper references" },
+        { arabic: "التراث العربي", english: "Heritage of the Arab world" }
+        ]
+      },
+      {
+        setId: "ch31-set2",
+        title: "Academic Institutes in Iraq",
+        unit: "unit7",
+        chapter: "ch31",
+        sourcePage: "31.6",
+        pairs: [
+        { arabic: "معاهد المعلمين", english: "teacher-training institutes" },
+        { arabic: "الفنون الجميلة", english: "fine arts" },
+        { arabic: "موزعة على", english: "distributed among" },
+        { arabic: "خريجو الدراسة المتوسطة", english: "graduates of intermediate school" },
+        { arabic: "تستغرق", english: "to take (a period of time)" },
+        { arabic: "الطاقة الاستيعابية", english: "capacity / enrollment capacity" },
+        { arabic: "قابلة للتغيير", english: "subject to change" },
+        { arabic: "إعداد المعلمين", english: "training / preparation of teachers" },
+        { arabic: "تخريج المعلمين", english: "graduating or producing teachers" },
+        { arabic: "أقسام متعددة", english: "multiple departments" },
+        { arabic: "الرسم التشكيلي", english: "visual / plastic arts" },
+        { arabic: "الزخرفة", english: "ornamentation / decorative art" }
+        ]
+      }
+    ];
+
+    const PROGRESS_KEY_PREFIX = "arabicStudy.matchProgress.v1.";
+
+    function trackEvent(name, params) { window.dataLayer = window.dataLayer || []; window.dataLayer.push(Object.assign({ event: name }, params || {})); }
+
+    function getSetProgress(setId) {
+      try {
+        const raw = localStorage.getItem(PROGRESS_KEY_PREFIX + setId);
+        return raw ? JSON.parse(raw) : null;
+      } catch (err) { return null; }
+    }
+    function saveSetProgress(setId, data) {
+      try { localStorage.setItem(PROGRESS_KEY_PREFIX + setId, JSON.stringify(data)); } catch (err) {}
+    }
+
+    let activeSetId = MATCH_SETS[0] ? MATCH_SETS[0].setId : null;
+    let leftOrder = [];
+    let rightOrder = [];
+    let selectedLeft = null;
+    let selectedRight = null;
+    let matchedPairs = new Set();
+    let mistakeCount = 0;
+
+    function shuffle(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+      }
+      return a;
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function renderSetPicker() {
+      const picker = document.getElementById("set-picker");
+      picker.innerHTML = "";
+      MATCH_SETS.forEach(function (set) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "set-link" + (set.setId === activeSetId ? " active" : "");
+        const progress = getSetProgress(set.setId);
+        const isComplete = progress && progress.matchedCount === set.pairs.length;
+        const statusClass = isComplete ? "status-complete" : "";
+        const statusLabel = isComplete ? "Complete" : (set.pairs.length + " pairs");
+        btn.innerHTML = "<span class=\"set-icon\" aria-hidden=\"true\"><span class=\"material-symbols-rounded\">extension</span></span><span><span class=\"set-title\">" + escapeHtml(set.title) + "</span><span class=\"set-meta\">" + escapeHtml(set.chapter.toUpperCase()) + "</span></span><span class=\"set-status " + statusClass + "\">" + statusLabel + "</span>";
+        btn.addEventListener("click", function () { loadSet(set.setId); trackEvent("match_set_selected", { set_id: set.setId }); });
+        picker.appendChild(btn);
+      });
+    }
+
+    function getActiveSet() { return MATCH_SETS.find(function (s) { return s.setId === activeSetId; }); }
+
+    function loadSet(setId) {
+      activeSetId = setId;
+      const set = getActiveSet();
+      if (!set) return;
+      leftOrder = shuffle(set.pairs.map(function (p, idx) { return idx; }));
+      rightOrder = shuffle(set.pairs.map(function (p, idx) { return idx; }));
+      selectedLeft = null;
+      selectedRight = null;
+      matchedPairs = new Set();
+      mistakeCount = 0;
+      document.getElementById("complete-panel").classList.remove("visible");
+      renderSetPicker();
+      renderBoard();
+      updateStats();
+    }
+
+    function renderBoard() {
+      const set = getActiveSet();
+      if (!set) return;
+      const board = document.getElementById("board");
+      board.innerHTML = "";
+      const maxLen = Math.max(leftOrder.length, rightOrder.length);
+      for (let row = 0; row < maxLen; row++) {
+        const leftIdx = leftOrder[row];
+        const rightIdx = rightOrder[row];
+        if (leftIdx !== undefined) {
+          const pair = set.pairs[leftIdx];
+          const tile = document.createElement("button");
+          tile.type = "button";
+          tile.className = "match-tile" + (matchedPairs.has(leftIdx) ? " is-matched" : "") + (selectedLeft === leftIdx ? " is-selected" : "");
+          tile.lang = "ar"; tile.dir = "rtl";
+          tile.textContent = pair.arabic;
+          tile.disabled = matchedPairs.has(leftIdx);
+          tile.addEventListener("click", function () { selectLeft(leftIdx); });
+          board.appendChild(tile);
+        } else {
+          board.appendChild(document.createElement("div"));
+        }
+        if (rightIdx !== undefined) {
+          const pair = set.pairs[rightIdx];
+          const tile = document.createElement("button");
+          tile.type = "button";
+          tile.className = "match-tile" + (matchedPairs.has(rightIdx) ? " is-matched" : "") + (selectedRight === rightIdx ? " is-selected" : "");
+          tile.textContent = pair.english;
+          tile.disabled = matchedPairs.has(rightIdx);
+          tile.addEventListener("click", function () { selectRight(rightIdx); });
+          board.appendChild(tile);
+        } else {
+          board.appendChild(document.createElement("div"));
+        }
+      }
+    }
+
+    function selectLeft(idx) {
+      if (matchedPairs.has(idx)) return;
+      selectedLeft = idx;
+      renderBoard();
+      tryMatch();
+    }
+    function selectRight(idx) {
+      if (matchedPairs.has(idx)) return;
+      selectedRight = idx;
+      renderBoard();
+      tryMatch();
+    }
+
+    function tryMatch() {
+      if (selectedLeft === null || selectedRight === null) return;
+      if (selectedLeft === selectedRight) {
+        matchedPairs.add(selectedLeft);
+        selectedLeft = null;
+        selectedRight = null;
+        renderBoard();
+        updateStats();
+        checkComplete();
+        trackEvent("match_pair_correct", { set_id: activeSetId });
+      } else {
+        mistakeCount++;
+        const board = document.getElementById("board");
+        const tiles = board.querySelectorAll(".match-tile.is-selected");
+        tiles.forEach(function (t) { t.classList.add("is-wrong"); });
+        trackEvent("match_pair_incorrect", { set_id: activeSetId });
+        setTimeout(function () {
+          selectedLeft = null;
+          selectedRight = null;
+          renderBoard();
+          updateStats();
+        }, 450);
+      }
+    }
+
+    function updateStats() {
+      const set = getActiveSet();
+      if (!set) return;
+      document.getElementById("stat-matched-text").textContent = matchedPairs.size + " of " + set.pairs.length + " matched";
+      document.getElementById("stat-mistakes-text").textContent = mistakeCount + (mistakeCount === 1 ? " mistake" : " mistakes");
+      const matchedPill = document.getElementById("stat-matched");
+      matchedPill.classList.toggle("stat-good", matchedPairs.size === set.pairs.length);
+      saveSetProgress(activeSetId, { matchedCount: matchedPairs.size, mistakeCount: mistakeCount, totalPairs: set.pairs.length });
+      renderSetPicker();
+    }
+
+    function checkComplete() {
+      const set = getActiveSet();
+      if (matchedPairs.size === set.pairs.length) {
+        document.getElementById("complete-summary").textContent = "You matched all " + set.pairs.length + " pairs with " + mistakeCount + (mistakeCount === 1 ? " mistake." : " mistakes.");
+        document.getElementById("complete-panel").classList.add("visible");
+        trackEvent("match_set_completed", { set_id: activeSetId, mistake_count: mistakeCount });
+      }
+    }
+
+    document.getElementById("shuffle-button").addEventListener("click", function () { loadSet(activeSetId); });
+    document.getElementById("play-again-button").addEventListener("click", function () { loadSet(activeSetId); });
+    document.getElementById("next-set-button").addEventListener("click", function () {
+      const currentIndex = MATCH_SETS.findIndex(function (s) { return s.setId === activeSetId; });
+      const next = MATCH_SETS[(currentIndex + 1) % MATCH_SETS.length];
+      loadSet(next.setId);
+    });
+
+    renderSetPicker();
+    if (activeSetId) loadSet(activeSetId);
+  </script>
+</body>
+</html>
