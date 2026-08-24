@@ -500,6 +500,39 @@
             "D": "decisive"
           },
           "answer": "B"
+        },
+        {
+          "number": 46,
+          "arabic": "حَظِيَ (بـ) / يَحْظى / حُظْوة",
+          "choices": {
+            "A": "to be hidden in, latent",
+            "B": "to enjoy, receive, be granted",
+            "C": "to occur, take place",
+            "D": "to go together"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 47,
+          "arabic": "لا بُدَّ من",
+          "choices": {
+            "A": "as an example",
+            "B": "it is necessary, there's no avoiding",
+            "C": "to communicate",
+            "D": "public sector"
+          },
+          "answer": "B"
+        },
+        {
+          "number": 48,
+          "arabic": "حاصل (من حَصَلَ / يَحْصُلُ / حُصول)",
+          "choices": {
+            "A": "occurring, taking place",
+            "B": "radical",
+            "C": "decisive",
+            "D": "predominant"
+          },
+          "answer": "A"
         }
       ]
     },
@@ -527,7 +560,7 @@
             "C": "except",
             "D": "symbolic"
           },
-          "answer": "A"
+          "answer": "D"
         },
         {
           "number": 3,
