@@ -21,9 +21,10 @@ This directory replaces the single monolithic `CHAPTER_PROGRESS_IMPLEMENTATION.m
 | Site Attribution Footer | ✅ Done | [homepage.md](features/homepage.md) |
 | Unit 6 Supplementary Vocabulary (sticky-note set) | ⏳ Planned — draft transcription in progress | [unit6-supplementary-vocab.md](features/unit6-supplementary-vocab.md) |
 | Classmate Feedback & Feature Requests | ⏳ Planned — triage and scoping not yet started | [classmate-feedback.md](backlog/classmate-feedback.md) |
-| Unit 7 (Chapters 31–32 Vocabulary) | ✅ Done — content, manifest, homepage picker live; Ch31 vocab gap-fill done 2026-08-24 | [unit7-vocabulary.md](features/unit7-vocabulary.md) |
+| Unit 7 (Chapters 31–32 Vocabulary) | ✅ Done — content, manifest, homepage picker live; 2 rounds of Ch31 vocab gap-fill QC done 2026-08-24 | [unit7-vocabulary.md](features/unit7-vocabulary.md) |
 | Interactive Docs Page (`docs.html`) | ✅ Done — editable, per-device local notes over the split docs | [interactive-docs-page.md](features/interactive-docs-page.md) |
 | Picture Matching Game Mode (`match.html`) | ✅ Done — foundational engine live, 2 matching sets for Ch31, "New!" badge in nav | [matching-game.md](features/matching-game.md) |
+| Competitor & Inspiration Tracker | ⏳ Planned — Quizlet/Memrise/Anki research done 2026-08-24; a classmate's Quizlet set flagged for comparison | [competitor-tracker.md](competitor-tracker.md) |
 | Per-unit Vocab QC Lists | ⏳ Planned — requested 2026-08-24 | [vocab-qc-lists.md](features/vocab-qc-lists.md) |
 | Account Authentication (Google + Magic Link) | ⏳ Planned — sequenced after Known Vocabulary | [account-authentication.md](features/account-authentication.md) |
 | Mobile App Store Distribution (Google Play + Apple App Store) | ⏳ Planned — Play Store fee paid; Apple enrollment not started | [mobile-app-distribution.md](features/mobile-app-distribution.md) |
@@ -55,6 +56,7 @@ The chapter navigation, progress, English-to-Arabic direction, known-vocabulary,
 - Every current and future page under `arabic/` must carry the identical GTM container snippet if it should be included in analytics; this is not automatic.
 - Any new standalone page (e.g. `docs.html`, `match.html`) that is a focused single-task screen (not the home hub) should use the `quiz.html`-style topbar (X-to-close, centered title, no persistent bottom nav) rather than the home hub's bottom nav + drawer pattern.
 - Any new experimental/foundational feature added to the home hub's bottom nav or drawer should carry a visible "New!" badge (gradient pill, distinct from the "Coming soon" badge) until it graduates out of the experimental phase.
+- Competitor research (see [competitor-tracker.md](competitor-tracker.md)) is for inspiration and gap-checking only — never copy another tool's UI/branding, and never treat a competitor feature as "worth building" without first scoping it into its own feature doc or the classmate-feedback backlog.
 
 ## Why this split happened (2026-08-24)
 
