@@ -9,6 +9,7 @@ Capture enough behavioral data to answer two questions without adding meaningful
 - The GTM container (`GTM-NDCR97CD`) was already live on `index.html` (the main portfolio landing page) before this work began. It was **not** present on `arabic/arabic.html` or `arabic/quiz.html`, meaning the two pages where nearly all real user activity happens — chapter selection and the quiz itself — had zero analytics coverage.
 - Because each HTML document is a separate page load with its own JS context, the GTM snippet does not "carry over" from `index.html` to the Arabic subpages automatically. It must be pasted identically into every page that should be tracked.
 - The container snippet (head `<script>` + body `<noscript><iframe>`) has been added identically to `arabic/arabic.html` and `arabic/quiz.html`, matching `index.html` exactly — same container ID, same placement (script immediately after `<meta charset>`, noscript iframe immediately after `<body>` opens).
+- **GTM/GA4 tag wiring in progress (started 2026-08-24):** the underlying Google Tag ("Caleb Pfohl - GA4", Measurement ID `G-0K3B85W2HH`) is configured and publishing page views from all three pages. Of the 7 custom `dataLayer` events below, `chapter_card_click` is now fully wired end to end — Custom Event trigger created, its Data Layer Variables (`unit_id`, `chapter_id`, `chapter_status`) created, and a `GA4 Event` tag built referencing the existing Google Tag, with parameters mapped and triggering configured. The remaining 6 events (`direction_toggle`, `answer_selected`, `answer_checked`, `word_flagged`, `word_marked_known`, `chapter_completed`) still need their triggers, variables, and GA4 Event tags built the same way before they'll reach GA4.
 
 ## Lightweight custom events
 
@@ -23,15 +24,15 @@ function trackEvent(name, params) {
 
 This pushes directly into the `dataLayer` array GTM already listens on — no additional script tags, no new dependencies, and no meaningful JS weight added. A GA4 Event tag can be configured inside GTM (in the Tag Manager web UI, not in code) to fire on any of these custom event names and forward them to GA4 as GA4 events.
 
-| Event | Fires when | Parameters | File |
-|---|---|---|---|
-| `direction_toggle` | Learner switches Arabic→English / English→Arabic mode on the homepage | `direction` | `arabic.html` |
-| `chapter_card_click` | Learner clicks an available chapter card | `unit_id`, `chapter_id`, `chapter_status` | `arabic.html` |
-| `answer_selected` | Learner picks an answer choice (before checking it) | `unit_id`, `chapter_id`, `mode` | `quiz.html` |
-| `answer_checked` | Learner submits/checks an answer | `unit_id`, `chapter_id`, `mode`, `correct` | `quiz.html` |
-| `word_flagged` | Learner taps the flag-a-question control | `unit_id`, `chapter_id`, `mode` | `quiz.html` |
-| `word_marked_known` | Learner manually marks a word as known | `unit_id`, `chapter_id`, `mode`, `source` | `quiz.html` |
-| `chapter_completed` | Learner finishes all questions in a chapter session | `unit_id`, `chapter_id`, `mode`, `score`, `total` | `quiz.html` |
+| Event | Fires when | Parameters | File | GTM/GA4 tag wired? |
+|---|---|---|---|---|
+| `direction_toggle` | Learner switches Arabic→English / English→Arabic mode on the homepage | `direction` | `arabic.html` | Not yet |
+| `chapter_card_click` | Learner clicks an available chapter card | `unit_id`, `chapter_id`, `chapter_status` | `arabic.html` | ✅ Done |
+| `answer_selected` | Learner picks an answer choice (before checking it) | `unit_id`, `chapter_id`, `mode` | `quiz.html` | Not yet |
+| `answer_checked` | Learner submits/checks an answer | `unit_id`, `chapter_id`, `mode`, `correct` | `quiz.html` | Not yet |
+| `word_flagged` | Learner taps the flag-a-question control | `unit_id`, `chapter_id`, `mode` | `quiz.html` | Not yet |
+| `word_marked_known` | Learner manually marks a word as known | `unit_id`, `chapter_id`, `mode`, `source` | `quiz.html` | Not yet |
+| `chapter_completed` | Learner finishes all questions in a chapter session | `unit_id`, `chapter_id`, `mode`, `score`, `total` | `quiz.html` | Not yet |
 
 ## Funnel and drop-off visibility this enables
 
@@ -39,7 +40,7 @@ Combined with GA4's automatic page-view tracking (no code required) and GA4's En
 
 `page_view` (homepage) → `chapter_card_click` → `page_view` (quiz.html) → `answer_selected`/`answer_checked` (repeated per question) → `chapter_completed`
 
-A learner who lands on the homepage, clicks into Chapter 32, answers a few questions, and leaves without finishing will show up in GA4 as having triggered `chapter_card_click` and several `answer_checked` events but never a `chapter_completed` event for that `chapter_id` — directly answering "where do people drop off."
+A learner who lands on the homepage, clicks into Chapter 32, answers a few questions, and leaves without finishing will show up in GA4 as having triggered `chapter_card_click` and several `answer_checked` events but never a `chapter_completed` event for that `chapter_id` — directly answering "where do people drop off." Full funnel visibility requires all 7 events to be wired in GTM, not just `chapter_card_click`.
 
 ## Rules
 
@@ -49,6 +50,7 @@ A learner who lands on the homepage, clicks into Chapter 32, answers a few quest
 - Every current and future page under `arabic/` must carry the identical GTM snippet (head script + noscript iframe) if it should be included in analytics — this is not automatic and must be checked when adding new pages (e.g. the planned matching game).
 - `trackEvent()` calls must never block or delay the underlying action they're attached to — analytics must fail silently and never break the quiz.
 - No personally identifying data is included in any event's parameters; all parameters are content identifiers (`unit_id`, `chapter_id`, `mode`) or non-identifying outcome data (`correct`, `score`, `total`, `source`).
+- When wiring a new event's GA4 Event tag in GTM, set the Configuration Tag field to **Google Tag** (not GA4 Event) and select the existing "Caleb Pfohl - GA4" tag *before* filling in Event Name and Event Parameters — changing the Configuration Tag type after parameters are entered resets them.
 
 ## Privacy policy implication
 
@@ -57,7 +59,8 @@ This addition means the Mobile App Store Distribution's planned privacy policy m
 ## Testing checklist
 
 - [ ] GTM Preview mode confirms the container fires correctly on `arabic.html` and `quiz.html`, not just `index.html`.
-- [ ] A GA4 tag is configured in the GTM container so page views and the seven custom events actually reach a GA4 property, not just the browser's `dataLayer`.
+- [x] A GA4 tag (Google Tag) is configured in the GTM container so page views reach a GA4 property (Measurement ID `G-0K3B85W2HH`).
+- [ ] All 7 custom events have Custom Event triggers, Data Layer Variables, and GA4 Event tags built in GTM. Done: `chapter_card_click`. Remaining: `direction_toggle`, `answer_selected`, `answer_checked`, `word_flagged`, `word_marked_known`, `chapter_completed`.
 - [ ] GA4 Enhanced Measurement (scroll tracking) is enabled to get drop-off signal on longer pages without additional custom events.
 - [ ] Each of the seven custom events appears correctly in GA4's DebugView with the expected parameters, for at least one full manual run through a chapter.
 - [ ] Privacy policy draft is updated to disclose GTM/GA4 before either store submission.
