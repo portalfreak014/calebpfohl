@@ -1,0 +1,64 @@
+{
+  "id": null,
+  "arabic": null,
+  "lemma": null,
+  "transliteration": null,
+  "lemmaTransliteration": null,
+  "glosses": [],
+  "partOfSpeech": "noun",
+  "partOfSpeechArabic": "اسم",
+  "chapter": null,
+  "unit": null,
+  "variety": "msa",
+  "register": null,
+  "frequency": null,
+  "level": null,
+  "audio": {
+    "status": "pending",
+    "src": null,
+    "speaker": null,
+    "dialect": "msa"
+  },
+  "examples": [],
+  "synonyms": [],
+  "antonyms": [],
+  "relatedWords": [],
+  "tags": [],
+  "grammar": {
+    "gender": null,
+    "number": "singular",
+    "isProperNoun": false,
+    "isCountable": null,
+    "isHuman": null,
+    "forms": {
+      "indefiniteSingular": null,
+      "definiteSingular": null,
+      "dualNominative": null,
+      "dualOblique": null,
+      "plural": null
+    },
+    "pluralType": null,
+    "feminineForm": null,
+    "masculineForm": null,
+    "caseForms": {
+      "indefinite": {
+        "nominative": null,
+        "accusative": null,
+        "genitive": null
+      },
+      "definite": {
+        "nominative": null,
+        "accusative": null,
+        "genitive": null
+      }
+    }
+  },
+  "notes": [],
+  "source": {
+    "book": null,
+    "page": null,
+    "lesson": null
+  },
+  "createdAt": null,
+  "updatedAt": null
+}

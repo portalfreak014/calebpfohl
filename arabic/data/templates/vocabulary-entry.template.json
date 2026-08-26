@@ -1,0 +1,36 @@
+{
+  "id": null,
+  "arabic": null,
+  "lemma": null,
+  "transliteration": null,
+  "lemmaTransliteration": null,
+  "glosses": [],
+  "partOfSpeech": null,
+  "partOfSpeechArabic": null,
+  "chapter": null,
+  "unit": null,
+  "variety": "msa",
+  "register": null,
+  "frequency": null,
+  "level": null,
+  "audio": {
+    "status": "pending",
+    "src": null,
+    "speaker": null,
+    "dialect": "msa"
+  },
+  "examples": [],
+  "synonyms": [],
+  "antonyms": [],
+  "relatedWords": [],
+  "tags": [],
+  "grammar": {},
+  "notes": [],
+  "source": {
+    "book": null,
+    "page": null,
+    "lesson": null
+  },
+  "createdAt": null,
+  "updatedAt": null
+}

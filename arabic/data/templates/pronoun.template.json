@@ -1,0 +1,46 @@
+{
+  "id": null,
+  "arabic": null,
+  "lemma": null,
+  "transliteration": null,
+  "lemmaTransliteration": null,
+  "glosses": [],
+  "partOfSpeech": "pronoun",
+  "partOfSpeechArabic": "ضمير",
+  "chapter": null,
+  "unit": null,
+  "variety": "msa",
+  "register": null,
+  "frequency": null,
+  "level": null,
+  "audio": {
+    "status": "pending",
+    "src": null,
+    "speaker": null,
+    "dialect": "msa"
+  },
+  "examples": [],
+  "synonyms": [],
+  "antonyms": [],
+  "relatedWords": [],
+  "tags": [],
+  "grammar": {
+    "pronounType": null,
+    "person": null,
+    "gender": null,
+    "number": null,
+    "forms": {
+      "independent": null,
+      "possessiveSuffix": null,
+      "objectSuffix": null
+    }
+  },
+  "notes": [],
+  "source": {
+    "book": null,
+    "page": null,
+    "lesson": null
+  },
+  "createdAt": null,
+  "updatedAt": null
+}

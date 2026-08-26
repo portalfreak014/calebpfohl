@@ -1,0 +1,92 @@
+{
+  "id": null,
+  "arabic": null,
+  "lemma": null,
+  "transliteration": null,
+  "lemmaTransliteration": null,
+  "glosses": [],
+  "partOfSpeech": "verb",
+  "partOfSpeechArabic": "فعل",
+  "chapter": null,
+  "unit": null,
+  "variety": "msa",
+  "register": null,
+  "frequency": null,
+  "level": null,
+  "audio": {
+    "status": "pending",
+    "src": null,
+    "speaker": null,
+    "dialect": "msa"
+  },
+  "examples": [],
+  "synonyms": [],
+  "antonyms": [],
+  "relatedWords": [],
+  "tags": [],
+  "grammar": {
+    "root": [],
+    "verbForm": null,
+    "verbFormArabic": null,
+    "transitivity": null,
+    "voice": "active",
+    "citationForm": {
+      "arabic": null,
+      "transliteration": null,
+      "label": "past_3ms"
+    },
+    "arabSchoolForms": {
+      "past": {
+        "arabic": null,
+        "transliteration": null,
+        "labelArabic": "فعل ماضٍ",
+        "labelEnglish": "past",
+        "person": "third",
+        "gender": "masculine",
+        "number": "singular"
+      },
+      "imperfect": {
+        "arabic": null,
+        "transliteration": null,
+        "labelArabic": "فعل مضارع",
+        "labelEnglish": "present / imperfect",
+        "person": "third",
+        "gender": "masculine",
+        "number": "singular"
+      },
+      "imperative": {
+        "arabic": null,
+        "transliteration": null,
+        "labelArabic": "فعل أمر",
+        "labelEnglish": "imperative",
+        "person": "second",
+        "gender": "masculine",
+        "number": "singular"
+      }
+    },
+    "derivedForms": {
+      "verbalNoun": null,
+      "activeParticiple": null,
+      "passiveParticiple": null
+    },
+    "verbClass": {
+      "rootLength": null,
+      "weakType": null,
+      "hasHamza": null,
+      "isDoubled": null
+    },
+    "conjugation": {
+      "past": {},
+      "imperfectIndicative": {},
+      "imperative": {}
+    }
+  },
+  "notes": [],
+  "source": {
+    "book": null,
+    "page": null,
+    "lesson": null
+  },
+  "createdAt": null,
+  "updatedAt": null
+}

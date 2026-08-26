@@ -1,0 +1,46 @@
+{
+  "id": null,
+  "arabic": null,
+  "lemma": null,
+  "transliteration": null,
+  "lemmaTransliteration": null,
+  "glosses": [],
+  "partOfSpeech": "particle",
+  "partOfSpeechArabic": "حرف",
+  "chapter": null,
+  "unit": null,
+  "variety": "msa",
+  "register": null,
+  "frequency": null,
+  "level": null,
+  "audio": {
+    "status": "pending",
+    "src": null,
+    "speaker": null,
+    "dialect": "msa"
+  },
+  "examples": [],
+  "synonyms": [],
+  "antonyms": [],
+  "relatedWords": [],
+  "tags": [],
+  "grammar": {
+    "particleType": null,
+    "function": null,
+    "isClitic": null,
+    "attachesToFollowingWord": null,
+    "governsCase": null,
+    "affectsVerbMood": null,
+    "scope": null,
+    "canAttachPronounSuffix": null,
+    "attachedPronounForms": {}
+  },
+  "notes": [],
+  "source": {
+    "book": null,
+    "page": null,
+    "lesson": null
+  },
+  "createdAt": null,
+  "updatedAt": null
+}
