@@ -1,30 +1,32 @@
-# Account Authentication (Google + Magic Link) ⏳ Planned
+# Account Authentication
 
-Intentionally sequenced after Known Vocabulary shipped and is manually verified, so `mergeProfile()` only needs to handle one finished profile shape rather than being updated twice. Not started; no auth-related code exists in the repository yet.
+## Status
+Planned platform feature. The current application is anonymous and stores learning progress locally in the browser.
 
 ## Purpose
+Account authentication enables learners to retain progress across devices, supports a durable known-vocabulary model, and provides the identity foundation for mobile app distribution and account-linked analytics.
 
-Adds real sign-in via Google OAuth and passwordless magic-link email, so learners can access progress across devices. No passwords are ever stored. Backend logic runs as Node.js serverless functions via Netlify Functions, deployed from this same repository — there is no separate server to provision. Netlify Functions execute as standard Node.js; a file like `netlify/functions/auth-google-callback.js` with a normal `exports.handler` signature is Node code, run automatically through the same GitHub integration already deploying this site. This is unrelated to GitHub Actions (CI/CD scripts, not live endpoints) and requires no separate Node server or hosting account.
+## Initial scope
+- Offer Google Sign-In as the first supported authentication method.
+- Continue to permit anonymous use; signing in should be a clear, non-blocking way to preserve progress across devices.
+- Store only the learning state required for cross-device continuity: completed content, quiz and matching-game results, study settings, and known-vocabulary/mastery data when available.
+- Provide sign-out and an understandable path to request or perform account/data deletion.
+- Keep cloud data as the canonical record after sign-in while maintaining a local cache for offline use.
 
-## Setup
+## Deferred scope
+- Traditional email/password authentication, including verification and password-reset support.
+- Social features, public profiles, and nonessential account customization.
 
-- [ ] Google OAuth 2.0 client in Google Cloud Console; client ID/secret stored as Netlify environment variables, never committed.
-- [ ] `netlify/functions/auth-google-callback.js` completes the OAuth flow and issues a session; the returned stable Google user ID becomes `profile.userId`.
-- [ ] Magic-link: `netlify/functions/auth-magic-link-request.js` generates a signed, single-use, 15-minute-expiring token and sends it via a transactional email API (Resend/Postmark/SendGrid — provider chosen at build time); `netlify/functions/auth-magic-link-verify.js` validates it and issues a session.
-- [ ] Sessions are a signed httpOnly cookie/token, never stored client-side as raw credentials. Signing out clears the session but preserves local `ProgressStore` data.
-- [ ] Netlify DB (Postgres): a `users` table (user ID, auth method, email/Google ID, createdAt) and a `progress` table/column holding the synced profile.
+## Anonymous-to-account progress migration
+On a learner’s first successful sign-in, import locally stored anonymous progress into their cloud account. If cloud progress already exists, merge records conservatively: never reduce completion, preserve the furthest progress per unit or chapter, retain the highest known-vocabulary or mastery state, and resolve settings by the most recently updated value. After a confirmed sync, cloud data becomes canonical while the device retains a cache for offline use.
 
-## Sync behavior
+## Acceptance criteria
+- A learner with only local progress experiences no loss after their first Google sign-in.
+- A returning learner who signs in on a new device receives their cloud progress.
+- A learner who accumulates local progress while offline receives a non-destructive merge at the next sign-in or sync.
+- Sign-out removes local account data from the device but does not delete cloud progress.
+- Account deletion clearly distinguishes deletion of cloud account/data from merely signing out.
+- The first-sync flow is tested with conflicting local and cloud records, with neither record regressing.
 
-On sign-in: fetch remote profile, call the existing `ProgressStore.mergeProfile(remoteProfile)` using the merge rules already defined in [quiz-engine-and-progress.md](quiz-engine-and-progress.md), persist the merged result, and sync every subsequent update with retry/offline handling that never blocks the quiz on failure.
-
-## Rules
-
-- No password-based auth. No secrets in client code, `localStorage`, or the repo — Netlify environment variables only. Sign-in is never required to use the quiz. Magic-link tokens are single-use and expiring. The existing `ProgressStore` API is not changed by this feature.
-
-## Testing checklist additions
-
-- [ ] Google sign-in creates a stable `users` record.
-- [ ] Magic-link request/verify round-trip works; expired/used tokens fail with a clear message.
-- [ ] Local progress made before sign-in merges correctly afterward, not overwritten.
-- [ ] Signing out preserves local progress. The quiz remains fully usable for a user who never signs in.
+## Release requirement
+Define, implement, and test this migration behavior before the Play Store build, so existing web learners can sign in without losing progress.
