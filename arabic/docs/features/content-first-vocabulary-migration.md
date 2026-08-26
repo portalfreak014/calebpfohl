@@ -360,6 +360,8 @@ Use the master template when beginning a record, then use the POS-specific templ
 - Review the Unit 7 Chapter 32 entry `احْتَجَّ / يَحْتَجُّ / احْتِجاج`: the source data shows “to protest” as choice `A` but marks `D` as the answer. This is logged for later validation; no source data was changed.
 - Validate all existing answer keys and glossary meanings in a separate content-review pass. Do not silently correct source wording during raw-backup or schema-migration work.
 
+
+
 ### Next safe sequence
 
 1. Populate each raw glossary from verified source material.
@@ -367,5 +369,81 @@ Use the master template when beginning a record, then use the POS-specific templ
 3. Establish the canonical rich vocabulary data location and migrate one unit at a time.
 4. Update the manifest and consumers only after populated data is ready.
 5. Add unit-access controls in `arabic.html`.
+
+## Chapter-based data architecture
+
+The project uses different file scopes for different kinds of content:
+
+| Data layer | Scope | Location |
+|---|---|---|
+| Raw vocabulary recovery glossary | One Markdown file per unit, divided into five chapter sections | `arabic/data/raw-vocabulary/unit<N>-glossary.md` |
+| Canonical rich vocabulary | One JSON file per chapter | `arabic/data/vocabulary/unit<N>/chapterNN.json` |
+| Quiz configuration | One JSON file per chapter | `arabic/data/quizzes/unit<N>/chapterNN.json` |
+| Unit metadata/index | One lightweight file per unit | `arabic/data/unit<N>.json` |
+| Legacy source preservation | Original source files retained unchanged | `arabic/data/OG_unit6.json`, `arabic/data/OG_unit7.json` |
+
+Each unit contains five chapters:
+
+- Unit 1: Chapters 1–5
+- Unit 2: Chapters 6–10
+- Unit 3: Chapters 11–15
+- Unit 4: Chapters 16–20
+- Unit 5: Chapters 21–25
+- Unit 6: Chapters 26–30
+- Unit 7: Chapters 31–35
+- Unit 8: Chapters 36–40
+- Unit 9: Chapters 41–45
+- Unit 10: Chapters 46–50
+
+### Canonical vocabulary chapter file
+
+Each canonical vocabulary chapter file is valid JSON:
+
+```json
+{
+  "unitId": "unit6",
+  "chapter": 26,
+  "title": "Chapter 26 Vocabulary",
+  "entries": []
+}
+```
+
+The `entries` array contains the content-first lexical records defined in this document. It must not include quiz choices, answer keys, UI state, or feature-specific scoring data.
+
+### Quiz chapter file
+
+Each quiz chapter file is valid JSON:
+
+```json
+{
+  "unitId": "unit6",
+  "chapter": 26,
+  "title": "Chapter 26 Quiz",
+  "questions": []
+}
+```
+
+Quiz files may later reference canonical vocabulary entry IDs. They store quiz-specific choices, answer keys, hints, ordering, and scoring behavior separately from canonical vocabulary data.
+
+## Safe migration and authoring workflow
+
+All vocabulary work must be limited to one chapter at a time.
+
+1. Add or verify the chapter section in the unit’s raw Markdown glossary.
+2. Commit the raw glossary update.
+3. Create or update one canonical vocabulary chapter JSON file.
+4. Validate the JSON and review the diff.
+5. Create or update the matching chapter quiz file only after vocabulary data is verified.
+6. Test that chapter before moving to another one.
+
+Do not ask an AI or automation to migrate an entire unit or multiple chapters in one write. Small chapter-scoped changes reduce the risk of omitted entries, unintended edits, oversized diffs, and difficult rollback.
+
+### Current architecture status
+
+- The `raw-vocabulary/` recovery layer exists with one placeholder glossary per Unit 1–10.
+- Canonical vocabulary and quiz architecture documentation exists under `arabic/data/vocabulary/README.md` and `arabic/data/quizzes/README.md`.
+- The canonical chapter JSON files and chapter quiz JSON files have not yet been scaffolded.
+- `OG_unit6.json` and `OG_unit7.json` are preserved legacy source files and must not be modified.
+- Existing app integration, the unit manifest, and UI navigation remain unchanged until populated chapter data exists and has been tested.
 
 This approach keeps vocabulary authoring lightweight now while ensuring the content can power morphology drills, matching games, adaptive review, filters, and future learning modes later.
