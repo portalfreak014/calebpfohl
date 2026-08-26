@@ -337,4 +337,35 @@ Use the master template when beginning a record, then use the POS-specific templ
 5. Add examples, audio, relations, and advanced morphology incrementally.
 6. Only populate formal case and mood fields for content that needs MSA/Classical precision.
 
+## Implementation status
+
+### Completed
+
+- The content-first schema, controlled vocabularies, and reusable JSON templates are documented and saved in `arabic/data/templates/`.
+- `arabic/data/raw-vocabulary/README.md` defines raw Markdown glossaries as the human-readable recovery layer.
+- Placeholder glossary files exist for Units 1–10 in `arabic/data/raw-vocabulary/`.
+- Valid empty unit JSON shells exist for Units 1–5 and Units 8–10.
+- Existing `unit6.json` and `unit7.json` were preserved without modification.
+- `units-manifest.js` and application navigation were intentionally left unchanged, so empty unit files do not change current app behavior.
+
+### Deferred intentionally
+
+- Raw Unit 1–10 glossary files have not yet been populated with verified vocabulary.
+- The existing Unit 6 and Unit 7 quiz-shaped JSON files have not yet been migrated to the content-first lexical schema.
+- No existing unit is yet powered by the new rich lexical records.
+- App integration for future populated unit JSON files remains pending. This requires reviewing and safely updating the existing unit manifest and relevant quiz/game consumers, then adding navigation controls in `arabic.html`.
+
+### Content-validation backlog
+
+- Review the Unit 7 Chapter 32 entry `احْتَجَّ / يَحْتَجُّ / احْتِجاج`: the source data shows “to protest” as choice `A` but marks `D` as the answer. This is logged for later validation; no source data was changed.
+- Validate all existing answer keys and glossary meanings in a separate content-review pass. Do not silently correct source wording during raw-backup or schema-migration work.
+
+### Next safe sequence
+
+1. Populate each raw glossary from verified source material.
+2. Validate answer keys and meanings separately.
+3. Establish the canonical rich vocabulary data location and migrate one unit at a time.
+4. Update the manifest and consumers only after populated data is ready.
+5. Add unit-access controls in `arabic.html`.
+
 This approach keeps vocabulary authoring lightweight now while ensuring the content can power morphology drills, matching games, adaptive review, filters, and future learning modes later.
