@@ -1,13 +1,13 @@
 # Unit 2 vocabulary
 
-This directory holds the canonical chapter-level vocabulary data for Unit 2.
+This directory holds the canonical chapter-level vocabulary data for Unit 2. Unit 2 covers chapters 6–10.
 
 ## Files
 
-- `chapter1.json`
-- `chapter2.json`
-- `chapter3.json`
-- `chapter4.json`
-- `chapter5.json`
+- `chapter6.json`
+- `chapter7.json`
+- `chapter8.json`
+- `chapter9.json`
+- `chapter10.json`
 
 Each chapter file is intentionally scaffolded as an empty JSON array. Populate entries from `../../raw-vocabulary/unit2-glossary.md` in a future migration pass, following the vocabulary data contract in `../README.md`.
