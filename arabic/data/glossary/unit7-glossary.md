@@ -52,6 +52,12 @@
 | حَظِيَ (بـ) / يَحْظى / حُظْوة | to enjoy, receive, be granted |
 | لا بُدَّ من | it is necessary, there's no avoiding |
 | حاصل (من حَصَلَ / يَحْصُلُ / حُصول) | occurring, taking place |
+| لَبّى / يُلَبّي / تَلْبية | to fulfill; meet (a need or requirement) |
+| حَقْل (ج. حُقول) | field; area of study |
+| نَسَّقَ / يُنَسِّقُ / تَنْسيق | to coordinate; coordination |
+| نَصيب | share; portion; allotment |
+| بِمُوجِب | pursuant to; under; in accordance with |
+| أَكاديمي / أَكاديمية | academic |
 
 ## Chapter 32
 
