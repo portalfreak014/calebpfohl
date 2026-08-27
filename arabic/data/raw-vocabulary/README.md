@@ -33,4 +33,10 @@ The files in `../` may eventually contain rich lexical records for quizzes, game
 ## Current status
 
 - Unit 6 glossary: pending creation
-- Unit 7 glossary: pending creation
+- Unit 7 glossary: Chapters 31–35 captured in `unit7-glossary.md`; Chapters 33–35 were added as Arabic/English Markdown-table entries.
+
+## Recent update
+
+- Unit 7 now includes raw vocabulary sections for Chapters 31, 32, 33, 34, and 35.
+- Chapter entries use a two-column Markdown table: `Arabic` and `English`.
+- The raw glossary remains the readable recovery source for later conversion into chapter JSON and quiz data.
