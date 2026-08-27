@@ -2,7 +2,7 @@
 
 ## Source of truth
 
-The authoritative, human-maintained glossary files are in `arabic/data/raw-vocabulary/`. There is one Markdown file per unit, named `unit{N}-glossary.md`; for example, `unit7-glossary.md`.
+The authoritative, human-maintained glossary files are in `arabic/data/glossary/`. There is one Markdown file per unit, named `unit{N}-glossary.md`; for example, `unit7-glossary.md`.
 
 Use these files first when checking whether terms from a reading, screenshot, or exercise are already covered.
 
