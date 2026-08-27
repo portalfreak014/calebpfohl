@@ -79,6 +79,8 @@
     .work-card h3 { margin: 1.5rem 0 .35rem; font-size: 1.3rem; }
     .work-card p { margin: 0; color: var(--on-surface-variant); }
     .work-card .visit { display: inline-flex; align-items: center; gap: .35rem; margin-top: 1rem; color: var(--primary); font-weight: 700; }
+    .preview-image { width: 100%; aspect-ratio: 16 / 9; margin: 0 0 1rem; object-fit: cover; border-radius: var(--radius-md); background: var(--primary-container); }
+    .preview-image[hidden] { display: none; }
     .contact-card { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: clamp(1.6rem, 5vw, 3.5rem); background: var(--primary-container); border-radius: var(--radius-xl); }
     .contact-card h2, .contact-card p { color: var(--on-primary-container); }
     .contact-card p { max-width: 55ch; margin: .75rem 0 0; }
@@ -132,9 +134,9 @@
     <section class="section" id="portfolio" aria-labelledby="portfolio-title">
       <div class="section-heading"><h2 id="portfolio-title">Selected work.</h2><p>A few projects and resources I’ve built for people and communities doing meaningful work.</p></div>
       <div class="work-grid">
-        <a class="work-card" href="https://legallyspeakingpodcast.com/" target="_blank" rel="noopener noreferrer"><span class="material-symbols-rounded">mic</span><h3>Legally Speaking Podcast</h3><p>Visit legallyspeakingpodcast.com</p><span class="visit">View site <span class="material-symbols-rounded">open_in_new</span></span></a>
-        <a class="work-card" href="https://madamedevaux.com/" target="_blank" rel="noopener noreferrer"><span class="material-symbols-rounded">auto_stories</span><h3>Madame Devaux</h3><p>Visit madamedevaux.com</p><span class="visit">View site <span class="material-symbols-rounded">open_in_new</span></span></a>
-        <a class="work-card" href="https://calebpfohl.com/arabic" target="_blank" rel="noopener noreferrer"><span class="material-symbols-rounded">translate</span><h3>Arabic resources</h3><p>Explore calebpfohl.com/arabic</p><span class="visit">View site <span class="material-symbols-rounded">open_in_new</span></span></a>
+        <a class="work-card" data-preview-site="legallyspeaking" href="https://legallyspeakingpodcast.com/" target="_blank" rel="noopener noreferrer"><img class="preview-image" alt="" hidden><span class="material-symbols-rounded">mic</span><h3>Legally Speaking Podcast</h3><p>Visit legallyspeakingpodcast.com</p><span class="visit">View site <span class="material-symbols-rounded">open_in_new</span></span></a>
+        <a class="work-card" data-preview-site="madamedevaux" href="https://madamedevaux.com/" target="_blank" rel="noopener noreferrer"><img class="preview-image" alt="" hidden><span class="material-symbols-rounded">auto_stories</span><h3>Madame Devaux</h3><p>Visit madamedevaux.com</p><span class="visit">View site <span class="material-symbols-rounded">open_in_new</span></span></a>
+        <a class="work-card" data-preview-site="arabic" href="https://calebpfohl.com/arabic" target="_blank" rel="noopener noreferrer"><img class="preview-image" alt="" hidden><span class="material-symbols-rounded">translate</span><h3>Arabic resources</h3><p>Explore calebpfohl.com/arabic</p><span class="visit">View site <span class="material-symbols-rounded">open_in_new</span></span></a>
       </div>
     </section>
     <section class="section" id="contact" aria-labelledby="contact-title">
@@ -161,6 +163,19 @@
     const rotator = document.getElementById('rotator'); let phrase = 0;
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setInterval(() => { phrase = (phrase + 1) % phrases.length; rotator.animate([{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-.35em)' }, { opacity: 0, transform: 'translateY(.35em)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 420, easing: 'ease-out' }); rotator.textContent = phrases[phrase]; }, 2600); }
     document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll('[data-preview-site]').forEach(async card => {
+      try {
+        const response = await fetch(`/.netlify/functions/link-preview?site=${encodeURIComponent(card.dataset.previewSite)}`);
+        if (!response.ok) return;
+        const preview = await response.json();
+        const title = card.querySelector('h3');
+        const description = card.querySelector('p');
+        const image = card.querySelector('.preview-image');
+        if (preview.title) title.textContent = preview.title;
+        if (preview.description) description.textContent = preview.description;
+        if (preview.image) { image.src = preview.image; image.alt = ''; image.hidden = false; }
+      } catch {}
+    });
   </script>
 </body>
 </html>
