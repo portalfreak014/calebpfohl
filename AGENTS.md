@@ -6,7 +6,7 @@ This repository contains an Arabic-learning project under `arabic/`. Follow thes
 
 ## Source of truth
 
-- Authoritative, human-maintained glossary files are in `arabic/data/raw-vocabulary/`.
+- Authoritative, human-maintained glossary files are in `arabic/data/glossary/`.
 - Naming convention: `unit{N}-glossary.md` (for example, `unit7-glossary.md`).
 - Treat these Markdown files as the source of truth for whether a vocabulary item is already covered.
 - `arabic/data/vocabulary/unit{N}/chapter{NN}.json` contains structured per-chapter vocabulary output.
@@ -17,7 +17,7 @@ This repository contains an Arabic-learning project under `arabic/`. Follow thes
 
 For a request such as “check the underlined terms from Unit 7, Chapter 31”:
 
-1. Inspect the relevant source glossary at `arabic/data/raw-vocabulary/unit7-glossary.md`.
+1. Inspect the relevant source glossary at `arabic/data/glossary/unit7-glossary.md`.
 2. Locate the Chapter 31 section.
 3. Extract the highlighted, underlined, or requested Arabic terms from the provided source material.
 4. Compare each term with the chapter section, accounting for ordinary inflectional variants and definite articles.
@@ -27,4 +27,4 @@ Before concluding that a glossary file is absent, list the relevant repository d
 
 ## Repository discovery
 
-When a request refers to Arabic vocabulary, begin at `arabic/` and inspect the directory structure as needed. The word “glossary” refers by default to the Markdown source files in `arabic/data/raw-vocabulary/`.
+When a request refers to Arabic vocabulary, begin at `arabic/` and inspect the directory structure as needed. The word “glossary” refers by default to the Markdown source files in `arabic/data/glossary/`.
