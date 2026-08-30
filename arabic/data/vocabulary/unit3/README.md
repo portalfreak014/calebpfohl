@@ -10,4 +10,4 @@ This directory holds the canonical chapter-level vocabulary data for Unit 3. Uni
 - `chapter14.json`
 - `chapter15.json`
 
-Each chapter file is intentionally scaffolded as an empty JSON array. Populate entries from `../../raw-vocabulary/unit3-glossary.md` in a future migration pass, following the vocabulary data contract in `../README.md`.
+Each chapter file is intentionally scaffolded as an empty JSON array. Populate entries from `../../glossary/unit3-glossary.md` in a future migration pass, following the vocabulary data contract in `../README.md`.
