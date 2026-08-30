@@ -70,25 +70,59 @@
     .card .material-symbols-rounded { display: grid; width: 48px; height: 48px; place-items: center; margin-bottom: 1.6rem; color: var(--on-primary-container); background: var(--primary-container); border-radius: 16px; }
     .card h3 { margin: 0 0 .5rem; font-size: 1.25rem; }
     .card p { margin: 0; color: var(--on-surface-variant); }
-   .work-grid {
-  align-items: start;
+  .work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  align-items: stretch;
 }
 .work-card {
-  min-height: 0;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.6rem;
+  color: var(--on-surface);
+  background: var(--surface-container-high);
+  border-radius: var(--radius-xl);
+  text-decoration: none;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
     .work-card:hover { background: var(--primary-container); box-shadow: 0 8px 20px rgba(0,43,93,.14); transform: translateY(-4px); }
     .work-card:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
    .work-card .material-symbols-rounded {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
   margin-bottom: 1.5rem;
+  color: var(--on-primary-container);
+  background: var(--primary-container);
+  border-radius: 16px;
 }
     .work-card:hover .material-symbols-rounded { background: var(--on-primary-container); color: var(--primary-container); }
     .work-card h3 { margin: 1.5rem 0 .35rem; font-size: 1.3rem; }
     .work-card p { margin: 0; color: var(--on-surface-variant); }
     .work-card .visit {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
   margin-top: auto;
+  color: var(--primary);
+  font-weight: 700;
 }
-    .preview-image { width: 100%; aspect-ratio: 16 / 9; margin: 0 0 1rem; object-fit: cover; border-radius: var(--radius-md); background: var(--primary-container); }
-    .preview-image[hidden] { display: none; }
+    .preview-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  flex: 0 0 auto;
+  margin: 0 0 1rem;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: var(--primary-container);
+}
+   .preview-image[hidden] {
+  display: none;
+}
     .contact-card { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: clamp(1.6rem, 5vw, 3.5rem); background: var(--primary-container); border-radius: var(--radius-xl); }
     .contact-card h2, .contact-card p { color: var(--on-primary-container); }
     .contact-card p { max-width: 55ch; margin: .75rem 0 0; }
@@ -105,7 +139,7 @@
     height: 520px;
   }
 }
-    @media (max-width: 760px) { .desktop-nav { display: none; } .icon-button { display: grid; } .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 4rem; text-align: center; } h1, .hero-copy { margin-left: auto; margin-right: auto; } .eyebrow { margin-left: auto; margin-right: auto; } .actions { justify-content: center; } .hero-art { order: -1; } .hero-art::before { width: min(82vw, 420px); } .sticker { width: min(78vw, 380px); border-radius: 48px; } .sticker img { border-radius: 36px; } .cards, .work-grid { grid-template-columns: 1fr; } .contact-card { align-items: flex-start; flex-direction: column; } }
+    @media (max-width: 760px) { .desktop-nav { display: none; } .icon-button { display: grid; } .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 4rem; text-align: center; } h1, .hero-copy { margin-left: auto; margin-right: auto; } .eyebrow { margin-left: auto; margin-right: auto; } .actions { justify-content: center; } .hero-art { order: -1; } .hero-art::before { width: min(82vw, 420px); } .sticker { width: min(78vw, 380px); border-radius: 48px; } .sticker img { border-radius: 36px; } .cards, .work-grid { grid-template-columns: 1fr; } .contact-card { align-items: flex-start; flex-direction: column; } .work-card {height: auto; min-height: 320px;}}
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
   </style>
 </head>
