@@ -34,7 +34,7 @@ Each chapter JSON file is currently an empty array scaffold. App integration, ma
 
 ## Raw glossary layer
 
-The files under `arabic/data/raw-vocabulary/` remain the readable source material for vocabulary migration and review.
+The files under `arabic/data/glossary/` remain the readable source material for vocabulary migration and review.
 
 ### Completed raw glossary work
 
@@ -49,7 +49,7 @@ The files under `arabic/data/raw-vocabulary/` remain the readable source materia
 
 ## Next steps
 
-1. Add the remaining raw-vocabulary source material, including Unit 7 Chapters 33–35.
+1. Add the remaining glossary source material, including Unit 7 Chapters 33–35.
 2. Convert raw glossary entries into the documented canonical JSON schema, one file per chapter.
 3. Update the unit manifest and application loaders to consume chapter files.
 4. Add validation and quality-control checks before switching any user-facing view to the new data source.
