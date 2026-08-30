@@ -70,15 +70,23 @@
     .card .material-symbols-rounded { display: grid; width: 48px; height: 48px; place-items: center; margin-bottom: 1.6rem; color: var(--on-primary-container); background: var(--primary-container); border-radius: 16px; }
     .card h3 { margin: 0 0 .5rem; font-size: 1.25rem; }
     .card p { margin: 0; color: var(--on-surface-variant); }
-    .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    .work-card { min-height: 260px; display: flex; flex-direction: column; align-items: flex-start; padding: 1.6rem; color: var(--on-surface); background: var(--surface-container-high); border-radius: var(--radius-xl); text-decoration: none; transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease; }
+   .work-grid {
+  align-items: start;
+}
+.work-card {
+  min-height: 0;
+}
     .work-card:hover { background: var(--primary-container); box-shadow: 0 8px 20px rgba(0,43,93,.14); transform: translateY(-4px); }
     .work-card:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
-    .work-card .material-symbols-rounded { display: grid; width: 48px; height: 48px; place-items: center; margin-bottom: auto; color: var(--on-primary-container); background: var(--primary-container); border-radius: 16px; }
+   .work-card .material-symbols-rounded {
+  margin-bottom: 1.5rem;
+}
     .work-card:hover .material-symbols-rounded { background: var(--on-primary-container); color: var(--primary-container); }
     .work-card h3 { margin: 1.5rem 0 .35rem; font-size: 1.3rem; }
     .work-card p { margin: 0; color: var(--on-surface-variant); }
-    .work-card .visit { display: inline-flex; align-items: center; gap: .35rem; margin-top: 1rem; color: var(--primary); font-weight: 700; }
+    .work-card .visit {
+  margin-top: auto;
+}
     .preview-image { width: 100%; aspect-ratio: 16 / 9; margin: 0 0 1rem; object-fit: cover; border-radius: var(--radius-md); background: var(--primary-container); }
     .preview-image[hidden] { display: none; }
     .contact-card { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: clamp(1.6rem, 5vw, 3.5rem); background: var(--primary-container); border-radius: var(--radius-xl); }
