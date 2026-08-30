@@ -10,4 +10,4 @@ This directory holds the canonical chapter-level vocabulary data for Unit 8. Uni
 - `chapter39.json`
 - `chapter40.json`
 
-Each chapter file is intentionally scaffolded as an empty JSON array. Populate entries from `../../raw-vocabulary/unit8-glossary.md` in a future migration pass, following the vocabulary data contract in `../README.md`.
+Each chapter file is intentionally scaffolded as an empty JSON array. Populate entries from `../../glossary/unit8-glossary.md` in a future migration pass, following the vocabulary data contract in `../README.md`.
