@@ -19,7 +19,7 @@ Do not place an entire unit's rich vocabulary in one large JSON file. Chapter-si
 
 ## Relationship to other data
 
-- `../raw-vocabulary/` contains the human-readable recovery layer: Arabic and meaning only.
+- `../glossary/` contains the human-readable recovery layer: Arabic and meaning only.
 - This directory contains the canonical rich lexical records.
 - `../quizzes/` contains quiz-specific presentation and answer-key data.
 - Existing legacy unit quiz files remain in place until a deliberate per-chapter migration is completed.
