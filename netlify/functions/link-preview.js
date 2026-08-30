@@ -69,20 +69,6 @@ async function fetchLimited(url, options = {}) {
   }
 }
 
-async function usableImage(url) {
-  if (!url) return '';
-  try {
-    const response = await fetch(url, {
-      method: 'HEAD',
-      redirect: 'follow',
-      headers: { 'user-agent': 'CalebPfohlPortfolioPreview/1.0', accept: 'image/*' }
-    });
-    return response.ok && (response.headers.get('content-type') || '').startsWith('image/') ? response.url : '';
-  } catch {
-    return '';
-  }
-}
-
 export default async request => {
   if (request.method !== 'GET') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
@@ -112,7 +98,7 @@ export default async request => {
     } catch {}
 
     const fallbackTitle = decodeHtml((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] || '').replace(/<[^>]*>/g, '').trim());
-    const image = await usableImage(candidate);
+    const image = candidate;
 
     return new Response(JSON.stringify({
       site,
