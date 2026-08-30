@@ -176,11 +176,14 @@
     const rotator = document.getElementById('rotator'); let phrase = 0;
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setInterval(() => { phrase = (phrase + 1) % phrases.length; rotator.animate([{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-.35em)' }, { opacity: 0, transform: 'translateY(.35em)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 420, easing: 'ease-out' }); rotator.textContent = phrases[phrase]; }, 2600); }
     document.getElementById('year').textContent = new Date().getFullYear();
-    document.querySelectorAll('[data-preview-site]').forEach(async card => {
+   document.querySelectorAll('[data-preview-site]').forEach(async card => {
   try {
+    const site = encodeURIComponent(card.dataset.previewSite);
+
     const response = await fetch(
-      `/.netlify/functions/link-preview?site=${encodeURIComponent(card.dataset.previewSite)}`
+      `/.netlify/functions/link-preview?site=${site}`
     );
+
     if (!response.ok) return;
 
     const preview = await response.json();
@@ -191,22 +194,20 @@
     if (preview.title) title.textContent = preview.title;
     if (preview.description) description.textContent = preview.description;
 
-    if (preview.image) {
-      image.onload = () => {
-        image.hidden = false;
-        image.onload = null;
-        image.onerror = null;
-      };
+    image.onload = () => {
+      image.hidden = false;
+      image.onload = null;
+      image.onerror = null;
+    };
 
-      image.onerror = () => {
-        image.removeAttribute('src');
-        image.hidden = true;
-        image.onload = null;
-        image.onerror = null;
-      };
+    image.onerror = () => {
+      image.removeAttribute('src');
+      image.hidden = true;
+      image.onload = null;
+      image.onerror = null;
+    };
 
-      image.src = preview.image;
-    }
+    image.src = `/.netlify/functions/link-preview?site=${site}&image=1`;
   } catch {}
 });
 </script>
