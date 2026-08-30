@@ -117,6 +117,7 @@ async function getPreview(site) {
   });
 
   const html = new TextDecoder().decode(bytes);
+
   const rawImage = meta(html, [
     'og:image',
     'twitter:image',
@@ -180,6 +181,10 @@ export default async request => {
   try {
     const preview = await getPreview(site);
 
+    /*
+     * JSON mode:
+     * /.netlify/functions/link-preview?site=legallyspeaking
+     */
     if (!wantsImage) {
       return new Response(JSON.stringify(preview), {
         status: 200,
@@ -191,6 +196,13 @@ export default async request => {
       });
     }
 
+    /*
+     * Image mode:
+     * /.netlify/functions/link-preview?site=legallyspeaking&image=1
+     *
+     * This fetches the source page's og:image server-side and returns
+     * its image bytes from your own Netlify domain.
+     */
     if (!preview.image) {
       return new Response(null, {
         status: 404,
