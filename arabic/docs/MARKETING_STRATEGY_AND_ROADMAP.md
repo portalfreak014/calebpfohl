@@ -1,7 +1,7 @@
 # UAD Companion Marketing Strategy and Product Roadmap
 
 **Status:** Working strategy document  
-**Last updated:** 2026-08-31  
+**Last updated:** 2026-09-03  
 **Scope:** Product positioning, naming, launch readiness, roadmap, and measurement for the Arabic study application in `arabic/`.
 
 ---
@@ -204,6 +204,7 @@ A first-time visitor should be able to answer four questions in the first screen
 
 - **Home:** Clear value proposition, current coverage, CTA, benefits, trust statement.
 - **Study:** Unit selection and the recommended next activity.
+- **Glossary:** Browse book-derived vocabulary by unit and chapter, with Arabic and English displayed exactly as recorded in the source glossary; link into matching chapter quizzes when available.
 - **Progress:** Completed work, weak areas, recent activity, next suggested step.
 - **How it works:** Short user guide with a 2–3 minute first-session walkthrough.
 - **Coverage:** Units and study modes available now; planned content marked clearly as planned.
@@ -234,6 +235,7 @@ Developer and content-operation documentation should remain detailed. User-facin
 - Add the homepage hero, supporting proposition, and primary CTA.
 - Build a Start Here / first-session onboarding path.
 - Publish truthful, visible content coverage status.
+- Add a read-only glossary-viewing experience so learners can browse available unit and chapter vocabulary outside quiz mode.
 - Add an About page or footer with independence, affiliation, privacy, and content-use statements.
 - Validate the entire experience on mobile before considering a release complete.
 - Add a direct feedback route.
@@ -262,6 +264,9 @@ Developer and content-operation documentation should remain detailed. User-facin
 - Complete one unit end to end before expanding thinly across many units.
 - Prioritize coverage based on actual student demand and current instructional timing.
 - Establish a content QA checklist: Arabic spelling, diacritics policy, transliteration policy, English gloss accuracy, duplicate detection, source/permission review, and review date.
+- Build glossary pages from the authoritative files in `arabic/data/glossary/`, organized by unit and chapter.
+- Preserve the book-derived Arabic and English transcription exactly in the public glossary view; keep any future corrections, notes, or enhanced lexical metadata separate from the source display.
+- Link glossary chapters to the corresponding quiz or matching activity only when that activity is available.
 - Improve repeatable import and validation tooling for unit, glossary, quiz, and matching data.
 - Display a content version or last-reviewed date where it helps users identify current material.
 
@@ -372,6 +377,7 @@ Treat these as starting hypotheses and revise after sufficient traffic accumulat
 - [ ] Progress by unit.
 - [ ] Lightweight session goal.
 - [ ] User-facing guide and coverage page.
+- [ ] Glossary pages with unit/chapter browsing and links to available study activities.
 
 ### P2 — Scale content responsibly
 
@@ -415,6 +421,7 @@ Treat these as starting hypotheses and revise after sufficient traffic accumulat
 - [ ] Progress behavior tested across refreshes and return sessions.
 - [ ] Core GA4 events verified.
 - [ ] Feedback submission path verified.
+- [ ] Glossary pages tested on mobile, including unit/chapter navigation and links to available study activities.
 
 ---
 
