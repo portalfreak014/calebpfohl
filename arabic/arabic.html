@@ -125,44 +125,7 @@
       line-height: 1.5;
       text-align: center;
     }
-    #firebase-auth {
-    position: fixed;
-    z-index: 1000;
-    top: 12px;
-    right: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    max-width: calc(100vw - 24px);
-    padding: 8px 10px;
-    border: 1px solid #d0d5dd;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.96);
-    box-shadow: 0 2px 10px rgba(16, 24, 40, 0.12);
-    color: #1d2939;
-    font: 14px/1.3 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  }
-
-  #firebase-auth button {
-    cursor: pointer;
-    border: 1px solid #1a73e8;
-    border-radius: 6px;
-    padding: 7px 10px;
-    background: #1a73e8;
-    color: #fff;
-    font: inherit;
-    white-space: nowrap;
-  }
-
-  #firebase-auth button:hover:not(:disabled) {
-    background: #1558b0;
-  }
-
-  #firebase-auth button:disabled {
-    cursor: wait;
-    opacity: 0.65;
-  }
-
+   
     .firebase-auth-drawer {
   margin: 12px 0 0;
   padding: 0 12px 12px;
@@ -184,7 +147,9 @@
 }
 
 .firebase-google-signin {
+  grid-template-columns: 28px auto;
   justify-content: center;
+  justify-items: start;
   border: 2px solid #d9d9d9;
   border-radius: 14px;
   background: #fff;
@@ -242,39 +207,6 @@
   font-size: 0.8rem;
   text-align: center;
 }
-
-  .firebase-user {
-    display: flex;
-    min-width: 0;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .firebase-user img {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-  }
-
-  .firebase-user span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  #firebase-auth-message {
-    min-width: 0;
-  }
-
-  @media (max-width: 640px) {
-    #firebase-auth {
-      top: auto;
-      right: 8px;
-      bottom: 8px;
-      left: 8px;
-      justify-content: center;
-    }
-  }
     @media (min-width:700px) { .app { padding:32px 32px 112px; } .top-app-bar { margin-bottom:32px; } .hero { padding:40px; } .continue { padding:24px; } .study-list { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; } }
   </style>
@@ -302,7 +234,7 @@
   </main>
   <nav class="bottom-nav" aria-label="Primary navigation"><div class="bottom-nav-inner"><button class="nav-item active" type="button" aria-current="page"><span class="nav-icon material-symbols-rounded" aria-hidden="true">home</span>Home</button><a class="nav-item" href="match.html"><span class="nav-icon material-symbols-rounded" aria-hidden="true">extension</span><span>Match</span><span class="new-pill">New!</span></a><button class="nav-item coming-soon" type="button" disabled aria-label="Learn — coming soon"><span class="nav-icon material-symbols-rounded" aria-hidden="true">school</span><span>Learn</span><span class="coming-soon-label">Coming soon</span></button><button class="nav-item coming-soon" type="button" disabled aria-label="Progress — coming soon"><span class="nav-icon material-symbols-rounded" aria-hidden="true">bar_chart</span><span>Progress</span><span class="coming-soon-label">Coming soon</span></button></div></nav>
   <div class="drawer-scrim" id="drawer-scrim" aria-hidden="true"></div>
-  <nav class="navigation-drawer" id="navigation-drawer" aria-label="Primary navigation" aria-hidden="true"><div class="drawer-header"><p class="drawer-title">Arabic Study</p><button class="icon-button" id="drawer-close-button" type="button" aria-label="Close navigation menu"><span class="material-symbols-rounded" aria-hidden="true">close</span></button></div><a class="drawer-item active" href="arabic.html" aria-current="page"><span class="material-symbols-rounded" aria-hidden="true">home</span><span>Home</span></a><span class="drawer-section-label">Study</span><a class="drawer-item" href="#unit6-chapters"><span class="material-symbols-rounded" aria-hidden="true">school</span><span>Unit 6 vocabulary</span></a><a class="drawer-item" href="#unit7-chapters"><span class="material-symbols-rounded" aria-hidden="true">school</span><span>Unit 7 vocabulary</span></a><a class="drawer-item" href="match.html"><span class="material-symbols-rounded" aria-hidden="true">extension</span><span class="drawer-item-text">Matching game <span class="drawer-item-badge new-badge">New!</span></span></a><a class="drawer-item" href="docs.html"><span class="material-symbols-rounded" aria-hidden="true">description</span><span>Project docs</span></a><a class="drawer-item" href="#class-resources"><span class="material-symbols-rounded" aria-hidden="true">link</span><span>Resources</span></a><a class="drawer-item" href="#recent-heading"><span class="material-symbols-rounded" aria-hidden="true">history</span><span>Recent activity</span></a><span class="drawer-section-label">More</span><div id="firebase-auth" class="firebase-auth-drawer"></div><div class="drawer-item coming-soon" aria-disabled="true"><span class="material-symbols-rounded" aria-hidden="true">menu_book</span><span class="drawer-item-text">Practice <span class="drawer-item-badge">Coming soon</span></span></div><div class="drawer-item coming-soon" aria-disabled="true"><span class="material-symbols-rounded" aria-hidden="true">bar_chart</span><span class="drawer-item-text">Progress <span class="drawer-item-badge">Coming soon</span></span></div><div class="drawer-item coming-soon" aria-disabled="true"><span class="material-symbols-rounded" aria-hidden="true">settings</span><span class="drawer-item-text">Settings <span class="drawer-item-badge">Coming soon</span></span></div><div id="firebase-auth" class="firebase-auth-drawer"></div>
+  <nav class="navigation-drawer" id="navigation-drawer" aria-label="Primary navigation" aria-hidden="true"><div class="drawer-header"><p class="drawer-title">Arabic Study</p><button class="icon-button" id="drawer-close-button" type="button" aria-label="Close navigation menu"><span class="material-symbols-rounded" aria-hidden="true">close</span></button></div><a class="drawer-item active" href="arabic.html" aria-current="page"><span class="material-symbols-rounded" aria-hidden="true">home</span><span>Home</span></a><span class="drawer-section-label">Study</span><a class="drawer-item" href="#unit6-chapters"><span class="material-symbols-rounded" aria-hidden="true">school</span><span>Unit 6 vocabulary</span></a><a class="drawer-item" href="#unit7-chapters"><span class="material-symbols-rounded" aria-hidden="true">school</span><span>Unit 7 vocabulary</span></a><a class="drawer-item" href="match.html"><span class="material-symbols-rounded" aria-hidden="true">extension</span><span class="drawer-item-text">Matching game <span class="drawer-item-badge new-badge">New!</span></span></a><a class="drawer-item" href="docs.html"><span class="material-symbols-rounded" aria-hidden="true">description</span><span>Project docs</span></a><a class="drawer-item" href="#class-resources"><span class="material-symbols-rounded" aria-hidden="true">link</span><span>Resources</span></a><a class="drawer-item" href="#recent-heading"><span class="material-symbols-rounded" aria-hidden="true">history</span><span>Recent activity</span></a><span class="drawer-section-label">More</span></div><div class="drawer-item coming-soon" aria-disabled="true"><span class="material-symbols-rounded" aria-hidden="true">menu_book</span><span class="drawer-item-text">Practice <span class="drawer-item-badge">Coming soon</span></span></div><div class="drawer-item coming-soon" aria-disabled="true"><span class="material-symbols-rounded" aria-hidden="true">bar_chart</span><span class="drawer-item-text">Progress <span class="drawer-item-badge">Coming soon</span></span></div><div class="drawer-item coming-soon" aria-disabled="true"><span class="material-symbols-rounded" aria-hidden="true">settings</span><span class="drawer-item-text">Settings <span class="drawer-item-badge">Coming soon</span></span></div><div id="firebase-auth" class="firebase-auth-drawer"></div>
 </nav>
   <script src="data/units-manifest.js"></script>
   <script src="progress-store.js"></script>
