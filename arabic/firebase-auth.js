@@ -40,34 +40,73 @@ function setMessage(root, text) {
 }
 
 function renderSignedOut(root) {
-  root.innerHTML = '<button id="firebase-sign-in" type="button">Sign in with Google</button><span id="firebase-auth-message" role="status"></span>';
+  root.innerHTML = `
+    <div class="firebase-menu-divider" role="separator"></div>
+
+    <button class="drawer-item firebase-google-signin"
+            id="firebase-sign-in"
+            type="button">
+      <span class="firebase-google-mark" aria-hidden="true">G</span>
+      <span>Log in with Google</span>
+    </button>
+
+    <span class="firebase-auth-message"
+          id="firebase-auth-message"
+          role="status"></span>
+  `;
+
   root.querySelector("#firebase-sign-in").addEventListener("click", async () => {
     const button = root.querySelector("#firebase-sign-in");
+
     button.disabled = true;
     setMessage(root, "Signing in…");
+
     try {
       await signInWithPopup(auth, provider);
     } catch (error) {
       console.error("Firebase Google sign-in failed:", error);
-      setMessage(root, error.code === "auth/popup-closed-by-user" ? "Sign-in cancelled." : "Could not sign in. Please try again.");
+
+      setMessage(
+        root,
+        error.code === "auth/popup-closed-by-user"
+          ? "Sign-in cancelled."
+          : "Could not sign in. Please try again.",
+      );
+
       button.disabled = false;
     }
   });
 }
 
 function renderSignedIn(root, user) {
-  const name = user.displayName || user.email || "Signed-in user";
-  const photo = user.photoURL ? '<img src="' + user.photoURL + '" alt="" referrerpolicy="no-referrer">' : "";
-  root.innerHTML = '<span class="firebase-user">' + photo + '<span>Signed in as ' + name + '</span></span><button id="firebase-sign-out" type="button">Sign out</button><span id="firebase-auth-message" role="status"></span>';
+  root.innerHTML = `
+    <div class="firebase-menu-divider" role="separator"></div>
+
+    <button class="drawer-item firebase-logout"
+            id="firebase-sign-out"
+            type="button">
+      <span class="material-symbols-rounded" aria-hidden="true">
+        logout
+      </span>
+      <span>Log out</span>
+    </button>
+
+    <span class="firebase-auth-message"
+          id="firebase-auth-message"
+          role="status"></span>
+  `;
+
   root.querySelector("#firebase-sign-out").addEventListener("click", async () => {
     const button = root.querySelector("#firebase-sign-out");
+
     button.disabled = true;
-    setMessage(root, "Signing out…");
+    setMessage(root, "Logging out…");
+
     try {
       await signOut(auth);
     } catch (error) {
       console.error("Firebase sign-out failed:", error);
-      setMessage(root, "Could not sign out. Please try again.");
+      setMessage(root, "Could not log out. Please try again.");
       button.disabled = false;
     }
   });
