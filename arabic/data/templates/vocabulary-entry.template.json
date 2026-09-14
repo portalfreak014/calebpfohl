@@ -1,6 +1,6 @@
 {
   "templateType": "vocabulary-entry",
-  "templateVersion": "1.0.1",
+  "templateVersion": "1.1.0",
   "id": null,
   "arabic": null,
   "lemma": null,
@@ -17,12 +17,7 @@
   "register": null,
   "frequency": null,
   "level": null,
-  "audio": {
-    "status": "pending",
-    "src": null,
-    "speaker": null,
-    "dialect": "msa"
-  },
+  "audio": {"status": "pending", "src": null, "speaker": null, "dialect": "msa"},
   "examples": [],
   "synonyms": [],
   "antonyms": [],
@@ -30,11 +25,7 @@
   "tags": [],
   "grammar": {},
   "notes": [],
-  "source": {
-    "book": null,
-    "page": null,
-    "lesson": null
-  },
+  "source": {"book": null, "page": null, "lesson": null},
   "createdAt": null,
   "updatedAt": null
 }

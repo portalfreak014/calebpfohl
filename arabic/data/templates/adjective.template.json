@@ -1,6 +1,6 @@
 {
   "templateType": "adjective",
-  "templateVersion": "1.0.1",
+  "templateVersion": "1.1.0",
   "id": null,
   "arabic": null,
   "lemma": null,
@@ -23,15 +23,7 @@
   "antonyms": [],
   "relatedWords": [],
   "tags": [],
-  "grammar": {
-    "gender": null,
-    "number": "singular",
-    "comparative": null,
-    "superlative": null,
-    "feminineForm": null,
-    "masculineForm": null,
-    "plurals": []
-  },
+  "grammar": {"gender": null, "number": "singular", "comparative": null, "superlative": null, "feminineForm": null, "masculineForm": null, "plurals": []},
   "notes": [],
   "source": {"book": null, "page": null, "lesson": null},
   "createdAt": null,
