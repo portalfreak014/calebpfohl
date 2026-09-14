@@ -1,12 +1,13 @@
 {
   "templateType": "verb",
-  "templateVersion": "1.0.0",
+  "templateVersion": "1.0.1",
   "id": null,
   "arabic": null,
   "lemma": null,
   "transliteration": null,
   "lemmaTransliteration": null,
   "glosses": [],
+  "senses": [],
   "partOfSpeech": "verb",
   "partOfSpeechArabic": "فعل",
   "chapter": null,
@@ -39,57 +40,16 @@
       "label": "past_3ms"
     },
     "arabSchoolForms": {
-      "past": {
-        "arabic": null,
-        "transliteration": null,
-        "labelArabic": "فعل ماضٍ",
-        "labelEnglish": "past",
-        "person": "third",
-        "gender": "masculine",
-        "number": "singular"
-      },
-      "imperfect": {
-        "arabic": null,
-        "transliteration": null,
-        "labelArabic": "فعل مضارع",
-        "labelEnglish": "present / imperfect",
-        "person": "third",
-        "gender": "masculine",
-        "number": "singular"
-      },
-      "imperative": {
-        "arabic": null,
-        "transliteration": null,
-        "labelArabic": "فعل أمر",
-        "labelEnglish": "imperative",
-        "person": "second",
-        "gender": "masculine",
-        "number": "singular"
-      }
+      "past": {"arabic": null, "transliteration": null, "labelArabic": "فعل ماضٍ", "labelEnglish": "past", "person": "third", "gender": "masculine", "number": "singular"},
+      "imperfect": {"arabic": null, "transliteration": null, "labelArabic": "فعل مضارع", "labelEnglish": "present / imperfect", "person": "third", "gender": "masculine", "number": "singular"},
+      "imperative": {"arabic": null, "transliteration": null, "labelArabic": "فعل أمر", "labelEnglish": "imperative", "person": "second", "gender": "masculine", "number": "singular"}
     },
-    "derivedForms": {
-      "verbalNoun": null,
-      "activeParticiple": null,
-      "passiveParticiple": null
-    },
-    "verbClass": {
-      "rootLength": null,
-      "weakType": null,
-      "hasHamza": null,
-      "isDoubled": null
-    },
-    "conjugation": {
-      "past": {},
-      "imperfectIndicative": {},
-      "imperative": {}
-    }
+    "derivedForms": {"verbalNoun": null, "activeParticiple": null, "passiveParticiple": null},
+    "verbClass": {"rootLength": null, "weakType": null, "hasHamza": null, "isDoubled": null},
+    "conjugation": {"past": {}, "imperfectIndicative": {}, "imperative": {}}
   },
   "notes": [],
-  "source": {
-    "book": null,
-    "page": null,
-    "lesson": null
-  },
+  "source": {"book": null, "page": null, "lesson": null},
   "createdAt": null,
   "updatedAt": null
 }

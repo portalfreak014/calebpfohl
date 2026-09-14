@@ -1,14 +1,15 @@
 {
   "templateType": "particle",
-  "templateVersion": "1.0.0",
+  "templateVersion": "1.0.1",
   "id": null,
   "arabic": null,
   "lemma": null,
   "transliteration": null,
   "lemmaTransliteration": null,
   "glosses": [],
+  "senses": [],
   "partOfSpeech": "particle",
-  "partOfSpeechArabic": "حرف",
+  "partOfSpeechArabic": "أداة",
   "chapter": null,
   "unit": null,
   "rootId": null,
@@ -16,34 +17,15 @@
   "register": null,
   "frequency": null,
   "level": null,
-  "audio": {
-    "status": "pending",
-    "src": null,
-    "speaker": null,
-    "dialect": "msa"
-  },
+  "audio": {"status": "pending", "src": null, "speaker": null, "dialect": "msa"},
   "examples": [],
   "synonyms": [],
   "antonyms": [],
   "relatedWords": [],
   "tags": [],
-  "grammar": {
-    "particleType": null,
-    "function": null,
-    "isClitic": null,
-    "attachesToFollowingWord": null,
-    "governsCase": null,
-    "affectsVerbMood": null,
-    "scope": null,
-    "canAttachPronounSuffix": null,
-    "attachedPronounForms": {}
-  },
+  "grammar": {"particleType": null, "governsCase": null, "governsMood": null},
   "notes": [],
-  "source": {
-    "book": null,
-    "page": null,
-    "lesson": null
-  },
+  "source": {"book": null, "page": null, "lesson": null},
   "createdAt": null,
   "updatedAt": null
 }
