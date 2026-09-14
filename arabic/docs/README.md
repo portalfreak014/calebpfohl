@@ -1,63 +1,45 @@
 # Arabic Study App — Documentation Index
 
-This directory replaces the single monolithic `CHAPTER_PROGRESS_IMPLEMENTATION.md` file, which had grown too large (50KB+, 10+ incremental commits) to safely read and edit as one unit. Each shipped feature now has its own small, stable file; only `README.md` (this file) and `CHANGELOG.md` change often, and both stay small by design.
+Start with [Project Compass](PROJECT_COMPASS.md) for the canonical sources, architecture direction, decision rules, and current next steps. Use the feature documents below for detailed requirements and testing notes.
+
+This directory replaces the single monolithic `CHAPTER_PROGRESS_IMPLEMENTATION.md` file. Each shipped feature has its own small, stable file; `README.md` and `CHANGELOG.md` serve as the index and dated record.
 
 ## Legend
+
 ✅ Done and live on `main` | ⏳ Planned, not yet implemented
 
 ## Status Summary
 
 | Section | Status | Doc |
 |---|---|---|
+| Project Compass | ✅ Done | [PROJECT_COMPASS.md](PROJECT_COMPASS.md) |
 | Content Contract | ✅ Done | [content-contract-and-manifest.md](features/content-contract-and-manifest.md) |
 | Units and Chapters Manifest | ✅ Done | [content-contract-and-manifest.md](features/content-contract-and-manifest.md) |
 | Homepage Changes | ✅ Done | [homepage.md](features/homepage.md) |
 | Quiz Changes | ✅ Done | [quiz-engine-and-progress.md](features/quiz-engine-and-progress.md) |
-| Local-First Progress Store | ✅ Done (schema updated by Known Vocabulary) | [quiz-engine-and-progress.md](features/quiz-engine-and-progress.md) |
-| Quiz Direction Mode (English-to-Arabic) | ✅ Done | [quiz-engine-and-progress.md](features/quiz-engine-and-progress.md) |
-| Known Vocabulary (Mark as Known) | ✅ Done — supersedes prior resume-bug issue | [known-vocabulary.md](features/known-vocabulary.md) |
-| Content Quality Control (Anonymous Flagging) | ✅ Done — Google Sheets logging live on `main` | [content-quality-control.md](features/content-quality-control.md) |
-| Homepage Coming Soon States (Study Sets, Class Resources) | ✅ Done — intentionally disabled pending future release | [homepage.md](features/homepage.md) |
-| Site Attribution Footer | ✅ Done | [homepage.md](features/homepage.md) |
-| Unit 6 Supplementary Vocabulary (sticky-note set) | ⏳ Planned — draft transcription in progress | [unit6-supplementary-vocab.md](features/unit6-supplementary-vocab.md) |
-| Classmate Feedback & Feature Requests | ⏳ Planned — triage and scoping not yet started | [classmate-feedback.md](backlog/classmate-feedback.md) |
-| Unit 7 (Chapters 31–32 Vocabulary) | ✅ Done — content, manifest, homepage picker live; 2 rounds of Ch31 vocab gap-fill QC done 2026-08-24 | [unit7-vocabulary.md](features/unit7-vocabulary.md) |
-| Interactive Docs Page (`docs.html`) | ✅ Done — editable, per-device local notes over the split docs | [interactive-docs-page.md](features/interactive-docs-page.md) |
-| Picture Matching Game Mode (`match.html`) | ✅ Done — foundational engine live, 2 matching sets for Ch31, "New!" badge in nav | [matching-game.md](features/matching-game.md) |
-| Competitor & Inspiration Tracker | ⏳ Planned — Quizlet/Memrise/Anki research done 2026-08-24; a classmate's Quizlet set flagged for comparison | [competitor-tracker.md](competitor-tracker.md) |
-| Per-unit Vocab QC Lists | ⏳ Planned — requested 2026-08-24 | [vocab-qc-lists.md](features/vocab-qc-lists.md) |
-| Account Authentication (Google + Magic Link) | ⏳ Planned — sequenced after Known Vocabulary | [account-authentication.md](features/account-authentication.md) |
-| Mobile App Store Distribution (Google Play + Apple App Store) | ⏳ Planned — Play Store fee paid; Apple enrollment not started | [mobile-app-distribution.md](features/mobile-app-distribution.md) |
-| Analytics (Google Tag Manager + GA4) | ✅ Done — GTM live; GA4 tag/Enhanced Measurement config still outstanding | [analytics.md](features/analytics.md) |
+| Local-First Progress Store | ✅ Done | [quiz-engine-and-progress.md](features/quiz-engine-and-progress.md) |
+| Known Vocabulary | ✅ Done | [known-vocabulary.md](features/known-vocabulary.md) |
+| Content Quality Control | ✅ Done | [content-quality-control.md](features/content-quality-control.md) |
+| Account Authentication | ⏳ Planned | [account-authentication.md](features/account-authentication.md) |
+| Unit 6 Supplementary Vocabulary | ⏳ Planned | [unit6-supplementary-vocab.md](features/unit6-supplementary-vocab.md) |
+| Dynamic schema-driven quiz migration | ⏳ Planned | [PROJECT_COMPASS.md](PROJECT_COMPASS.md) |
 
 ## Purpose
 
-This documentation describes the intended implementation for expanding the Arabic quiz experience from a Chapter 26-only entry point into an easy-to-navigate, multi-chapter experience — designed from the outset to be unit-agnostic. Adding a new unit later (Unit 7, Unit 8, etc.) should require adding a content file and a manifest entry, not new HTML pages or engine changes. It also defines a local-first learner-progress design that can later connect to Google, Apple, email/password, or another account provider without rewriting quiz logic.
+The app is unit-agnostic: adding a unit should require a content file and manifest entry, not new HTML pages or quiz-engine changes. It uses local-first learner progress and can later connect to an account provider without rewriting quiz logic.
 
-The chapter navigation, progress, English-to-Arabic direction, known-vocabulary, anonymous flagging, homepage Coming Soon states, and attribution footer work has been merged to `main` and is live in production.
+## Guardrails
 
-## Guardrails (apply across all features)
+- Preserve Material Design 3 styling and Arabic Unicode, `lang`, and `dir` handling.
+- Check `arabic/data/templates/` before defining new vocabulary fields.
+- Keep content, quiz rendering, learner progress, and external-service concerns separate.
+- Prefer additive modules and compatibility adapters over broad rewrites.
+- Do not make sign-in required for studying or flagging content.
+- Keep secrets out of the repository and make backend failures non-blocking.
+- Store known-word status only in `ProgressStore`, never in content JSON.
+- Do not commit unreviewed vocabulary into a live content file.
+- Keep all activity code unit- and subject-agnostic.
 
-- Preserve the current Material-style mobile design and Arabic Unicode/`lang`/`dir` handling.
-- Do not overwrite or regenerate `unit6.json` unless explicitly required and separately reviewed.
-- Do not add authentication, tracking, analytics, or external services before a doc specifies them.
-- Prefer additive standalone modules over broad rewrites.
-- No unit-specific or subject-specific logic in `quiz.html`, `progress-store.js`, or the manifest helper API.
-- No quiz-direction-specific logic outside the single reversal function.
-- No password-based login — Google and magic-link only. No secrets committed to the repository.
-- Sign-in is never required to use the quiz or to flag a question. Flagging is anonymous-only; no identity field of any kind should be added to the flag payload.
-- No public surfacing of flag data or verification status without a separate explicit decision.
-- Backend failures (auth sync, flag logging) must fail gracefully, never blocking the quiz.
-- Known-word status lives only in `ProgressStore`, never in content JSON, never merged with flag or `verified` data.
-- No retroactive grandfathering of per-word history from old aggregate scores. A single correct answer never marks a word known on its own — two consecutive correct attempts, or a manual override, are required.
-- Draft/unreviewed vocabulary (e.g. the sticky-note supplementary set) must never be committed into a file already live on `main` until the user has reviewed and corrected every entry.
-- Every new chapter's questions must be authored in the correct `number`/`arabic`/`choices`/`answer` shape from the start — the Chapter 31 format bug should not recur.
-- The mobile app store packaging effort must wrap the existing live site rather than fork it into a separately maintained codebase.
-- Every current and future page under `arabic/` must carry the identical GTM container snippet if it should be included in analytics; this is not automatic.
-- Any new standalone page (e.g. `docs.html`, `match.html`) that is a focused single-task screen (not the home hub) should use the `quiz.html`-style topbar (X-to-close, centered title, no persistent bottom nav) rather than the home hub's bottom nav + drawer pattern.
-- Any new experimental/foundational feature added to the home hub's bottom nav or drawer should carry a visible "New!" badge (gradient pill, distinct from the "Coming soon" badge) until it graduates out of the experimental phase.
-- Competitor research (see [competitor-tracker.md](competitor-tracker.md)) is for inspiration and gap-checking only — never copy another tool's UI/branding, and never treat a competitor feature as "worth building" without first scoping it into its own feature doc or the classmate-feedback backlog.
+## Documentation Use
 
-## Why this split happened (2026-08-24)
-
-The original single file (`CHAPTER_PROGRESS_IMPLEMENTATION.md`) grew past the point where it could be safely read back and edited via available GitHub tooling — reconstructing it required commit-diff replay, which works for small/young files but not for a 50KB+ file with a long incremental history. Splitting by feature keeps every file small and independently editable going forward. See `CHANGELOG.md` for the dated history of changes, and each feature file for its own status, rules, and testing checklist.
+Read Project Compass first. Then consult the feature document that owns the area being changed, update that document when the architectural decision changes, and add a changelog entry for shipped work.
