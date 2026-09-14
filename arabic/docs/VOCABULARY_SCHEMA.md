@@ -75,6 +75,21 @@ Separate root-letter tokens with hyphens. The root ح ل ل becomes `7-l-l`; ظ 
 
 Use `grammar.root` when a template supports it to store Arabic root letters for display and linguistic data. `rootId` is the cross-content relationship key. A root record owns the shared semantic thread, form explanations, source metadata, and Freya Selberg attribution for material from Freya's Root Chart.
 
+## Verb forms
+
+For every migrated verb whose derived form can be identified reliably, populate both `grammar.verbForm` and `grammar.verbFormArabic`. Use the conventional Arabic numeral for `verbForm` and the Arabic label for `verbFormArabic`.
+
+```json
+{
+  "grammar": {
+    "verbForm": 8,
+    "verbFormArabic": "الفعل الثامن"
+  }
+}
+```
+
+Leave both fields `null` only when the form is genuinely unresolved, disputed, or not meaningfully applicable. In that case, add a concise note explaining why. This keeps the schema honest while making derived-form information available for learning features and filtering.
+
 ## Phrases
 
 For a multiword expression, use one verified primary `rootId`: the root of the phrase's primary meaning-bearing word. This is a navigational and pedagogical connection, not a claim that the whole phrase has one literal root. Keep the full phrase in `arabic` and `lemma`; individual component entries may have their own root links when they are independently useful vocabulary.
