@@ -25,9 +25,48 @@ Arabic roots are the shared conceptual backbone of the vocabulary model. Every v
 
 A `rootId` is a stable, letter-based key that resolves to a shared record in `arabic/data/roots.json`. It should not encode an English gloss or semantic thread, because editorial explanations may improve over time while the relationship must remain stable.
 
+## Root ID encoding
+
+Use the project's backend-safe Arabizi encoding for all `rootId` values. IDs are lowercase ASCII, hyphen-separated, and contain only letters and digits. Do not use apostrophes, spaces, Unicode letters, or punctuation in root IDs. This keeps IDs safe for URLs, object keys, selectors, command-line tools, and future APIs.
+
+Use these canonical mappings:
+
+| Arabic letter | Root-ID token |
+|---|---|
+| ا / ء | `2` |
+| ب | `b` |
+| ت | `t` |
+| ث | `th` |
+| ج | `j` |
+| ح | `7` |
+| خ | `5` |
+| د | `d` |
+| ذ | `dh` |
+| ر | `r` |
+| ز | `z` |
+| س | `s` |
+| ش | `sh` |
+| ص | `9` |
+| ض | `9d` |
+| ط | `6` |
+| ظ | `6z` |
+| ع | `3` |
+| غ | `8` |
+| ف | `f` |
+| ق | `q` |
+| ك | `k` |
+| ل | `l` |
+| م | `m` |
+| ن | `n` |
+| ه | `h` |
+| و | `w` |
+| ي | `y` |
+
+Separate root-letter tokens with hyphens. The root ح ل ل becomes `7-l-l`; ظ ل م becomes `6z-l-m`; and ع ل م becomes `3-l-m`.
+
 ```json
 {
-  "rootId": "q-t-ayn",
+  "rootId": "q-6-3",
   "grammar": {
     "root": ["ق", "ط", "ع"]
   }
