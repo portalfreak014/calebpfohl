@@ -34,97 +34,35 @@ function getAuthRoot() {
   return root;
 }
 
-function setMessage(root, text) {
-  const message = root.querySelector("#firebase-auth-message");
-  if (message) message.textContent = text || "";
-}
+function setMessage(root, text) { const message = root.querySelector("#firebase-auth-message"); if (message) message.textContent = text || ""; }
 
 function renderSignedOut(root) {
-  root.innerHTML = `
-    <div class="firebase-menu-divider" role="separator"></div>
-
-    <button class="drawer-item firebase-google-signin"
-            id="firebase-sign-in"
-            type="button">
-      <span class="firebase-google-mark" aria-hidden="true">G</span>
-      <span>Log in with Google</span>
-    </button>
-
-    <span class="firebase-auth-message"
-          id="firebase-auth-message"
-          role="status"></span>
-  `;
-
+  root.innerHTML = `<div class="firebase-menu-divider" role="separator"></div><button class="drawer-item firebase-google-signin" id="firebase-sign-in" type="button"><span class="firebase-google-mark" aria-hidden="true">G</span><span>Log in with Google</span></button><span class="firebase-auth-message" id="firebase-auth-message" role="status"></span>`;
   root.querySelector("#firebase-sign-in").addEventListener("click", async () => {
-    const button = root.querySelector("#firebase-sign-in");
-
-    button.disabled = true;
-    setMessage(root, "Signing in…");
-
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.error("Firebase Google sign-in failed:", error);
-
-      setMessage(
-        root,
-        error.code === "auth/popup-closed-by-user"
-          ? "Sign-in cancelled."
-          : "Could not sign in. Please try again.",
-      );
-
-      button.disabled = false;
-    }
+    const button = root.querySelector("#firebase-sign-in"); button.disabled = true; setMessage(root, "Signing in…");
+    try { await signInWithPopup(auth, provider); }
+    catch (error) { console.error("Firebase Google sign-in failed:", error); setMessage(root, error.code === "auth/popup-closed-by-user" ? "Sign-in cancelled." : "Could not sign in. Please try again."); button.disabled = false; }
   });
 }
 
-function renderSignedIn(root, user) {
-  root.innerHTML = `
-    <div class="firebase-menu-divider" role="separator"></div>
-
-    <button class="drawer-item firebase-logout"
-            id="firebase-sign-out"
-            type="button">
-      <span class="material-symbols-rounded" aria-hidden="true">
-        logout
-      </span>
-      <span>Log out</span>
-    </button>
-
-    <span class="firebase-auth-message"
-          id="firebase-auth-message"
-          role="status"></span>
-  `;
-
+function renderSignedIn(root) {
+  root.innerHTML = `<div class="firebase-menu-divider" role="separator"></div><button class="drawer-item firebase-logout" id="firebase-sign-out" type="button"><span class="material-symbols-rounded" aria-hidden="true">logout</span><span>Log out</span></button><span class="firebase-auth-message" id="firebase-auth-message" role="status"></span>`;
   root.querySelector("#firebase-sign-out").addEventListener("click", async () => {
-    const button = root.querySelector("#firebase-sign-out");
-
-    button.disabled = true;
-    setMessage(root, "Logging out…");
-
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error("Firebase sign-out failed:", error);
-      setMessage(root, "Could not log out. Please try again.");
-      button.disabled = false;
-    }
+    const button = root.querySelector("#firebase-sign-out"); button.disabled = true; setMessage(root, "Logging out…");
+    try { await signOut(auth); }
+    catch (error) { console.error("Firebase sign-out failed:", error); setMessage(root, "Could not log out. Please try again."); button.disabled = false; }
   });
 }
 
-function getProgressStore() {
-  return window.ProgressStore && typeof window.ProgressStore.getProfile === "function" ? window.ProgressStore : null;
-}
-
-function profileReference(user) {
-  return doc(db, "users", user.uid, "progress", "current");
-}
+function getProgressStore() { return window.ProgressStore && typeof window.ProgressStore.getProfile === "function" ? window.ProgressStore : null; }
+function profileReference(user) { return doc(db, "users", user.uid, "progress", "current"); }
 
 async function writeProgressNow() {
   if (!activeUser || !syncReady) return;
   const store = getProgressStore();
   if (!store) return;
   const profile = store.getProfile();
+  if (profile.userId !== activeUser.uid) return;
   const serialized = JSON.stringify(profile);
   if (serialized === lastSavedProfile) return;
   try {
@@ -137,11 +75,7 @@ async function writeProgressNow() {
   }
 }
 
-function queueProgressSync() {
-  if (!activeUser || !syncReady) return;
-  window.clearTimeout(syncTimer);
-  syncTimer = window.setTimeout(writeProgressNow, SYNC_DELAY_MS);
-}
+function queueProgressSync() { if (!activeUser || !syncReady) return; window.clearTimeout(syncTimer); syncTimer = window.setTimeout(writeProgressNow, SYNC_DELAY_MS); }
 
 function installProgressSync() {
   if (window.__firebaseProgressSyncInstalled) return;
@@ -149,39 +83,34 @@ function installProgressSync() {
   const store = getProgressStore();
   if (!store || typeof store.saveProfile !== "function") return;
   const originalSaveProfile = store.saveProfile.bind(store);
-  store.saveProfile = function saveProfileAndQueueSync(profile) {
-    const result = originalSaveProfile(profile);
-    queueProgressSync();
-    return result;
-  };
-  window.addEventListener("pagehide", () => {
-    if (syncTimer) {
-      window.clearTimeout(syncTimer);
-      syncTimer = null;
-      writeProgressNow();
-    }
-  });
+  store.saveProfile = function saveProfileAndQueueSync(profile) { const result = originalSaveProfile(profile); queueProgressSync(); return result; };
+  window.addEventListener("pagehide", () => { if (syncTimer) { window.clearTimeout(syncTimer); syncTimer = null; writeProgressNow(); } });
 }
 
 async function hydrateProgress(user) {
   const store = getProgressStore();
-  if (!store) {
-    console.warn("ProgressStore was unavailable; cloud progress was not synced.");
-    return;
-  }
+  if (!store) { console.warn("ProgressStore was unavailable; cloud progress was not synced."); return; }
   syncReady = false;
   installProgressSync();
   try {
+    const localProfile = store.getProfile();
+    const localOwner = localProfile.userId || null;
     const snapshot = await getDoc(profileReference(user));
     const remoteProfile = snapshot.exists() ? snapshot.data().profile : null;
-    const merged = remoteProfile && typeof store.mergeProfile === "function" ? store.mergeProfile(remoteProfile) : store.getProfile();
-    if (merged && typeof store.saveProfile === "function") {
-      const profileWithUser = { ...merged, userId: user.uid };
-      store.saveProfile(profileWithUser);
-      lastSavedProfile = "";
-      syncReady = true;
-      await writeProgressNow();
+
+    if (localOwner && localOwner !== user.uid) {
+      store.createBackup(localProfile, "different-user");
+      const replacement = remoteProfile && typeof remoteProfile === "object" ? remoteProfile : { ...localProfile, units: {}, lastActive: null, syncVersion: 0 };
+      const ownedProfile = { ...replacement, userId: user.uid };
+      store.replaceProfile(ownedProfile);
+    } else {
+      const merged = remoteProfile && typeof store.mergeProfile === "function" ? store.mergeProfile(remoteProfile, localProfile) : localProfile;
+      store.replaceProfile({ ...merged, userId: user.uid });
     }
+
+    lastSavedProfile = "";
+    syncReady = true;
+    await writeProgressNow();
     window.dispatchEvent(new CustomEvent("firebase-progress-ready", { detail: { user } }));
   } catch (error) {
     console.error("Firebase progress hydration failed:", error);
@@ -195,12 +124,8 @@ onAuthStateChanged(auth, async (user) => {
   activeUser = user || null;
   syncReady = false;
   window.clearTimeout(syncTimer);
-  if (user) {
-    renderSignedIn(root, user);
-    await hydrateProgress(user);
-  } else {
-    renderSignedOut(root);
-  }
+  if (user) { renderSignedIn(root, user); await hydrateProgress(user); }
+  else renderSignedOut(root);
   window.dispatchEvent(new CustomEvent("firebase-auth-state-changed", { detail: { user: user || null } }));
 });
 
