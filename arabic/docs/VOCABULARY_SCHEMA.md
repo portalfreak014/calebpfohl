@@ -1,5 +1,24 @@
 # Vocabulary Schema Conventions
 
+## Template versioning
+
+Every vocabulary entry records the exact source template through two required top-level fields:
+
+```json
+{
+  "templateType": "noun",
+  "templateVersion": "1.0.0"
+}
+```
+
+Use semantic versioning for each template independently:
+
+- Increase the major version for a breaking structural change that requires migration.
+- Increase the minor version for new optional fields or compatible additions.
+- Increase the patch version for clarifications, documentation-only edits, or corrections that do not alter the expected entry shape.
+
+When a template changes, update that template's `templateVersion` and only update a content file's `templateVersion` after the file has been reviewed or migrated. This makes outdated chapter content discoverable without pretending it has already been upgraded.
+
 ## Root-centered relationships
 
 Arabic roots are the shared conceptual backbone of the vocabulary model. Every vocabulary template provides an optional `rootId` field. Populate it when a meaningful root has been verified; use `null` for particles, pronouns, borrowed terms, fixed expressions without a defensible primary lexical root, and unresolved cases. Never infer a root solely to fill the field.
@@ -52,7 +71,6 @@ For nouns, `lemma` is the canonical dictionary form. Record grammatical number i
     }
   }
 }
-```
 
 Use `relatedWords` only for distinct vocabulary records that need a deliberate relationship, such as a derived noun, related adjective, counterpart, or a pedagogically paired expression. Each relation should refer to a stable `entryId`; do not use it to repeat ordinary inflected forms.
 
@@ -65,4 +83,3 @@ Use `relatedWords` only for distinct vocabulary records that need a deliberate r
     }
   ]
 }
-```
