@@ -9,6 +9,7 @@
   "partOfSpeechArabic": "اسم",
   "chapter": null,
   "unit": null,
+  "rootId": null,
   "variety": "msa",
   "register": null,
   "frequency": null,
@@ -33,9 +34,11 @@
     "forms": {
       "indefiniteSingular": null,
       "definiteSingular": null,
-      "dualNominative": null,
-      "dualOblique": null,
-      "plural": null
+      "dual": {
+        "nominative": null,
+        "oblique": null
+      },
+      "plurals": []
     },
     "pluralType": null,
     "feminineForm": null,
