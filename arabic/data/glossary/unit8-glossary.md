@@ -1,7 +1,310 @@
-# Unit 8 glossary
+# Unit 8 Glossary
 
-> Status: Placeholder. Add vocabulary from the source glossary before using this as a recovery record.
+Source: *Arabic Basic Course, Second Edition* — Chapters 36–40.
 
-| Arabic | Meaning |
+## Chapter 36
+
+| Arabic | English |
 |---|---|
-# Unit 8 Glossary\n\nSource: Arabic Basic Course, Second Edition — Chapters 36–40.\n\n## Chapter 36\n\n| Arabic | English |\n|---|---|\n| استجاب / يستجيب / استجابة | to respond |\n| استجم / يستجم / استجمام | to relax, recuperate |\n| استدعى / يستدعي / استدعاء | to require |\n| استهدف / يستهدف / استهداف | to target, aim |\n| إصابات طارئة | accidental injuries |\n| إعاقات | disabilities |\n| اعتاد / يعتاد / اعتياد | to get used to |\n| أعشاب طبية | medicinal herbs |\n| انتكس / ينتكس / انتكاس | to relapse |\n| أودى بـ / يودي | to put an end to (life) |\n| تبعات | consequences |\n| تعرض / يتعرض / تعرض | to be exposed, subjected |\n| التهب / يلتهب / التهاب | to be infected, inflamed |\n| تحسباً من | being afraid of, on guard against |\n| توعك | ailment |\n| التوى / يلتوي / التواء | to be sprained |\n| ثقّف / يثقّف / تثقيف | to educate |\n| جرح / جروح | wound(s) |\n| جيب / جيوب أنفية | sinus(es) |\n| حرجة | critical |\n| حرق / حروق | burn(s) |\n| حشرات سامة | poisonous insects |\n| حفّز / يحفّز / تحفيز | to stimulate |\n| حلق | throat |\n| حنّط / يحنّط / تحنيط | to mummify |\n| خافض للحرارة | fever reducer |\n| دواجن | poultry |\n| ربو | asthma |\n| سال / يسيل / سيلان | to flow |\n| سعال | cough |\n| سم / سموم | poison(s) |\n| شائع | widespread |\n| شخص / يشخّص / تشخيص | to diagnose |\n| صادق / يصادق / مصادقة | to approve |\n| ضمّد / يضمّد / تضميد | to bandage |\n| طب بديل | alternative medicine |\n| طبع / يطبع / طباعة | to print |\n| طعّم / يطعّم / تطعيم | to vaccinate |\n| عبر | across, through |\n| عقار / عقاقير | drug(s), medicine |\n| عرض / أعراض | symptom(s) |\n| غلى / يغلي / غليان | to boil |\n| قرص مدمج | compact disc or DVD |\n| كدمات | bruise(s) |\n| كمادات | compress(es) |\n| لدغات الثعابين | snakebites |\n| لسعات العقارب | scorpion stings |\n| لقاح | vaccination |\n| مبسط | simplified |\n| مخاط | mucus |\n| مركب | compound |\n| مرهم / مراهم | ointment(s) |\n| مسعف | paramedic, ambulance worker |\n| مصاب | afflicted, injured |\n| مضاد حيوي | antibiotic |\n| مضاعفات | complications |\n| معنية | concerned |\n| مفصل / مفاصل | joint(s) |\n| مناعة | immunity |\n| نبّه / ينبّه / تنبيه | to call someone’s attention to |\n| نفع / ينفع / نفع | to benefit |\n| نقع / ينقع / نقع | to steep |\n| ورم / أورام | swelling, tumor(s) |\n| وعّى / يوعّي / توعية | to make aware |\n\n## Chapter 37\n\n| Arabic | English |\n|---|---|\n| أساء / يسيء / إساءة | to do badly |\n| استأصل / يستأصل / استئصال | to remove by surgery |\n| استعصى / يستعصي / استعصاء | to be difficult to cure |\n| أسنان لبنية | baby teeth |\n| إسهال | diarrhea |\n| أشعة / أشعة سينية | X-rays |\n| أمراض باطنية | internal diseases |\n| السرطان | cancer |\n| إمساك | constipation |\n| أوعية دموية | blood vessels |\n| باستثناء | except, excluding |\n| برّاق | shining |\n| بيّض / تبييض | to whiten |\n| تجاويف | cavities |\n| تجلط الدم | blood clotting |\n| ترسب / يترسب / ترسب | to be deposited, settle |\n| تسوس / يتسوس / تسوس | to become decayed |\n| تصلب الشرايين | hardening of the arteries |\n| تفاقم / تفاقم | to worsen |\n| جراحة | surgery |\n| جلطة دموية | blood clot |\n| جير | lime |\n| حشوة / حشوات | filling(s) |\n| حلوى / حلويات | sweets |\n| حفر / يحفر / حفر | to dig, drill |\n| خلع / يخلع / خلع | to extract, pull out |\n| خلية / خلايا | cell(s) |\n| تنظيف الأسنان (خيط) | flossing |\n| دماغ | brain |\n| سحب العصب | root canal |\n| سكري | diabetes |\n| صقل / صقل | to smooth, polish |\n| شريان / شرايين | artery(ies) |\n| صدر | chest |\n| طبيب الأسنان | dentist |\n| عصب / أعصاب | nerve(s) |\n| غدة درقية | thyroid gland |\n| فك / فكان | jaw(s) |\n| قرحة المعدة | stomach ulcer |\n| كبد | liver |\n| كلية / كلى | kidney(ies) |\n| لثة / لثات | gums |\n| لبني | to do with babies |\n| لوزة / لوزتان | tonsil(s) |\n| متراكم | accumulated |\n| متوازن | balanced |\n| مزمن | chronic |\n| أمراض مستعصية | incurable diseases |\n| ملصق | sticker |\n| مناعة | resistance, immunity |\n| نوبة قلبية | heart attack |\n| هش | brittle |\n| هشاشة العظام | osteoporosis |\n| وثق / ثقة | to trust |\n| وعاء / أوعية | vessel(s) |\n\n## Chapter 38\n\n| Arabic | English |\n|---|---|\n| أبلغ / يبلغ / إبلاغ | to notify, inform, announce |\n| اختنق / يختنق / اختناق | to be unable to breathe |\n| أزال / يزيل / إزالة | to remove |\n| استكمل / يستكمل / استكمال | to complete |\n| استنفر / يستنفر / استنفار | to call upon |\n| أشغل / يشغل / إشغال | to occupy |\n| أطراف صناعية | artificial limbs |\n| اعتمد / يعتمد / اعتماد | to authorize |\n| أنقاض | debris, rubble |\n| أنقذ / ينقذ / إنقاذ | to rescue |\n| انهار / ينهار / انهيار | to collapse |\n| إصابات بليغة | severe injuries |\n| أهّل / يؤهل / تأهيل | to rehabilitate |\n| تأهيل طبي | medical rehabilitation |\n| تحت تصرف | at the disposal of |\n| تحسب / يتحسب / تحسب | to take precautions, anticipate |\n| تطلب / يتطلب / تطلب | to require |\n| تقتضي الحاجة | it is necessary |\n| جبيرة / جبائر | splint(s) |\n| جدر / يجدر / جدارة | to be worthy, deserve |\n| جناح / أجنحة | wing(s) |\n| جهاز تنفسي | pulmonary system |\n| جهاز هضمي | digestive system |\n| حمل | bearing a child, carrying a baby |\n| خفف / يخفف / تخفيف | to lighten, ease, relieve, reduce |\n| رض / رضوض | bruise(s), contusion(s) |\n| زرع / يزرع / زراعة | to transplant an organ |\n| ضحية / ضحايا | victim(s) |\n| ضمادة / ضمادات | bandage(s), wound dressing |\n| عائقة / عوائق | obstacle(s) |\n| عصب / أعصاب | nerve(s) |\n| عناية | care |\n| عناية مركزة | intensive care |\n| فشل كلوي | kidney failure |\n| قبو | basement |\n| كادر / كوادر | trained personnel, cadre |\n| كفاءة / كفاءات | competence, efficiency, ability |\n| مراجع | patient consulting a doctor |\n| نخبة / نخب | selection(s) |\n| نزف / ينزف / نزف | to bleed |\n| نزيف | bleeding |\n| نقلة نوعية | qualitative leap |\n| ولادة | giving birth |\n\n## Chapter 39\n\n| Arabic | English |\n|---|---|\n| أبداً | never (in the future) |\n| أثر إيجابي | positive effect |\n| أثنى / يثني / إثناء / ثناء | commend, praise |\n| أرضع / يرضع / إرضاع | to breastfeed |\n| استشار / يستشير / استشارة | to consult |\n| استشاري | consultative, advisory |\n| استند على / يستند / استناد | to be supported by, rely upon |\n| استنسخ / يستنسخ / استنساخ | to clone |\n| اكتسح / يكتسح / اكتساح | to overrun, sweep |\n| أنسجة | tissue |\n| بحث / بحوث | research |\n| بعوضة / بعوض | mosquito(es) |\n| بغية | with the aim of |\n| تبنى / يتبنى / تبني | to adopt |\n| تسرّب / يتسرّب / تسرّب | to leak out, escape |\n| تعرض / يتعرض / تعرض | to be exposed |\n| تفشّى / يتفشّى / تفشّي | to spread widely |\n| تقنية | technology |\n| تنقية دموية | dialysis |\n| توّج / يتوّج / تتويج | to crown |\n| توصية / توصيات | recommendation(s) |\n| جزم / يجزم / جزم | to be certain, assert |\n| جنس | sex |\n| حصد / يحصد / حصد | to harvest |\n| حصّن / يحصّن / حصانة | immunity |\n| حقن / يحقن / حقن | to inject |\n| حمل | pregnancy |\n| خرج عن الطوق | to go out of control |\n| خلايا جذعية | stem cells |\n| خلية / خلايا | cell(s) |\n| دقيق | very small |\n| روّع / يروّع / ترويع | to frighten |\n| سبق | first occurrence |\n| صدى / أصداء | echo, reverberation(s) |\n| ضجة | noise |\n| طاعون / طواعين | plague(s) |\n| طفرة / طفرات | rise, jump, upturn |\n| عاجز | unable |\n| عدّل / يعدّل / تعديل | to modify |\n| علاقات مثلية | homosexual relations |\n| علاقة | correlation, relation |\n| علمي | scientific |\n| على غرار | like, such as |\n| فتوى / فتاوى | a formal opinion by a Muslim cleric |\n| قضى على / يقضي / قضاء | to terminate |\n| متميز | distinguished, outstanding |\n| مثمر | fruitful, productive |\n| محظور | prohibited |\n| مزمع | decided, imminent, forthcoming |\n| مستوطن | indigenous |\n| مسح / يمسح / مسح | to survey, poll |\n| مسهب | lengthy, detailed |\n\n## Chapter 40\n\n| Arabic | English |\n|---|---|\n| أخضع / يخضع / إخضاع | to subjugate, subdue |\n| أخلى / يخلي / إخلاء | to vacate, remove, evacuate |\n| استأنف / يستأنف / استئناف | to resume |\n| أسر / يأسر / أسر | to capture, take prisoner |\n| إشعاع / إشعاعات | radiation, rays |\n| اعترف / يعترف / اعتراف | to acknowledge, confess |\n| إعياء | exhaustion, fatigue |\n| إغماء | fainting, unconsciousness |\n| أقدم (على) / يقدم / إقدام | to undertake |\n| انتحر / ينتحر / انتحار | to commit suicide |\n| انعدم / ينعدم / انعدام | to be nonexistent, lack, be in need |\n| انهار / ينهار / انهيار | to fall down |\n| بتر / يبتر / بتر | to amputate |\n| بول | urine |\n| تسمم / يتسمم / تسمم | to be poisoned |\n| تشنج | convulsion |\n| تشوه | disfigurement |\n| حاصر / يحاصر / محاصرة / حصار | to besiege, encircle |\n| حرر / يحرر / تحرير | to liberate |\n| خارق | able to pierce, penetrate |\n| خسر / يخسر / خسارة | to lose |\n| دعوى / دعاوى | lawsuit, case, legal proceeding |\n| دمّر / يدمّر / تدمير | to destroy |\n| ذاكرة | memory |\n| ركام | rubble |\n| زحف / يزحف / زحف | to advance, push ahead, march |\n| سائل / سوائل | liquid, fluid(s) |\n| شراسة | viciousness |\n| شظية / شظايا | splinter, shrapnel |\n| عزا / يعزو / عزو | to attribute, lay the blame |\n| عقدة نفسية / عقد | psychological problem(s) |\n| عقّم / يعقّم / تعقيم | to sterilize |\n| علني | open to the public |\n| غاب / يغيب / غياب | to be absent |\n| غثيان | nausea |\n| غير معهود | unfamiliar, infrequent |\n| فادح | serious, grave, heavy |\n| فاق / يفوق / فواق | to surpass |\n| فظيع | horrible, hideous |\n| فقاعة / فقاعات | bubble(s) |\n| فقد الوعي / يفقد / فقدان | to lose consciousness |\n| قاء / يقيء / قيء | to vomit |\n| قذيفة / قذائف | projectile, missile, bomb(s) |\n| قضى نحبه | to die |\n| قفاز / قفازات | glove(s) |\n| قناع / أقنعة | mask(s) |\n| قنبلة / قنابل | bomb(s) |\n| قومي | national |\n| قيء | vomit |\n| لمس / يلمس / لمس | to touch |\n| متفاوت | varying |\n| متلازمة | syndrome |\n| محارب | fighter |\n| محكمة الاستئناف | court of appeal |\n| مدى الحياة | for life |\n| مرحاض / مراحيض | toilet, lavatory |\n| مرير | strong, tenacious |\n| مزاج | disposition, frame of mind |\n| مزّق / يمزّق / تمزيق | to tear |\n| مستشار | consultant |\n| مغص | abdominal pain |\n| مفقود | missing |\n| ملقاط | tweezers |\n| منشأ / مناشئ | origin |\n| منضب | depleted |\n| منكوب | afflicted with disaster, ill-fated |\n| نجا / ينجو / نجاة | to be rescued, escape harm |\n| نجم (عن) / ينجم / نجوم | to be caused (by) |\n
+| استجاب / يستجيب / استجابة | to respond |
+| استجم / يستجم / استجمام | to relax, recuperate |
+| استدعى / يستدعي / استدعاء | to require |
+| استهدف / يستهدف / استهداف | to target, aim |
+| إصابات طارئة | accidental injuries |
+| إعاقات | disabilities |
+| اعتاد / يعتاد / اعتياد | to get used to |
+| أعشاب طبية | medicinal herbs |
+| انتكس / ينتكس / انتكاس | to relapse |
+| أودى بـ / يودي | to put an end to (life) |
+| تبعات | consequences |
+| تعرض / يتعرض / تعرض | to be exposed, subjected |
+| التهب / يلتهب / التهاب | to be infected, inflamed |
+| تحسبًا من | being afraid of, on guard against |
+| توعك | ailment |
+| التوى / يلتوي / التواء | to be sprained |
+| ثقّف / يثقّف / تثقيف | to educate |
+| جرح / جروح | wound(s) |
+| جيب / جيوب أنفية | sinus(es) |
+| حرجة | critical |
+| حرق / حروق | burn(s) |
+| حشرات سامة | poisonous insects |
+| حفّز / يحفّز / تحفيز | to stimulate |
+| حلق | throat |
+| حنّط / يحنّط / تحنيط | to mummify |
+| خافض للحرارة | fever reducer |
+| دواجن | poultry |
+| ربو | asthma |
+| سال / يسيل / سيلان | to flow |
+| سعال | cough |
+| سم / سموم | poison(s) |
+| شائع | widespread |
+| شخص / يشخّص / تشخيص | to diagnose |
+| صادق / يصادق / مصادقة | to approve |
+| ضمّد / يضمّد / تضميد | to bandage |
+| طب بديل | alternative medicine |
+| طبع / يطبع / طباعة | to print |
+| طعّم / يطعّم / تطعيم | to vaccinate |
+| عبر | across, through |
+| عقار / عقاقير | drug(s), medicine |
+| عرض / أعراض | symptom(s) |
+| غلى / يغلي / غليان | to boil |
+| قرص مدمج | compact disc or DVD |
+| كدمات | bruise(s) |
+| كمادات | compress(es) |
+| لدغات الثعابين | snakebites |
+| لسعات العقارب | scorpion stings |
+| لقاح | vaccination |
+| مبسط | simplified |
+| مخاط | mucus |
+| مركب | compound |
+| مرهم / مراهم | ointment(s) |
+| مسعف | paramedic, ambulance worker |
+| مصاب | afflicted, injured |
+| مضاد حيوي | antibiotic |
+| مضاعفات | complications |
+| معنية | concerned |
+| مفصل / مفاصل | joint(s) |
+| مناعة | immunity |
+| نبّه / ينبّه / تنبيه | to call someone’s attention to |
+| نفع / ينفع / نفع | to benefit |
+| نقع / ينقع / نقع | to steep |
+| ورم / أورام | swelling, tumor(s) |
+| وعّى / يوعّي / توعية | to make aware |
+
+## Chapter 37
+
+| Arabic | English |
+|---|---|
+| أساء / يسيء / إساءة | to do badly |
+| استأصل / يستأصل / استئصال | to remove by surgery |
+| استعصى / يستعصي / استعصاء | to be difficult to cure |
+| أسنان لبنية | baby teeth |
+| إسهال | diarrhea |
+| أشعة / أشعة سينية | X-rays |
+| أمراض باطنية | internal diseases |
+| السرطان | cancer |
+| إمساك | constipation |
+| أوعية دموية | blood vessels |
+| باستثناء | except, excluding |
+| برّاق | shining |
+| بيّض / تبييض | to whiten |
+| تجاويف | cavities |
+| تجلط الدم | blood clotting |
+| ترسب / يترسب / ترسب | to be deposited, settle |
+| تسوس / يتسوس / تسوس | to become decayed |
+| تصلب الشرايين | hardening of the arteries |
+| تفاقم / يتفاقم / تفاقم | to worsen |
+| جراحة | surgery |
+| جلطة دموية | blood clot |
+| جير | lime |
+| حشوة / حشوات | filling(s) |
+| حلوى / حلويات | sweets |
+| حفر / يحفر / حفر | to dig, drill |
+| خلع / يخلع / خلع | to extract, pull out |
+| خلية / خلايا | cell(s) |
+| تنظيف الأسنان (خيط) | flossing |
+| دماغ | brain |
+| سحب العصب | root canal |
+| سكري | diabetes |
+| صقل / يصقل / صقل | to smooth, polish |
+| شريان / شرايين | artery(ies) |
+| صدر | chest |
+| طبيب الأسنان | dentist |
+| عصب / أعصاب | nerve(s) |
+| غدة درقية | thyroid gland |
+| فك / فكان | jaw(s) |
+| قرحة المعدة | stomach ulcer |
+| كبد | liver |
+| كلية / كلى | kidney(ies) |
+| لثة / لثات | gums |
+| لبني | related to babies |
+| لوزة / لوزتان | tonsil(s) |
+| متراكم | accumulated |
+| متوازن | balanced |
+| مزمن | chronic |
+| أمراض مستعصية | incurable diseases |
+| ملصق | sticker |
+| مناعة | resistance, immunity |
+| نوبة قلبية | heart attack |
+| هش | brittle |
+| هشاشة العظام | osteoporosis |
+| وثق / يثق / ثقة | to trust |
+| وعاء / أوعية | vessel(s) |
+
+## Chapter 38
+
+| Arabic | English |
+|---|---|
+| أبلغ / يبلغ / إبلاغ | to notify, inform, announce |
+| اختنق / يختنق / اختناق | to be unable to breathe |
+| أزال / يزيل / إزالة | to remove |
+| استكمل / يستكمل / استكمال | to complete |
+| استنفر / يستنفر / استنفار | to call upon |
+| أشغل / يشغل / إشغال | to occupy |
+| أطراف صناعية | artificial limbs |
+| اعتمد / يعتمد / اعتماد | to authorize |
+| أنقاض | debris, rubble |
+| أنقذ / ينقذ / إنقاذ | to rescue |
+| انهار / ينهار / انهيار | to collapse |
+| إصابات بليغة | severe injuries |
+| أهّل / يؤهّل / تأهيل | to rehabilitate |
+| تأهيل طبي | medical rehabilitation |
+| تحت تصرف | at the disposal of |
+| تحسب / يتحسب / تحسب | to take precautions, anticipate |
+| تطلب / يتطلب / تطلب | to require |
+| تقتضي الحاجة | it is necessary |
+| جبيرة / جبائر | splint(s) |
+| جدر / يجدر / جدارة | to be worthy, deserve |
+| جناح / أجنحة | wing(s) |
+| جهاز تنفسي | pulmonary system |
+| جهاز هضمي | digestive system |
+| حمل | bearing a child, carrying a baby |
+| خفّف / يخفّف / تخفيف | to lighten, ease, relieve, reduce |
+| رضّ / رضوض | bruise(s), contusion(s) |
+| زرع / يزرع / زراعة | to transplant an organ |
+| ضحية / ضحايا | victim(s) |
+| ضمادة / ضمادات | bandage(s), wound dressing |
+| عائقة / عوائق | obstacle(s) |
+| عصب / أعصاب | nerve(s) |
+| عناية | care |
+| عناية مركزة | intensive care |
+| فشل كلوي | kidney failure |
+| قبو | basement |
+| كادر / كوادر | trained personnel, cadre |
+| كفاءة / كفاءات | competence, efficiency, ability |
+| مراجع | patient consulting a doctor |
+| نخبة / نخب | selection(s) |
+| نزف / ينزف / نزف | to bleed |
+| نزيف | bleeding |
+| نقلة نوعية | qualitative leap |
+| ولادة | giving birth |
+
+## Chapter 39
+
+| Arabic | English |
+|---|---|
+| أبدًا | never (in the future) |
+| أثر إيجابي | positive effect |
+| أثنى / يثني / إثْناء / ثناء | to commend, praise |
+| أرضع / يرضع / إرضاع | to breastfeed |
+| استشار / يستشير / استشارة | to consult |
+| استشاري | consultative, advisory |
+| استند على / يستند / استناد | to be supported by, rely upon |
+| استنسخ / يستنسخ / استنساخ | to clone |
+| اكتسح / يكتسح / اكتساح | to overrun, sweep |
+| أنسجة | tissue |
+| بحث / بحوث | research |
+| بعوضة / بعوض | mosquito(es) |
+| بغية | with the aim of |
+| تبنى / يتبنى / تبني | to adopt |
+| تسرّب / يتسرّب / تسرّب | to leak out, escape |
+| تعرض / يتعرض / تعرض | to be exposed |
+| تفشّى / يتفشّى / تفشّي | to spread widely |
+| تقنية | technology |
+| تنقية دموية | dialysis |
+| توّج / يتوّج / تتويج | to crown |
+| توصية / توصيات | recommendation(s) |
+| جزم / يجزم / جزم | to be certain, assert |
+| جنس | sex |
+| حصد / يحصد / حصد | to harvest |
+| حصّن / يحصّن / حصانة | immunity |
+| حقن / يحقن / حقن | to inject |
+| حمل | pregnancy |
+| خرج عن الطوق | to go out of control |
+| خلايا جذعية | stem cells |
+| خلية / خلايا | cell(s) |
+| دقيق | very small |
+| روّع / يروّع / ترويع | to frighten |
+| سبق | first occurrence |
+| صدى / أصداء | echo, reverberation(s) |
+| ضجة | noise |
+| طاعون / طواعين | plague(s) |
+| طفرة / طفرات | rise, jump, upturn |
+| عاجز | unable |
+| عدّل / يعدّل / تعديل | to modify |
+| علاقات مثلية | homosexual relations |
+| علاقة | correlation, relation |
+| علمي | scientific |
+| على غرار | like, such as |
+| فتوى / فتاوى | formal opinion by a Muslim cleric |
+| قضى على / يقضي / قضاء | to terminate |
+| متميز | distinguished, outstanding |
+| مثمر | fruitful, productive |
+| محظور | prohibited |
+| مزمع | decided, imminent, forthcoming |
+| مستوطن | indigenous |
+| مسح / يمسح / مسح | to survey, poll |
+| مسهب | lengthy, detailed |
+
+## Chapter 40
+
+| Arabic | English |
+|---|---|
+| أخضع / يخضع / إخضاع | to subjugate, subdue |
+| أخلى / يخلي / إخلاء | to vacate, remove, evacuate |
+| استأنف / يستأنف / استئناف | to resume |
+| أسر / يأسر / أسر | to capture, take prisoner |
+| إشعاع / إشعاعات | radiation, rays |
+| اعترف / يعترف / اعتراف | to acknowledge, confess |
+| إعياء | exhaustion, fatigue |
+| إغماء | fainting, unconsciousness |
+| أقدم (على) / يقدم / إقدام | to undertake |
+| انتحر / ينتحر / انتحار | to commit suicide |
+| انعدم / ينعدم / انعدام | to be nonexistent, lack, be in need |
+| انهار / ينهار / انهيار | to fall down |
+| بتر / يبتر / بتر | to amputate |
+| بول | urine |
+| تسمم / يتسمم / تسمم | to be poisoned |
+| تشنج | convulsion |
+| تشوه | disfigurement |
+| حاصر / يحاصر / محاصرة / حصار | to besiege, encircle |
+| حرّر / يحرّر / تحرير | to liberate |
+| خارق | able to pierce, penetrate |
+| خسر / يخسر / خسارة | to lose |
+| دعوى / دعاوى | lawsuit, case, legal proceeding |
+| دمّر / يدمّر / تدمير | to destroy |
+| ذاكرة | memory |
+| ركام | rubble |
+| زحف / يزحف / زحف | to advance, push ahead, march |
+| سائل / سوائل | liquid, fluid(s) |
+| شراسة | viciousness |
+| شظية / شظايا | splinter, shrapnel |
+| عزا / يعزو / عزو | to attribute, lay the blame |
+| عقدة نفسية / عقد | psychological problem(s) |
+| عقّم / يعقّم / تعقيم | to sterilize |
+| علني | open to the public |
+| غاب / يغيب / غياب | to be absent |
+| غثيان | nausea |
+| غير معهود | unfamiliar, infrequent |
+| فادح | serious, grave, heavy |
+| فاق / يفوق / فواق | to surpass |
+| فظيع | horrible, hideous |
+| فقاعة / فقاعات | bubble(s) |
+| فقد الوعي / يفقد / فقدان | to lose consciousness |
+| قاء / يقيء / قيء | to vomit |
+| قذيفة / قذائف | projectile, missile, bomb(s) |
+| قضى نحبه | to die |
+| قفاز / قفازات | glove(s) |
+| قناع / أقنعة | mask(s) |
+| قنبلة / قنابل | bomb(s) |
+| قومي | national |
+| قيء | vomit |
+| لمس / يلمس / لمس | to touch |
+| متفاوت | varying |
+| متلازمة | syndrome |
+| محارب | fighter |
+| محكمة الاستئناف | court of appeal |
+| مدى الحياة | for life |
+| مرحاض / مراحيض | toilet, lavatory |
+| مرير | strong, tenacious |
+| مزاج | disposition, frame of mind |
+| مزّق / يمزّق / تمزيق | to tear |
+| مستشار | consultant |
+| مغص | abdominal pain |
+| مفقود | missing |
+| ملقاط | tweezers |
+| منشأ / مناشئ | origin |
+| منضب | depleted |
+| منكوب | afflicted with disaster, ill-fated |
+| نجا / ينجو / نجاة | to be rescued, escape harm |
+| نجم (عن) / ينجم / نجوم | to be caused (by) |
