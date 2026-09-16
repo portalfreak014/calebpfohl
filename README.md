@@ -29,3 +29,13 @@ projects/
 ## Notes for AI-assisted work
 
 When asking an AI assistant to work in this repository, specify the target files and whether changes should be made directly or proposed first. The `arabic/` directory is out of scope unless explicitly authorized.
+
+## Arabic vocabulary schema
+
+Changes within `arabic/` require explicit authorization. For new vocabulary entries, use the part-of-speech-agnostic template at `arabic/data/templates/vocabulary-entry.template.json`.
+
+- Use `templateVersion: "2.0.0"` for all new vocabulary entries.
+- Required fields are `id`, `arabic`, `lemma`, `glosses`, `partOfSpeech`, `chapter`, and `unit`.
+- Use the optional `forms` object for morphology only when needed, such as verb forms, noun plurals, or adjective gender variants.
+- The part-of-speech-specific templates are retained for reference only; they are legacy schemas and must not be used for new entries.
+- Prefer focused, additive edits, and validate JSON before committing vocabulary changes.
