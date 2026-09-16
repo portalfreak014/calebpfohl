@@ -1,31 +1,22 @@
 {
   "templateType": "vocabulary-entry",
-  "templateVersion": "1.1.0",
+  "templateVersion": "2.0.0",
   "id": null,
   "arabic": null,
   "lemma": null,
-  "transliteration": null,
-  "lemmaTransliteration": null,
   "glosses": [],
-  "senses": [],
   "partOfSpeech": null,
-  "partOfSpeechArabic": null,
   "chapter": null,
   "unit": null,
-  "rootId": null,
   "variety": "msa",
-  "register": null,
-  "frequency": null,
-  "level": null,
-  "audio": {"status": "pending", "src": null, "speaker": null, "dialect": "msa"},
+  "forms": {},
   "examples": [],
-  "synonyms": [],
-  "antonyms": [],
   "relatedWords": [],
   "tags": [],
-  "grammar": {},
   "notes": [],
-  "source": {"book": null, "page": null, "lesson": null},
-  "createdAt": null,
-  "updatedAt": null
+  "source": {
+    "book": null,
+    "page": null,
+    "lesson": null
+  }
 }
