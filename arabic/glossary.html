@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root { --primary:#6750a4; --on-primary:#fff; --primary-container:#e9ddff; --on-primary-container:#21005d; --surface:#fffbfe; --surface-container:#f3edf7; --surface-high:#ece6f0; --text:#1c1b1f; --muted:#49454f; --outline:#79747e; --outline-variant:#cac4d0; --radius-lg:20px; --radius-md:14px; }
+    :root { --primary:#6750a4; --on-primary:#fff; --primary-container:#e9ddff; --on-primary-container:#21005d; --surface:#fffbfe; --surface-container:#f3edf7; --surface-high:#ece6f0; --additional-surface:#e8e1ec; --text:#1c1b1f; --muted:#49454f; --outline:#79747e; --outline-variant:#cac4d0; --radius-lg:20px; --radius-md:14px; }
     * { box-sizing:border-box; }
     html { background:var(--surface); scroll-behavior:smooth; }
     body { margin:0; min-height:100dvh; color:var(--text); background:var(--surface); font-family:"Noto Sans","Noto Sans Arabic",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
@@ -58,6 +58,9 @@
     td.arabic { direction:rtl; text-align:right; font-family:"Noto Sans Arabic","Noto Sans",sans-serif; font-size:1rem; font-weight:600; }
     tbody tr:last-child td { border-bottom:0; }
     tbody tr:hover { background:rgb(103 80 164 / .05); }
+    tbody tr.additional { background:var(--additional-surface); }
+    tbody tr.additional:hover { background:#ddd3e3; }
+    .additional-label { display:inline-block; margin-left:8px; padding:2px 6px; border-radius:999px; color:var(--on-primary-container); background:var(--primary-container); font-size:.67rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; vertical-align:middle; }
     .status { display:flex; align-items:center; justify-content:center; gap:10px; min-height:200px; padding:24px; border:1px dashed var(--outline-variant); border-radius:var(--radius-lg); color:var(--muted); text-align:center; line-height:1.55; }
     .status .material-symbols-rounded { color:var(--primary); }
     .empty { padding:28px; border-radius:var(--radius-lg); color:var(--muted); background:var(--surface-container); text-align:center; line-height:1.55; }
@@ -98,6 +101,7 @@
 
   <script>
     const GLOSSARY_PATH = "data/glossary/unit{unit}-glossary.md";
+    const ADDITIONAL_GLOSSARY_PATH = "data/glossary/unit{unit}-additional.md";
     const UNITS = Array.from({ length: 10 }, (_, index) => index + 1);
     const state = { unit: 1, query: "", data: {} };
 
@@ -105,7 +109,7 @@
       return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&#039;");
     }
 
-    function parseGlossary(markdown) {
+    function parseGlossary(markdown, additional = false) {
       const chapters = [];
       let chapter = null;
       markdown.replace(/\r\n/g, "\n").split("\n").forEach((line) => {
@@ -117,7 +121,21 @@
         }
         if (!chapter || !/^\|.*\|\s*$/.test(line) || /^\|\s*(Arabic|---)/i.test(line)) return;
         const cells = line.split("|").slice(1, -1).map((cell) => cell.trim());
-        if (cells.length >= 2 && cells[0] && cells[1]) chapter.entries.push({ arabic: cells[0], english: cells[1] });
+        if (cells.length >= 2 && cells[0] && cells[1]) chapter.entries.push({ arabic: cells[0], english: cells[1], additional });
+      });
+      return chapters;
+    }
+
+    function appendAdditionalChapters(chapters, additionalChapters) {
+      const chapterMap = new Map(chapters.map((chapter) => [chapter.title, chapter]));
+      additionalChapters.forEach((additionalChapter) => {
+        const matchingChapter = chapterMap.get(additionalChapter.title);
+        if (matchingChapter) {
+          matchingChapter.entries.push(...additionalChapter.entries);
+        } else {
+          chapters.push(additionalChapter);
+          chapterMap.set(additionalChapter.title, additionalChapter);
+        }
       });
       return chapters;
     }
@@ -126,9 +144,13 @@
       if (state.data[unit]) return state.data[unit];
       const response = await fetch(GLOSSARY_PATH.replace("{unit}", unit));
       if (!response.ok) throw new Error("Could not load Unit " + unit + ".");
-      const markdown = await response.text();
-      state.data[unit] = parseGlossary(markdown);
-      return state.data[unit];
+      const chapters = parseGlossary(await response.text());
+      try {
+        const additionalResponse = await fetch(ADDITIONAL_GLOSSARY_PATH.replace("{unit}", unit));
+        if (additionalResponse.ok) appendAdditionalChapters(chapters, parseGlossary(await additionalResponse.text(), true));
+      } catch (error) {}
+      state.data[unit] = chapters;
+      return chapters;
     }
 
     function filteredChapters(chapters) {
@@ -157,7 +179,7 @@
         content.innerHTML = '<div class="empty">No matching vocabulary in Unit ' + state.unit + '. Try a different Arabic or English search term.</div>';
         return;
       }
-      content.innerHTML = visible.map((chapter, index) => '<section class="chapter" id="chapter-' + index + '"><h3 class="chapter-title">' + escapeHtml(chapter.title) + '</h3><div class="table-wrap"><table><thead><tr><th>Arabic</th><th>English</th></tr></thead><tbody>' + chapter.entries.map((entry) => '<tr><td class="arabic" lang="ar">' + escapeHtml(entry.arabic) + '</td><td>' + escapeHtml(entry.english) + '</td></tr>').join("") + '</tbody></table></div></section>').join("");
+      content.innerHTML = visible.map((chapter, index) => '<section class="chapter" id="chapter-' + index + '"><h3 class="chapter-title">' + escapeHtml(chapter.title) + '</h3><div class="table-wrap"><table><thead><tr><th>Arabic</th><th>English</th></tr></thead><tbody>' + chapter.entries.map((entry) => '<tr' + (entry.additional ? ' class="additional"' : '') + '><td class="arabic" lang="ar">' + escapeHtml(entry.arabic) + '</td><td>' + escapeHtml(entry.english) + (entry.additional ? '<span class="additional-label">Additional</span>' : '') + '</td></tr>').join("") + '</tbody></table></div></section>').join("");
     }
 
     async function selectUnit(unit) {
