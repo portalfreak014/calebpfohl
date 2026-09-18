@@ -244,6 +244,127 @@
     outline-offset:3px;
   }
 
+    .brand-link {
+  color:var(--ink);
+}
+
+.icon-button {
+  display:grid;
+  place-items:center;
+  width:46px;
+  height:46px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:transparent;
+  color:var(--v);
+  font-size:1.7rem;
+  line-height:1;
+}
+
+.icon-button:hover { background:rgb(29 27 32 / .08); }
+
+.drawer-backdrop {
+  position:fixed;
+  inset:0;
+  z-index:20;
+  background:rgb(29 27 32 / .12);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease;
+}
+
+.drawer-backdrop.open {
+  opacity:1;
+  pointer-events:auto;
+}
+
+.drawer {
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  z-index:21;
+  display:flex;
+  flex-direction:column;
+  width:min(86vw,340px);
+  padding:max(18px,env(safe-area-inset-top)) 16px 24px;
+  background:var(--s);
+  box-shadow:-8px 0 26px rgb(0 0 0 / .18);
+  transform:translateX(105%);
+  transition:transform .22s ease;
+}
+
+.drawer.open { transform:translateX(0); }
+
+.drawer-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:56px;
+  margin-bottom:16px;
+}
+
+.drawer-head strong { font-size:1.1rem; }
+
+.drawer-links {
+  display:grid;
+  gap:8px;
+}
+
+.drawer-links a,
+.drawer-item {
+  display:flex;
+  align-items:center;
+  width:100%;
+  min-height:54px;
+  padding:0 14px;
+  border:0;
+  border-radius:16px;
+  background:transparent;
+  color:var(--ink);
+  font:700 .95rem/1.2 "Noto Sans","Noto Sans Arabic",system-ui,sans-serif;
+  text-align:left;
+  text-decoration:none;
+}
+
+.drawer-links a:hover,
+.drawer-item:hover { background:var(--sl); }
+
+.drawer-links a[aria-current="page"] {
+  background:var(--pc);
+  color:var(--opc);
+}
+
+#firebase-auth {
+  margin-top:auto;
+}
+
+.firebase-menu-divider {
+  height:1px;
+  margin:16px 0 12px;
+  background:var(--ov);
+}
+
+.firebase-google-mark {
+  display:grid;
+  place-items:center;
+  width:24px;
+  height:24px;
+  margin-right:14px;
+  border-radius:50%;
+  background:#fff;
+  color:#4285f4;
+  font-weight:800;
+}
+
+.firebase-auth-message {
+  display:block;
+  padding:8px 14px 0;
+  color:var(--v);
+  font-size:.78rem;
+}
+
   @media (min-width:700px) {
     main { padding:28px 32px 56px; }
   }
@@ -263,11 +384,42 @@
 </style>
 </head>
 <body>
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+
+<aside id="drawer" class="drawer" aria-label="Site menu" aria-hidden="true">
+  <div class="drawer-head">
+    <strong>Arabic Study</strong>
+
+    <button id="closeMenuButton" class="icon-button" type="button" aria-label="Close menu">
+      ×
+    </button>
+  </div>
+
+  <nav class="drawer-links" aria-label="Primary navigation">
+    <a href="arabic.html">Home</a>
+    <a href="docs.html">Documentation</a>
+    <a href="flashcards.html">Flashcards</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="match.html">Match</a>
+    <a href="ttt.html" aria-current="page">TTT Listening</a>
+  </nav>
+
   <div id="firebase-auth"></div>
-  <header>
-    <a href="arabic.html">Arabic Study</a>
-    <a href="docs.html">Docs</a>
-  </header>
+</aside>
+ <header>
+  <a class="brand-link" href="arabic.html">Arabic Study</a>
+
+  <button
+    id="menuButton"
+    class="icon-button"
+    type="button"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="drawer"
+  >
+    ☰
+  </button>
+</header>
   <main>
     <h1>TTT Listening & Transcription</h1>
     <section class="selectors" aria-label="TTT chapter selection">
@@ -431,6 +583,7 @@ const saveDrafts = (chapter, drafts) => {
     }
     async function renderChapter(chapter) {
   const drafts = await readDrafts(chapter);
+      currentDrafts = drafts;
       status.className = 'notice'; status.textContent = chapter.title || 'TTT chapter';
       activities.innerHTML = (chapter.activities || []).map(activity => {
         const draft = drafts[activity.number] || {};
@@ -443,7 +596,7 @@ const saveDrafts = (chapter, drafts) => {
       activities.querySelectorAll('audio').forEach(audio => audio.addEventListener('play', () => { if (activeAudio && activeAudio !== audio) activeAudio.pause(); activeAudio = audio; }));
       activities.querySelectorAll('.activity').forEach(card => {
         const persist = () => {
-          const current = readDrafts(chapter);
+          const current = currentDrafts;
           current[card.dataset.number] = card.dataset.type === 'fill-blank' ? Object.fromEntries([...card.querySelectorAll('[data-blank]')].map(input => [input.dataset.blank, input.value])) : card.querySelector('textarea').value;
           saveDrafts(chapter, current);
           const saved = card.querySelector('.saved'); saved.textContent = 'Saved locally'; clearTimeout(saved.timer); saved.timer = setTimeout(() => saved.textContent = '', 1400);
@@ -453,6 +606,30 @@ const saveDrafts = (chapter, drafts) => {
     }
     unitSelect.addEventListener('change', () => populateChapters());
     chapterSelect.addEventListener('change', loadChapter);
+    const menuButton = document.querySelector("#menuButton");
+const closeMenuButton = document.querySelector("#closeMenuButton");
+const drawer = document.querySelector("#drawer");
+const drawerBackdrop = document.querySelector("#drawerBackdrop");
+
+function setDrawer(open) {
+  drawer.classList.toggle("open", open);
+  drawerBackdrop.classList.toggle("open", open);
+  drawer.setAttribute("aria-hidden", String(!open));
+  menuButton.setAttribute("aria-expanded", String(open));
+
+  if (open) closeMenuButton.focus();
+  else menuButton.focus();
+}
+
+menuButton.addEventListener("click", () => setDrawer(true));
+closeMenuButton.addEventListener("click", () => setDrawer(false));
+drawerBackdrop.addEventListener("click", () => setDrawer(false));
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && drawer.classList.contains("open")) {
+    setDrawer(false);
+  }
+});
     loadManifest();
   </script>
 </body>
