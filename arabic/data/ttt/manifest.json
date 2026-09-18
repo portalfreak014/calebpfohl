@@ -1,0 +1,15 @@
+{
+  "units": [
+    {
+      "id": "unit8",
+      "title": "Unit 8",
+      "chapters": [
+        {
+          "id": "ch36",
+          "title": "Chapter 36 — Common Ailments and Accidental Injuries",
+          "file": "unit8/chapter36.json"
+        }
+      ]
+    }
+  ]
+}
