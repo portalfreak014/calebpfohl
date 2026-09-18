@@ -1,76 +1,61 @@
-# Analytics (Google Tag Manager + GA4) ✅ Done
-
-## Quick links (for this project's console access)
-
-- **GTM container/workspace:** https://tagmanager.google.com/?utm_source=marketingplatform.google.com&utm_medium=et&utm_campaign=marketingplatform.google.com%2Fabout%2Ftag-manager%2F#/container/accounts/6221115678/containers/179682350/workspaces/4
-  (Account `6221115678`, Container `179682350` — this is container `GTM-NDCR97CD`, the same one referenced throughout this doc.)
-- **GA4 property (Intelligence Home report):** https://analytics.google.com/analytics/web/#/a108811965p431050203/reports/intelligenthome
-  (Account `108811965`, Property `431050203`.)
-
-These are private Google account consoles, not public URLs — access requires being signed in as the account owner. Recorded here so they're easy to find whenever analytics work comes up (e.g. configuring the outstanding GA4 tag, checking Enhanced Measurement, or verifying an event in GA4 DebugView), rather than having to search for them each time.
-
-## Purpose
-
-Capture enough behavioral data to answer two questions without adding meaningful JS weight: where visitors drop off in the Unit 6/Unit 7 study funnel, and which buttons/features they actually engage with. Google Tag Manager (GTM) was chosen over hand-rolled analytics calls because a GA4 tag can be configured entirely inside the GTM container (Google Tag Manager web UI) without further code changes, and over loading `gtag.js` directly because the same container ID already existed on `index.html` — reusing it keeps one tracking setup across the whole site instead of three.
+# Analytics (Google Tag Manager + GA4)
 
 ## Status
 
-- The GTM container (`GTM-NDCR97CD`) was already live on `index.html` (the main portfolio landing page) before this work began. It was **not** present on `arabic/arabic.html` or `arabic/quiz.html`, meaning the two pages where nearly all real user activity happens — chapter selection and the quiz itself — had zero analytics coverage.
-- Because each HTML document is a separate page load with its own JS context, the GTM snippet does not "carry over" from `index.html` to the Arabic subpages automatically. It must be pasted identically into every page that should be tracked.
-- The container snippet (head `<script>` + body `<noscript><iframe>`) has been added identically to `arabic/arabic.html`, `arabic/quiz.html`, `arabic/docs.html`, and `arabic/match.html`, matching `index.html` exactly — same container ID, same placement (script immediately after `<meta charset>`, noscript iframe immediately after `<body>` opens).
-- **Outstanding:** the GA4 tag itself still needs to be configured inside the GTM workspace (linked above) so the events below actually reach the GA4 property (also linked above), not just the browser's `dataLayer`. This is a GTM/GA4 console task, not a code change.
+Google Tag Manager is live for the Arabic Study app. The site already pushes its custom study events into `dataLayer`; GTM is responsible for forwarding them to GA4.
 
-## Lightweight custom events
+### Current GTM configuration
 
-Rather than adding a third-party analytics library or a large event-tracking framework, a single ~1-line helper was added to each page:
+- GTM account: `6221115678` (Caleb Pfohl Website)
+- Container: `179682350` (`GTM-NDCR97CD`)
+- Workspace: `5`
+- GA4 measurement ID: `G-0K3B85W2HH`
+- Existing GA4 configuration tag: `GA4 Tag`
+- Existing event tag: `GA4 Event - chapter_card_click`
 
-```js
-function trackEvent(name, params) {
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push(Object.assign({ event: name }, params || {}));
-}
-```
+### GA4 event tags created 2026-09-18
 
-This pushes directly into the `dataLayer` array GTM already listens on — no additional script tags, no new dependencies, and no meaningful JS weight added. A GA4 Event tag can be configured inside GTM (in the Tag Manager web UI, not in code) to fire on any of these custom event names and forward them to GA4 as GA4 events.
+| Event | GTM tag | Tag ID | Trigger status |
+| --- | --- | --- | --- |
+| `quiz_started` | `GA4 Event - quiz_started` | 29 | Pending: create and attach `CE - quiz_started` Custom Event trigger |
+| `quiz_answered` | `GA4 Event - quiz_answered` | 30 | Pending: create and attach `CE - quiz_answered` Custom Event trigger |
+| `quiz_completed` | `GA4 Event - quiz_completed` | 31 | Pending: create and attach `CE - quiz_completed` Custom Event trigger |
+| `known_word_toggled` | `GA4 Event - known_word_toggled` | 32 | Pending: create and attach `CE - known_word_toggled` Custom Event trigger |
 
-| Event | Fires when | Parameters | File |
-|---|---|---|---|
-| `direction_toggle` | Learner switches Arabic→English / English→Arabic mode on the homepage | `direction` | `arabic.html` |
-| `chapter_card_click` | Learner clicks an available chapter card | `unit_id`, `chapter_id`, `chapter_status` | `arabic.html` |
-| `answer_selected` | Learner picks an answer choice (before checking it) | `unit_id`, `chapter_id`, `mode` | `quiz.html` |
-| `answer_checked` | Learner submits/checks an answer | `unit_id`, `chapter_id`, `mode`, `correct` | `quiz.html` |
-| `word_flagged` | Learner taps the flag-a-question control | `unit_id`, `chapter_id`, `mode` | `quiz.html` |
-| `word_marked_known` | Learner manually marks a word as known | `unit_id`, `chapter_id`, `mode`, `source` | `quiz.html` |
-| `chapter_completed` | Learner finishes all questions in a chapter session | `unit_id`, `chapter_id`, `mode`, `score`, `total` | `quiz.html` |
-| `doc_opened` / `doc_edit_opened` / `doc_reset` | Learner browses/edits/resets a doc | `doc_id` | `docs.html` |
-| `match_set_selected` / `match_pair_correct` / `match_pair_incorrect` / `match_set_completed` | Learner interacts with the matching game | `set_id`, `mistake_count` (on completion) | `match.html` |
+Each tag sends its identically named event to `G-0K3B85W2HH`. They currently have no firing trigger, so they will not send data until their matching Custom Event triggers are attached.
 
-## Funnel and drop-off visibility this enables
+### Still to create
 
-Combined with GA4's automatic page-view tracking (no code required) and GA4's Enhanced Measurement feature (scroll-depth tracking, configured in the GTM/GA4 UI, not in code), the event set above gives a full funnel:
+- `GA4 Event - match_set_selected` with `CE - match_set_selected`
+- `GA4 Event - match_pair_correct` with `CE - match_pair_correct`
+- `GA4 Event - match_pair_incorrect` with `CE - match_pair_incorrect`
+- `GA4 Event - match_set_completed` with `CE - match_set_completed`
 
-`page_view` (homepage) → `chapter_card_click` → `page_view` (quiz.html) → `answer_selected`/`answer_checked` (repeated per question) → `chapter_completed`
+## App event contract
 
-A learner who lands on the homepage, clicks into Chapter 32, answers a few questions, and leaves without finishing will show up in GA4 as having triggered `chapter_card_click` and several `answer_checked` events but never a `chapter_completed` event for that `chapter_id` — directly answering "where do people drop off."
+The app pushes these events directly into the `dataLayer` array that GTM listens to. No additional script tags or dependencies are needed in the app; configure a GTM GA4 Event tag to fire on the corresponding Custom Event and forward it to GA4.
 
-## Rules
+- `quiz_started`
+- `quiz_answered`
+- `quiz_completed`
+- `known_word_toggled`
+- `match_set_selected`
+- `match_pair_correct`
+- `match_pair_incorrect`
+- `match_set_completed`
 
-- No third-party analytics library or SDK was added; all tracking flows through the existing `dataLayer` GTM already reads, keeping the JS footprint to a single small helper function per page.
-- GTM/GA4 configuration itself (which tags fire on which events, GA4 property wiring, Enhanced Measurement toggles) happens in the Google Tag Manager and GA4 web consoles (linked at the top of this doc), not in this codebase.
-- The GTM container ID (`GTM-NDCR97CD`) is the same one already used on `index.html`; a second or different container must not be introduced without a documented reason.
-- Every current and future page under `arabic/` must carry the identical GTM snippet (head script + noscript iframe) if it should be included in analytics — this is not automatic and must be checked when adding new pages.
-- `trackEvent()` calls must never block or delay the underlying action they're attached to — analytics must fail silently and never break the quiz.
-- No personally identifying data is included in any event's parameters; all parameters are content identifiers (`unit_id`, `chapter_id`, `mode`, `doc_id`, `set_id`) or non-identifying outcome data (`correct`, `score`, `total`, `source`, `mistake_count`).
-- The GTM/GA4 console links at the top of this doc are private and account-specific — never embed them in any public-facing page or commit a screenshot/export of their contents that could expose account structure to the public repo.
+For event parameters, only add Data Layer Variables that the specific event actually includes. For example, the existing `chapter_card_click` event passes `unit_id`, `chapter_id`, and `chapter_status`; those should not be copied automatically to unrelated study events.
 
-## Privacy policy implication
+## Verification checklist
 
-This addition means the Mobile App Store Distribution's planned privacy policy must also disclose GTM/GA4 usage — the policy draft must not describe the site as having "no analytics" once this ships. This does not block Google Play submission; it is a content requirement for the privacy policy page itself.
+1. Create the matching GTM Custom Event trigger for each event and attach it to its event tag.
+2. Use GTM Preview mode while starting/completing a quiz, toggling a known word, and playing a matching set.
+3. Confirm the event appears in GA4 DebugView.
+4. Publish the GTM workspace only after the Preview checks pass.
 
-## Testing checklist
+## Console links
 
-- [ ] GTM Preview mode confirms the container fires correctly on `arabic.html`, `quiz.html`, `docs.html`, and `match.html`, not just `index.html`.
-- [ ] A GA4 tag is configured in the GTM container (see quick link above) so page views and all custom events actually reach the GA4 property, not just the browser's `dataLayer`.
-- [ ] GA4 Enhanced Measurement (scroll tracking) is enabled to get drop-off signal on longer pages without additional custom events.
-- [ ] Each custom event appears correctly in GA4's DebugView with the expected parameters, for at least one full manual run through a chapter, the docs page, and the matching game.
-- [ ] Privacy policy draft is updated to disclose GTM/GA4 before either store submission.
+These are private Google account consoles, not public URLs—access requires being signed in as the account owner.
+
+- Google Tag Manager: https://tagmanager.google.com/
+- Google Analytics: https://analytics.google.com/
