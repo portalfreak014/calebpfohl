@@ -522,6 +522,15 @@
         transition-duration:.01ms!important;
       }
     }
+    @media (prefers-reduced-motion:reduce) {
+  .drawer {
+    transition:transform .22s ease !important;
+  }
+
+  .drawer-backdrop {
+    transition:opacity .2s ease !important;
+  }
+}
   </style>
 </head>
 
