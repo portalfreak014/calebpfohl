@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TTT Listening & Transcription | Arabic Study</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --paper:#f7f4ee; --card:#fff; --accent:#2563eb; --line:#d7dce5; --success:#087443; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); }
+    header { background:var(--ink); color:#fff; padding:18px max(20px,calc((100% - 960px)/2)); display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    header a { color:#fff; text-decoration:none; font-weight:700; }
+    main { max-width:960px; margin:0 auto; padding:28px 20px 56px; }
+    h1 { margin:0 0 4px; font-size:clamp(1.7rem,4vw,2.4rem); }
+    .lede { color:var(--muted); margin:0 0 24px; }
+    .selectors,.activity { background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px #1720330d; }
+    .selectors { display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:18px; margin-bottom:20px; }
+    label { display:grid; gap:6px; font-weight:650; }
+    select,input,textarea,button { font:inherit; }
+    select,input,textarea { width:100%; border:1px solid var(--line); border-radius:8px; padding:10px 12px; background:#fff; color:var(--ink); }
+    textarea { min-height:120px; resize:vertical; direction:rtl; text-align:right; font-size:1.1rem; }
+    .empty { background:#fff8e6; border:1px solid #edcf81; border-radius:12px; padding:18px; color:#6f5200; }
+    .activity { padding:20px; margin:14px 0; }
+    .activity-top { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .number { display:inline-grid; place-items:center; width:34px; height:34px; border-radius:50%; color:#fff; background:var(--accent); font-weight:800; }
+    .type { color:var(--muted); font-size:.9rem; }
+    .prompt { direction:rtl; text-align:right; font-size:1.25rem; margin:18px 0; }
+    .instruction { color:var(--muted); margin:8px 0 16px; }
+    .audio-toggle { border:0; border-radius:8px; padding:10px 14px; background:var(--accent); color:#fff; font-weight:700; cursor:pointer; }
+    .player { display:none; margin:14px 0; padding:12px; background:#f1f5ff; border-radius:10px; }
+    .player.open { display:block; }
+    audio { width:100%; }
+    .blanks { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; direction:rtl; }
+    .saved { color:var(--success); font-size:.85rem; min-height:1.3em; margin-top:9px; }
+    .notice { margin:18px 0; padding:14px; border-left:4px solid var(--accent); background:#eef4ff; border-radius:6px; }
+    @media (max-width:600px) { .selectors { grid-template-columns:1fr; } header { padding:16px 20px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="arabic.html">Arabic Study</a>
+    <a href="docs.html">Docs</a>
+  </header>
+  <main>
+    <h1>TTT Listening & Transcription</h1>
+    <p class="lede">Listen, transcribe, and keep your work saved on this device.</p>
+    <section class="selectors" aria-label="TTT chapter selection">
+      <label>Unit<select id="unitSelect"><option value="">Loading units…</option></select></label>
+      <label>Chapter<select id="chapterSelect" disabled><option value="">Choose a unit first</option></select></label>
+    </section>
+    <div id="status" class="notice">Choose a unit and chapter. Only migrated TTT chapters appear here.</div>
+    <section id="activities" aria-live="polite"></section>
+  </main>
+  <script>
+    const dataRoot = 'data/ttt/';
+    const manifestPath = dataRoot + 'manifest.json';
+    const unitSelect = document.querySelector('#unitSelect');
+    const chapterSelect = document.querySelector('#chapterSelect');
+    const status = document.querySelector('#status');
+    const activities = document.querySelector('#activities');
+    let manifest = { units: [] }, activeAudio = null, activeKey = '';
+
+    const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const storageKey = chapter => `arabicStudy.ttt.v1.${chapter.unitId}.${chapter.chapterId}`;
+    const readDrafts = chapter => { try { return JSON.parse(localStorage.getItem(storageKey(chapter)) || '{}'); } catch { return {}; } };
+    const saveDrafts = (chapter, drafts) => localStorage.setItem(storageKey(chapter), JSON.stringify(drafts));
+
+    async function loadManifest() {
+      try {
+        const response = await fetch(manifestPath);
+        if (!response.ok) throw new Error('No TTT manifest yet');
+        manifest = await response.json();
+        const units = manifest.units || [];
+        unitSelect.innerHTML = '<option value="">Choose a unit</option>' + units.map(u => `<option value="${esc(u.id)}">${esc(u.title || u.id)}</option>`).join('');
+        const saved = JSON.parse(localStorage.getItem('arabicStudy.ttt.lastSelection') || '{}');
+        if (saved.unitId && units.some(u => u.id === saved.unitId)) { unitSelect.value = saved.unitId; populateChapters(saved.chapterId); }
+        status.textContent = units.length ? 'Choose an available TTT chapter.' : 'No TTT chapters have been migrated yet.';
+      } catch (error) {
+        unitSelect.innerHTML = '<option value="">No TTT content available</option>';
+        status.className = 'empty';
+        status.textContent = 'TTT is ready for content. Add data/ttt/manifest.json and chapter JSON files to publish migrated chapters.';
+      }
+    }
+
+    function populateChapters(selectedId = '') {
+      const unit = (manifest.units || []).find(u => u.id === unitSelect.value);
+      const chapters = unit?.chapters || [];
+      chapterSelect.disabled = !chapters.length;
+      chapterSelect.innerHTML = '<option value="">Choose a chapter</option>' + chapters.map(ch => `<option value="${esc(ch.id)}">${esc(ch.title || ch.id)}</option>`).join('');
+      if (selectedId && chapters.some(ch => ch.id === selectedId)) { chapterSelect.value = selectedId; loadChapter(); }
+      activities.innerHTML = '';
+    }
+
+    async function loadChapter() {
+      const unit = (manifest.units || []).find(u => u.id === unitSelect.value);
+      const chapter = (unit?.chapters || []).find(ch => ch.id === chapterSelect.value);
+      if (!chapter) return;
+      localStorage.setItem('arabicStudy.ttt.lastSelection', JSON.stringify({ unitId:unit.id, chapterId:chapter.id }));
+      status.className = 'notice'; status.textContent = 'Loading chapter…'; activities.innerHTML = '';
+      try {
+        const response = await fetch(dataRoot + chapter.file);
+        if (!response.ok) throw new Error('Chapter file unavailable');
+        const data = await response.json();
+        activeKey = storageKey(data);
+        renderChapter(data);
+      } catch (error) {
+        status.className = 'empty'; status.textContent = 'This TTT chapter could not be loaded. Check its manifest path and JSON file.';
+      }
+    }
+
+    function renderChapter(chapter) {
+      const drafts = readDrafts(chapter);
+      status.className = 'notice'; status.textContent = chapter.title || 'TTT chapter';
+      activities.innerHTML = (chapter.activities || []).map(activity => {
+        const isBlank = activity.type === 'fill-blank';
+        const fields = isBlank ? Array.from({length: activity.answerFields || 1}, (_, i) => `<input dir="rtl" lang="ar" aria-label="Answer ${i + 1} for activity ${activity.number}" data-answer="${i}" value="${esc((drafts[activity.number] || [])[i] || '')}" placeholder="الإجابة ${i + 1}">`).join('') : `<textarea lang="ar" aria-label="Transcription for activity ${activity.number}" placeholder="اكتب ما تسمع هنا">${esc(drafts[activity.number] || '')}</textarea>`;
+        const source = esc((chapter.audioBasePath || '') + (activity.audio || ''));
+        return `<article class="activity" data-number="${activity.number}" data-type="${esc(activity.type)}"><div class="activity-top"><span class="number">${activity.number}</span><span class="type">${isBlank ? 'Fill in the blank' : 'Full transcription'}</span></div>${activity.promptArabic ? `<p class="prompt" lang="ar">${esc(activity.promptArabic)}</p>` : ''}${activity.instruction ? `<p class="instruction">${esc(activity.instruction)}</p>` : ''}${activity.translationRequired ? '<p class="instruction">Include an English translation with your response.</p>' : ''}<button class="audio-toggle" type="button">Play audio</button><div class="player"><audio preload="metadata" controls src="${source}"></audio></div><div class="${isBlank ? 'blanks' : ''}">${fields}</div><div class="saved"></div></article>`;
+      }).join('');
+      activities.querySelectorAll('.audio-toggle').forEach(button => button.addEventListener('click', () => {
+        const player = button.nextElementSibling; player.classList.toggle('open');
+        button.textContent = player.classList.contains('open') ? 'Hide audio' : 'Play audio';
+      }));
+      activities.querySelectorAll('audio').forEach(audio => audio.addEventListener('play', () => { if (activeAudio && activeAudio !== audio) activeAudio.pause(); activeAudio = audio; }));
+      activities.querySelectorAll('.activity').forEach(card => {
+        const persist = () => {
+          const current = readDrafts(chapter);
+          current[card.dataset.number] = card.dataset.type === 'fill-blank' ? [...card.querySelectorAll('[data-answer]')].map(input => input.value) : card.querySelector('textarea').value;
+          saveDrafts(chapter, current);
+          const saved = card.querySelector('.saved'); saved.textContent = 'Saved locally';
+          clearTimeout(saved.timer); saved.timer = setTimeout(() => saved.textContent = '', 1400);
+        };
+        card.querySelectorAll('input, textarea').forEach(field => field.addEventListener('input', persist));
+      });
+    }
+
+    unitSelect.addEventListener('change', () => populateChapters());
+    chapterSelect.addEventListener('change', loadChapter);
+    loadManifest();
+  </script>
+</body>
+</html>
