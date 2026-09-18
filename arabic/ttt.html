@@ -19,6 +19,7 @@
     select,input,textarea,button { font:inherit; }
     select,input,textarea { width:100%; border:1px solid var(--line); border-radius:8px; padding:10px 12px; background:#fff; color:var(--ink); }
     textarea { min-height:120px; resize:vertical; direction:rtl; text-align:right; font-size:1.1rem; }
+    .inline-blank { display:inline-block; width:10ch; max-width:100%; margin:0 .18em; padding:.16em .35em; direction:rtl; text-align:center; vertical-align:baseline; border-width:0 0 2px; border-radius:0; background:#f8fbff; }
     .empty { background:#fff8e6; border:1px solid #edcf81; border-radius:12px; padding:18px; color:#6f5200; }
     .activity { padding:20px; margin:14px 0; }
     .activity-top { display:flex; align-items:center; justify-content:space-between; gap:12px; }
@@ -27,13 +28,13 @@
     .prompt { direction:rtl; text-align:right; font-size:1.25rem; margin:18px 0; }
     .instruction { color:var(--muted); margin:8px 0 16px; }
     .audio-toggle { border:0; border-radius:8px; padding:10px 14px; background:var(--accent); color:#fff; font-weight:700; cursor:pointer; }
+    .audio-toggle:disabled { cursor:not-allowed; opacity:.55; }
     .player { display:none; margin:14px 0; padding:12px; background:#f1f5ff; border-radius:10px; }
     .player.open { display:block; }
     audio { width:100%; }
-    .blanks { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; direction:rtl; }
     .saved { color:var(--success); font-size:.85rem; min-height:1.3em; margin-top:9px; }
     .notice { margin:18px 0; padding:14px; border-left:4px solid var(--accent); background:#eef4ff; border-radius:6px; }
-    @media (max-width:600px) { .selectors { grid-template-columns:1fr; } header { padding:16px 20px; } }
+    @media (max-width:600px) { .selectors { grid-template-columns:1fr; } header { padding:16px 20px; } .inline-blank { width:8ch; } }
   </style>
 </head>
 <body>
@@ -53,87 +54,76 @@
   </main>
   <script>
     const dataRoot = 'data/ttt/';
-    const manifestPath = dataRoot + 'manifest.json';
     const unitSelect = document.querySelector('#unitSelect');
     const chapterSelect = document.querySelector('#chapterSelect');
     const status = document.querySelector('#status');
     const activities = document.querySelector('#activities');
-    let manifest = { units: [] }, activeAudio = null, activeKey = '';
-
+    let manifest = { units: [] }, activeAudio = null;
     const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const storageKey = chapter => `arabicStudy.ttt.v1.${chapter.unitId}.${chapter.chapterId}`;
     const readDrafts = chapter => { try { return JSON.parse(localStorage.getItem(storageKey(chapter)) || '{}'); } catch { return {}; } };
     const saveDrafts = (chapter, drafts) => localStorage.setItem(storageKey(chapter), JSON.stringify(drafts));
+    const inlinePrompt = (prompt, number, draft) => esc(prompt).replace(/\{\{blank:(\d+)\}\}/g, (_, index) => `<input class="inline-blank" type="text" lang="ar" dir="rtl" data-blank="blank:${index}" aria-label="Answer ${index} for activity ${number}" value="${esc(draft[`blank:${index}`] || '')}">`);
 
     async function loadManifest() {
       try {
-        const response = await fetch(manifestPath);
-        if (!response.ok) throw new Error('No TTT manifest yet');
+        const response = await fetch(dataRoot + 'manifest.json');
+        if (!response.ok) throw new Error();
         manifest = await response.json();
         const units = manifest.units || [];
         unitSelect.innerHTML = '<option value="">Choose a unit</option>' + units.map(u => `<option value="${esc(u.id)}">${esc(u.title || u.id)}</option>`).join('');
         const saved = JSON.parse(localStorage.getItem('arabicStudy.ttt.lastSelection') || '{}');
         if (saved.unitId && units.some(u => u.id === saved.unitId)) { unitSelect.value = saved.unitId; populateChapters(saved.chapterId); }
         status.textContent = units.length ? 'Choose an available TTT chapter.' : 'No TTT chapters have been migrated yet.';
-      } catch (error) {
+      } catch {
         unitSelect.innerHTML = '<option value="">No TTT content available</option>';
-        status.className = 'empty';
-        status.textContent = 'TTT is ready for content. Add data/ttt/manifest.json and chapter JSON files to publish migrated chapters.';
+        status.className = 'empty'; status.textContent = 'TTT is ready for content. Add a manifest and chapter JSON files to publish migrated chapters.';
       }
     }
-
     function populateChapters(selectedId = '') {
       const unit = (manifest.units || []).find(u => u.id === unitSelect.value);
       const chapters = unit?.chapters || [];
       chapterSelect.disabled = !chapters.length;
       chapterSelect.innerHTML = '<option value="">Choose a chapter</option>' + chapters.map(ch => `<option value="${esc(ch.id)}">${esc(ch.title || ch.id)}</option>`).join('');
-      if (selectedId && chapters.some(ch => ch.id === selectedId)) { chapterSelect.value = selectedId; loadChapter(); }
       activities.innerHTML = '';
+      if (selectedId && chapters.some(ch => ch.id === selectedId)) { chapterSelect.value = selectedId; loadChapter(); }
     }
-
     async function loadChapter() {
       const unit = (manifest.units || []).find(u => u.id === unitSelect.value);
-      const chapter = (unit?.chapters || []).find(ch => ch.id === chapterSelect.value);
-      if (!chapter) return;
-      localStorage.setItem('arabicStudy.ttt.lastSelection', JSON.stringify({ unitId:unit.id, chapterId:chapter.id }));
+      const chapterRef = (unit?.chapters || []).find(ch => ch.id === chapterSelect.value);
+      if (!chapterRef) return;
+      localStorage.setItem('arabicStudy.ttt.lastSelection', JSON.stringify({unitId:unit.id, chapterId:chapterRef.id}));
       status.className = 'notice'; status.textContent = 'Loading chapter…'; activities.innerHTML = '';
       try {
-        const response = await fetch(dataRoot + chapter.file);
-        if (!response.ok) throw new Error('Chapter file unavailable');
-        const data = await response.json();
-        activeKey = storageKey(data);
-        renderChapter(data);
-      } catch (error) {
+        const response = await fetch(dataRoot + chapterRef.file);
+        if (!response.ok) throw new Error();
+        renderChapter(await response.json());
+      } catch {
         status.className = 'empty'; status.textContent = 'This TTT chapter could not be loaded. Check its manifest path and JSON file.';
       }
     }
-
     function renderChapter(chapter) {
       const drafts = readDrafts(chapter);
       status.className = 'notice'; status.textContent = chapter.title || 'TTT chapter';
       activities.innerHTML = (chapter.activities || []).map(activity => {
+        const draft = drafts[activity.number] || {};
         const isBlank = activity.type === 'fill-blank';
-        const fields = isBlank ? Array.from({length: activity.answerFields || 1}, (_, i) => `<input dir="rtl" lang="ar" aria-label="Answer ${i + 1} for activity ${activity.number}" data-answer="${i}" value="${esc((drafts[activity.number] || [])[i] || '')}" placeholder="الإجابة ${i + 1}">`).join('') : `<textarea lang="ar" aria-label="Transcription for activity ${activity.number}" placeholder="اكتب ما تسمع هنا">${esc(drafts[activity.number] || '')}</textarea>`;
-        const source = esc((chapter.audioBasePath || '') + (activity.audio || ''));
-        return `<article class="activity" data-number="${activity.number}" data-type="${esc(activity.type)}"><div class="activity-top"><span class="number">${activity.number}</span><span class="type">${isBlank ? 'Fill in the blank' : 'Full transcription'}</span></div>${activity.promptArabic ? `<p class="prompt" lang="ar">${esc(activity.promptArabic)}</p>` : ''}${activity.instruction ? `<p class="instruction">${esc(activity.instruction)}</p>` : ''}${activity.translationRequired ? '<p class="instruction">Include an English translation with your response.</p>' : ''}<button class="audio-toggle" type="button">Play audio</button><div class="player"><audio preload="metadata" controls src="${source}"></audio></div><div class="${isBlank ? 'blanks' : ''}">${fields}</div><div class="saved"></div></article>`;
+        const hasAudio = Boolean(activity.audio);
+        const answer = isBlank ? '' : `<textarea lang="ar" dir="rtl" aria-label="Transcription for activity ${activity.number}" placeholder="اكتب ما تسمع هنا">${esc(typeof draft === 'string' ? draft : '')}</textarea>`;
+        return `<article class="activity" data-number="${activity.number}" data-type="${esc(activity.type)}"><div class="activity-top"><span class="number">${activity.number}</span><span class="type">${isBlank ? 'Fill in the blank' : 'Full transcription'}</span></div>${activity.promptArabic ? `<p class="prompt" lang="ar">${isBlank ? inlinePrompt(activity.promptArabic, activity.number, typeof draft === 'object' ? draft : {}) : esc(activity.promptArabic)}</p>` : ''}${activity.instruction ? `<p class="instruction">${esc(activity.instruction)}</p>` : ''}${activity.translationRequired ? '<p class="instruction">Translate your completed response into English.</p>' : ''}<button class="audio-toggle" type="button" ${hasAudio ? '' : 'disabled'}>${hasAudio ? 'Play audio' : 'Audio coming soon'}</button><div class="player"><audio preload="metadata" controls src="${esc((chapter.audioBasePath || '') + activity.audio)}"></audio></div>${answer}<div class="saved"></div></article>`;
       }).join('');
-      activities.querySelectorAll('.audio-toggle').forEach(button => button.addEventListener('click', () => {
-        const player = button.nextElementSibling; player.classList.toggle('open');
-        button.textContent = player.classList.contains('open') ? 'Hide audio' : 'Play audio';
-      }));
+      activities.querySelectorAll('.audio-toggle:not(:disabled)').forEach(button => button.addEventListener('click', () => { const player = button.nextElementSibling; player.classList.toggle('open'); button.textContent = player.classList.contains('open') ? 'Hide audio' : 'Play audio'; }));
       activities.querySelectorAll('audio').forEach(audio => audio.addEventListener('play', () => { if (activeAudio && activeAudio !== audio) activeAudio.pause(); activeAudio = audio; }));
       activities.querySelectorAll('.activity').forEach(card => {
         const persist = () => {
           const current = readDrafts(chapter);
-          current[card.dataset.number] = card.dataset.type === 'fill-blank' ? [...card.querySelectorAll('[data-answer]')].map(input => input.value) : card.querySelector('textarea').value;
+          current[card.dataset.number] = card.dataset.type === 'fill-blank' ? Object.fromEntries([...card.querySelectorAll('[data-blank]')].map(input => [input.dataset.blank, input.value])) : card.querySelector('textarea').value;
           saveDrafts(chapter, current);
-          const saved = card.querySelector('.saved'); saved.textContent = 'Saved locally';
-          clearTimeout(saved.timer); saved.timer = setTimeout(() => saved.textContent = '', 1400);
+          const saved = card.querySelector('.saved'); saved.textContent = 'Saved locally'; clearTimeout(saved.timer); saved.timer = setTimeout(() => saved.textContent = '', 1400);
         };
         card.querySelectorAll('input, textarea').forEach(field => field.addEventListener('input', persist));
       });
     }
-
     unitSelect.addEventListener('change', () => populateChapters());
     chapterSelect.addEventListener('change', loadChapter);
     loadManifest();

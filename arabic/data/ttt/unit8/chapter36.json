@@ -3,6 +3,80 @@
   "chapterId": "ch36",
   "title": "Chapter 36 TTT — Common Ailments and Accidental Injuries",
   "audioBasePath": "audio/unit8/ch36/",
-  "activities": [],
-  "notes": "Chapter scaffold created from CHAPTER_36_STUDENTS.pdf. Add verified activity prompts and matching audio files before publishing activities."
+  "activities": [
+    {
+      "number": 1,
+      "type": "fill-blank",
+      "audio": "",
+      "promptArabic": "مع قدوم فصل الشتاء تزداد الحاجة إلى {{blank:1}} {{blank:2}} لمعالجة بعض الأمراض التي تصاحب هذا الفصل البارد.",
+      "translationRequired": true
+    },
+    {
+      "number": 2,
+      "type": "fill-blank",
+      "audio": "",
+      "promptArabic": "في فصل الشتاء {{blank:1}} الإنسان إلى كثير من الأمراض {{blank:2}} مثل الأنفلونزا.",
+      "translationRequired": false
+    },
+    {
+      "number": 3,
+      "type": "fill-blank",
+      "audio": "",
+      "promptArabic": "أمراض الشتاء {{blank:1}} هي الأنفلونزا، {{blank:2}}، {{blank:3}}، {{blank:4}}، {{blank:5}}.",
+      "translationRequired": true
+    },
+    {
+      "number": 4,
+      "type": "fill-blank",
+      "audio": "",
+      "promptArabic": "{{blank:1}} {{blank:2}} {{blank:3}} {{blank:4}} التي تصاحبها {{blank:5}} مزعجة، هي من الأمراض الشائعة.",
+      "translationRequired": false
+    },
+    {
+      "number": 5,
+      "type": "fill-blank",
+      "audio": "",
+      "promptArabic": "لابد من {{blank:1}} لها والعمل على تنشيط جهاز {{blank:2}} في الجسم.",
+      "translationRequired": true
+    },
+    {
+      "number": 6,
+      "type": "fill-blank",
+      "audio": "",
+      "promptArabic": "قد يصاب المريض {{blank:1}} صحية قد تؤدي في بعض الأحيان إلى {{blank:2}} خطيرة وتسبب {{blank:3}}.",
+      "translationRequired": false
+    },
+    {
+      "number": 7,
+      "type": "transcription",
+      "audio": "",
+      "promptArabic": "",
+      "instruction": "استمع واكتب الجملة كاملة.",
+      "translationRequired": true
+    },
+    {
+      "number": 8,
+      "type": "fill-blank",
+      "audio": "",
+      "promptArabic": "قد {{blank:1}} {{blank:2}} الصحة في كثير من بلدان العالم على {{blank:3}} المواطنين لأخذ {{blank:4}} المناسب.",
+      "translationRequired": false
+    },
+    {
+      "number": 9,
+      "type": "transcription",
+      "audio": "",
+      "promptArabic": "",
+      "instruction": "استمع واكتب الجملة كاملة.",
+      "translationRequired": true
+    },
+    {
+      "number": 10,
+      "type": "transcription",
+      "audio": "",
+      "promptArabic": "",
+      "instruction": "استمع واكتب الجملة كاملة.",
+      "translationRequired": false
+    }
+  ],
+  "notes": "Activities 1–10 transcribed from the worksheet. Audio filenames and answer keys remain to be added after verification."
 }
