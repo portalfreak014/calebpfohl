@@ -363,6 +363,49 @@
       transition:transform .22s ease;
     }
 
+    .drawer-item {
+      display:flex;
+      align-items:center;
+      gap:14px;
+      width:100%;
+      min-height:54px;
+      padding:0 14px;
+      border:0;
+      border-radius:16px;
+      background:transparent;
+      color:var(--ink);
+      font:700 .95rem/1.2 "Noto Sans","Noto Sans Arabic",system-ui,sans-serif;
+      text-align:left;
+    }
+
+    .drawer-item:hover {
+      background:var(--sl);
+    }
+    
+    .firebase-google-mark {
+      display:grid;
+      place-items:center;
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      background:#fff;
+      color:#4285f4;
+      font-weight:800;
+    }
+    
+    .firebase-auth-message {
+      display:block;
+      padding:8px 14px 0;
+      color:var(--v);
+      font-size:.78rem;
+    }
+    
+    .firebase-menu-divider {
+      height:1px;
+      margin:12px 0;
+      background:var(--ov);
+    }
+
     .drawer.open { transform:translateX(0); }
 
     .drawer-head {
@@ -547,6 +590,8 @@
         <span class="material-symbols-rounded" aria-hidden="true">bar_chart</span>
         Progress
       </button>
+
+      <div id="firebase-auth"></div>
     </div>
   </aside>
 
@@ -576,6 +621,7 @@
 
   <script src="data/units-manifest.js"></script>
   <script src="progress-store.js"></script>
+<script type="module" src="./firebase-auth.js"></script>
   <script>
     let mode = localStorage.getItem('arabicStudy.quizDirection') === 'en-to-ar'
       ? 'en-to-ar'
