@@ -1,1 +1,769 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#6750a4"><title>Arabic Study</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>:root{--p:#6750a4;--pc:#e9ddff;--opc:#21005d;--s:#fffbfe;--sl:#f7f2fa;--sh:#ece6f0;--ink:#1c1b1f;--v:#49454f;--o:#79747e;--ov:#cac4d0;--r:20px}*{box-sizing:border-box}body{margin:0;background:var(--s);color:var(--ink);font-family:"Noto Sans","Noto Sans Arabic",sans-serif}.app{width:min(100%,760px);margin:auto;padding:16px 16px 96px}.top{display:flex;align-items:center;justify-content:space-between;min-height:56px}.brand{display:flex;gap:10px;align-items:center}.mark{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:var(--pc);color:var(--opc);font:800 1.3rem "Noto Sans Arabic"}.brand p{margin:0;font-size:.78rem;color:var(--v)}.brand b{font-size:1rem}.icon{display:grid;place-items:center;width:46px;height:46px;border:0;border-radius:50%;background:transparent;color:var(--v)}.hero{margin-top:16px;padding:24px;border-radius:28px;background:var(--pc);color:var(--opc)}.eyebrow{margin:0 0 9px;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.hero h1{max-width:13ch;margin:0 0 11px;font-size:clamp(2rem,8vw,2.8rem);line-height:1.1;letter-spacing:-.04em}.hero p{margin:0;line-height:1.55}.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;margin-top:20px;padding:0 20px;border-radius:999px;background:var(--p);color:#fff;text-decoration:none;font-weight:800}.section{margin-top:34px}.heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:13px}.heading h2{margin:0;font-size:1.3rem}.hint{margin:0;color:var(--v);font-size:.82rem}.mode{display:flex;gap:0;width:max-content;border:1px solid var(--ov);border-radius:999px;padding:3px;background:var(--sl)}.mode button{border:0;border-radius:999px;padding:9px 12px;background:transparent;color:var(--v);font:700 .8rem inherit}.mode button.active{background:var(--pc);color:var(--opc)}.units{display:grid;gap:12px}.unit{border:1px solid var(--ov);border-radius:var(--r);background:var(--s);overflow:hidden}.unit summary{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;min-height:78px;padding:14px;cursor:pointer;list-style:none}.unit summary::-webkit-details-marker{display:none}.unit[open] summary{background:var(--sl)}.uicon{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--pc);color:var(--opc);font-weight:800}.utitle{display:block;font-weight:800}.umeta{display:block;margin-top:3px;color:var(--v);font-size:.82rem}.chev{color:var(--v);transition:transform .2s}.unit[open] .chev{transform:rotate(180deg)}.soon .uicon{background:var(--sh);color:var(--v)}.pill{padding:4px 9px;border-radius:999px;background:var(--sh);color:var(--v);font-size:.66rem;font-weight:800;text-transform:uppercase}.chapters{display:grid;gap:8px;padding:0 14px 14px}.chapter{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:11px;min-height:64px;padding:10px;border-radius:15px;background:var(--sl);color:inherit;text-decoration:none}.chapter:hover{background:var(--sh)}.num{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--pc);color:var(--opc);font-weight:800;font-size:.83rem}.ctitle{font-weight:700}.cmeta{display:block;color:var(--v);font-size:.77rem;margin-top:2px}.status{font-size:.7rem;color:var(--p);font-weight:800}.soon .chapters{opacity:.62}.soon .chapter{background:var(--sl)}.nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;padding:8px 12px;background:#fffbfef2;border-top:1px solid var(--ov);backdrop-filter:blur(12px)}.navin{display:grid;grid-template-columns:repeat(4,1fr);width:min(100%,600px)}.nav a,.nav button{display:grid;place-items:center;gap:2px;min-height:55px;border:0;background:transparent;color:var(--v);font:700 .7rem inherit;text-decoration:none}.nav .active{color:var(--opc)}.material-symbols-rounded{font-family:"Material Symbols Rounded";font-size:23px}@media(min-width:700px){.app{padding:28px 32px 96px}.hero{padding:38px}.chapters{grid-template-columns:repeat(2,1fr)}}</style></head><body><main class="app"><header class="top"><div class="brand"><div class="mark" lang="ar">ع</div><div><b>Arabic Study</b><p lang="ar" dir="rtl">تعلّم العربية خطوة بخطوة</p></div></div><button class="icon" aria-label="Menu"><span class="material-symbols-rounded">menu</span></button></header><section class="hero"><p class="eyebrow">Your study space</p><h1>Learn Arabic with focus.</h1><p>Choose a unit, then work through a chapter at a time.</p><a class="button" id="start" href="quiz.html?unit=unit6&chapter=ch26">Start studying <span class="material-symbols-rounded">arrow_forward</span></a></section><section class="section"><div class="heading"><h2>Study direction</h2></div><p class="hint">Applies to every available chapter.</p><div class="mode"><button id="ar" class="active">ع to English</button><button id="en">English to ع</button></div></section><section class="section"><div class="heading"><h2>Units</h2><p class="hint">10 course units</p></div><div class="units" id="units"></div></section></main><nav class="nav"><div class="navin"><button class="active"><span class="material-symbols-rounded">home</span>Home</button><a href="match.html"><span class="material-symbols-rounded">extension</span>Match</a><a href="roots.html"><span class="material-symbols-rounded">account_tree</span>Roots</a><button><span class="material-symbols-rounded">bar_chart</span>Progress</button></div></nav><script src="data/units-manifest.js"></script><script>let mode=localStorage.getItem('arabicStudy.quizDirection')==='en-to-ar'?'en-to-ar':'ar-to-en';const units=document.querySelector('#units');function url(u,c){return`quiz.html?unit=${u}&chapter=${c}${mode==='en-to-ar'?'&mode=en-to-ar':''}`}function render(){document.querySelector('#ar').classList.toggle('active',mode==='ar-to-en');document.querySelector('#en').classList.toggle('active',mode==='en-to-ar');let ids=window.UnitsManifest.listUnits();units.innerHTML=ids.map(id=>{let u=window.UnitsManifest.getUnit(id),active=u.chapters.some(c=>c.available),num=id.replace('unit',''),open=active?' open':'',cards=u.chapters.map(c=>c.available?`<a class="chapter" href="${url(id,c.id)}"><span class="num">${c.number}</span><span><span class="ctitle">${c.title}</span><span class="cmeta">Vocabulary quiz</span></span><span class="status">Start</span></a>`:`<div class="chapter" aria-disabled="true"><span class="num">${c.number}</span><span><span class="ctitle">${c.title}</span><span class="cmeta">Coming soon</span></span><span class="pill">Soon</span></div>`).join('');return`<details class="unit ${active?'':'soon'}"${open}><summary><span class="uicon">${num}</span><span><span class="utitle">${u.title}</span><span class="umeta">${active?u.chapters.filter(c=>c.available).length+' chapters available':'Coming soon'}</span></span>${active?'<span class="material-symbols-rounded chev">expand_more</span>':'<span class="pill">Soon</span>'}</summary><div class="chapters">${cards}</div></details>`}).join('')}document.querySelector('#ar').onclick=()=>{mode='ar-to-en';localStorage.setItem('arabicStudy.quizDirection',mode);render()};document.querySelector('#en').onclick=()=>{mode='en-to-ar';localStorage.setItem('arabicStudy.quizDirection',mode);render()};render()</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#6750a4">
+  <meta name="description" content="A mobile-first Arabic study space.">
+  <title>Arabic Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --p:#6750a4;
+      --pc:#e9ddff;
+      --opc:#21005d;
+      --s:#fffbfe;
+      --sl:#f7f2fa;
+      --sh:#ece6f0;
+      --ink:#1c1b1f;
+      --v:#49454f;
+      --o:#79747e;
+      --ov:#cac4d0;
+      --r:20px;
+    }
+
+    * { box-sizing:border-box; }
+
+    html { scroll-behavior:smooth; }
+
+    body {
+      margin:0;
+      background:var(--s);
+      color:var(--ink);
+      font-family:"Noto Sans","Noto Sans Arabic",system-ui,sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    button,a { font:inherit; -webkit-tap-highlight-color:transparent; }
+
+    button { cursor:pointer; }
+
+    .material-symbols-rounded {
+      font-family:"Material Symbols Rounded";
+      font-size:23px;
+      line-height:1;
+      font-weight:normal;
+      font-style:normal;
+      white-space:nowrap;
+      font-variation-settings:"FILL" 0,"wght" 500,"GRAD" 0,"opsz" 24;
+    }
+
+    .app {
+      width:min(100%,760px);
+      margin:auto;
+      padding:16px 16px 132px;
+    }
+
+    .top {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      min-height:56px;
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .mark {
+      display:grid;
+      place-items:center;
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      background:var(--pc);
+      color:var(--opc);
+      font:800 1.3rem "Noto Sans Arabic";
+    }
+
+    .brand p {
+      margin:0;
+      color:var(--v);
+      font-size:.78rem;
+    }
+
+    .brand b { font-size:1rem; }
+
+    .icon {
+      display:grid;
+      place-items:center;
+      width:46px;
+      height:46px;
+      padding:0;
+      border:0;
+      border-radius:50%;
+      background:transparent;
+      color:var(--v);
+    }
+
+    .icon:hover { background:rgb(29 27 32 / .08); }
+
+    .hero {
+      margin-top:16px;
+      padding:24px;
+      border-radius:28px;
+      background:var(--pc);
+      color:var(--opc);
+    }
+
+    .eyebrow {
+      margin:0 0 9px;
+      font-size:.75rem;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .hero h1 {
+      max-width:13ch;
+      margin:0 0 11px;
+      font-size:clamp(2rem,8vw,2.8rem);
+      line-height:1.1;
+      letter-spacing:-.04em;
+    }
+
+    .hero p {
+      margin:0;
+      line-height:1.55;
+    }
+
+    .button {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:48px;
+      margin-top:20px;
+      padding:0 20px;
+      border:0;
+      border-radius:999px;
+      background:var(--p);
+      color:#fff;
+      font-weight:800;
+      text-decoration:none;
+    }
+
+    .section { margin-top:34px; }
+
+    .heading {
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:13px;
+    }
+
+    .heading h2 {
+      margin:0;
+      font-size:1.3rem;
+    }
+
+    .hint {
+      margin:0 0 10px;
+      color:var(--v);
+      font-size:.82rem;
+    }
+
+    .heading .hint { margin:0; }
+
+    .mode {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      width:100%;
+      padding:3px;
+      border:1px solid var(--ov);
+      border-radius:999px;
+      background:var(--sl);
+    }
+
+    .mode button {
+      min-width:0;
+      padding:10px 12px;
+      border:0;
+      border-radius:999px;
+      background:transparent;
+      color:var(--v);
+      font-size:.82rem;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .mode button.active {
+      background:var(--pc);
+      color:var(--opc);
+    }
+
+    .units { display:grid; gap:12px; }
+
+    .unit {
+      border:1px solid var(--ov);
+      border-radius:var(--r);
+      background:var(--s);
+    }
+
+    .unit summary {
+      display:grid;
+      grid-template-columns:44px minmax(0,1fr) auto;
+      align-items:center;
+      gap:12px;
+      min-height:78px;
+      padding:14px;
+      cursor:pointer;
+      list-style:none;
+      border-radius:var(--r);
+    }
+
+    .unit summary::-webkit-details-marker { display:none; }
+
+    .unit[open] summary {
+      border-bottom-left-radius:0;
+      border-bottom-right-radius:0;
+      background:var(--sl);
+    }
+
+    .uicon {
+      display:grid;
+      place-items:center;
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:var(--pc);
+      color:var(--opc);
+      font-weight:800;
+    }
+
+    .utitle {
+      display:block;
+      font-weight:800;
+    }
+
+    .umeta {
+      display:block;
+      margin-top:3px;
+      color:var(--v);
+      font-size:.82rem;
+    }
+
+    .chev {
+      color:var(--v);
+      transition:transform .2s ease;
+    }
+
+    .unit[open] .chev { transform:rotate(180deg); }
+
+    .soon .uicon {
+      background:var(--sh);
+      color:var(--v);
+    }
+
+    .pill {
+      padding:4px 9px;
+      border-radius:999px;
+      background:var(--sh);
+      color:var(--v);
+      font-size:.66rem;
+      font-weight:800;
+      text-transform:uppercase;
+    }
+
+    .chapters {
+      display:grid;
+      gap:8px;
+      padding:10px 14px 14px;
+    }
+
+    .chapter {
+      display:grid;
+      grid-template-columns:38px minmax(0,1fr) auto;
+      align-items:center;
+      gap:11px;
+      min-height:64px;
+      padding:10px;
+      border-radius:15px;
+      background:var(--sl);
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .chapter:hover { background:var(--sh); }
+
+    .num {
+      display:grid;
+      place-items:center;
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      background:var(--pc);
+      color:var(--opc);
+      font-size:.83rem;
+      font-weight:800;
+    }
+
+    .ctitle { font-weight:700; }
+
+    .cmeta {
+      display:block;
+      margin-top:2px;
+      color:var(--v);
+      font-size:.77rem;
+    }
+
+    .status {
+      color:var(--p);
+      font-size:.7rem;
+      font-weight:800;
+    }
+
+    .soon .chapters { opacity:.62; }
+
+    .drawer-backdrop {
+      position:fixed;
+      inset:0;
+      z-index:20;
+      background:rgb(0 0 0 / .35);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .2s ease;
+    }
+
+    .drawer-backdrop.open {
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .drawer {
+      position:fixed;
+      top:0;
+      right:0;
+      bottom:0;
+      z-index:21;
+      display:flex;
+      flex-direction:column;
+      width:min(86vw,340px);
+      padding:max(18px,env(safe-area-inset-top)) 16px 24px;
+      background:var(--s);
+      box-shadow:-8px 0 26px rgb(0 0 0 / .18);
+      transform:translateX(105%);
+      transition:transform .22s ease;
+    }
+
+    .drawer.open { transform:translateX(0); }
+
+    .drawer-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      min-height:56px;
+      margin-bottom:16px;
+    }
+
+    .drawer-head strong { font-size:1.1rem; }
+
+    .drawer-links {
+      display:grid;
+      gap:8px;
+    }
+
+    .drawer-links a,
+    .drawer-links button {
+      display:flex;
+      align-items:center;
+      gap:14px;
+      width:100%;
+      min-height:54px;
+      padding:0 14px;
+      border:0;
+      border-radius:16px;
+      background:transparent;
+      color:var(--ink);
+      font-size:.95rem;
+      font-weight:700;
+      text-align:left;
+      text-decoration:none;
+    }
+
+    .drawer-links a:hover,
+    .drawer-links button:hover { background:var(--sl); }
+
+    .drawer-links .material-symbols-rounded { color:var(--p); }
+
+    .nav {
+      position:fixed;
+      right:0;
+      bottom:max(12px,env(safe-area-inset-bottom));
+      left:0;
+      z-index:10;
+      display:flex;
+      justify-content:center;
+      padding:0 12px;
+      pointer-events:none;
+    }
+
+    .navin {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      width:min(100%,600px);
+      padding:5px;
+      border:1px solid var(--ov);
+      border-radius:999px;
+      background:rgb(255 251 254 / .94);
+      box-shadow:0 5px 18px rgb(0 0 0 / .14);
+      backdrop-filter:blur(12px);
+      pointer-events:auto;
+    }
+
+    .nav a,
+    .nav button {
+      display:grid;
+      place-items:center;
+      gap:3px;
+      min-height:52px;
+      padding:3px 4px;
+      border:0;
+      border-radius:999px;
+      appearance:none;
+      background:transparent;
+      color:var(--v);
+      font-family:"Noto Sans","Noto Sans Arabic",system-ui,sans-serif;
+      font-size:.68rem;
+      font-weight:700;
+      line-height:1.1;
+      text-decoration:none;
+    }
+
+    .nav a:hover,
+    .nav button:hover { background:var(--sl); }
+
+    .nav .active {
+      background:var(--pc);
+      color:var(--opc);
+    }
+
+    :focus-visible {
+      outline:3px solid var(--p);
+      outline-offset:3px;
+    }
+
+    @media (min-width:700px) {
+      .app { padding:28px 32px 132px; }
+      .hero { padding:38px; }
+      .chapters { grid-template-columns:repeat(2,1fr); }
+    }
+
+    @media (max-width:390px) {
+      .mode button { padding:10px 7px; font-size:.75rem; }
+      .nav a,.nav button { font-size:.62rem; }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      *,*::before,*::after {
+        scroll-behavior:auto!important;
+        transition-duration:.01ms!important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header class="top">
+      <div class="brand">
+        <div class="mark" lang="ar">ع</div>
+        <div>
+          <b>Arabic Study</b>
+          <p lang="ar" dir="rtl">تعلّم العربية خطوة بخطوة</p>
+        </div>
+      </div>
+
+      <button class="icon" id="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <span class="material-symbols-rounded" aria-hidden="true">menu</span>
+      </button>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">Your study space</p>
+      <h1>Learn Arabic with focus.</h1>
+      <p>Choose a unit, then work through a chapter at a time.</p>
+      <a class="button" id="start" href="quiz.html?unit=unit6&chapter=ch26">
+        Start studying
+        <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+      </a>
+    </section>
+
+    <section class="section">
+      <div class="heading">
+        <h2>Study direction</h2>
+      </div>
+      <p class="hint">Applies to every available chapter.</p>
+
+      <div class="mode" aria-label="Study direction">
+        <button id="ar" class="active" type="button">ع to English</button>
+        <button id="en" type="button">English to ع</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="heading">
+        <h2>Units</h2>
+        <p class="hint">10 course units</p>
+      </div>
+      <div class="units" id="units"></div>
+    </section>
+  </main>
+
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+  <aside class="drawer" id="drawer" aria-label="Main menu" aria-hidden="true">
+    <div class="drawer-head">
+      <strong>Menu</strong>
+      <button class="icon" id="close-menu-button" type="button" aria-label="Close menu">
+        <span class="material-symbols-rounded" aria-hidden="true">close</span>
+      </button>
+    </div>
+
+    <div class="drawer-links">
+      <a href="roots.html">
+        <span class="material-symbols-rounded" aria-hidden="true">account_tree</span>
+        Roots
+      </a>
+
+      <button id="progress-menu-button" type="button">
+        <span class="material-symbols-rounded" aria-hidden="true">bar_chart</span>
+        Progress
+      </button>
+    </div>
+  </aside>
+
+  <nav class="nav" aria-label="Primary navigation">
+    <div class="navin">
+      <a class="active" href="arabic.html" aria-current="page">
+        <span class="material-symbols-rounded" aria-hidden="true">home</span>
+        Home
+      </a>
+
+      <a href="glossary.html">
+        <span class="material-symbols-rounded" aria-hidden="true">menu_book</span>
+        Glossary
+      </a>
+
+      <a href="flashcards.html">
+        <span class="material-symbols-rounded" aria-hidden="true">style</span>
+        Flashcards
+      </a>
+
+      <a href="match.html">
+        <span class="material-symbols-rounded" aria-hidden="true">extension</span>
+        Match
+      </a>
+    </div>
+  </nav>
+
+  <script src="data/units-manifest.js"></script>
+  <script src="progress-store.js"></script>
+  <script>
+    let mode = localStorage.getItem('arabicStudy.quizDirection') === 'en-to-ar'
+      ? 'en-to-ar'
+      : 'ar-to-en';
+
+    const units = document.querySelector('#units');
+    const start = document.querySelector('#start');
+    const menuButton = document.querySelector('#menu-button');
+    const closeMenuButton = document.querySelector('#close-menu-button');
+    const drawer = document.querySelector('#drawer');
+    const drawerBackdrop = document.querySelector('#drawer-backdrop');
+    const progressMenuButton = document.querySelector('#progress-menu-button');
+
+    function chapterKey(chapterId) {
+      return mode === 'en-to-ar' ? `${chapterId}:en-to-ar` : chapterId;
+    }
+
+    function quizUrl(unitId, chapterId) {
+      return `quiz.html?unit=${encodeURIComponent(unitId)}&chapter=${encodeURIComponent(chapterId)}${mode === 'en-to-ar' ? '&mode=en-to-ar' : ''}`;
+    }
+
+    function getChapterProgress(unitId, chapterId) {
+      if (!window.ProgressStore) return null;
+      return window.ProgressStore.getChapter(unitId, chapterKey(chapterId));
+    }
+
+    function unitProgress(unitId, chapterList) {
+      const available = chapterList.filter(chapter => chapter.available);
+
+      let answered = 0;
+      let total = 0;
+
+      available.forEach(chapter => {
+        const progress = getChapterProgress(unitId, chapter.id);
+
+        if (!progress) return;
+
+        answered += Math.min(
+          Number(progress.answeredCount) || 0,
+          Number(progress.totalQuestions) || 0
+        );
+
+        total += Number(progress.totalQuestions) || 0;
+      });
+
+      return {
+        answered,
+        total,
+        label: total > 0 ? `${answered} of ${total} complete` : `${available.length} chapters available`
+      };
+    }
+
+    function chapterMeta(unitId, chapter) {
+      const progress = getChapterProgress(unitId, chapter.id);
+
+      if (!progress || !progress.totalQuestions) return 'Vocabulary quiz';
+
+      const answered = Math.min(
+        Number(progress.answeredCount) || 0,
+        Number(progress.totalQuestions) || 0
+      );
+
+      if (progress.status === 'completed') return 'Completed';
+
+      if (answered > 0) {
+        return `${answered} of ${progress.totalQuestions} complete`;
+      }
+
+      return 'Vocabulary quiz';
+    }
+
+    function chapterStatus(unitId, chapter) {
+      const progress = getChapterProgress(unitId, chapter.id);
+
+      if (progress && progress.status === 'completed') return 'Review';
+      if (progress && progress.answeredCount > 0) return 'Continue';
+
+      return 'Start';
+    }
+
+    function updateStartLink() {
+      if (!window.ProgressStore || !window.UnitsManifest) return;
+
+      const lastActive = window.ProgressStore.getProfile().lastActive;
+
+      if (!lastActive || !lastActive.unitId || !lastActive.chapterId) return;
+
+      const cleanChapterId = lastActive.chapterId.replace(':en-to-ar', '');
+      const lastMode = lastActive.chapterId.endsWith(':en-to-ar') ? 'en-to-ar' : 'ar-to-en';
+
+      start.href = `quiz.html?unit=${encodeURIComponent(lastActive.unitId)}&chapter=${encodeURIComponent(cleanChapterId)}${lastMode === 'en-to-ar' ? '&mode=en-to-ar' : ''}`;
+      start.firstChild.textContent = 'Continue studying ';
+    }
+
+    function render() {
+      document.querySelector('#ar').classList.toggle('active', mode === 'ar-to-en');
+      document.querySelector('#en').classList.toggle('active', mode === 'en-to-ar');
+
+      const ids = window.UnitsManifest.listUnits();
+
+      units.innerHTML = ids.map(id => {
+        const unit = window.UnitsManifest.getUnit(id);
+        const active = unit.chapters.some(chapter => chapter.available);
+        const unitNumber = id.replace('unit', '');
+        const progress = unitProgress(id, unit.chapters);
+        const isOpen = active ? ' open' : '';
+
+        const cards = unit.chapters.map(chapter => {
+          if (!chapter.available) {
+            return `
+              <div class="chapter" aria-disabled="true">
+                <span class="num">${chapter.number}</span>
+                <span>
+                  <span class="ctitle">${chapter.title}</span>
+                  <span class="cmeta">Coming soon</span>
+                </span>
+                <span class="pill">Soon</span>
+              </div>
+            `;
+          }
+
+          return `
+            <a class="chapter" href="${quizUrl(id, chapter.id)}">
+              <span class="num">${chapter.number}</span>
+              <span>
+                <span class="ctitle">${chapter.title}</span>
+                <span class="cmeta">${chapterMeta(id, chapter)}</span>
+              </span>
+              <span class="status">${chapterStatus(id, chapter)}</span>
+            </a>
+          `;
+        }).join('');
+
+        return `
+          <details class="unit ${active ? '' : 'soon'}" id="${id}-chapters"${isOpen}>
+            <summary>
+              <span class="uicon">${unitNumber}</span>
+              <span>
+                <span class="utitle">${unit.title}</span>
+                <span class="umeta">${active ? progress.label : 'Coming soon'}</span>
+              </span>
+              ${active
+                ? '<span class="material-symbols-rounded chev" aria-hidden="true">expand_more</span>'
+                : '<span class="pill">Soon</span>'}
+            </summary>
+            <div class="chapters">${cards}</div>
+          </details>
+        `;
+      }).join('');
+
+      updateStartLink();
+    }
+
+    function setMode(nextMode) {
+      mode = nextMode;
+      localStorage.setItem('arabicStudy.quizDirection', mode);
+      render();
+    }
+
+    function openMenu() {
+      drawer.classList.add('open');
+      drawerBackdrop.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false');
+      menuButton.setAttribute('aria-expanded', 'true');
+      closeMenuButton.focus();
+    }
+
+    function closeMenu() {
+      drawer.classList.remove('open');
+      drawerBackdrop.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
+      menuButton.setAttribute('aria-expanded', 'false');
+      menuButton.focus();
+    }
+
+    function showProgress() {
+      closeMenu();
+
+      const firstUnit = document.querySelector('.unit');
+
+      if (firstUnit) {
+        firstUnit.scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+    }
+
+    document.querySelector('#ar').addEventListener('click', () => setMode('ar-to-en'));
+    document.querySelector('#en').addEventListener('click', () => setMode('en-to-ar'));
+
+    menuButton.addEventListener('click', openMenu);
+    closeMenuButton.addEventListener('click', closeMenu);
+    drawerBackdrop.addEventListener('click', closeMenu);
+    progressMenuButton.addEventListener('click', showProgress);
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && drawer.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
