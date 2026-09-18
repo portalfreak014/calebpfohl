@@ -60,6 +60,26 @@
     tbody tr:hover { background:rgb(103 80 164 / .05); }
     tbody tr.additional { background:var(--additional-surface); }
     tbody tr.additional:hover { background:#ddd3e3; }
+    .icon {
+      display:grid;
+      place-items:center;
+      width:46px;
+      height:46px;
+      padding:0;
+      border:0;
+      border-radius:50%;
+      background:transparent;
+      color:var(--muted);
+    }
+    
+    .icon:hover {
+      background:rgb(29 27 32 / .08);
+    }
+    
+    .icon:focus-visible {
+      outline:3px solid var(--primary);
+      outline-offset:3px;
+    }
     .drawer-backdrop {
       position:fixed;
       inset:0;
@@ -243,7 +263,7 @@
       </a>
       <a href="roots.html">
         <span class="material-symbols-rounded" aria-hidden="true">account_tree</span>
-        Roots
+        Freya's Root Chart
       </a>
 
       <button id="progress-menu-button" type="button">
@@ -363,5 +383,45 @@
     renderTabs();
     selectUnit(1);
   </script>
+  <script type="module" src="./firebase-auth.js"></script>
+
+<script>
+  const menuButton = document.getElementById('menu-button');
+  const closeMenuButton = document.getElementById('close-menu-button');
+  const drawer = document.getElementById('drawer');
+  const drawerBackdrop = document.getElementById('drawer-backdrop');
+  const progressMenuButton = document.getElementById('progress-menu-button');
+
+  function openMenu() {
+    drawer.classList.add('open');
+    drawerBackdrop.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    menuButton.setAttribute('aria-expanded', 'true');
+    closeMenuButton.focus();
+  }
+
+  function closeMenu() {
+    drawer.classList.remove('open');
+    drawerBackdrop.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.focus();
+  }
+
+  menuButton.addEventListener('click', openMenu);
+  closeMenuButton.addEventListener('click', closeMenu);
+  drawerBackdrop.addEventListener('click', closeMenu);
+
+  progressMenuButton.addEventListener('click', () => {
+    closeMenu();
+    location.href = 'arabic.html#units';
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && drawer.classList.contains('open')) {
+      closeMenu();
+    }
+  });
+</script>
 </body>
 </html>
