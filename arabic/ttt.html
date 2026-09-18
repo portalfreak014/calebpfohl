@@ -263,13 +263,13 @@
 </style>
 </head>
 <body>
+  <div id="firebase-auth"></div>
   <header>
     <a href="arabic.html">Arabic Study</a>
     <a href="docs.html">Docs</a>
   </header>
   <main>
     <h1>TTT Listening & Transcription</h1>
-    <p class="lede">Listen, transcribe, and keep your work saved on this device.</p>
     <section class="selectors" aria-label="TTT chapter selection">
       <label>Unit<select id="unitSelect"><option value="">Loading units…</option></select></label>
       <label>Chapter<select id="chapterSelect" disabled><option value="">Choose a unit first</option></select></label>
@@ -277,6 +277,78 @@
     <div id="status" class="notice">Choose a unit and chapter. Only migrated TTT chapters appear here.</div>
     <section id="activities" aria-live="polite"></section>
   </main>
+  <script type="module">
+  import { auth, db } from "./firebase-auth.js";
+  import {
+    doc,
+    getDoc,
+    serverTimestamp,
+    setDoc
+  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+  window.TttCloudStore = {
+    get user() {
+      return auth.currentUser;
+    },
+
+    ref(user, unitId, chapterId) {
+      return doc(db, "users", user.uid, "ttt", `${unitId}_${chapterId}`);
+    },
+
+    selectionRef(user) {
+      return doc(db, "users", user.uid, "ttt", "selection");
+    },
+
+    async loadChapter(unitId, chapterId) {
+      const user = auth.currentUser;
+      if (!user) return null;
+
+      const snapshot = await getDoc(this.ref(user, unitId, chapterId));
+      return snapshot.exists() ? snapshot.data().drafts || {} : {};
+    },
+
+    async saveChapter(unitId, chapterId, drafts) {
+      const user = auth.currentUser;
+      if (!user) return false;
+
+      await setDoc(
+        this.ref(user, unitId, chapterId),
+        {
+          drafts,
+          updatedAt: serverTimestamp()
+        },
+        { merge:true }
+      );
+
+      return true;
+    },
+
+    async loadSelection() {
+      const user = auth.currentUser;
+      if (!user) return null;
+
+      const snapshot = await getDoc(this.selectionRef(user));
+      return snapshot.exists() ? snapshot.data() : null;
+    },
+
+    async saveSelection(unitId, chapterId) {
+      const user = auth.currentUser;
+      if (!user) return false;
+
+      await setDoc(
+        this.selectionRef(user),
+        {
+          unitId,
+          chapterId,
+          updatedAt: serverTimestamp()
+        },
+        { merge:true }
+      );
+
+      return true;
+    }
+  };
+</script>
   <script>
     const dataRoot = 'data/ttt/';
     const unitSelect = document.querySelector('#unitSelect');
@@ -285,9 +357,39 @@
     const activities = document.querySelector('#activities');
     let manifest = { units: [] }, activeAudio = null;
     const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const storageKey = chapter => `arabicStudy.ttt.v1.${chapter.unitId}.${chapter.chapterId}`;
-    const readDrafts = chapter => { try { return JSON.parse(localStorage.getItem(storageKey(chapter)) || '{}'); } catch { return {}; } };
-    const saveDrafts = (chapter, drafts) => localStorage.setItem(storageKey(chapter), JSON.stringify(drafts));
+    let currentDrafts = {};
+let saveTimer = null;
+
+const readDrafts = async chapter => {
+  const cloud = window.TttCloudStore;
+
+  if (!cloud?.user) return {};
+  return await cloud.loadChapter(chapter.unitId, chapter.chapterId);
+};
+
+const saveDrafts = (chapter, drafts) => {
+  currentDrafts = drafts;
+  window.clearTimeout(saveTimer);
+
+  saveTimer = window.setTimeout(async () => {
+    const cloud = window.TttCloudStore;
+    if (!cloud?.user) return;
+
+    try {
+      await cloud.saveChapter(chapter.unitId, chapter.chapterId, currentDrafts);
+      document.querySelectorAll(".saved").forEach(el => {
+        el.textContent = "Saved to your Google account";
+        clearTimeout(el.timer);
+        el.timer = setTimeout(() => el.textContent = "", 1800);
+      });
+    } catch (error) {
+      console.error("TTT cloud save failed:", error);
+      document.querySelectorAll(".saved").forEach(el => {
+        el.textContent = "Could not sync. Check your connection.";
+      });
+    }
+  }, 650);
+};
     const inlinePrompt = (prompt, number, draft) => esc(prompt).replace(/\{\{blank:(\d+)\}\}/g, (_, index) => `<input class="inline-blank" type="text" lang="ar" dir="rtl" data-blank="blank:${index}" aria-label="Answer ${index} for activity ${number}" value="${esc(draft[`blank:${index}`] || '')}">`);
 
     async function loadManifest() {
@@ -297,7 +399,7 @@
         manifest = await response.json();
         const units = manifest.units || [];
         unitSelect.innerHTML = '<option value="">Choose a unit</option>' + units.map(u => `<option value="${esc(u.id)}">${esc(u.title || u.id)}</option>`).join('');
-        const saved = JSON.parse(localStorage.getItem('arabicStudy.ttt.lastSelection') || '{}');
+        const saved = await window.TttCloudStore?.loadSelection() || {};
         if (saved.unitId && units.some(u => u.id === saved.unitId)) { unitSelect.value = saved.unitId; populateChapters(saved.chapterId); }
         status.textContent = units.length ? 'Choose an available TTT chapter.' : 'No TTT chapters have been migrated yet.';
       } catch {
@@ -317,18 +419,18 @@
       const unit = (manifest.units || []).find(u => u.id === unitSelect.value);
       const chapterRef = (unit?.chapters || []).find(ch => ch.id === chapterSelect.value);
       if (!chapterRef) return;
-      localStorage.setItem('arabicStudy.ttt.lastSelection', JSON.stringify({unitId:unit.id, chapterId:chapterRef.id}));
+      window.TttCloudStore?.saveSelection(unit.id, chapterRef.id);
       status.className = 'notice'; status.textContent = 'Loading chapter…'; activities.innerHTML = '';
       try {
         const response = await fetch(dataRoot + chapterRef.file);
         if (!response.ok) throw new Error();
-        renderChapter(await response.json());
+        await renderChapter(await response.json());
       } catch {
         status.className = 'empty'; status.textContent = 'This TTT chapter could not be loaded. Check its manifest path and JSON file.';
       }
     }
-    function renderChapter(chapter) {
-      const drafts = readDrafts(chapter);
+    async function renderChapter(chapter) {
+  const drafts = await readDrafts(chapter);
       status.className = 'notice'; status.textContent = chapter.title || 'TTT chapter';
       activities.innerHTML = (chapter.activities || []).map(activity => {
         const draft = drafts[activity.number] || {};
