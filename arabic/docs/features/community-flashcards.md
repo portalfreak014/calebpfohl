@@ -10,6 +10,7 @@ Planned. Community Flashcards lets signed-in learners create and immediately pub
 - The section title is **Community flashcards**.
 - A very light purple divider subtly separates the Unit 8 and community sections.
 - Public, published sets appear in the Community Flashcards list and open in the same card player as course sets.
+- The creator button label is **Create a set**.
 - A signed-in learner can create a set from the page with a short form: set title, Arabic/English card pairs, an Add card action, and a Publish set action.
 - Initial publishing is immediate. A valid submitted set is saved as public and published without manual review.
 - Learners must be able to study without an account. An account is required only to create, edit, or delete a community set.
@@ -51,7 +52,7 @@ Required initial validation:
 4. Render each result in the existing chapter-card visual language, showing its title, creator name, and card count.
 5. Selecting a community set loads its `cards` array into the existing player. The player must not need a separate implementation for community content.
 6. Show a concise empty state if no public community sets exist.
-7. Provide a Create a set action in the community section. Signed-out users receive a clear instruction to log in; signed-in users can expand or open the inline creator form.
+7. Provide a **Create a set** action in the community section. Signed-out users receive a clear instruction to log in; signed-in users can expand or open the inline creator form.
 8. For set owners, provide simple edit and delete actions without exposing those actions to other users.
 
 ## Authorization and Firestore rules
