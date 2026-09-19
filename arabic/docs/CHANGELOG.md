@@ -4,6 +4,15 @@ Dated, append-only history of implementation work. New entries go at the top. Th
 
 ---
 
+## 2026-09-19 — Community Flashcards architecture documented
+
+- Documented the planned Community Flashcards feature in [features/community-flashcards.md](features/community-flashcards.md). Community content will live in one Firestore document per set, not in shared or per-set repository JSON files.
+- Decided that the Community Flashcards UI and inline creator form will live on `arabic/flashcards.html`, below the existing Unit 8 list and separated by a subtle light-purple divider.
+- Initial policy: signed-in learners can immediately publish valid Arabic/English card sets as `public` / `published`; studying public sets remains available without signing in.
+- Reserved `visibility` and `status` fields for a future owner-managed review flow, including private/draft, private/pending, and private/rejected states. A later admin workflow can promote reviewed sets to public/published without a data migration.
+
+---
+
 ## 2026-08-24 (later) — Matching game engine shipped + nav/UX tweaks
 
 - Shipped `arabic/match.html`, a generic, reusable matching-game engine: tap an Arabic term, then tap its English match; correct pairs lock in green, wrong picks flash red and reset. Per-set progress (matched count, mistakes) saves to `localStorage` under `arabicStudy.matchProgress.v1.*` — its own namespace, separate from `ProgressStore`. Fires `dataLayer` events (`match_set_selected`, `match_pair_correct`, `match_pair_incorrect`, `match_set_completed`) following the existing analytics pattern. See [features/matching-game.md](features/matching-game.md).
