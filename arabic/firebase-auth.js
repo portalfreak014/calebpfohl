@@ -24,6 +24,10 @@ let syncTimer = null;
 let lastSavedProfile = "";
 const SYNC_DELAY_MS = 800;
 
+function shouldRenderAuthUi() {
+  return document.documentElement.dataset.firebaseAuthUi !== "off";
+}
+
 function getAuthRoot() {
   let root = document.getElementById("firebase-auth");
   if (root) return root;
@@ -119,13 +123,17 @@ async function hydrateProgress(user) {
   }
 }
 
-const root = getAuthRoot();
+const renderAuthUi = shouldRenderAuthUi();
+const root = renderAuthUi ? getAuthRoot() : null;
 onAuthStateChanged(auth, async (user) => {
   activeUser = user || null;
   syncReady = false;
   window.clearTimeout(syncTimer);
-  if (user) { renderSignedIn(root, user); await hydrateProgress(user); }
-  else renderSignedOut(root);
+  if (renderAuthUi) {
+    if (user) renderSignedIn(root, user);
+    else renderSignedOut(root);
+  }
+  if (user) await hydrateProgress(user);
   window.dispatchEvent(new CustomEvent("firebase-auth-state-changed", { detail: { user: user || null } }));
 });
 
