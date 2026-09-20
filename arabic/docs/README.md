@@ -20,6 +20,7 @@ This directory replaces the single monolithic `CHAPTER_PROGRESS_IMPLEMENTATION.m
 | Local-First Progress Store | ✅ Done | [quiz-engine-and-progress.md](features/quiz-engine-and-progress.md) |
 | Known Vocabulary | ✅ Done | [known-vocabulary.md](features/known-vocabulary.md) |
 | Content Quality Control | ✅ Done | [content-quality-control.md](features/content-quality-control.md) |
+| Firestore Rules Reference | ⏳ Planned deployment | [FIRESTORE_RULES_REFERENCE.md](FIRESTORE_RULES_REFERENCE.md) |
 | Account Authentication | ⏳ Planned | [account-authentication.md](features/account-authentication.md) |
 | Community Flashcards | ⏳ Planned | [community-flashcards.md](features/community-flashcards.md) |
 | Unit 6 Supplementary Vocabulary | ⏳ Planned | [unit6-supplementary-vocab.md](features/unit6-supplementary-vocab.md) |
