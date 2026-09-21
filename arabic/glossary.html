@@ -209,7 +209,8 @@
         <div class="brand-mark" aria-hidden="true"><span class="material-symbols-rounded">menu_book</span></div>
         <div><p class="brand-title">Arabic Study</p><p class="brand-subtitle">Reference glossary</p></div>
       </div>
-     <button class="icon" id="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+     <button class="icon" data-menu-button type="button"
+  aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
   <span class="material-symbols-rounded" aria-hidden="true">menu</span>
 </button>
     </header>
@@ -230,8 +231,10 @@
       <nav class="chapter-links" id="chapter-links" aria-label="Chapter links"></nav>
       <div id="content"><div class="status"><span class="material-symbols-rounded" aria-hidden="true">hourglass_top</span><span>Loading glossary…</span></div></div>
     </section>
+
+    <div data-hamburger-menu></div>
     
-<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<!-- <div class="drawer-backdrop" id="drawer-backdrop"></div>
 
 <aside class="drawer" id="drawer" aria-label="Main menu" aria-hidden="true">
   <div class="drawer-head">
@@ -278,7 +281,7 @@
 
       <div id="firebase-auth"></div>
   </div>
-</aside>
+</aside> -->
 
     <footer>Created by Caleb Pfohl · Glossary data is loaded from the repository Markdown files.</footer>
   </main>
@@ -388,44 +391,13 @@
     renderTabs();
     selectUnit(1);
   </script>
+  
+<script src="hamburger-menu.js"></script>
   <script type="module" src="./firebase-auth.js"></script>
 
 <script>
-  const menuButton = document.getElementById('menu-button');
-  const closeMenuButton = document.getElementById('close-menu-button');
-  const drawer = document.getElementById('drawer');
-  const drawerBackdrop = document.getElementById('drawer-backdrop');
-  const progressMenuButton = document.getElementById('progress-menu-button');
-
-  function openMenu() {
-    drawer.classList.add('open');
-    drawerBackdrop.classList.add('open');
-    drawer.setAttribute('aria-hidden', 'false');
-    menuButton.setAttribute('aria-expanded', 'true');
-    closeMenuButton.focus();
-  }
-
-  function closeMenu() {
-    drawer.classList.remove('open');
-    drawerBackdrop.classList.remove('open');
-    drawer.setAttribute('aria-hidden', 'true');
-    menuButton.setAttribute('aria-expanded', 'false');
-    menuButton.focus();
-  }
-
-  menuButton.addEventListener('click', openMenu);
-  closeMenuButton.addEventListener('click', closeMenu);
-  drawerBackdrop.addEventListener('click', closeMenu);
-
-  progressMenuButton.addEventListener('click', () => {
-    closeMenu();
+  document.addEventListener('shared-menu:progress', () => {
     location.href = 'arabic.html#units';
-  });
-
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && drawer.classList.contains('open')) {
-      closeMenu();
-    }
   });
 </script>
 </body>
