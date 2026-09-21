@@ -545,9 +545,12 @@
         </div>
       </div>
 
-      <button class="icon" id="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <!-- Replace the old menu button ID with this -->
+      <button class="icon" data-menu-button type="button"
+        aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
         <span class="material-symbols-rounded" aria-hidden="true">menu</span>
       </button>
+      
     </header>
 
     <section class="hero">
@@ -581,7 +584,10 @@
     </section>
   </main>
 
-  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <div data-hamburger-menu></div>
+  <div data-pill-nav></div>
+
+  <!-- <div class="drawer-backdrop" id="drawer-backdrop"></div>
 
   <aside class="drawer" id="drawer" aria-label="Main menu" aria-hidden="true">
     <div class="drawer-head">
@@ -624,11 +630,11 @@
       <a href="docs.html" aria-current="page">
   <span class="material-symbols-rounded" aria-hidden="true">description</span>
   Docs
-</a>
+      </a>
 
       <div id="firebase-auth"></div>
     </div>
-  </aside>
+    </aside>
 
   <nav class="nav" aria-label="Primary navigation">
     <div class="navin">
@@ -636,7 +642,7 @@
         <span class="material-symbols-rounded" aria-hidden="true">home</span>
         Home
       </a>
-
+    
       <a href="glossary.html">
         <span class="material-symbols-rounded" aria-hidden="true">menu_book</span>
         Glossary
@@ -654,9 +660,13 @@
     </div>
   </nav>
 
+  -->
+
   <script src="data/units-manifest.js"></script>
   <script src="progress-store.js"></script>
-<script type="module" src="./firebase-auth.js"></script>
+  <script src="hamburger-menu.js"></script>
+  <script src="pill-nav.js"></script>
+  <script type="module" src="./firebase-auth.js"></script>
   <script>
     let mode = localStorage.getItem('arabicStudy.quizDirection') === 'en-to-ar'
       ? 'en-to-ar'
@@ -664,10 +674,6 @@
 
     const units = document.querySelector('#units');
     const start = document.querySelector('#start');
-    const menuButton = document.querySelector('#menu-button');
-    const closeMenuButton = document.querySelector('#close-menu-button');
-    const drawer = document.querySelector('#drawer');
-    const drawerBackdrop = document.querySelector('#drawer-backdrop');
     const progressMenuButton = document.querySelector('#progress-menu-button');
 
     function chapterKey(chapterId) {
@@ -815,46 +821,8 @@
       localStorage.setItem('arabicStudy.quizDirection', mode);
       render();
     }
-
-    function openMenu() {
-      drawer.classList.add('open');
-      drawerBackdrop.classList.add('open');
-      drawer.setAttribute('aria-hidden', 'false');
-      menuButton.setAttribute('aria-expanded', 'true');
-      closeMenuButton.focus();
-    }
-
-    function closeMenu() {
-      drawer.classList.remove('open');
-      drawerBackdrop.classList.remove('open');
-      drawer.setAttribute('aria-hidden', 'true');
-      menuButton.setAttribute('aria-expanded', 'false');
-      menuButton.focus();
-    }
-
-    function showProgress() {
-      closeMenu();
-
-      const firstUnit = document.querySelector('.unit');
-
-      if (firstUnit) {
-        firstUnit.scrollIntoView({ behavior:'smooth', block:'start' });
-      }
-    }
-
-    document.querySelector('#ar').addEventListener('click', () => setMode('ar-to-en'));
-    document.querySelector('#en').addEventListener('click', () => setMode('en-to-ar'));
-
-    menuButton.addEventListener('click', openMenu);
-    closeMenuButton.addEventListener('click', closeMenu);
-    drawerBackdrop.addEventListener('click', closeMenu);
-    progressMenuButton.addEventListener('click', showProgress);
-
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && drawer.classList.contains('open')) {
-        closeMenu();
-      }
-    });
+document.querySelector('#ar').addEventListener('click', () => setMode('ar-to-en'));
+document.querySelector('#en').addEventListener('click', () => setMode('en-to-ar'));
 
     render();
   </script>
