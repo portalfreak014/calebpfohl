@@ -25,7 +25,44 @@
     .prompt{margin:0 0 14px;font-family:"Noto Sans Arabic","Noto Sans",sans-serif;font-size:clamp(2rem,7vw,3.25rem);font-weight:700;line-height:1.2;text-align:center}.prompt.prompt-en{font-family:"Noto Sans",sans-serif;font-size:clamp(1.5rem,6vw,2.5rem)}.choices{display:grid;gap:8px}.choice{display:grid;grid-template-columns:32px minmax(0,1fr);align-items:center;gap:12px;width:100%;min-height:54px;padding:10px 14px;border:2px solid var(--outline-variant);border-radius:var(--radius-md);color:var(--on-surface);background:var(--surface);text-align:left;transition:background 150ms ease,border-color 150ms ease,transform 150ms ease}.choice:hover:not(:disabled){background:var(--surface-low)}.choice:active:not(:disabled){transform:scale(.99)}.choice-key{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;color:var(--variant);background:var(--surface-high);font-size:.82rem;font-weight:800}.choice-text{font-size:1rem;font-weight:650;line-height:1.35}.choice-text.choice-text-ar{font-family:"Noto Sans Arabic",sans-serif;font-size:1.15rem}.choice.selected{border-color:var(--primary);background:var(--primary-container)}.choice.correct{border-color:var(--success);color:#083d19;background:var(--success-container)}.choice.incorrect{border-color:var(--error);color:#601410;background:var(--error-container)}.choice:disabled{cursor:default}
     .feedback{display:none;align-items:flex-start;gap:10px;margin-top:10px;padding:12px 14px;border-radius:var(--radius-md);line-height:1.35}.feedback.show{display:flex}.feedback.good{color:#083d19;background:var(--success-container)}.feedback.bad{color:#601410;background:var(--error-container)}.feedback strong{display:block;margin-bottom:2px}.feedback .feedback-ar{font-family:"Noto Sans Arabic",sans-serif}.action-area{margin-top:auto;min-height:60px;padding-top:10px;flex-shrink:0}.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border:0;border-radius:999px;font-weight:800;text-decoration:none}.button.full{width:100%}.button.primary{color:var(--on-primary);background:var(--primary);box-shadow:0 1px 3px rgb(0 0 0 / .25)}.button.primary:disabled{opacity:.42;cursor:not-allowed;box-shadow:none}.button.tonal{color:var(--on-primary-container);background:var(--primary-container)}
     .screen{text-align:center}.screen-icon{display:grid;place-items:center;width:72px;height:72px;margin:0 auto 20px;border-radius:24px;color:var(--on-primary-container);background:var(--primary-container)}.screen-icon .material-symbols-rounded{font-size:38px;font-variation-settings:"FILL" 1,"wght" 500,"GRAD" 0,"opsz" 36}.screen h1{margin:0 0 10px;font-size:clamp(1.8rem,7vw,2.5rem);line-height:1.15;letter-spacing:-.03em}.screen p{max-width:42ch;margin:0 auto 24px;color:var(--variant);line-height:1.55}.score{margin:24px 0;color:var(--primary);font-size:3.2rem;font-weight:800;line-height:1}.screen .button+.button{margin-top:12px}.snackbar{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));z-index:10;max-width:calc(100% - 32px);padding:12px 16px;border-radius:12px;color:#fff;background:#323036;box-shadow:0 4px 14px rgb(0 0 0 / .24);font-size:.9rem;font-weight:700;opacity:0;pointer-events:none;transform:translate(-50%,16px);transition:opacity 180ms ease,transform 180ms ease}.snackbar.show{opacity:1;transform:translate(-50%,0)}.hidden{display:none!important}:focus-visible{outline:3px solid var(--primary);outline-offset:3px}#firebase-auth{display:none!important}
-    @media (min-width:700px){.app{padding:20px 32px}main{padding:18px 0 10px}.choice{min-height:58px;padding:12px 18px}}@media (max-height:720px){.app{padding-top:max(8px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}.topbar{min-height:48px}.icon-button{width:44px;height:44px}.progress-block{margin-top:8px}.question-kicker-row{margin-bottom:8px}.prompt{margin-bottom:10px;font-size:clamp(1.85rem,7vw,2.75rem)}.choices{gap:7px}.choice{min-height:48px;padding:8px 12px}.feedback{margin-top:8px;padding:10px 12px}.action-area{min-height:56px;padding-top:8px}.button{min-height:48px}}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+    .written-answer {
+  display:grid;
+  gap:10px;
+}
+
+.written-answer input {
+  width:100%;
+  min-height:62px;
+  padding:10px 16px;
+  border:2px solid var(--outline-variant);
+  border-radius:var(--radius-md);
+  color:var(--on-surface);
+  background:var(--surface);
+  font-family:"Noto Sans Arabic","Noto Sans",sans-serif;
+  font-size:clamp(1.4rem,6vw,2rem);
+  font-weight:700;
+  line-height:1.4;
+  text-align:center;
+  direction:rtl;
+}
+
+.written-answer input:focus {
+  border-color:var(--primary);
+  outline:0;
+}
+
+.written-answer input:disabled {
+  color:var(--variant);
+  background:var(--surface-low);
+}
+
+.written-answer-help {
+  margin:0;
+  color:var(--variant);
+  font-size:.86rem;
+  line-height:1.45;
+  text-align:center;
+}@media (min-width:700px){.app{padding:20px 32px}main{padding:18px 0 10px}.choice{min-height:58px;padding:12px 18px}}@media (max-height:720px){.app{padding-top:max(8px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}.topbar{min-height:48px}.icon-button{width:44px;height:44px}.progress-block{margin-top:8px}.question-kicker-row{margin-bottom:8px}.prompt{margin-bottom:10px;font-size:clamp(1.85rem,7vw,2.75rem)}.choices{gap:7px}.choice{min-height:48px;padding:8px 12px}.feedback{margin-top:8px;padding:10px 12px}.action-area{min-height:56px;padding-top:8px}.button{min-height:48px}}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
@@ -34,16 +71,991 @@
       <section id="loading-screen" class="screen"><div class="screen-icon"><span class="material-symbols-rounded">progress_activity</span></div><h1>Loading your quiz</h1><p>Getting your study set ready.</p></section>
       <section id="quiz-screen" class="hidden" aria-live="polite"><div class="question-kicker-row"><p class="question-kicker" id="question-kicker"></p><div class="question-actions"><button class="audio-button" id="audio-button" type="button" aria-label="Listen to pronunciation" title="Listen to pronunciation" aria-disabled="true"><span class="material-symbols-rounded" aria-hidden="true">volume_up</span></button><button class="flag-button" id="flag-button" type="button" aria-label="Flag this word" title="Flag this word"><span class="material-symbols-rounded" aria-hidden="true">flag</span></button><button class="known-toggle" id="known-toggle" type="button" aria-pressed="false"><span class="material-symbols-rounded" aria-hidden="true" id="known-toggle-icon">check_circle</span><span id="known-toggle-label">Mark as known</span></button></div></div><h1 class="prompt" id="prompt"></h1><div class="choices" id="choices" aria-label="Answer choices"></div><div class="feedback" id="feedback" role="status"></div><div class="action-area"><button class="button primary full" id="next-button" type="button" disabled>Choose an answer</button></div></section>
       <section id="complete-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">celebration</span></div><h1>Chapter complete</h1><p id="complete-copy"></p><div class="score" id="final-score"></div><button class="button primary full" id="again-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">refresh</span>Practice again</button><button class="button tonal full hidden" id="next-chapter-button" type="button"></button><a class="button tonal full" href="arabic.html">Back to Arabic Study</a></section><section id="done-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">military_tech</span></div><h1>You know every word here</h1><p id="done-copy">Every word in this chapter is marked as known. Review them all again anytime, or head back and pick another chapter.</p><button class="button primary full" id="review-all-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">restart_alt</span>Review all words</button><a class="button tonal full" href="arabic.html#unit6-chapters">Choose another chapter</a></section><section id="unavailable-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">hourglass_top</span></div><h1>Chapter not available yet</h1><p id="unavailable-copy">This chapter is still being written.</p><a class="button primary full" href="arabic.html#unit6-chapters">Choose another chapter</a></section><section id="error-screen" class="screen hidden"><div class="screen-icon"><span class="material-symbols-rounded">error</span></div><h1>Quiz unavailable</h1><p id="error-copy">We could not load this study set.</p><a class="button primary full" href="arabic.html">Back to Arabic Study</a></section></main></div><div class="snackbar" id="snackbar" role="status" aria-live="polite"></div>
-  <script src="data/units-manifest.js"></script><script src="progress-store.js"></script><script>
-    const params=new URLSearchParams(location.search),unit=(params.get('unit')||(window.UnitsManifest?window.UnitsManifest.listUnits()[0]:'unit6')||'unit6').replace(/[^a-zA-Z0-9_-]/g,''),requestedChapterId=(params.get('chapter')||'').replace(/[^a-zA-Z0-9_-]/g,''),requestedMode=(params.get('mode')||'').replace(/[^a-zA-Z0-9_-]/g,''),mode=requestedMode==='en-to-ar'?'en-to-ar':'ar-to-en',reviewAll=params.get('review')==='all',KNOWN_ADVANCE_DELAY_MS=1500,state={data:null,chapter:null,chapterId:null,allQuestions:[],questions:[],index:0,score:0,selected:null,answered:false,displayToOriginal:{},knownAdvanceTimer:null};const $=id=>document.getElementById(id),show=id=>$(id).classList.remove('hidden'),hide=id=>$(id).classList.add('hidden'),shuffle=list=>{const copy=[...list];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]]}return copy},trackEvent=(name,params)=>{window.dataLayer=window.dataLayer||[];window.dataLayer.push(Object.assign({event:name},params||{}))};
-    const progressKeyFor=chapterId=>mode==='en-to-ar'?`${chapterId}:en-to-ar`:chapterId,wordIdFor=q=>q.id||q.arabic,reviewAllUrl=()=>`quiz.html?unit=${encodeURIComponent(unit)}&chapter=${encodeURIComponent(state.chapterId)}${mode==='en-to-ar'?'&mode=en-to-ar':''}&review=all`;
-    function setUnavailable(message){hide('loading-screen');hide('quiz-screen');hide('complete-screen');hide('done-screen');hide('error-screen');hide('progress-block');hide('topbar');if(message)$('unavailable-copy').textContent=message;show('unavailable-screen')}function setError(message){hide('loading-screen');hide('quiz-screen');hide('complete-screen');hide('done-screen');hide('unavailable-screen');hide('progress-block');hide('topbar');$('error-copy').textContent=message;show('error-screen')}function setAllKnownDone(){hide('loading-screen');hide('quiz-screen');hide('complete-screen');hide('unavailable-screen');hide('error-screen');hide('progress-block');$('done-copy').textContent=`Every word in ${state.chapter.label||state.chapter.title} (${mode==='en-to-ar'?'English-to-Arabic':'Arabic-to-English'}) is marked as known. Review them all again anytime, or head back and pick another chapter.`;show('done-screen')}function saveProgress(patch){if(!window.ProgressStore)return;const key=progressKeyFor(state.chapterId);window.ProgressStore.updateChapter(unit,key,patch);window.ProgressStore.setLastActive(unit,key)}function updateProgress(){const total=state.questions.length||1,current=Math.min(state.index+1,total),percent=Math.round(state.index/total*100);$('progress-text').textContent=`Question ${current} of ${total}`;$('score-text').textContent=`${state.score} correct`;$('progress-fill').style.width=`${percent}%`;document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow',percent)}
-    const FLAG_QUEUE_KEY='arabicStudy.anonymousFlagQueue.v1',FLAG_ENDPOINT='/api/report-question-flag',FLAG_SNACKBAR_DURATION_MS=2500;let snackbarTimer=null;function readFlagQueue(){try{const queue=JSON.parse(localStorage.getItem(FLAG_QUEUE_KEY)||'[]');return Array.isArray(queue)?queue.slice(0,50):[]}catch(error){return[]}}function writeFlagQueue(queue){try{localStorage.setItem(FLAG_QUEUE_KEY,JSON.stringify(queue.slice(0,50)))}catch(error){}}function showSnackbar(message){const snackbar=$('snackbar');snackbar.textContent=message;snackbar.classList.add('show');if(snackbarTimer)clearTimeout(snackbarTimer);snackbarTimer=setTimeout(()=>snackbar.classList.remove('show'),FLAG_SNACKBAR_DURATION_MS)}function currentFlagPayload(){const q=state.questions[state.index];return{timestamp:new Date().toISOString(),unitId:unit,chapterId:state.chapterId,mode,arabic:q.arabic,correctAnswer:q.choices[q.answer]}}async function sendFlag(payload){const response=await fetch(FLAG_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!response.ok)throw new Error('Flag endpoint unavailable.')}async function flushFlagQueue(){const queue=readFlagQueue();if(!queue.length)return;const remaining=[];for(const payload of queue){try{await sendFlag(payload)}catch(error){remaining.push(payload);break}}writeFlagQueue(remaining)}async function flagCurrentWord(){const button=$('flag-button');if(button.disabled)return;button.disabled=true;const payload=currentFlagPayload();trackEvent('word_flagged',{unit_id:unit,chapter_id:state.chapterId,mode});try{await sendFlag(payload);showSnackbar('Word flagged for correction, thank you!')}catch(error){const queue=readFlagQueue();queue.push(payload);writeFlagQueue(queue);showSnackbar('Word flagged for correction, thank you!')}finally{button.disabled=false;flushFlagQueue()}}
-    function updateAudioButton(q){const button=$('audio-button');const src=q&&q.audio&&q.audio.src;if(src){button.dataset.audioSrc=src;button.setAttribute('aria-disabled','false');button.title='Listen to pronunciation';button.setAttribute('aria-label','Listen to pronunciation')}else{delete button.dataset.audioSrc;button.setAttribute('aria-disabled','true');button.title='Pronunciation audio coming soon';button.setAttribute('aria-label','Pronunciation audio coming soon')}}function playCurrentAudio(){const button=$('audio-button'),src=button.dataset.audioSrc;if(!src){showSnackbar('Pronunciation audio coming soon.');return}const audio=new Audio(src);audio.play().catch(()=>showSnackbar('Audio could not play. Please try again.'));trackEvent('audio_played',{unit_id:unit,chapter_id:state.chapterId,mode})}
-    const LETTER_LABELS=['A','B','C','D','E','F'];function buildPromptAndChoices(q,allQuestions){if(mode==='en-to-ar'){const correctText=q.choices[q.answer],correctArabic=q.arabic,distractors=shuffle(allQuestions.filter(other=>other!==q&&other.arabic!==correctArabic).map(other=>other.arabic)).slice(0,3),optionTexts=shuffle([correctArabic,...distractors]);return{promptText:correctText,promptIsArabic:false,optionTexts,correctText:correctArabic,optionIsArabic:true}}const optionTexts=shuffle(Object.keys(q.choices)).map(key=>q.choices[key]);return{promptText:q.arabic,promptIsArabic:true,optionTexts,correctText:q.choices[q.answer],optionIsArabic:false}}
-    function updateKnownToggle(){const q=state.questions[state.index],known=window.ProgressStore?window.ProgressStore.isWordKnown(unit,progressKeyFor(state.chapterId),wordIdFor(q)):false,toggle=$('known-toggle');toggle.disabled=false;toggle.classList.toggle('is-known',known);toggle.setAttribute('aria-pressed',known?'true':'false');$('known-toggle-icon').textContent=known?'check_circle':'radio_button_unchecked';$('known-toggle-label').textContent=known?'Known':'Mark as known'}function advanceAfterKnown(){if(state.index<state.questions.length-1){state.index+=1;renderQuestion()}else complete()}function toggleKnown(){if(!window.ProgressStore)return;if(state.knownAdvanceTimer){clearTimeout(state.knownAdvanceTimer);state.knownAdvanceTimer=null}const q=state.questions[state.index],wordId=wordIdFor(q),key=progressKeyFor(state.chapterId),currentlyKnown=window.ProgressStore.isWordKnown(unit,key,wordId);if(currentlyKnown){window.ProgressStore.markWordUnknown(unit,key,wordId);updateKnownToggle();return}window.ProgressStore.markWordKnown(unit,key,wordId);updateKnownToggle();trackEvent('word_marked_known',{unit_id:unit,chapter_id:state.chapterId,mode,source:'manual'});$('known-toggle').disabled=true;state.knownAdvanceTimer=setTimeout(()=>{state.knownAdvanceTimer=null;advanceAfterKnown()},KNOWN_ADVANCE_DELAY_MS)}
-    function renderQuestion(){if(state.knownAdvanceTimer){clearTimeout(state.knownAdvanceTimer);state.knownAdvanceTimer=null}state.selected=null;state.answered=false;const q=state.questions[state.index],built=buildPromptAndChoices(q,state.questions);state.displayToOriginal={};built.optionTexts.forEach((text,i)=>state.displayToOriginal[LETTER_LABELS[i]]=text);state.correctText=built.correctText;updateProgress();updateKnownToggle();updateAudioButton(q);const promptEl=$('prompt');if(built.promptIsArabic){promptEl.classList.remove('prompt-en');promptEl.setAttribute('lang','ar');promptEl.setAttribute('dir','rtl');$('question-kicker').textContent='Choose the English meaning'}else{promptEl.classList.add('prompt-en');promptEl.removeAttribute('lang');promptEl.removeAttribute('dir');$('question-kicker').textContent='Choose the Arabic word'}promptEl.textContent=built.promptText;const choices=$('choices');choices.innerHTML='';Object.entries(state.displayToOriginal).forEach(([displayKey,text])=>{const button=document.createElement('button');button.type='button';button.className='choice';button.dataset.key=displayKey;const textClass=built.optionIsArabic?'choice-text choice-text-ar':'choice-text',langAttr=built.optionIsArabic?' lang="ar" dir="rtl"':'';button.innerHTML=`<span class="choice-key">${displayKey}</span><span class="${textClass}"${langAttr}>${text}</span>`;button.addEventListener('click',()=>{trackEvent('answer_selected',{unit_id:unit,chapter_id:state.chapterId,mode});selectAnswer(displayKey)});choices.appendChild(button)});hide('feedback');$('feedback').className='feedback';$('next-button').disabled=true;$('next-button').textContent='Choose an answer'}
-    function selectAnswer(key){if(state.answered)return;state.selected=key;document.querySelectorAll('.choice').forEach(button=>button.classList.toggle('selected',button.dataset.key===key));$('next-button').disabled=false;$('next-button').textContent='Check answer'}function checkAnswer(){const correctDisplayKey=Object.keys(state.displayToOriginal).find(displayKey=>state.displayToOriginal[displayKey]===state.correctText),correct=state.selected===correctDisplayKey;state.answered=true;if(correct)state.score+=1;document.querySelectorAll('.choice').forEach(button=>{const key=button.dataset.key;button.disabled=true;if(key===correctDisplayKey)button.classList.add('correct');else if(key===state.selected)button.classList.add('incorrect')});const feedback=$('feedback');feedback.className=`feedback show ${correct?'good':'bad'}`;const correctTextSpan=mode==='en-to-ar'?`<span class="feedback-ar" lang="ar" dir="rtl">${state.correctText}</span>`:`“${state.correctText}”`;feedback.innerHTML=`<span class="material-symbols-rounded" aria-hidden="true">${correct?'check_circle':'info'}</span><div><strong>${correct?'Correct!':'Not quite.'}</strong>${correct?`${correctTextSpan} is correct.`:`The correct answer is ${correctDisplayKey}: ${correctTextSpan}.`}</div>`;$('next-button').textContent=state.index===state.questions.length-1?'See results':'Continue';const q=state.questions[state.index];if(window.ProgressStore)window.ProgressStore.recordAnswer(unit,progressKeyFor(state.chapterId),wordIdFor(q),correct);updateKnownToggle();trackEvent('answer_checked',{unit_id:unit,chapter_id:state.chapterId,mode,correct});saveProgress({status:'in_progress',totalQuestions:state.questions.length,answeredCount:state.index+1,correctCount:state.score,resumeIndex:state.index+1,latestScore:state.score})}function next(){if(!state.selected)return;if(!state.answered){checkAnswer();return}if(state.index<state.questions.length-1){state.index+=1;renderQuestion()}else complete()}function complete(){const key=progressKeyFor(state.chapterId),existing=window.ProgressStore?window.ProgressStore.getChapter(unit,key):null,bestScore=Math.max(existing&&existing.bestScore||0,state.score);saveProgress({status:'completed',totalQuestions:state.questions.length,answeredCount:state.questions.length,correctCount:state.score,resumeIndex:state.questions.length,latestScore:state.score,bestScore,completedAt:new Date().toISOString()});hide('quiz-screen');hide('progress-block');trackEvent('chapter_completed',{unit_id:unit,chapter_id:state.chapterId,mode,score:state.score,total:state.questions.length});$('final-score').textContent=`${state.score} / ${state.questions.length}`;$('complete-copy').textContent=`You completed ${state.chapter.label||state.chapter.title} (${mode==='en-to-ar'?'English-to-Arabic':'Arabic-to-English'}). Keep practicing to make these words stick.`;const nextChapterButton=$('next-chapter-button'),nextChapter=window.UnitsManifest?window.UnitsManifest.getNextAvailableChapter(unit,state.chapterId):null;if(nextChapter){nextChapterButton.textContent=`Start ${nextChapter.title}`;nextChapterButton.classList.remove('hidden');nextChapterButton.onclick=()=>location.href=`quiz.html?unit=${encodeURIComponent(unit)}&chapter=${encodeURIComponent(nextChapter.id)}${mode==='en-to-ar'?'&mode=en-to-ar':''}`}else nextChapterButton.classList.add('hidden');show('complete-screen')}function buildActiveQuestionSet(){if(reviewAll||!window.ProgressStore)return state.allQuestions;const knownWords=window.ProgressStore.getKnownWords(unit,progressKeyFor(state.chapterId));return state.allQuestions.filter(q=>!(knownWords[wordIdFor(q)]&&knownWords[wordIdFor(q)].known))}function startSessionOrShowDone(){state.questions=buildActiveQuestionSet();state.index=0;state.score=0;state.selected=null;state.answered=false;if(state.questions.length===0){setAllKnownDone();return}hide('done-screen');show('progress-block');show('quiz-screen');$('review-all-link').classList.toggle('hidden',reviewAll);renderQuestion()}function restart(){if(window.ProgressStore)window.ProgressStore.resetCurrentAttempt(unit,progressKeyFor(state.chapterId));hide('complete-screen');startSessionOrShowDone();window.scrollTo({top:0,behavior:'smooth'})}function goToChapterPicker(){location.href='arabic.html#unit6-chapters'}function goToReviewAll(){location.href=reviewAllUrl()}async function init(){try{const manifestChapter=window.UnitsManifest?window.UnitsManifest.getChapter(unit,requestedChapterId):null;if(requestedChapterId&&manifestChapter&&manifestChapter.available===false){setUnavailable(manifestChapter.status?`${manifestChapter.title}: ${manifestChapter.status}.`:'This chapter is not available yet.');return}const response=await fetch(`data/${unit}.json`,{cache:'no-store'});if(!response.ok)throw new Error('data file not found');state.data=await response.json();const chapters=state.data.chapters||{},fallbackId=window.UnitsManifest?(window.UnitsManifest.getAvailableChapters(unit)[0]||{}).id:Object.keys(chapters)[0],selectedId=requestedChapterId||fallbackId||Object.keys(chapters)[0];state.chapter=chapters[selectedId];state.chapterId=selectedId;if(!state.chapter||!Array.isArray(state.chapter.questions)||!state.chapter.questions.length){setUnavailable('This chapter has no study data yet.');return}state.allQuestions=shuffle(state.chapter.questions);const modeSuffix=mode==='en-to-ar'?' (English to Arabic)':'';document.title=`${state.chapter.label||state.chapter.title}${modeSuffix} · Arabic Study`;$('quiz-title').textContent=state.data.title||'Arabic Study';$('chapter-label').textContent=`${state.chapter.label||state.chapter.title}${modeSuffix}`;$('exit-button').addEventListener('click',()=>location.href='arabic.html');$('change-chapter-button').addEventListener('click',goToChapterPicker);$('restart-button').addEventListener('click',restart);$('again-button').addEventListener('click',restart);$('next-button').addEventListener('click',next);$('known-toggle').addEventListener('click',toggleKnown);$('flag-button').addEventListener('click',flagCurrentWord);$('audio-button').addEventListener('click',playCurrentAudio);$('review-all-link').addEventListener('click',goToReviewAll);$('review-all-button').addEventListener('click',goToReviewAll);if(window.ProgressStore)window.ProgressStore.setLastActive(unit,progressKeyFor(state.chapterId));flushFlagQueue();hide('loading-screen');startSessionOrShowDone()}catch(error){setError('We could not load this quiz. Make sure the data file exists and the chapter link is correct.')}}init();
-  </script><script type="module" src="./firebase-auth.js"></script>
+  <script src="data/units-manifest.js"></script><script src="progress-store.js"></script>
+   <script>
+    const params = new URLSearchParams(location.search);
+
+    const unit = (
+      params.get('unit') ||
+      (window.UnitsManifest ? window.UnitsManifest.listUnits()[0] : 'unit6') ||
+      'unit6'
+    ).replace(/[^a-zA-Z0-9_-]/g, '');
+
+    const requestedChapterId = (params.get('chapter') || '')
+      .replace(/[^a-zA-Z0-9_-]/g, '');
+
+    const requestedMode = (params.get('mode') || '')
+      .replace(/[^a-zA-Z0-9_-]/g, '');
+
+    const isWrittenAnswer =
+      requestedMode === 'written-answer' &&
+      unit === 'unit8' &&
+      requestedChapterId === 'ch36';
+
+    const mode = isWrittenAnswer
+      ? 'written-answer'
+      : requestedMode === 'en-to-ar'
+        ? 'en-to-ar'
+        : 'ar-to-en';
+
+    const reviewAll = params.get('review') === 'all';
+    const KNOWN_ADVANCE_DELAY_MS = 1500;
+
+    const state = {
+      data: null,
+      chapter: null,
+      chapterId: null,
+      allQuestions: [],
+      questions: [],
+      index: 0,
+      score: 0,
+      selected: null,
+      answered: false,
+      displayToOriginal: {},
+      correctText: '',
+      knownAdvanceTimer: null
+    };
+
+    const $ = id => document.getElementById(id);
+
+    const show = id => $(id).classList.remove('hidden');
+    const hide = id => $(id).classList.add('hidden');
+
+    const shuffle = list => {
+      const copy = [...list];
+
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+
+      return copy;
+    };
+
+    const trackEvent = (name, eventParams) => {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(Object.assign({ event: name }, eventParams || {}));
+    };
+
+    const progressKeyFor = chapterId => {
+      if (mode === 'en-to-ar') return `${chapterId}:en-to-ar`;
+      if (mode === 'written-answer') return `${chapterId}:written-answer`;
+      return chapterId;
+    };
+
+    const wordIdFor = q => q.id || q.arabic;
+
+    const quizModeLabel = () => {
+      if (mode === 'en-to-ar') return 'English-to-Arabic';
+      if (mode === 'written-answer') return 'Type the Answer';
+      return 'Arabic-to-English';
+    };
+
+    const reviewAllUrl = () => {
+      const modeParam =
+        mode === 'en-to-ar'
+          ? '&mode=en-to-ar'
+          : mode === 'written-answer'
+            ? '&mode=written-answer'
+            : '';
+
+      return `quiz.html?unit=${encodeURIComponent(unit)}&chapter=${encodeURIComponent(state.chapterId)}${modeParam}&review=all`;
+    };
+
+    function setUnavailable(message) {
+      hide('loading-screen');
+      hide('quiz-screen');
+      hide('complete-screen');
+      hide('done-screen');
+      hide('error-screen');
+      hide('progress-block');
+      hide('topbar');
+
+      if (message) {
+        $('unavailable-copy').textContent = message;
+      }
+
+      show('unavailable-screen');
+    }
+
+    function setError(message) {
+      hide('loading-screen');
+      hide('quiz-screen');
+      hide('complete-screen');
+      hide('done-screen');
+      hide('unavailable-screen');
+      hide('progress-block');
+      hide('topbar');
+
+      $('error-copy').textContent = message;
+      show('error-screen');
+    }
+
+    function setAllKnownDone() {
+      hide('loading-screen');
+      hide('quiz-screen');
+      hide('complete-screen');
+      hide('unavailable-screen');
+      hide('error-screen');
+      hide('progress-block');
+
+      $('done-copy').textContent =
+        `Every word in ${state.chapter.label || state.chapter.title} (${quizModeLabel()}) is marked as known. Review them all again anytime, or head back and pick another chapter.`;
+
+      show('done-screen');
+    }
+
+    function saveProgress(patch) {
+      if (!window.ProgressStore) return;
+
+      const key = progressKeyFor(state.chapterId);
+
+      window.ProgressStore.updateChapter(unit, key, patch);
+      window.ProgressStore.setLastActive(unit, key);
+    }
+
+    function updateProgress() {
+      const total = state.questions.length || 1;
+      const current = Math.min(state.index + 1, total);
+      const percent = Math.round((state.index / total) * 100);
+
+      $('progress-text').textContent = `Question ${current} of ${total}`;
+      $('score-text').textContent = `${state.score} correct`;
+      $('progress-fill').style.width = `${percent}%`;
+
+      document
+        .querySelector('[role="progressbar"]')
+        .setAttribute('aria-valuenow', percent);
+    }
+
+    const FLAG_QUEUE_KEY = 'arabicStudy.anonymousFlagQueue.v1';
+    const FLAG_ENDPOINT = '/api/report-question-flag';
+    const FLAG_SNACKBAR_DURATION_MS = 2500;
+
+    let snackbarTimer = null;
+
+    function readFlagQueue() {
+      try {
+        const queue = JSON.parse(localStorage.getItem(FLAG_QUEUE_KEY) || '[]');
+        return Array.isArray(queue) ? queue.slice(0, 50) : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function writeFlagQueue(queue) {
+      try {
+        localStorage.setItem(
+          FLAG_QUEUE_KEY,
+          JSON.stringify(queue.slice(0, 50))
+        );
+      } catch (error) {
+        // Local storage may be unavailable; the quiz should still work.
+      }
+    }
+
+    function showSnackbar(message) {
+      const snackbar = $('snackbar');
+
+      snackbar.textContent = message;
+      snackbar.classList.add('show');
+
+      if (snackbarTimer) {
+        clearTimeout(snackbarTimer);
+      }
+
+      snackbarTimer = setTimeout(() => {
+        snackbar.classList.remove('show');
+      }, FLAG_SNACKBAR_DURATION_MS);
+    }
+
+    function currentFlagPayload() {
+      const q = state.questions[state.index];
+
+      return {
+        timestamp: new Date().toISOString(),
+        unitId: unit,
+        chapterId: state.chapterId,
+        mode,
+        arabic: q.arabic,
+        correctAnswer:
+          mode === 'written-answer'
+            ? q.arabic
+            : q.choices[q.answer]
+      };
+    }
+
+    async function sendFlag(payload) {
+      const response = await fetch(FLAG_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error('Flag endpoint unavailable.');
+      }
+    }
+
+    async function flushFlagQueue() {
+      const queue = readFlagQueue();
+
+      if (!queue.length) return;
+
+      const remaining = [];
+
+      for (const payload of queue) {
+        try {
+          await sendFlag(payload);
+        } catch (error) {
+          remaining.push(payload);
+          break;
+        }
+      }
+
+      writeFlagQueue(remaining);
+    }
+
+    async function flagCurrentWord() {
+      const button = $('flag-button');
+
+      if (button.disabled) return;
+
+      button.disabled = true;
+
+      const payload = currentFlagPayload();
+
+      trackEvent('word_flagged', {
+        unit_id: unit,
+        chapter_id: state.chapterId,
+        mode
+      });
+
+      try {
+        await sendFlag(payload);
+        showSnackbar('Word flagged for correction, thank you!');
+      } catch (error) {
+        const queue = readFlagQueue();
+        queue.push(payload);
+        writeFlagQueue(queue);
+        showSnackbar('Word flagged for correction, thank you!');
+      } finally {
+        button.disabled = false;
+        flushFlagQueue();
+      }
+    }
+
+    function updateAudioButton(q) {
+      const button = $('audio-button');
+      const src = q && q.audio && q.audio.src;
+
+      if (src) {
+        button.dataset.audioSrc = src;
+        button.setAttribute('aria-disabled', 'false');
+        button.title = 'Listen to pronunciation';
+        button.setAttribute('aria-label', 'Listen to pronunciation');
+      } else {
+        delete button.dataset.audioSrc;
+        button.setAttribute('aria-disabled', 'true');
+        button.title = 'Pronunciation audio coming soon';
+        button.setAttribute('aria-label', 'Pronunciation audio coming soon');
+      }
+    }
+
+    function playCurrentAudio() {
+      const button = $('audio-button');
+      const src = button.dataset.audioSrc;
+
+      if (!src) {
+        showSnackbar('Pronunciation audio coming soon.');
+        return;
+      }
+
+      const audio = new Audio(src);
+
+      audio.play().catch(() => {
+        showSnackbar('Audio could not play. Please try again.');
+      });
+
+      trackEvent('audio_played', {
+        unit_id: unit,
+        chapter_id: state.chapterId,
+        mode
+      });
+    }
+
+    const LETTER_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+    function normalizeArabicAnswer(value) {
+      return String(value || '')
+        .normalize('NFD')
+        .replace(/[\u064B-\u065F\u0670]/g, '')
+        .replace(/\u0640/g, '')
+        .replace(/[أإآ]/g, 'ا')
+        .replace(/ى/g, 'ي')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function getWrittenAnswer(q) {
+      return q.arabic || '';
+    }
+
+    function isWrittenAnswerCorrect(q, value) {
+      return (
+        normalizeArabicAnswer(value) ===
+        normalizeArabicAnswer(getWrittenAnswer(q))
+      );
+    }
+
+    function buildPromptAndChoices(q, allQuestions) {
+      if (mode === 'en-to-ar') {
+        const correctText = q.choices[q.answer];
+        const correctArabic = q.arabic;
+
+        const distractors = shuffle(
+          allQuestions
+            .filter(other => other !== q && other.arabic !== correctArabic)
+            .map(other => other.arabic)
+        ).slice(0, 3);
+
+        const optionTexts = shuffle([
+          correctArabic,
+          ...distractors
+        ]);
+
+        return {
+          promptText: correctText,
+          promptIsArabic: false,
+          optionTexts,
+          correctText: correctArabic,
+          optionIsArabic: true
+        };
+      }
+
+      const optionTexts = shuffle(Object.keys(q.choices))
+        .map(key => q.choices[key]);
+
+      return {
+        promptText: q.arabic,
+        promptIsArabic: true,
+        optionTexts,
+        correctText: q.choices[q.answer],
+        optionIsArabic: false
+      };
+    }
+
+    function updateKnownToggle() {
+      const q = state.questions[state.index];
+
+      const known = window.ProgressStore
+        ? window.ProgressStore.isWordKnown(
+            unit,
+            progressKeyFor(state.chapterId),
+            wordIdFor(q)
+          )
+        : false;
+
+      const toggle = $('known-toggle');
+
+      toggle.disabled = false;
+      toggle.classList.toggle('is-known', known);
+      toggle.setAttribute('aria-pressed', known ? 'true' : 'false');
+
+      $('known-toggle-icon').textContent =
+        known ? 'check_circle' : 'radio_button_unchecked';
+
+      $('known-toggle-label').textContent =
+        known ? 'Known' : 'Mark as known';
+    }
+
+    function advanceAfterKnown() {
+      if (state.index < state.questions.length - 1) {
+        state.index += 1;
+        renderQuestion();
+      } else {
+        complete();
+      }
+    }
+
+    function toggleKnown() {
+      if (!window.ProgressStore) return;
+
+      if (state.knownAdvanceTimer) {
+        clearTimeout(state.knownAdvanceTimer);
+        state.knownAdvanceTimer = null;
+      }
+
+      const q = state.questions[state.index];
+      const wordId = wordIdFor(q);
+      const key = progressKeyFor(state.chapterId);
+
+      const currentlyKnown = window.ProgressStore.isWordKnown(
+        unit,
+        key,
+        wordId
+      );
+
+      if (currentlyKnown) {
+        window.ProgressStore.markWordUnknown(unit, key, wordId);
+        updateKnownToggle();
+        return;
+      }
+
+      window.ProgressStore.markWordKnown(unit, key, wordId);
+      updateKnownToggle();
+
+      trackEvent('word_marked_known', {
+        unit_id: unit,
+        chapter_id: state.chapterId,
+        mode,
+        source: 'manual'
+      });
+
+      $('known-toggle').disabled = true;
+
+      state.knownAdvanceTimer = setTimeout(() => {
+        state.knownAdvanceTimer = null;
+        advanceAfterKnown();
+      }, KNOWN_ADVANCE_DELAY_MS);
+    }
+
+    function renderQuestion() {
+      if (state.knownAdvanceTimer) {
+        clearTimeout(state.knownAdvanceTimer);
+        state.knownAdvanceTimer = null;
+      }
+
+      state.selected = null;
+      state.answered = false;
+
+      const q = state.questions[state.index];
+
+      updateProgress();
+      updateKnownToggle();
+      updateAudioButton(q);
+
+      const promptEl = $('prompt');
+      const choices = $('choices');
+
+      hide('feedback');
+      $('feedback').className = 'feedback';
+      $('next-button').disabled = true;
+
+      if (mode === 'written-answer') {
+        state.correctText = getWrittenAnswer(q);
+
+        $('question-kicker').textContent =
+          'Type the complete Arabic word';
+
+        promptEl.classList.add('prompt-en');
+        promptEl.removeAttribute('lang');
+        promptEl.removeAttribute('dir');
+
+        promptEl.textContent = q.choices[q.answer];
+
+        choices.innerHTML = `
+          <div class="written-answer">
+            <p class="written-answer-help">
+              Type the complete Arabic answer. No letters are shown.
+            </p>
+
+            <input
+              id="written-answer-input"
+              type="text"
+              lang="ar"
+              dir="rtl"
+              inputmode="text"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+              aria-label="Type the complete Arabic answer"
+              placeholder="اكتب الإجابة بالعربية"
+            >
+          </div>
+        `;
+
+        const input = $('written-answer-input');
+
+        input.addEventListener('input', () => {
+          if (state.answered) return;
+
+          state.selected = input.value;
+
+          $('next-button').disabled = !input.value.trim();
+          $('next-button').textContent = 'Check answer';
+        });
+
+        input.addEventListener('keydown', event => {
+          if (event.key !== 'Enter' || !input.value.trim()) return;
+
+          event.preventDefault();
+          next();
+        });
+
+        $('next-button').textContent = 'Type an answer';
+
+        requestAnimationFrame(() => input.focus());
+        return;
+      }
+
+      const built = buildPromptAndChoices(q, state.questions);
+
+      state.displayToOriginal = {};
+
+      built.optionTexts.forEach((text, index) => {
+        state.displayToOriginal[LETTER_LABELS[index]] = text;
+      });
+
+      state.correctText = built.correctText;
+
+      if (built.promptIsArabic) {
+        promptEl.classList.remove('prompt-en');
+        promptEl.setAttribute('lang', 'ar');
+        promptEl.setAttribute('dir', 'rtl');
+
+        $('question-kicker').textContent =
+          'Choose the English meaning';
+      } else {
+        promptEl.classList.add('prompt-en');
+        promptEl.removeAttribute('lang');
+        promptEl.removeAttribute('dir');
+
+        $('question-kicker').textContent =
+          'Choose the Arabic word';
+      }
+
+      promptEl.textContent = built.promptText;
+      choices.innerHTML = '';
+
+      Object.entries(state.displayToOriginal).forEach(([displayKey, text]) => {
+        const button = document.createElement('button');
+
+        button.type = 'button';
+        button.className = 'choice';
+        button.dataset.key = displayKey;
+
+        const textClass = built.optionIsArabic
+          ? 'choice-text choice-text-ar'
+          : 'choice-text';
+
+        const langAttr = built.optionIsArabic
+          ? ' lang="ar" dir="rtl"'
+          : '';
+
+        button.innerHTML = `
+          <span class="choice-key">${displayKey}</span>
+          <span class="${textClass}"${langAttr}>${text}</span>
+        `;
+
+        button.addEventListener('click', () => {
+          trackEvent('answer_selected', {
+            unit_id: unit,
+            chapter_id: state.chapterId,
+            mode
+          });
+
+          selectAnswer(displayKey);
+        });
+
+        choices.appendChild(button);
+      });
+
+      $('next-button').textContent = 'Choose an answer';
+    }
+
+    function selectAnswer(key) {
+      if (state.answered) return;
+
+      state.selected = key;
+
+      document.querySelectorAll('.choice').forEach(button => {
+        button.classList.toggle(
+          'selected',
+          button.dataset.key === key
+        );
+      });
+
+      $('next-button').disabled = false;
+      $('next-button').textContent = 'Check answer';
+    }
+
+    function checkAnswer() {
+      const q = state.questions[state.index];
+
+      let correct = false;
+      let correctDisplayKey = null;
+
+      if (mode === 'written-answer') {
+        const input = $('written-answer-input');
+        const typedAnswer = input ? input.value : '';
+
+        correct = isWrittenAnswerCorrect(q, typedAnswer);
+
+        state.selected = typedAnswer;
+        state.correctText = getWrittenAnswer(q);
+
+        if (input) {
+          input.disabled = true;
+          input.setAttribute('aria-invalid', correct ? 'false' : 'true');
+        }
+      } else {
+        correctDisplayKey = Object.keys(state.displayToOriginal)
+          .find(displayKey => {
+            return state.displayToOriginal[displayKey] === state.correctText;
+          });
+
+        correct = state.selected === correctDisplayKey;
+
+        document.querySelectorAll('.choice').forEach(button => {
+          const key = button.dataset.key;
+
+          button.disabled = true;
+
+          if (key === correctDisplayKey) {
+            button.classList.add('correct');
+          } else if (key === state.selected) {
+            button.classList.add('incorrect');
+          }
+        });
+      }
+
+      state.answered = true;
+
+      if (correct) {
+        state.score += 1;
+      }
+
+      const feedback = $('feedback');
+
+      feedback.className = `feedback show ${correct ? 'good' : 'bad'}`;
+
+      const correctArabic =
+        `<span class="feedback-ar" lang="ar" dir="rtl">${state.correctText}</span>`;
+
+      feedback.innerHTML = `
+        <span class="material-symbols-rounded" aria-hidden="true">
+          ${correct ? 'check_circle' : 'info'}
+        </span>
+
+        <div>
+          <strong>${correct ? 'Correct!' : 'Not quite.'}</strong>
+          ${
+            correct
+              ? `${correctArabic} is correct.`
+              : `The correct Arabic answer is ${correctArabic}.`
+          }
+        </div>
+      `;
+
+      $('next-button').disabled = false;
+      $('next-button').textContent =
+        state.index === state.questions.length - 1
+          ? 'See results'
+          : 'Continue';
+
+      if (window.ProgressStore) {
+        window.ProgressStore.recordAnswer(
+          unit,
+          progressKeyFor(state.chapterId),
+          wordIdFor(q),
+          correct
+        );
+      }
+
+      updateKnownToggle();
+
+      trackEvent('answer_checked', {
+        unit_id: unit,
+        chapter_id: state.chapterId,
+        mode,
+        correct
+      });
+
+      saveProgress({
+        status: 'in_progress',
+        totalQuestions: state.questions.length,
+        answeredCount: state.index + 1,
+        correctCount: state.score,
+        resumeIndex: state.index + 1,
+        latestScore: state.score
+      });
+    }
+
+    function next() {
+      if (mode === 'written-answer') {
+        const input = $('written-answer-input');
+
+        if (!state.answered && (!input || !input.value.trim())) {
+          return;
+        }
+      } else if (!state.selected) {
+        return;
+      }
+
+      if (!state.answered) {
+        checkAnswer();
+        return;
+      }
+
+      if (state.index < state.questions.length - 1) {
+        state.index += 1;
+        renderQuestion();
+      } else {
+        complete();
+      }
+    }
+
+    function complete() {
+      const key = progressKeyFor(state.chapterId);
+
+      const existing = window.ProgressStore
+        ? window.ProgressStore.getChapter(unit, key)
+        : null;
+
+      const bestScore = Math.max(
+        (existing && existing.bestScore) || 0,
+        state.score
+      );
+
+      saveProgress({
+        status: 'completed',
+        totalQuestions: state.questions.length,
+        answeredCount: state.questions.length,
+        correctCount: state.score,
+        resumeIndex: state.questions.length,
+        latestScore: state.score,
+        bestScore,
+        completedAt: new Date().toISOString()
+      });
+
+      hide('quiz-screen');
+      hide('progress-block');
+
+      trackEvent('chapter_completed', {
+        unit_id: unit,
+        chapter_id: state.chapterId,
+        mode,
+        score: state.score,
+        total: state.questions.length
+      });
+
+      $('final-score').textContent =
+        `${state.score} / ${state.questions.length}`;
+
+      $('complete-copy').textContent =
+        `You completed ${state.chapter.label || state.chapter.title} (${quizModeLabel()}). Keep practicing to make these words stick.`;
+
+      const nextChapterButton = $('next-chapter-button');
+
+      const nextChapter = window.UnitsManifest
+        ? window.UnitsManifest.getNextAvailableChapter(
+            unit,
+            state.chapterId
+          )
+        : null;
+
+      if (nextChapter) {
+        nextChapterButton.textContent = `Start ${nextChapter.title}`;
+        nextChapterButton.classList.remove('hidden');
+
+        nextChapterButton.onclick = () => {
+          const modeParam =
+            mode === 'en-to-ar'
+              ? '&mode=en-to-ar'
+              : '';
+
+          location.href =
+            `quiz.html?unit=${encodeURIComponent(unit)}&chapter=${encodeURIComponent(nextChapter.id)}${modeParam}`;
+        };
+      } else {
+        nextChapterButton.classList.add('hidden');
+      }
+
+      show('complete-screen');
+    }
+
+    function buildActiveQuestionSet() {
+      if (reviewAll || !window.ProgressStore) {
+        return state.allQuestions;
+      }
+
+      const knownWords = window.ProgressStore.getKnownWords(
+        unit,
+        progressKeyFor(state.chapterId)
+      );
+
+      return state.allQuestions.filter(q => {
+        const word = knownWords[wordIdFor(q)];
+        return !(word && word.known);
+      });
+    }
+
+    function startSessionOrShowDone() {
+      state.questions = buildActiveQuestionSet();
+      state.index = 0;
+      state.score = 0;
+      state.selected = null;
+      state.answered = false;
+
+      if (state.questions.length === 0) {
+        setAllKnownDone();
+        return;
+      }
+
+      hide('done-screen');
+      show('progress-block');
+      show('quiz-screen');
+
+      $('review-all-link').classList.toggle(
+        'hidden',
+        reviewAll
+      );
+
+      renderQuestion();
+    }
+
+    function restart() {
+      if (window.ProgressStore) {
+        window.ProgressStore.resetCurrentAttempt(
+          unit,
+          progressKeyFor(state.chapterId)
+        );
+      }
+
+      hide('complete-screen');
+      startSessionOrShowDone();
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    function goToChapterPicker() {
+      location.href = 'arabic.html#unit8-chapters';
+    }
+
+    function goToReviewAll() {
+      location.href = reviewAllUrl();
+    }
+
+    async function init() {
+      try {
+        const manifestChapter = window.UnitsManifest
+          ? window.UnitsManifest.getChapter(
+              unit,
+              requestedChapterId
+            )
+          : null;
+
+        if (
+          requestedChapterId &&
+          manifestChapter &&
+          manifestChapter.available === false
+        ) {
+          setUnavailable(
+            manifestChapter.status
+              ? `${manifestChapter.title}: ${manifestChapter.status}.`
+              : 'This chapter is not available yet.'
+          );
+
+          return;
+        }
+
+        const response = await fetch(`data/${unit}.json`, {
+          cache: 'no-store'
+        });
+
+        if (!response.ok) {
+          throw new Error('data file not found');
+        }
+
+        state.data = await response.json();
+
+        const chapters = state.data.chapters || {};
+
+        const fallbackId = window.UnitsManifest
+          ? (
+              window.UnitsManifest.getAvailableChapters(unit)[0] || {}
+            ).id
+          : Object.keys(chapters)[0];
+
+        const selectedId =
+          requestedChapterId ||
+          fallbackId ||
+          Object.keys(chapters)[0];
+
+        state.chapter = chapters[selectedId];
+        state.chapterId = selectedId;
+
+        if (
+          !state.chapter ||
+          !Array.isArray(state.chapter.questions) ||
+          !state.chapter.questions.length
+        ) {
+          setUnavailable('This chapter has no study data yet.');
+          return;
+        }
+
+        state.allQuestions = shuffle(state.chapter.questions);
+
+        const modeSuffix =
+          mode === 'en-to-ar'
+            ? ' (English to Arabic)'
+            : mode === 'written-answer'
+              ? ' (Type the Answer)'
+              : '';
+
+        document.title =
+          `${state.chapter.label || state.chapter.title}${modeSuffix} · Arabic Study`;
+
+        $('quiz-title').textContent =
+          state.data.title || 'Arabic Study';
+
+        $('chapter-label').textContent =
+          `${state.chapter.label || state.chapter.title}${modeSuffix}`;
+
+        $('exit-button').addEventListener('click', () => {
+          location.href = 'arabic.html';
+        });
+
+        $('change-chapter-button').addEventListener(
+          'click',
+          goToChapterPicker
+        );
+
+        $('restart-button').addEventListener('click', restart);
+        $('again-button').addEventListener('click', restart);
+        $('next-button').addEventListener('click', next);
+        $('known-toggle').addEventListener('click', toggleKnown);
+        $('flag-button').addEventListener('click', flagCurrentWord);
+        $('audio-button').addEventListener('click', playCurrentAudio);
+        $('review-all-link').addEventListener('click', goToReviewAll);
+        $('review-all-button').addEventListener('click', goToReviewAll);
+
+        if (window.ProgressStore) {
+          window.ProgressStore.setLastActive(
+            unit,
+            progressKeyFor(state.chapterId)
+          );
+        }
+
+        flushFlagQueue();
+
+        hide('loading-screen');
+        startSessionOrShowDone();
+      } catch (error) {
+        console.error(error);
+
+        setError(
+          'We could not load this quiz. Make sure the data file exists and the chapter link is correct.'
+        );
+      }
+    }
+
+    init();
+  </script>
+  <script type="module" src="./firebase-auth.js"></script>
 </body>
 </html>
