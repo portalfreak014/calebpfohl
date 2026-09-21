@@ -13,6 +13,11 @@
   ];
 
   root.innerHTML = `
+    <style>
+      [data-pill-nav] .navin {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+    </style>
     <nav class="nav" aria-label="Primary navigation">
       <div class="navin">
         ${items.map(item => {
