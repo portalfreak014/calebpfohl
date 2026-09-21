@@ -228,6 +228,55 @@
   text-decoration:none;
 }
 
+    [data-pill-nav] .nav {
+  position:fixed;
+  right:0;
+  bottom:max(12px,env(safe-area-inset-bottom));
+  left:0;
+  z-index:10;
+  display:flex;
+  justify-content:center;
+  padding:0 12px;
+  pointer-events:none;
+}
+
+[data-pill-nav] .navin {
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  width:min(100%,600px);
+  padding:5px;
+  border:1px solid var(--md-sys-color-outline-variant);
+  border-radius:999px;
+  background:rgb(255 251 254 / .94);
+  box-shadow:0 5px 18px rgb(0 0 0 / .14);
+  backdrop-filter:blur(12px);
+  pointer-events:auto;
+}
+
+[data-pill-nav] .nav a {
+  display:grid;
+  place-items:center;
+  gap:3px;
+  min-height:52px;
+  padding:3px 4px;
+  border-radius:999px;
+  color:var(--md-sys-color-on-surface-variant);
+  font-family:"Noto Sans","Noto Sans Arabic",system-ui,sans-serif;
+  font-size:.68rem;
+  font-weight:700;
+  line-height:1.1;
+  text-decoration:none;
+}
+
+[data-pill-nav] .nav a:hover {
+  background:var(--md-sys-color-surface-container);
+}
+
+[data-pill-nav] .nav .active {
+  color:var(--md-sys-color-on-primary-container);
+  background:var(--md-sys-color-primary-container);
+}
+
 .nav-item:hover {
   background:var(--md-sys-color-surface-container);
 }
@@ -462,7 +511,7 @@
         <div class="brand-mark" aria-hidden="true"><span class="material-symbols-rounded">description</span></div>
         <div class="brand-copy"><p class="brand-title">Project Docs</p><p class="brand-subtitle">Editable notes, stored on this device</p></div>
       </div>
-      <button class="icon-button" id="menu-button" type="button"
+      <button class="icon-button" data-menu-button type="button"
   aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
   <span class="material-symbols-rounded" aria-hidden="true">menu</span>
 </button>
@@ -518,80 +567,9 @@
     </footer>
   </main>
 
-  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <div data-hamburger-menu></div>
 
-<aside class="drawer" id="drawer" aria-label="Main menu" aria-hidden="true">
-  <div class="drawer-head">
-    <strong>Menu</strong>
-
-    <button class="icon-button" id="close-menu-button" type="button"
-      aria-label="Close menu">
-      <span class="material-symbols-rounded" aria-hidden="true">close</span>
-    </button>
-  </div>
-
-  <div class="drawer-links">
-    <a href="arabic.html">
-      <span class="material-symbols-rounded" aria-hidden="true">home</span>
-      Home
-    </a>
-
-    <a href="glossary.html">
-      <span class="material-symbols-rounded" aria-hidden="true">menu_book</span>
-      Glossary
-    </a>
-
-    <a href="flashcards.html">
-      <span class="material-symbols-rounded" aria-hidden="true">style</span>
-      Flashcards
-    </a>
-
-    <a href="match.html">
-      <span class="material-symbols-rounded" aria-hidden="true">extension</span>
-      Match
-    </a>
-
-    <a href="roots.html">
-      <span class="material-symbols-rounded" aria-hidden="true">account_tree</span>
-      Freya's Root Chart
-    </a>
-
-    <button id="progress-menu-button" type="button">
-      <span class="material-symbols-rounded" aria-hidden="true">bar_chart</span>
-      Progress
-    </button>
-
-    <a href="docs.html" aria-current="page">
-  <span class="material-symbols-rounded" aria-hidden="true">description</span>
-  Docs
-</a>
-    <div id="firebase-auth"></div>
-  </div>
-</aside>
-
-  <nav class="bottom-nav" aria-label="Primary navigation">
-  <div class="bottom-nav-inner">
-    <a class="nav-item" href="arabic.html">
-      <span class="nav-icon material-symbols-rounded" aria-hidden="true">home</span>
-      Home
-    </a>
-
-    <a class="nav-item" href="glossary.html">
-      <span class="nav-icon material-symbols-rounded" aria-hidden="true">menu_book</span>
-      Glossary
-    </a>
-
-    <a class="nav-item" href="flashcards.html">
-      <span class="nav-icon material-symbols-rounded" aria-hidden="true">style</span>
-      Flashcards
-    </a>
-
-    <a class="nav-item" href="match.html">
-      <span class="nav-icon material-symbols-rounded" aria-hidden="true">extension</span>
-      Match
-    </a>
-  </div>
-</nav>
+  <div data-pill-nav></div>
 
   <script src="progress-store.js"></script>
   <script>
@@ -821,49 +799,6 @@
     let saveTimer = null;
 
     function trackEvent(name, params) { window.dataLayer = window.dataLayer || []; window.dataLayer.push(Object.assign({ event: name }, params || {})); }
-
-    const menuButton = document.getElementById("menu-button");
-    const closeMenuButton = document.getElementById("close-menu-button");
-    const drawer = document.getElementById("drawer");
-    const drawerBackdrop = document.getElementById("drawer-backdrop");
-    const progressMenuButton = document.getElementById("progress-menu-button");
-    
-    function openMenu() {
-      drawer.classList.add("open");
-      drawerBackdrop.classList.add("open");
-      drawer.setAttribute("aria-hidden", "false");
-      menuButton.setAttribute("aria-expanded", "true");
-      closeMenuButton.focus();
-    }
-    
-    function closeMenu() {
-      drawer.classList.remove("open");
-      drawerBackdrop.classList.remove("open");
-      drawer.setAttribute("aria-hidden", "true");
-      menuButton.setAttribute("aria-expanded", "false");
-      menuButton.focus();
-    }
-    
-    function showProgress() {
-      closeMenu();
-    
-      const pages = document.getElementById("doc-picker-heading");
-    
-      if (pages) {
-        pages.scrollIntoView({ behavior:"smooth", block:"start" });
-      }
-    }
-    
-    menuButton.addEventListener("click", openMenu);
-    closeMenuButton.addEventListener("click", closeMenu);
-    drawerBackdrop.addEventListener("click", closeMenu);
-    progressMenuButton.addEventListener("click", showProgress);
-    
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && drawer.classList.contains("open")) {
-        closeMenu();
-      }
-    });
     
     function renderDocPicker() {
       const picker = document.getElementById("doc-picker");
@@ -961,6 +896,8 @@
     renderDocPicker();
     openDoc(activeDocId);
   </script>
-  <script type="module" src="./firebase-auth.js"></script>
+  <script src="hamburger-menu.js"></script>
+<script type="module" src="./firebase-auth.js"></script>
+<script src="pill-nav.js"></script>
 </body>
 </html>
