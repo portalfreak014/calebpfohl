@@ -125,16 +125,40 @@ async function hydrateProgress(user) {
 
 const renderAuthUi = shouldRenderAuthUi();
 const root = renderAuthUi ? getAuthRoot() : null;
+const isMainPage = location.pathname.endsWith("/arabic.html")
+  || location.pathname.endsWith("/arabic/")
+  || location.pathname === "/";
+
+let initialAuthStateResolved = false;
+let currentAuthUserId = null;
+
 onAuthStateChanged(auth, async (user) => {
+  const nextUserId = user?.uid ?? null;
+
+  if (!initialAuthStateResolved) {
+    initialAuthStateResolved = true;
+  } else if (isMainPage && nextUserId !== currentAuthUserId) {
+    location.reload();
+    return;
+  }
+
+  currentAuthUserId = nextUserId;
   activeUser = user || null;
   syncReady = false;
   window.clearTimeout(syncTimer);
+
   if (renderAuthUi) {
     if (user) renderSignedIn(root, user);
     else renderSignedOut(root);
   }
+
   if (user) await hydrateProgress(user);
-  window.dispatchEvent(new CustomEvent("firebase-auth-state-changed", { detail: { user: user || null } }));
+
+  window.dispatchEvent(
+    new CustomEvent("firebase-auth-state-changed", {
+      detail: { user: user || null }
+    })
+  );
 });
 
 export { app, auth, db, queueProgressSync };
