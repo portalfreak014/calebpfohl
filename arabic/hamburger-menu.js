@@ -17,6 +17,7 @@
         <a href="flashcards.html"><span class="material-symbols-rounded" aria-hidden="true">style</span>Flashcards</a>
         <a href="match.html"><span class="material-symbols-rounded" aria-hidden="true">extension</span>Match</a>
         <a href="roots.html"><span class="material-symbols-rounded" aria-hidden="true">account_tree</span>Freya's Root Chart</a>
+        <button id="progress-menu-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">bar_chart</span>Progress</button>
         <a href="docs.html"><span class="material-symbols-rounded" aria-hidden="true">description</span>Docs</a>
         <div id="firebase-auth"></div>
       </div>
@@ -27,6 +28,7 @@
   const drawer = root.querySelector('#drawer');
   const backdrop = root.querySelector('#drawer-backdrop');
   const closeButton = root.querySelector('#close-menu-button');
+  const progressButton = root.querySelector('#progress-menu-button');
   if (!menuButton || !drawer || !backdrop || !closeButton) return;
 
   function openMenu() {
@@ -37,17 +39,21 @@
     closeButton.focus();
   }
 
-  function closeMenu() {
+  function closeMenu({ restoreFocus = true } = {}) {
     drawer.classList.remove('open');
     backdrop.classList.remove('open');
     drawer.setAttribute('aria-hidden', 'true');
     menuButton.setAttribute('aria-expanded', 'false');
-    menuButton.focus();
+    if (restoreFocus) menuButton.focus();
   }
 
   menuButton.addEventListener('click', openMenu);
   closeButton.addEventListener('click', closeMenu);
   backdrop.addEventListener('click', closeMenu);
+  progressButton?.addEventListener('click', () => {
+    closeMenu({ restoreFocus: false });
+    document.dispatchEvent(new CustomEvent('shared-menu:progress'));
+  });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && drawer.classList.contains('open')) closeMenu();
   });
