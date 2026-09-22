@@ -768,7 +768,7 @@
         const active = unit.chapters.some(chapter => chapter.available);
         const unitNumber = id.replace('unit', '');
         const progress = unitProgress(id, unit.chapters);
-        const isOpen = active ? ' open' : '';
+        const isOpen = '';
 
         const cards = unit.chapters.map(chapter => {
           if (!chapter.available) {
@@ -797,7 +797,7 @@
         }).join('');
 
         return `
-          <details class="unit ${active ? '' : 'soon'}" id="${id}-chapters"${isOpen}>
+          <details class="unit ${active ? '' : 'soon'}" id="${id}-chapters">
             <summary>
               <span class="uicon">${unitNumber}</span>
               <span>
