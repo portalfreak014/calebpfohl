@@ -14,8 +14,23 @@
 
   root.innerHTML = `
     <style>
+      [data-pill-nav] .nav {
+        transform-origin: top center;
+        transition: transform 220ms ease;
+      }
+
+      [data-pill-nav].pill-scrolled .nav {
+        transform: scale(0.7);
+      }
+
       [data-pill-nav] .navin {
         grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        [data-pill-nav] .nav {
+          transition: none;
+        }
       }
     </style>
     <nav class="nav" aria-label="Primary navigation">
@@ -33,4 +48,11 @@
       </div>
     </nav>
   `;
+
+  const updatePillSize = () => {
+    root.classList.toggle('pill-scrolled', window.scrollY > 20);
+  };
+
+  window.addEventListener('scroll', updatePillSize, { passive: true });
+  updatePillSize();
 })();
