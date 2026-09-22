@@ -287,110 +287,346 @@
   </main>
 
   <script>
-    const GLOSSARY_PATH = "data/glossary/unit{unit}-glossary.md";
-    const ADDITIONAL_GLOSSARY_PATH = "data/glossary/unit{unit}-additional.md";
-    const UNITS = Array.from({ length: 10 }, (_, index) => index + 1);
-    const state = { unit: 1, query: "", data: {} };
+const GLOSSARY_PATH = "data/glossary/unit{unit}-glossary.md";
+const ADDITIONAL_GLOSSARY_PATH = "data/glossary/unit{unit}-additional.md";
+const UNITS = Array.from({ length: 10 }, (_, index) => index + 1);
+const state = { unit: 1, query: "", data: {} };
 
-    function escapeHtml(value) {
-      return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&#039;");
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function parseGlossary(markdown, additional = false) {
+  const chapters = [];
+  let chapter = null;
+
+  markdown.replace(/\r\n/g, "\n").split("\n").forEach((line) => {
+    const heading = line.match(/^##\s+Chapter\s+(.+)\s*$/i);
+
+    if (heading) {
+      chapter = {
+        title: "Chapter " + heading[1].trim(),
+        entries: []
+      };
+      chapters.push(chapter);
+      return;
     }
 
-    function parseGlossary(markdown, additional = false) {
-      const chapters = [];
-      let chapter = null;
-      markdown.replace(/\r\n/g, "\n").split("\n").forEach((line) => {
-        const heading = line.match(/^##\s+Chapter\s+(.+)\s*$/i);
-        if (heading) {
-          chapter = { title: "Chapter " + heading[1].trim(), entries: [] };
-          chapters.push(chapter);
-          return;
-        }
-        if (!chapter || !/^\|.*\|\s*$/.test(line) || /^\|\s*(Arabic|---)/i.test(line)) return;
-        const cells = line.split("|").slice(1, -1).map((cell) => cell.trim());
-        if (cells.length >= 2 && cells[0] && cells[1]) chapter.entries.push({ arabic: cells[0], english: cells[1], additional });
+    if (!chapter || !/^\|.*\|\s*$/.test(line) || /^\|\s*(Arabic|---)/i.test(line)) {
+      return;
+    }
+
+    const cells = line
+      .split("|")
+      .slice(1, -1)
+      .map((cell) => cell.trim());
+
+    if (cells.length >= 2 && cells[0] && cells[1]) {
+      chapter.entries.push({
+        arabic: cells[0],
+        english: cells[1],
+        additional
       });
-      return chapters;
     }
+  });
 
-    function appendAdditionalChapters(chapters, additionalChapters) {
-      const chapterMap = new Map(chapters.map((chapter) => [chapter.title, chapter]));
-      additionalChapters.forEach((additionalChapter) => {
-        const matchingChapter = chapterMap.get(additionalChapter.title);
-        if (matchingChapter) {
-          matchingChapter.entries.push(...additionalChapter.entries);
-        } else {
-          chapters.push(additionalChapter);
-          chapterMap.set(additionalChapter.title, additionalChapter);
-        }
-      });
-      return chapters;
+  return chapters;
+}
+
+function appendAdditionalChapters(chapters, additionalChapters) {
+  const chapterMap = new Map(
+    chapters.map((chapter) => [chapter.title, chapter])
+  );
+
+  additionalChapters.forEach((additionalChapter) => {
+    const matchingChapter = chapterMap.get(additionalChapter.title);
+
+    if (matchingChapter) {
+      matchingChapter.entries.push(...additionalChapter.entries);
+    } else {
+      chapters.push(additionalChapter);
+      chapterMap.set(additionalChapter.title, additionalChapter);
     }
+  });
 
-    async function loadUnit(unit) {
-      if (state.data[unit]) return state.data[unit];
-      const response = await fetch(GLOSSARY_PATH.replace("{unit}", unit));
-      if (!response.ok) throw new Error("Could not load Unit " + unit + ".");
-      const chapters = parseGlossary(await response.text());
-      try {
-        const additionalResponse = await fetch(ADDITIONAL_GLOSSARY_PATH.replace("{unit}", unit));
-        if (additionalResponse.ok) appendAdditionalChapters(chapters, parseGlossary(await additionalResponse.text(), true));
-      } catch (error) {}
-      state.data[unit] = chapters;
-      return chapters;
+  return chapters;
+}
+
+async function loadUnit(unit) {
+  if (state.data[unit]) return state.data[unit];
+
+  const response = await fetch(
+    GLOSSARY_PATH.replace("{unit}", unit)
+  );
+
+  if (!response.ok) {
+    throw new Error("Could not load Unit " + unit + ".");
+  }
+
+  const chapters = parseGlossary(await response.text());
+
+  try {
+    const additionalResponse = await fetch(
+      ADDITIONAL_GLOSSARY_PATH.replace("{unit}", unit)
+    );
+
+    if (additionalResponse.ok) {
+      appendAdditionalChapters(
+        chapters,
+        parseGlossary(await additionalResponse.text(), true)
+      );
     }
+  } catch (error) {}
 
-    function filteredChapters(chapters) {
-      const query = state.query.trim().toLocaleLowerCase();
-      if (!query) return chapters;
-      return chapters.map((chapter) => ({
-        title: chapter.title,
-        entries: chapter.entries.filter((entry) => (entry.arabic + " " + entry.english).toLocaleLowerCase().includes(query))
-      })).filter((chapter) => chapter.entries.length);
-    }
+  state.data[unit] = chapters;
+  return chapters;
+}
 
-    function renderTabs() {
-      const tabs = document.getElementById("unit-tabs");
-      tabs.innerHTML = UNITS.map((unit) => '<button class="unit-tab' + (unit === state.unit ? ' active' : '') + '" type="button" data-unit="' + unit + '" aria-pressed="' + (unit === state.unit) + '">Unit ' + unit + '</button>').join("");
-      tabs.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => selectUnit(Number(button.dataset.unit))));
-    }
+async function loadAllUnits() {
+  const units = await Promise.all(
+    UNITS.map(async (unit) => ({
+      unit,
+      chapters: await loadUnit(unit)
+    }))
+  );
 
-    function render(chapters) {
-      const visible = filteredChapters(chapters);
-      const count = visible.reduce((total, chapter) => total + chapter.entries.length, 0);
-      document.getElementById("unit-title").textContent = "Unit " + state.unit + " glossary";
-      document.getElementById("result-count").textContent = count + " entr" + (count === 1 ? "y" : "ies");
-      document.getElementById("chapter-links").innerHTML = visible.map((chapter, index) => '<a class="chapter-link" href="#chapter-' + index + '">' + escapeHtml(chapter.title) + '</a>').join("");
-      const content = document.getElementById("content");
-      if (!visible.length) {
-        content.innerHTML = '<div class="empty">No matching vocabulary in Unit ' + state.unit + '. Try a different Arabic or English search term.</div>';
-        return;
-      }
-      content.innerHTML = visible.map((chapter, index) => '<section class="chapter" id="chapter-' + index + '"><h3 class="chapter-title">' + escapeHtml(chapter.title) + '</h3><div class="table-wrap"><table><thead><tr><th>Arabic</th><th>English</th></tr></thead><tbody>' + chapter.entries.map((entry) => '<tr' + (entry.additional ? ' class="additional"' : '') + '><td class="arabic" lang="ar">' + escapeHtml(entry.arabic) + '</td><td>' + escapeHtml(entry.english) + (entry.additional ? '<span class="additional-label">Additional</span>' : '') + '</td></tr>').join("") + '</tbody></table></div></section>').join("");
-    }
+  return units.sort((a, b) => {
+    if (a.unit === state.unit) return -1;
+    if (b.unit === state.unit) return 1;
+    return a.unit - b.unit;
+  });
+}
 
-    async function selectUnit(unit) {
-      state.unit = unit;
-      renderTabs();
-      document.getElementById("content").innerHTML = '<div class="status"><span class="material-symbols-rounded" aria-hidden="true">hourglass_top</span><span>Loading Unit ' + unit + '…</span></div>';
-      document.getElementById("chapter-links").innerHTML = "";
-      document.getElementById("result-count").textContent = "";
-      try {
-        render(await loadUnit(unit));
-      } catch (error) {
-        document.getElementById("unit-title").textContent = "Unit " + unit + " glossary";
-        document.getElementById("content").innerHTML = '<div class="status"><span class="material-symbols-rounded" aria-hidden="true">error</span><span>' + escapeHtml(error.message) + ' Check that the glossary Markdown file is available.</span></div>';
-      }
-    }
+function filteredChapters(chapters) {
+  const query = state.query.trim().toLocaleLowerCase();
 
-    document.getElementById("search-input").addEventListener("input", async (event) => {
-      state.query = event.target.value;
-      try { render(await loadUnit(state.unit)); } catch (error) {}
+  if (!query) return chapters;
+
+  return chapters
+    .map((chapter) => ({
+      title: chapter.title,
+      entries: chapter.entries.filter((entry) =>
+        (entry.arabic + " " + entry.english)
+          .toLocaleLowerCase()
+          .includes(query)
+      )
+    }))
+    .filter((chapter) => chapter.entries.length);
+}
+
+function renderTabs() {
+  const tabs = document.getElementById("unit-tabs");
+
+  tabs.innerHTML = UNITS.map(
+    (unit) =>
+      '<button class="unit-tab' +
+      (unit === state.unit ? " active" : "") +
+      '" type="button" data-unit="' +
+      unit +
+      '" aria-pressed="' +
+      (unit === state.unit) +
+      '">Unit ' +
+      unit +
+      "</button>"
+  ).join("");
+
+  tabs.querySelectorAll("button").forEach((button) => {
+    button.addEventListener("click", () => {
+      selectUnit(Number(button.dataset.unit));
     });
+  });
+}
 
-    renderTabs();
-    selectUnit(1);
-  </script>
+function renderChapter(chapter, chapterId) {
+  return (
+    '<section class="chapter" id="' +
+    chapterId +
+    '">' +
+    '<h4 class="chapter-title">' +
+    escapeHtml(chapter.title) +
+    "</h4>" +
+    '<div class="table-wrap">' +
+    "<table>" +
+    "<thead><tr><th>Arabic</th><th>English</th></tr></thead>" +
+    "<tbody>" +
+    chapter.entries
+      .map(
+        (entry) =>
+          "<tr" +
+          (entry.additional ? ' class="additional"' : "") +
+          '><td class="arabic" lang="ar">' +
+          escapeHtml(entry.arabic) +
+          "</td><td>" +
+          escapeHtml(entry.english) +
+          (entry.additional
+            ? '<span class="additional-label">Additional</span>'
+            : "") +
+          "</td></tr>"
+      )
+      .join("") +
+    "</tbody>" +
+    "</table>" +
+    "</div>" +
+    "</section>"
+  );
+}
+
+function renderUnit(unit, chapters, chapterOffset, showUnitHeading) {
+  const visible = filteredChapters(chapters);
+
+  if (!visible.length) {
+    return {
+      html: "",
+      links: [],
+      count: 0
+    };
+  }
+
+  const links = visible.map((chapter, index) => ({
+    id: "chapter-" + (chapterOffset + index),
+    label: showUnitHeading
+      ? "Unit " + unit + " · " + chapter.title
+      : chapter.title
+  }));
+
+  const html =
+    (showUnitHeading
+      ? '<section class="chapter" id="unit-' +
+        unit +
+        '"><h3 class="chapter-title">Unit ' +
+        unit +
+        "</h3>"
+      : "") +
+    visible
+      .map((chapter, index) =>
+        renderChapter(chapter, "chapter-" + (chapterOffset + index))
+      )
+      .join("") +
+    (showUnitHeading ? "</section>" : "");
+
+  return {
+    html,
+    links,
+    count: visible.reduce(
+      (total, chapter) => total + chapter.entries.length,
+      0
+    )
+  };
+}
+
+function render(unitsData) {
+  const searching = Boolean(state.query.trim());
+
+  const visibleUnits = searching
+    ? unitsData
+    : unitsData.filter((item) => item.unit === state.unit);
+
+  document.getElementById("unit-title").textContent = searching
+    ? "Glossary search"
+    : "Unit " + state.unit + " glossary";
+
+  let chapterOffset = 0;
+  let resultCount = 0;
+  const renderedUnits = [];
+
+  visibleUnits.forEach((item) => {
+    const rendered = renderUnit(
+      item.unit,
+      item.chapters,
+      chapterOffset,
+      searching
+    );
+
+    chapterOffset += rendered.links.length;
+    resultCount += rendered.count;
+    renderedUnits.push(rendered);
+  });
+
+  document.getElementById("result-count").textContent =
+    resultCount + " entr" + (resultCount === 1 ? "y" : "ies");
+
+  document.getElementById("chapter-links").innerHTML = renderedUnits
+    .flatMap((rendered) => rendered.links)
+    .map(
+      (link) =>
+        '<a class="chapter-link" href="#' +
+        link.id +
+        '">' +
+        escapeHtml(link.label) +
+        "</a>"
+    )
+    .join("");
+
+  const content = document.getElementById("content");
+
+  if (!resultCount) {
+    content.innerHTML =
+      '<div class="empty">No matching vocabulary. Try a different Arabic or English search term.</div>';
+    return;
+  }
+
+  content.innerHTML = renderedUnits.map((rendered) => rendered.html).join("");
+}
+
+function showLoading(message) {
+  document.getElementById("content").innerHTML =
+    '<div class="status">' +
+    '<span class="material-symbols-rounded" aria-hidden="true">hourglass_top</span>' +
+    "<span>" +
+    escapeHtml(message) +
+    "</span>" +
+    "</div>";
+
+  document.getElementById("chapter-links").innerHTML = "";
+  document.getElementById("result-count").textContent = "";
+}
+
+async function updateGlossary() {
+  const searching = Boolean(state.query.trim());
+
+  showLoading(searching ? "Searching all units…" : "Loading glossary…");
+
+  try {
+    const data = searching
+      ? await loadAllUnits()
+      : [{ unit: state.unit, chapters: await loadUnit(state.unit) }];
+
+    render(data);
+  } catch (error) {
+    document.getElementById("unit-title").textContent =
+      "Unit " + state.unit + " glossary";
+
+    document.getElementById("content").innerHTML =
+      '<div class="status">' +
+      '<span class="material-symbols-rounded" aria-hidden="true">error</span>' +
+      "<span>" +
+      escapeHtml(error.message) +
+      " Check that the glossary Markdown file is available.</span>" +
+      "</div>";
+  }
+}
+
+async function selectUnit(unit) {
+  state.unit = unit;
+  renderTabs();
+  await updateGlossary();
+}
+
+document
+  .getElementById("search-input")
+  .addEventListener("input", async (event) => {
+    state.query = event.target.value;
+    await updateGlossary();
+  });
+
+renderTabs();
+selectUnit(1);
+</script>
   
 <script src="hamburger-menu.js"></script>
   <script type="module" src="./firebase-auth.js"></script>
