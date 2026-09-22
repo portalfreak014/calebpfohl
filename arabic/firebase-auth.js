@@ -137,10 +137,10 @@ onAuthStateChanged(auth, async (user) => {
 
   if (!initialAuthStateResolved) {
     initialAuthStateResolved = true;
-  } else if (isMainPage && nextUserId !== currentAuthUserId) {
-    location.reload();
-    return;
-  }
+  } else if (nextUserId !== currentAuthUserId) {
+  location.reload();
+  return;
+}
 
   currentAuthUserId = nextUserId;
   activeUser = user || null;
