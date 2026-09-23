@@ -19,10 +19,6 @@
         transition: transform 220ms ease;
       }
 
-      [data-pill-nav].pill-scrolled .nav {
-        transform: scale(0.7);
-      }
-
       [data-pill-nav] .navin {
         grid-template-columns: repeat(5, minmax(0, 1fr));
       }
@@ -50,9 +46,11 @@
   `;
 
   const updatePillSize = () => {
-    root.classList.toggle('pill-scrolled', window.scrollY > 20);
-  };
+  const progress = Math.min(window.scrollY / 150, 1);
+  const scale = 1 - (progress * 0.3); // 1.0 → 0.7
+  root.querySelector('.nav').style.transform = `scale(${scale})`;
+};
 
-  window.addEventListener('scroll', updatePillSize, { passive: true });
-  updatePillSize();
+window.addEventListener('scroll', updatePillSize, { passive: true });
+updatePillSize();
 })();
