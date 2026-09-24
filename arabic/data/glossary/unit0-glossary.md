@@ -2,6 +2,8 @@
 
 > Status: Placeholder. Add vocabulary from the source glossary before using this as a recovery record.
 
+## Lesson 1
+
 | Arabic | Meaning |
 |---|---|
 | توت | Berries |
@@ -18,6 +20,11 @@
 | نام/ نامت | He slept/she slept |
 | يوليو | July |
 | يونيو | June |
+
+## Lesson 2
+
+| Arabic | Meaning |
+|---|---|
 | أنا | I |
 | أبي | My father |
 | ألعب | I play |
