@@ -1,4 +1,6 @@
-Sound and Script glossary
-Status: Placeholder. Add vocabulary from the source glossary before using this as a recovery record.
+# Sound and Script glossary
 
-Arabic	Meaning
+> Status: Placeholder. Add vocabulary from the source glossary before using this as a recovery record.
+
+| Arabic | Meaning |
+|---|---|
