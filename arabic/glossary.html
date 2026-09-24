@@ -233,63 +233,13 @@
     </section>
 
     <div data-hamburger-menu></div>
-    
-<!-- <div class="drawer-backdrop" id="drawer-backdrop"></div>
-
-<aside class="drawer" id="drawer" aria-label="Main menu" aria-hidden="true">
-  <div class="drawer-head">
-    <strong>Menu</strong>
-    <button class="icon" id="close-menu-button" type="button" aria-label="Close menu">
-      <span class="material-symbols-rounded" aria-hidden="true">close</span>
-    </button>
-  </div>
-
-  <div class="drawer-links">
-    <a href="arabic.html">
-    <span class="material-symbols-rounded" aria-hidden="true">home</span>
-        Home
-      </a>
-    
-      <a href="glossary.html">
-        <span class="material-symbols-rounded" aria-hidden="true">menu_book</span>
-        Glossary
-      </a>
-    
-      <a href="flashcards.html">
-        <span class="material-symbols-rounded" aria-hidden="true">style</span>
-        Flashcards
-      </a>
-    
-      <a href="match.html">
-        <span class="material-symbols-rounded" aria-hidden="true">extension</span>
-        Match
-      </a>
-      <a href="roots.html">
-        <span class="material-symbols-rounded" aria-hidden="true">account_tree</span>
-        Freya's Root Chart
-      </a>
-
-      <button id="progress-menu-button" type="button">
-        <span class="material-symbols-rounded" aria-hidden="true">bar_chart</span>
-        Progress
-      </button>
-
-    <a href="docs.html" aria-current="page">
-  <span class="material-symbols-rounded" aria-hidden="true">description</span>
-  Docs
-</a>
-
-      <div id="firebase-auth"></div>
-  </div>
-</aside> -->
-
     <footer>Created by Caleb Pfohl · Glossary data is loaded from the repository Markdown files.</footer>
   </main>
 
   <script>
 const GLOSSARY_PATH = "data/glossary/unit{unit}-glossary.md";
 const ADDITIONAL_GLOSSARY_PATH = "data/glossary/unit{unit}-additional.md";
-const UNITS = Array.from({ length: 10 }, (_, index) => index + 1);
+const UNITS = [0, ...Array.from({ length: 10 }, (_, index) => index + 1)];
 const state = { unit: 1, query: "", data: {} };
 
 function escapeHtml(value) {
@@ -430,9 +380,9 @@ function renderTabs() {
       unit +
       '" aria-pressed="' +
       (unit === state.unit) +
-      '">Unit ' +
-      unit +
-      "</button>"
+      '">' +
+(unit === 0 ? "Sound & Script" : "Unit " + unit) +
+"</button>"
   ).join("");
 
   tabs.querySelectorAll("button").forEach((button) => {
@@ -526,8 +476,10 @@ function render(unitsData) {
     ? unitsData
     : unitsData.filter((item) => item.unit === state.unit);
 
-  document.getElementById("unit-title").textContent = searching
-    ? "Glossary search"
+ document.getElementById("unit-title").textContent = searching
+  ? "Glossary search"
+  : state.unit === 0
+    ? "Sound & Script glossary"
     : "Unit " + state.unit + " glossary";
 
   let chapterOffset = 0;
