@@ -4,4 +4,3 @@
 
 | Arabic | English |
 |---|---|
-| المهارة | skill, proficiency |
