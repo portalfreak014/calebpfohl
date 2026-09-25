@@ -4,72 +4,79 @@ Source: *Arabic Basic Course, Second Edition* — Chapters 36–40.
 
 ## Chapter 36
 
-| Arabic | English |
-|---|---|
-| استجاب / يستجيب / استجابة | to respond |
-| استجم / يستجم / استجمام | to relax, recuperate |
-| استدعى / يستدعي / استدعاء | to require |
-| استهدف / يستهدف / استهداف | to target, aim |
-| إصابات طارئة | accidental injuries |
-| إعاقات | disabilities |
-| اعتاد / يعتاد / اعتياد | to get used to |
-| أعشاب طبية | medicinal herbs |
-| انتكس / ينتكس / انتكاس | to relapse |
-| أودى بـ / يودي | to put an end to (life) |
-| تبعات | consequences |
-| تعرض / يتعرض / تعرض | to be exposed, subjected |
-| التهب / يلتهب / التهاب | to be infected, inflamed |
-| تحسبًا من | being afraid of, on guard against |
-| توعك | ailment |
-| التوى / يلتوي / التواء | to be sprained |
-| ثقّف / يثقّف / تثقيف | to educate |
-| جرح / جروح | wound(s) |
-| جيب / جيوب أنفية | sinus(es) |
-| حرجة | critical |
-| حرق / حروق | burn(s) |
-| حشرات سامة | poisonous insects |
-| حفّز / يحفّز / تحفيز | to stimulate |
-| حلق | throat |
-| حنّط / يحنّط / تحنيط | to mummify |
-| خافض للحرارة | fever reducer |
-| دواجن | poultry |
-| ربو | asthma |
-| سال / يسيل / سيلان | to flow |
-| سعال | cough |
-| سم / سموم | poison(s) |
-| شائع | widespread |
-| شخص / يشخّص / تشخيص | to diagnose |
-| صادق / يصادق / مصادقة | to approve |
-| ضمّد / يضمّد / تضميد | to bandage |
-| طب بديل | alternative medicine |
-| طبع / يطبع / طباعة | to print |
-| طعّم / يطعّم / تطعيم | to vaccinate |
-| عبر | across, through |
-| عقار / عقاقير | drug(s), medicine |
-| عرض / أعراض | symptom(s) |
-| غلى / يغلي / غليان | to boil |
-| قرص مدمج | compact disc or DVD |
-| كدمات | bruise(s) |
-| كمادات | compress(es) |
-| لدغات الثعابين | snakebites |
-| لسعات العقارب | scorpion stings |
-| لقاح | vaccination |
-| مبسط | simplified |
-| مخاط | mucus |
-| مركب | compound |
-| مرهم / مراهم | ointment(s) |
-| مسعف | paramedic, ambulance worker |
-| مصاب | afflicted, injured |
-| مضاد حيوي | antibiotic |
-| مضاعفات | complications |
-| معنية | concerned |
-| مفصل / مفاصل | joint(s) |
-| مناعة | immunity |
-| نبّه / ينبّه / تنبيه | to call someone’s attention to |
-| نفع / ينفع / نفع | to benefit |
-| نقع / ينقع / نقع | to steep |
-| ورم / أورام | swelling, tumor(s) |
-| وعّى / يوعّي / توعية | to make aware |
+| Arabic | English | Type |
+|---|---|---|
+| استجاب / يستجيب / استجابة | to respond | |
+| استجم / يستجم / استجمام | to relax, recuperate | |
+| استدعى / يستدعي / استدعاء | to require | |
+| استهدف / يستهدف / استهداف | to target, aim | |
+| إصابات طارئة | accidental injuries | |
+| إعاقات | disabilities | |
+| اعتاد / يعتاد / اعتياد | to get used to | |
+| أعشاب طبية | medicinal herbs | |
+| انتكس / ينتكس / انتكاس | to relapse | |
+| أودى بـ / يودي | to put an end to (life) | |
+| تبعات | consequences | |
+| تعرض / يتعرض / تعرض | to be exposed, subjected | |
+| التهب / يلتهب / التهاب | to be infected, inflamed | |
+| تحسبًا من | being afraid of, on guard against | |
+| توعك | ailment | |
+| التوى / يلتوي / التواء | to be sprained | |
+| ثقّف / يثقّف / تثقيف | to educate | |
+| جرح / جروح | wound(s) | |
+| جيب / جيوب أنفية | sinus(es) | |
+| حرجة | critical | |
+| حرق / حروق | burn(s) | |
+| حشرات سامة | poisonous insects | |
+| حفّز / يحفّز / تحفيز | to stimulate | |
+| حلق | throat | |
+| حنّط / يحنّط / تحنيط | to mummify | |
+| خافض للحرارة | fever reducer | |
+| دواجن | poultry | |
+| ربو | asthma | |
+| سال / يسيل / سيلان | to flow | |
+| سعال | cough | |
+| سم / سموم | poison(s) | |
+| شائع | widespread | |
+| شخص / يشخّص / تشخيص | to diagnose | |
+| صادق / يصادق / مصادقة | to approve | |
+| ضمّد / يضمّد / تضميد | to bandage | |
+| طب بديل | alternative medicine | |
+| طبع / يطبع / طباعة | to print | |
+| طعّم / يطعّم / تطعيم | to vaccinate | |
+| عبر | across, through | |
+| عقار / عقاقير | drug(s), medicine | |
+| عرض / أعراض | symptom(s) | |
+| غلى / يغلي / غليان | to boil | |
+| قرص مدمج | compact disc or DVD | |
+| كدمات | bruise(s) | |
+| كمادات | compress(es) | |
+| لدغات الثعابين | snakebites | |
+| لسعات العقارب | scorpion stings | |
+| لقاح | vaccination | |
+| مبسط | simplified | |
+| مخاط | mucus | |
+| مركب | compound | |
+| مرهم / مراهم | ointment(s) | |
+| مسعف | paramedic, ambulance worker | |
+| مصاب | afflicted, injured | |
+| مضاد حيوي | antibiotic | |
+| مضاعفات | complications | |
+| معنية | concerned | |
+| مفصل / مفاصل | joint(s) | |
+| مناعة | immunity | |
+| نبّه / ينبّه / تنبيه | to call someone’s attention to | |
+| نفع / ينفع / نفع | to benefit | |
+| نقع / ينقع / نقع | to steep | |
+| ورم / أورام | swelling, tumor(s) | |
+| وعّى / يوعّي / توعية | to make aware | |
+| كالزكام | such as the common cold | Additional |
+| التهابات الحلق | throat infections | Additional |
+| إفرازات مخاطية | mucous secretions | Additional |
+| بالعدوى | with infection; by contagion | Additional |
+| يواجه / يواجه | to face, confront | Additional |
+| يتحوّل / يتحوّل | to turn into, become | Additional |
+| وباء | epidemic | Additional |
 
 ## Chapter 37
 
@@ -133,51 +140,52 @@ Source: *Arabic Basic Course, Second Edition* — Chapters 36–40.
 
 ## Chapter 38
 
-| Arabic | English |
-|---|---|
-| أبلغ / يبلغ / إبلاغ | to notify, inform, announce |
-| اختنق / يختنق / اختناق | to be unable to breathe |
-| أزال / يزيل / إزالة | to remove |
-| استكمل / يستكمل / استكمال | to complete |
-| استنفر / يستنفر / استنفار | to call upon |
-| أشغل / يشغل / إشغال | to occupy |
-| أطراف صناعية | artificial limbs |
-| اعتمد / يعتمد / اعتماد | to authorize |
-| أنقاض | debris, rubble |
-| أنقذ / ينقذ / إنقاذ | to rescue |
-| انهار / ينهار / انهيار | to collapse |
-| إصابات بليغة | severe injuries |
-| أهّل / يؤهّل / تأهيل | to rehabilitate |
-| تأهيل طبي | medical rehabilitation |
-| تحت تصرف | at the disposal of |
-| تحسب / يتحسب / تحسب | to take precautions, anticipate |
-| تطلب / يتطلب / تطلب | to require |
-| تقتضي الحاجة | it is necessary |
-| جبيرة / جبائر | splint(s) |
-| جدر / يجدر / جدارة | to be worthy, deserve |
-| جناح / أجنحة | wing(s) |
-| جهاز تنفسي | pulmonary system |
-| جهاز هضمي | digestive system |
-| حمل | bearing a child, carrying a baby |
-| خفّف / يخفّف / تخفيف | to lighten, ease, relieve, reduce |
-| رضّ / رضوض | bruise(s), contusion(s) |
-| زرع / يزرع / زراعة | to transplant an organ |
-| ضحية / ضحايا | victim(s) |
-| ضمادة / ضمادات | bandage(s), wound dressing |
-| عائقة / عوائق | obstacle(s) |
-| عصب / أعصاب | nerve(s) |
-| عناية | care |
-| عناية مركزة | intensive care |
-| فشل كلوي | kidney failure |
-| قبو | basement |
-| كادر / كوادر | trained personnel, cadre |
-| كفاءة / كفاءات | competence, efficiency, ability |
-| مراجع | patient consulting a doctor |
-| نخبة / نخب | selection(s) |
-| نزف / ينزف / نزف | to bleed |
-| نزيف | bleeding |
-| نقلة نوعية | qualitative leap |
-| ولادة | giving birth |
+| Arabic | English | Type |
+|---|---|---|
+| أبلغ / يبلغ / إبلاغ | to notify, inform, announce | |
+| اختنق / يختنق / اختناق | to be unable to breathe | |
+| أزال / يزيل / إزالة | to remove | |
+| استكمل / يستكمل / استكمال | to complete | |
+| استنفر / يستنفر / استنفار | to call upon | |
+| أشغل / يشغل / إشغال | to occupy | |
+| أطراف صناعية | artificial limbs | |
+| اعتمد / يعتمد / اعتماد | to authorize | |
+| أنقاض | debris, rubble | |
+| أنقذ / ينقذ / إنقاذ | to rescue | |
+| انهار / ينهار / انهيار | to collapse | |
+| إصابات بليغة | severe injuries | |
+| أهّل / يؤهّل / تأهيل | to rehabilitate | |
+| تأهيل طبي | medical rehabilitation | |
+| تحت تصرف | at the disposal of | |
+| تحسب / يتحسب / تحسب | to take precautions, anticipate | |
+| تطلب / يتطلب / تطلب | to require | |
+| تقتضي الحاجة | it is necessary | |
+| جبيرة / جبائر | splint(s) | |
+| جدر / يجدر / جدارة | to be worthy, deserve | |
+| جناح / أجنحة | wing(s) | |
+| جهاز تنفسي | pulmonary system | |
+| جهاز هضمي | digestive system | |
+| حمل | bearing a child, carrying a baby | |
+| خفّف / يخفّف / تخفيف | to lighten, ease, relieve, reduce | |
+| رضّ / رضوض | bruise(s), contusion(s) | |
+| زرع / يزرع / زراعة | to transplant an organ | |
+| ضحية / ضحايا | victim(s) | |
+| ضمادة / ضمادات | bandage(s), wound dressing | |
+| عائقة / عوائق | obstacle(s) | |
+| عصب / أعصاب | nerve(s) | |
+| عناية | care | |
+| عناية مركزة | intensive care | |
+| فشل كلوي | kidney failure | |
+| قبو | basement | |
+| كادر / كوادر | trained personnel, cadre | |
+| كفاءة / كفاءات | competence, efficiency, ability | |
+| مراجع | patient consulting a doctor | |
+| نخبة / نخب | selection(s) | |
+| نزف / ينزف / نزف | to bleed | |
+| نزيف | bleeding | |
+| نقلة نوعية | qualitative leap | |
+| ولادة | giving birth | |
+| المهارة | skill, proficiency | Additional |
 
 ## Chapter 39
 
