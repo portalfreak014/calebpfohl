@@ -240,7 +240,11 @@
 const GLOSSARY_PATH = "data/glossary/unit{unit}-glossary.md";
 const ADDITIONAL_GLOSSARY_PATH = "data/glossary/unit{unit}-additional.md";
 const UNITS = [0, ...Array.from({ length: 10 }, (_, index) => index + 1)];
-const state = { unit: 1, query: "", data: {} };
+const LAST_UNIT_KEY = "uad-glossary-last-unit";
+const savedUnit = Number(localStorage.getItem(LAST_UNIT_KEY));
+const initialUnit = UNITS.includes(savedUnit) ? savedUnit : 1;
+
+const state = { unit: initialUnit, query: "", data: {} };
 
 function escapeHtml(value) {
   return String(value)
@@ -256,16 +260,19 @@ function parseGlossary(markdown, additional = false) {
   let chapter = null;
 
   markdown.replace(/\r\n/g, "\n").split("\n").forEach((line) => {
-    const heading = line.match(/^##\s+Chapter\s+(.+)\s*$/i);
+    const heading = line.match(/^##\s+(Chapter|Lesson)\s+(.+?)\s*$/i);
 
     if (heading) {
-      chapter = {
-        title: "Chapter " + heading[1].trim(),
-        entries: []
-      };
-      chapters.push(chapter);
-      return;
-    }
+  chapter = {
+    title: heading[1].charAt(0).toUpperCase() +
+      heading[1].slice(1).toLowerCase() +
+      " " +
+      heading[2].trim(),
+    entries: []
+  };
+  chapters.push(chapter);
+  return;
+}
 
     if (!chapter || !/^\|.*\|\s*$/.test(line) || /^\|\s*(Arabic|---)/i.test(line)) {
       return;
@@ -565,6 +572,7 @@ async function updateGlossary() {
 
 async function selectUnit(unit) {
   state.unit = unit;
+  localStorage.setItem(LAST_UNIT_KEY, String(unit));
   renderTabs();
   await updateGlossary();
 }
@@ -577,7 +585,7 @@ document
   });
 
 renderTabs();
-selectUnit(1);
+selectUnit(state.unit);
 </script>
   
 <script src="hamburger-menu.js"></script>
