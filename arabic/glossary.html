@@ -452,7 +452,10 @@ function renderUnit(unit, chapters, chapterOffset, showUnitHeading) {
   }
 
   const links = visible.map((chapter, index) => ({
-    id: "chapter-" + (chapterOffset + index),
+    id: chapter.title
+  .toLowerCase()
+  .replace(/\s+/g, "-")
+  .replace(/[^a-z0-9-]/g, ""),
     label: showUnitHeading
       ? "Unit " + unit + " · " + chapter.title
       : chapter.title
@@ -468,7 +471,13 @@ function renderUnit(unit, chapters, chapterOffset, showUnitHeading) {
       : "") +
     visible
       .map((chapter, index) =>
-        renderChapter(chapter, "chapter-" + (chapterOffset + index))
+        renderChapter(
+  chapter,
+  chapter.title
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+)
       )
       .join("") +
     (showUnitHeading ? "</section>" : "");
