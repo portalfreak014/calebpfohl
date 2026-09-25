@@ -263,18 +263,24 @@ function parseGlossary(markdown, additional = false) {
     const heading = line.match(/^##\s+(Chapter|Lesson)\s+(.+?)\s*$/i);
 
     if (heading) {
-  chapter = {
-    title: heading[1].charAt(0).toUpperCase() +
-      heading[1].slice(1).toLowerCase() +
-      " " +
-      heading[2].trim(),
-    entries: []
-  };
-  chapters.push(chapter);
-  return;
-}
+      chapter = {
+        title:
+          heading[1].charAt(0).toUpperCase() +
+          heading[1].slice(1).toLowerCase() +
+          " " +
+          heading[2].trim(),
+        entries: []
+      };
 
-    if (!chapter || !/^\|.*\|\s*$/.test(line) || /^\|\s*(Arabic|---)/i.test(line)) {
+      chapters.push(chapter);
+      return;
+    }
+
+    if (
+      !chapter ||
+      !/^\|.*\|\s*$/.test(line) ||
+      /^\|\s*(Arabic|---)/i.test(line)
+    ) {
       return;
     }
 
@@ -287,7 +293,8 @@ function parseGlossary(markdown, additional = false) {
       chapter.entries.push({
         arabic: cells[0],
         english: cells[1],
-        additional
+        additional:
+          additional || cells[2]?.toLowerCase() === "additional"
       });
     }
   });
