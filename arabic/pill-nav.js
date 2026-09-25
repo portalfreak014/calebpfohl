@@ -2,7 +2,7 @@
   const root = document.querySelector('[data-pill-nav]');
   if (!root) return;
 
-  const scheduleUrl = 'https://dliflc01.sharepoint.com/:w:/r/teams/21501AD00326_J3/_layouts/15/Doc.aspx?action=edit&sourcedoc=%7B9a92921e-5b24-42bc-9d34-8bec4f78dac2%7D&wdExp=TEAMS-TREATMENT&web=1';
+  const scheduleUrl = 'https://dliflc01.sharepoint.com/:w:/r/teams/21501AD00326_J3/_layouts/15/Doc.aspx?action=edit&sourcedoc=%7B030487d0-c74d-4270-9b27-670932ddcacf%7D&wdExp=TEAMS-TREATMENT&web=1';
   const page = location.pathname.split('/').pop() || 'arabic.html';
   const items = [
     { href: 'arabic.html', icon: 'home', label: 'Home' },
