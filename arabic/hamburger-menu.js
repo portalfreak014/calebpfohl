@@ -17,7 +17,7 @@
         <a href="flashcards.html"><span class="material-symbols-rounded" aria-hidden="true">style</span>Flashcards</a>
         <a href="match.html"><span class="material-symbols-rounded" aria-hidden="true">extension</span>Match</a>
         <a href="roots.html"><span class="material-symbols-rounded" aria-hidden="true">account_tree</span>Freya's Root Chart</a>
-        <a href="https://dliflc01.sharepoint.com/:w:/r/teams/21501AD00326_J3/_layouts/15/Doc.aspx?action=edit&sourcedoc=%7B9a92921e-5b24-42bc-9d34-8bec4f78dac2%7D&wdExp=TEAMS-TREATMENT&web=1" target="_blank" rel="noopener noreferrer"><span class="material-symbols-rounded" aria-hidden="true">calendar_month</span>Schedule</a>
+        <a href="https://dliflc01.sharepoint.com/:w:/r/teams/21501AD00326_J3/_layouts/15/Doc.aspx?action=edit&sourcedoc=%7B030487d0-c74d-4270-9b27-670932ddcacf%7D&wdExp=TEAMS-TREATMENT&web=1" target="_blank" rel="noopener noreferrer"><span class="material-symbols-rounded" aria-hidden="true">calendar_month</span>Schedule</a>
         <button id="progress-menu-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">bar_chart</span>Progress</button>
         <a href="docs.html"><span class="material-symbols-rounded" aria-hidden="true">description</span>Docs</a>
         <div id="firebase-auth"></div>
