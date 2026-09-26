@@ -2,24 +2,32 @@
 
 ## Status
 
-Planned. Community Flashcards lets signed-in learners create and immediately publish simple Arabic/English flashcard sets from `flashcards.html`. Community sets use the existing flashcard player; they do not use Git-hosted JSON files.
+Implemented in `flashcards.html`. Signed-in learners can create and immediately publish simple Arabic/English flashcard sets. Public, published sets appear beneath the Unit 8 course-deck picker and run in the same flashcard player as built-in decks.
 
-## Product decision
+## Current behavior
 
-- The UI lives directly on `arabic/flashcards.html`, beneath the existing Unit 8 chapter picker.
-- The section title is **Community flashcards**.
-- A very light purple divider subtly separates the Unit 8 and community sections.
-- Public, published sets appear in the Community Flashcards list and open in the same card player as course sets.
-- The creator button label is **Create a set**.
-- A signed-in learner can create a set from the page with a short form: set title, Arabic/English card pairs, an Add card action, and a Publish set action.
-- Initial publishing is immediate. A valid submitted set is saved as public and published without manual review.
-- Learners must be able to study without an account. An account is required only to create, edit, or delete a community set.
+- The UI lives in `arabic/flashcards.html`, beneath the Unit 8 chapter picker.
+- The section title is **Community flashcards** and is separated from course decks with a subtle light-purple divider.
+- Public sets are loaded from Firestore documents where `visibility == "public"` and `status == "published"`.
+- Each set tile displays its title, creator name, and card count.
+- Anyone can browse and study public community decks without signing in.
+- A signed-in learner can use **Create a set** to open the inline form, provide a title and at least two Arabic/English card pairs, and publish the set immediately.
+- Set owners see an owner-only **Delete** button. Deletion requires confirmation and permanently removes the Firestore document.
+- Community sets use the shared overlay player, including card flip, Previous/Next navigation, shuffle, directional navigation animation, keyboard flipping, and reduced-motion support.
+- Community decks do not show **Take quiz** because there is no matching quiz dataset.
+
+## Validation
+
+The page validates before publishing:
+
+- A title is required and limited to 80 characters in the form.
+- Every submitted card must contain both Arabic and English text.
+- A set must contain at least two complete card pairs.
+- Arabic text is preserved as Unicode and rendered with `lang="ar"` and right-to-left direction.
 
 ## Data model
 
-Store each set as one document in the Firestore `communityFlashcards` collection. Do not store all community content in one shared document or static JSON file: independent documents avoid concurrent-write conflicts and allow set-level ownership, editing, deletion, and moderation.
-
-Suggested document shape:
+Each set is one Firestore document in the `communityFlashcards` collection:
 
 ```js
 {
@@ -36,65 +44,34 @@ Suggested document shape:
 }
 ```
 
-Required initial validation:
+Independent documents prevent concurrent-write conflicts and allow ownership checks at the set level.
 
-- Trim title and card fields before saving.
-- Require a non-empty title.
-- Require at least two complete Arabic/English card pairs.
-- Reject incomplete cards instead of silently publishing them.
-- Preserve Arabic text as Unicode and render it with `lang="ar"` and right-to-left direction in the player.
+## Authorization and rules
 
-## Flashcard-page behavior
+UI visibility is not authorization. Firestore Security Rules must enforce these policies:
 
-1. Load the existing Unit 8 chapter list from `data/unit8.json` unchanged.
-2. Render a light divider and the Community Flashcards heading below that list.
-3. Query Firestore for sets where `visibility == "public"` and `status == "published"`.
-4. Render each result in the existing chapter-card visual language, showing its title, creator name, and card count.
-5. Selecting a community set loads its `cards` array into the existing player. The player must not need a separate implementation for community content.
-6. Show a concise empty state if no public community sets exist.
-7. Provide a **Create a set** action in the community section. Signed-out users receive a clear instruction to log in; signed-in users can expand or open the inline creator form.
-8. For set owners, provide simple edit and delete actions without exposing those actions to other users.
+- Read access is limited to documents that are public and published.
+- A signed-in user may create only a document whose `ownerId` equals `request.auth.uid`.
+- A signed-in user may delete only a document they own.
+- A signed-in user may update only a document they own once editing is added.
+- Rules should validate document shape and practical field/card-count limits, and must prevent ownership-field takeover.
 
-## Authorization and Firestore rules
+When Firestore operations fail, the page displays a concise error without blocking use of other decks. The creator form remains available so the learner can retry.
 
-Client-side UI checks are not security. Firestore Security Rules must enforce the policy:
+## Editing status
 
-- Anyone may read only documents with `visibility == "public"` and `status == "published"`.
-- An authenticated user may create a document only when `ownerId` equals `request.auth.uid`.
-- An authenticated user may update or delete only a document whose `ownerId` equals `request.auth.uid`.
-- Validate the required data shape and cap title length, card count, and field lengths in rules where practical.
-- Do not allow clients to change another user's ownership fields.
+Community-deck editing is planned but not implemented. The current product supports creation, publishing, studying, and owner-only deletion. Do not document an Edit control as available until both the UI and Firestore-rule path are implemented.
 
-Keep Firestore failures non-blocking: show a clear error in the Community Flashcards section and retain any unsaved form entries in the page until the learner changes or dismisses them.
+## Future moderation
 
-## Future moderation path
-
-Immediate publishing is the initial policy, but the data model intentionally supports an owner-managed approval layer later. The relevant fields are `visibility` and `status`.
-
-Possible future states:
-
-| visibility | status | Meaning |
-|---|---|---|
-| `public` | `published` | Visible in the community list and studyable by everyone. |
-| `private` | `draft` | Visible only to its owner while being written or revised. |
-| `private` | `pending` | Submitted or created for owner review; not visible publicly. |
-| `private` | `rejected` | Not public; retain only when a reviewer needs a record or feedback workflow. |
-
-To introduce moderation later:
-
-1. Change new learner-created sets to `private` / `pending` rather than publishing immediately.
-2. Give the site owner an admin review view or a controlled Firestore workflow to inspect pending sets.
-3. Approve by changing the set to `public` / `published`; reject by changing it to `private` / `rejected`.
-4. Update Firestore rules so only an approved administrator identity or trusted server-side function can alter moderation fields on another author's set.
-
-Until an admin role is implemented, ordinary users should not be able to create private/pending sets for review through the public UI. The site owner can create them manually in Firestore if needed.
+The `visibility` and `status` fields preserve a migration path to moderation. A future workflow could create sets as `private` / `pending`, then allow a trusted administrator or server-side process to publish them as `public` / `published`. Ordinary learners should not be able to change another author's ownership or moderation fields.
 
 ## Acceptance criteria
 
-- The flashcards page clearly separates Unit 8 and Community Flashcards with a subtle light-purple divider.
-- Public/published Firestore sets render below the course sets.
-- A selected community set runs in the existing flip-card player.
-- Signed-in users can create and immediately publish valid sets without leaving `flashcards.html`.
-- Signed-out users can still browse and study public community sets.
-- Ownership and published-only reading are enforced by Firestore rules, not only hidden UI controls.
-- The document fields support a future private/pending approval workflow without migrating existing published sets.
+- Public/published Firestore sets render beneath Unit 8 course decks.
+- Signed-out learners can browse and study community decks.
+- Signed-in learners can immediately publish valid decks from the page.
+- Only the owner sees and can use the Delete action.
+- A selected community deck uses the shared flashcard player.
+- Community decks do not expose a quiz deep link.
+- Firestore rules, rather than hidden controls alone, enforce ownership and public-reading policy.
