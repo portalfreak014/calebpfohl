@@ -243,6 +243,8 @@ Source: *Arabic Basic Course, Second Edition* — Chapters 36–40.
 | مستوطن | indigenous |
 | مسح / يمسح / مسح | to survey, poll |
 | مسهب | lengthy, detailed |
+| الأوساط | circles, milieus, environments | Additional |
+| ولي العهد | crown prince | Additional |
 
 ## Chapter 40
 
