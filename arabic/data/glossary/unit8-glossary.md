@@ -227,7 +227,7 @@ Source: *Arabic Basic Course, Second Edition* — Chapters 36–40.
 | صدى / أصداء | echo, reverberation(s) |
 | ضجة | noise |
 | طاعون / طواعين | plague(s) |
-| طفرة / طفرات | rise, jump, upturn |
+| طفرة / طفرات | rise, jump, upturn, upswing |
 | عاجز | unable |
 | عدّل / يعدّل / تعديل | to modify |
 | علاقات مثلية | homosexual relations |
