@@ -1,6 +1,36 @@
-# Unit 9 glossary
+## Chapter 41
 
-> Status: Placeholder. Add vocabulary from the source glossary before using this as a recovery record.
-
-| Arabic | Meaning |
+| Arabic | English |
 |---|---|
+| سطح / أسطح | surface(s) |
+| رسوبي | sedimentary |
+| مهد | cradle |
+| انبعث / ينبعث / انبعاث | to originate, arise |
+| شريعة / شرائع | law(s) |
+| بلاد الرافدين | Iraq (land of the two tributaries) |
+| سوّر / يسوّر / تسوير | to enclose with a wall |
+| مستوطنة / مستوطنات | settlement(s) |
+| ألفية | millennium |
+| الأهوار | marshland in southern Iraq |
+| عافية | strength |
+| جاموسة / جواميس | buffalo(es) |
+| استرد / يسترد / استرداد | to recover, regain |
+| مجددًا | again, anew |
+| جفّ / يجفّ / تجفيف | to make dry / dehydrate / desiccate |
+| ذاب / يذوب / ذوبان | to dissolve, melt |
+| أقنية | irrigation canals |
+| اندلع / يندلع / اندلاع | to break out (war or fire) |
+| تمرّد / يتمرّد / تمرّد | to revolt, rebel |
+| قاحل | arid, dry |
+| غزا / يغزو / غزو | to invade, attack |
+| غمر / يغمر / غمر | to flood, cover with liquid |
+| نادرًا | seldom |
+| إحصائيات | statistics |
+| أكسب / يكسب / إكساب | to make gain, impart |
+| هيكل / هياكل | temple(s), altar(s) |
+| زلزال / زلازل | earthquake(s) |
+| رمّم / يرمّم / ترميم | to repair, restore |
+| طقس / طقوس | ritual(s) |
+| ذبيحة / ذبائح | offering(s), sacrifice, animal slaughter |
+| صمد / يصمد / صمود | to remain unaffected, withstand |
+| عملاق / عمالقة | giant(s) |
