@@ -79,3 +79,59 @@
 | هائل | huge, gigantic |
 | هيكل تنظيمي | organizational structure |
 | وحشي | savage |
+
+## Chapter 43
+
+| Arabic | English |
+|---|---|
+| الاحتباس الحراري | global warming |
+| احتكاك | friction, touch, contact |
+| أحرق / يُحرق / إحراق | to burn |
+| استدام / يستديم / استدامة | to continue, to go on |
+| إعصار / أعاصير | hurricane(s) |
+| أفقي | horizontal |
+| انبعث / ينبعث / انبعاث | to be emitted |
+| اهتزّ / يهتزّ / اهتزاز | to shake, tremble |
+| باهظ | costly, exorbitant, very expensive |
+| بثّ / يبثّ / بثّ | to emit, disperse |
+| برق | lightning |
+| بركان / براكين | volcano(es) |
+| تآكل / يتآكل / تآكل | to become eroded |
+| تحتم / يتحتم / تحتم | to be necessary, be incumbent |
+| تزامن / يتزامن / تزامن | to occur simultaneously |
+| تصحّر | desertification |
+| تصدّر / يتصدّر / تصدّر | to be in the lead, to head |
+| تفصيلي | detailed |
+| جرف / يجرف / جرف | to sweep away |
+| جزيء / جزيئات | small particle |
+| حبيبة | particulate, small particle |
+| الحيلولة دون | preventing, avoiding |
+| خاتمة المطاف | the end |
+| دوامة | whirlpool, vortex |
+| رعد | thunder |
+| سديم | mist, haze |
+| صان / يصون / صون | to protect |
+| صعق / يصعق / صعق | to strike with lightning |
+| ضراوة | voracity |
+| ضعف | to weaken |
+| عاتية | strong (f) |
+| عارم | violent, strong |
+| عكف / يعكف / عكوف | to embark |
+| غبار | dust |
+| غيم / غيوم | cloud(s) |
+| فحم | coal |
+| فيما يتعلق بـ | as to, with regard to |
+| قطب | pole |
+| لقي حتفه / يلقى / لقاء | to die |
+| لقي مصرعه | to be killed |
+| تلوّث / يتلوّث / تلوّث | to be/to become polluted |
+| لوّث / يلوّث / تلويث | to pollute |
+| متناهية الصغر | infinitesimally small |
+| مدّ | rising tide |
+| مرتبة / مراتب | rank, class(es) |
+| ملوّث / ملوّثات | pollutant(s) |
+| من جرّاء | as a result of, due to |
+| موّل / يموّل / تمويل | to finance |
+| هباء | fine dust |
+| واسع النطاق | far-reaching, comprehensive |
+| اليابسة | earth |
