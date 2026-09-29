@@ -174,3 +174,50 @@
 | نزح / ينزح / نزوح | to leave, emigrate |
 | نسل / أنسال | descendant(s) |
 | وتيرة / وتائر | manner, mode(s) |
+
+## Chapter 45
+
+| Arabic | English |
+|---|---|
+| ائتلف / يتألف / ائتلاف | to be combined, consist of |
+| احتمالية | probability |
+| اخترق / يخترق / اختراق | to penetrate, pass through |
+| اختطف / يختطف / اختطاف | to kidnap |
+| ادعى / يدّعي / ادعاء | to claim |
+| استرد / يسترد / استرداد | to recover, reclaim, get back |
+| استلب / يستلب / استلاب | to take away, steal |
+| انتهك | to violate |
+| بلاط أميري | royal court |
+| تدخل / يتدخل / تدخل | to interfere |
+| ترسانة | arsenal |
+| تكبّد / يتكبّد / تكبّد | to sustain, suffer, endure |
+| تورّط / يتورّط / تورّط | to be involved, be entangled |
+| ثغرة | opening, gap, breach |
+| حدا / يحدو / حدو | to prompt, urge |
+| حساسة | sensitive |
+| رد فعل | reaction |
+| رصّ (الصفوف) / يرصّ / رصّ | to pull together |
+| زهاء | about, roughly, approximately |
+| سوّى / يساوي / تسوية | to settle a dispute |
+| شرّد / يشرّد / تشريد | to drive away, to make homeless |
+| شعبية | popularity |
+| شلّ / يشلّ / شلّ | to paralyze |
+| شنّ / يشنّ / شنّ | to launch an attack |
+| صافح / يصافح / مصافحة | to shake hands |
+| ضفة | bank (of a river) |
+| الضفة الغربية | the West Bank |
+| طبّع / يطبّع / تطبيع | to normalize |
+| عالقة | hanging, undecided |
+| عمق | depth |
+| قاسية | severe (f) |
+| كرامة | dignity |
+| كفّ / يكفّ / كفّ | to stop, refrain, desist |
+| متعاقبة | in succession, consecutive (f) |
+| محوري | pivotal |
+| مزّق / يمزّق / تمزيق | to tear |
+| معسكر | camp |
+| منطق | logic |
+| نزاع | conflict |
+| نشب / ينشب / نشوب | to break out |
+| نقّب / ينقّب / تنقيب | to explore, drill |
+| هدنة | truce, armistice, peace |
