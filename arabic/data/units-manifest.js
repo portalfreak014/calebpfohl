@@ -28,11 +28,11 @@ window.UNITS_MANIFEST = {
     {id:'ch20',number:20,title:'Chapter 20',available:true}
   ]},
   unit5:{title:'Unit 5 Vocabulary',chapters:[
-    {id:'ch21',number:21,title:'Chapter 21',available:false},
-    {id:'ch22',number:22,title:'Chapter 22',available:false},
-    {id:'ch23',number:23,title:'Chapter 23',available:false},
-    {id:'ch24',number:24,title:'Chapter 24',available:false},
-    {id:'ch25',number:25,title:'Chapter 25',available:false}
+    {id:'ch21',number:21,title:'Chapter 21',available:true},
+    {id:'ch22',number:22,title:'Chapter 22',available:true},
+    {id:'ch23',number:23,title:'Chapter 23',available:true},
+    {id:'ch24',number:24,title:'Chapter 24',available:true},
+    {id:'ch25',number:25,title:'Chapter 25',available:true}
   ]},
   unit6:{title:'Unit 6 Vocabulary',chapters:[
     {id:'ch26',number:26,title:'Chapter 26',available:true},
