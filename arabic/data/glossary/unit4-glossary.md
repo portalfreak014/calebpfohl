@@ -121,3 +121,69 @@
 | سمح / يسمح / سماح | to permit |
 | شمل / يشمل / شمول | to include |
 | كشف / يكشف / كشف | to disclose, reveal |
+
+## Chapter 18
+
+### People of the Middle East
+
+| Arabic | Meaning |
+|---|---|
+| أديان سماوية | heavenly [revealed religion(s)] |
+| أقباط | Copts |
+| بربر | Berber (tribe of North Africa) |
+| بلاد الشام | Levantine countries |
+| حضارة / حضارات | civilization(s) |
+| السامية | Semitic (a race) |
+| الشرق الأوسط | the Middle East |
+| طائفة / طوائف | sect(s), denomination(s) |
+| مجموع السكان | total population |
+| مجموعة عرقية | ethnic group |
+| مزيج | mixture |
+| اليهودية | Judaism |
+
+### Customs and traditions
+
+| Arabic | Meaning |
+|---|---|
+| تهنئة / تهاني | congratulations |
+| الجمعة الحزينة | Good Friday |
+| خطبة | engagement |
+| رابطة / روابط | tie(s), bond(s) |
+| زفاف | wedding |
+| شبكة | engagement present |
+| عروس | bride |
+| عريس | groom |
+| عقد قران | marriage contract |
+| قيمة | valuable |
+| مراسم | ceremonies |
+| مهر | dowry |
+| هدية / هدايا | gift(s) |
+
+### Miscellaneous
+
+| Arabic | Meaning |
+|---|---|
+| الدولة العثمانية | the Ottoman Empire |
+| فقير / فقراء | poor (noun) |
+| لؤلؤ | pearl |
+
+### Verbs
+
+| Arabic | Meaning |
+|---|---|
+| ارتدى / يرتدي / ارتداء | to wear |
+| احتفل / يحتفل / احتفال | to celebrate |
+| استراح / يستريح / استراحة | to rest |
+| انتمى / ينتمي / انتماء | to belong to |
+| تبادل / يتبادل / تبادل | to exchange |
+| تزاور / يتزاور / تزاور | to exchange visits |
+| تمسّك / يتمسّك / تمسّك | to adhere to |
+| تمّ / يتم / تمام | to be completed, performed, accomplished |
+| خطب / يخطب / خطبة | to propose a toast, make a speech |
+| سعى / يسعى / سعي | to strive for |
+| شكّل / يشكّل / تشكيل | to form |
+| ظهر / يظهر / ظهور | to appear |
+| قضى / يقضي / قضاء | to spend (time) |
+| نسي / ينسى / نسيان | to forget |
+| هنّأ / يهنّئ / تهنئة | to congratulate |
+| وضع / يضع / وضع | to place, put |
