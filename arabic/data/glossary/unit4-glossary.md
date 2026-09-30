@@ -187,3 +187,157 @@
 | نسي / ينسى / نسيان | to forget |
 | هنّأ / يهنّئ / تهنئة | to congratulate |
 | وضع / يضع / وضع | to place, put |
+
+## Chapter 19
+
+### Shopping for food
+
+| Arabic | Meaning |
+|---|---|
+| رطل / أرطال | pound(s) |
+| شريحة / شرائح | slice(s) |
+| صنف / أصناف | kind(s), type(s) |
+| قطعة / قطع | piece(s) |
+| لحم بقري | beef |
+| مذاق | taste |
+
+### Shopping for clothes and jewelry
+
+| Arabic | Meaning |
+|---|---|
+| بدلة | suit |
+| تخفيض / تخفيضات | discount(s), sale(s) |
+| جورب / جوارب | pair(s) of socks |
+| حرير | silk |
+| حزام / أحزمة | belt(s) |
+| خياط / خياطة | tailor, seamstress |
+| ربطة عنق | necktie |
+| سوار / أسورة / أساور | bracelet(s) |
+| سوق الصاغة | jewelry market |
+| صوف | wool |
+| عقد / عقود | necklace(s) |
+| قرط / أقراط | earring(s) |
+| قماش / أقمشة | cloth, fabric(s) |
+| مجوهرات | jewelry |
+| مخطط | striped |
+| معطف / معاطف | overcoat |
+| مقاس / مقاسات | size(s) |
+| ملابس جاهزة | ready-made clothes |
+| ملابس داخلية | underwear |
+| منقط | polka-dotted |
+
+### In the coffee shop
+
+| Arabic | Meaning |
+|---|---|
+| رائحة / روائح | smell, aroma |
+| طاولة | backgammon |
+| فطيرة / فطائر | pie |
+| قهوة سادة | plain coffee |
+| كوب / أكواب | cup(s), glass(es) |
+| مشروبات غازية | soda |
+| مفرش / مفارش | tablecloth(s) |
+| نارجيلة | hookah |
+
+### Miscellaneous and verbs
+
+| Arabic | Meaning |
+|---|---|
+| أي - أية | which, any (m-f) |
+| بضاعة / بضائع | goods, merchandise |
+| ثمن / أثمان | price(s) |
+| حساب | total cost |
+| راقٍ | high-ranking, high-class |
+| غالٍ | expensive |
+| في متناول… | within reach |
+| لازم / لوازم | necessity(ies) |
+| تقسيط | installment |
+| مبلغ / مبالغ | sum(s) (of money) |
+| مماثل | similar, equivalent |
+| مساومة | bargaining |
+| مستورد | imported |
+| مفلس | penniless, broke |
+| نكتة / نكت | joke(s) |
+| أزعج / يزعج / إزعاج | to annoy |
+| خاط / يخيط / خياطة | to sew, tailor |
+| طلب / يطلب / طلب | to order, ask |
+| ظل / يظل / ظلول | to stay |
+| فصّل / يفصّل / تفصيل | to sew, tailor |
+| قطع / يقطع / قطع | to cut |
+| قلق / يقلق / قلق | to worry |
+| لف / يلف / لف | to wrap |
+| ودّ / يودّ / ودّ | to like |
+
+## Chapter 20
+
+### At the furniture showroom
+
+| Arabic | Meaning |
+|---|---|
+| جلد | leather |
+| جودة | quality |
+| خدمة التوصيل | delivery service |
+| خشبي | wooden |
+| دفعة أولى | first payment |
+| سعر / أسعار | price(s) |
+| شكل / أشكال | shape(s) |
+| طراز | model/fashion |
+| عصري | modern |
+| مستطيل | rectangular |
+| مصنوع من | made of |
+| معرض / معارض | showroom(s) |
+| مقدم | down payment |
+| مواصفات | specifications |
+| ميزانية | budget |
+| نظام دفع | payment plan |
+
+### Appliances and moving
+
+| Arabic | Meaning |
+|---|---|
+| بوصة / بوصات | inch(es) |
+| جهاز تكييف / أجهزة تكييف | air conditioner(s) |
+| سعة / سعات | holding capacity(ies) |
+| ضمان / ضمانات | warranty(ies) |
+| طهي | cooking |
+| قسط / أقساط | installment(s) |
+| (على) نفقة | at someone’s expense |
+| بند / بنود | article(s) |
+| تهوية | ventilation |
+| ثريا / ثريات | chandelier(s) |
+| دولاب ملابس | wardrobe/closet |
+| سباك | plumber |
+| سقف | ceiling |
+| مرآة | mirror |
+| مروحة / مراوح | fan(s) |
+| نشافة | dryer |
+| وفقًا | according to |
+| مقدمًا | in advance |
+| محدود | limited |
+| مستعملة | used |
+| نافذة / نوافذ | window(s) |
+| واجهة | display window |
+| مستديرة | round |
+| طقم / أطقم | set |
+| سجادة / سجاجيد | carpet(s) |
+| كافة | all |
+| مزاد | auction |
+
+### Verbs
+
+| Arabic | Meaning |
+|---|---|
+| أثث / يؤثث / تأثيث | to furnish |
+| احتاج / يحتاج / احتياج (حاجة) | to need |
+| صلح / يصلح / تصليح | to repair |
+| اقترض / يقترض / اقتراض | to borrow |
+| اقتنى / يقتني / اقتناء | to possess |
+| تعطّل / يتعطّل / تعطّل | to be out of service |
+| ركّب / يركّب / تركيب | to install |
+| علّق / يعلّق / تعليق | to hang |
+| قارن / يقارن / مقارنة | to compare |
+| ناقش / يناقش / مناقشة | to discuss |
+| توفّر / يتوفّر / توفّر | to be available |
+| أقنع / يقنع / إقناع | to convince |
+| انتبه / ينتبه / انتباه | to pay attention |
+| صان / يصون / صيانة | to maintain |
