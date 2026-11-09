@@ -138,42 +138,43 @@
 
 ## Chapter 44
 
-| Arabic | English |
-|---|---|
-| أرجع / يُرجع / إرجاع | to attribute |
-| الأمية | illiteracy |
-| انحراف | deviation |
-| بدو | Bedouins |
-| تنظيم النسل | birth control, family planning |
-| ثورة / ثورات | revolution(s) |
-| جريمة / جرائم | crime(s) |
-| جهد / جهود | effort(s) |
-| حثيث | fast, quick |
-| حضري | related to cities (urban) |
-| دين / ديون | debt(s) |
-| رحّل | nomadic |
-| رسوم تخطيطية | charts |
-| شبح / أشباح | ghost(s) |
-| عزف عن / يعزف / عزوف | to avoid, refrain from |
-| عقد / عقود | decade(s) |
-| فعّل / يفعّل / تفعيل | to activate, implement |
-| فلاح | peasant |
-| فوج / أفواج | group(s) |
-| في أعقاب | following, on the heels of |
-| قاسم / قواسم | denominator(s) |
-| كثافة | density |
-| مؤشر / مؤشرات | indicator(s) |
-| مأساوي | tragic |
-| متضاد | opposite |
-| محو الأمية | literacy |
-| مرفق / مرافق | public utility(ies) |
-| مفهوم / مفاهيم | meaning(s) |
-| ملموس | tangible, observable |
-| منحنى / منحنيات | curve(s) |
-| ناهز / يناَهز / مناهزة | to reach, be close to |
-| نزح / ينزح / نزوح | to leave, emigrate |
-| نسل / أنسال | descendant(s) |
-| وتيرة / وتائر | manner, mode(s) |
+| Arabic | English | Type |
+|---|---|---|
+| أرجع / يُرجع / إرجاع | to attribute | |
+| الأمية | illiteracy | |
+| انحراف | deviation | |
+| بدو | Bedouins | |
+| تنظيم النسل | birth control, family planning | |
+| ثورة / ثورات | revolution(s) | |
+| جريمة / جرائم | crime(s) | |
+| جهد / جهود | effort(s) | |
+| حثيث | fast, quick | |
+| حضري | related to cities (urban) | |
+| دين / ديون | debt(s) | |
+| رحّل | nomadic | |
+| رسوم تخطيطية | charts | |
+| شبح / أشباح | ghost(s) | |
+| عزف عن / يعزف / عزوف | to avoid, refrain from | |
+| عقد / عقود | decade(s) | |
+| فعّل / يفعّل / تفعيل | to activate, implement | |
+| فلاح | peasant | |
+| فوج / أفواج | group(s) | |
+| في أعقاب | following, on the heels of | |
+| قاسم / قواسم | denominator(s) | |
+| كثافة | density | |
+| مؤشر / مؤشرات | indicator(s) | |
+| مأساوي | tragic | |
+| متضاد | opposite | |
+| محو الأمية | literacy | |
+| مرفق / مرافق | public utility(ies) | |
+| مفهوم / مفاهيم | meaning(s) | |
+| ملموس | tangible, observable | |
+| منحنى / منحنيات | curve(s) | |
+| ناهز / يناَهز / مناهزة | to reach, be close to | |
+| نزح / ينزح / نزوح | to leave, emigrate | |
+| نسل / أنسال | descendant(s) | |
+| وتيرة / وتائر | manner, mode(s) | |
+| تسارع / يتسارع / تسارع | to accelerate, speed up | Additional |
 
 ## Chapter 45
 
@@ -221,9 +222,3 @@
 | نشب / ينشب / نشوب | to break out |
 | نقّب / ينقّب / تنقيب | to explore, drill |
 | هدنة | truce, armistice, peace |
-
-## Unit 9 Additional
-
-| Arabic | English |
-|---|---|
-| تسارع / يتسارع / تسارع | to accelerate, speed up |
