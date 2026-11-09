@@ -221,3 +221,9 @@
 | نشب / ينشب / نشوب | to break out |
 | نقّب / ينقّب / تنقيب | to explore, drill |
 | هدنة | truce, armistice, peace |
+
+## Unit 9 Additional
+
+| Arabic | English |
+|---|---|
+| تسارع / يتسارع / تسارع | to accelerate, speed up |
