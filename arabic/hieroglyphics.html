@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hieroglyphics | UAD Study Companion (Unofficial)</title>
+<style>
+:root{color-scheme:dark;--bg:#121923;--panel:#1d2938;--ink:#f4efe4;--muted:#bac5d2;--accent:#edc77d}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,sans-serif}main{max-width:980px;margin:auto;padding:24px}a{color:var(--accent)}h1,h2,h3{line-height:1.2}header{margin:28px 0}p{max-width:75ch}.muted,small{color:var(--muted)}nav,.actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}button{font:inherit;cursor:pointer;border:1px solid #64748b;border-radius:10px;padding:10px 18px;color:var(--ink);background:var(--panel)}button:hover,button[aria-pressed=true]{border-color:var(--accent);background:#354151}button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:4px}button:disabled{opacity:.6;cursor:default}.panel,.tile{background:var(--panel);border-radius:16px;padding:22px;margin:18px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}.tile{margin:0;text-align:center}.glyph{font-family:'Noto Sans Egyptian Hieroglyphs','Segoe UI Historic',sans-serif;font-size:64px;line-height:1.5;direction:ltr}.study{text-align:center;min-height:290px}.study .glyph{font-size:100px}.study .actions{justify-content:center}[hidden]{display:none!important}footer{margin:40px 0;font-size:14px}#feedback{min-height:2em}ol li{margin-bottom:12px}
+</style>
+</head>
+<body>
+<main>
+<a href="arabic.html">Back to Arabic study tools</a>
+<header><p class="muted">Ancient Egyptian · beginner starter</p><h1>Learn Egyptian hieroglyphs</h1><p>A small foundation for learning signs—not an English-to-hieroglyph translator. Ancient Egyptian is a different language from Arabic.</p></header>
+<nav aria-label="Learning sections">
+<button type="button" data-view="learn" aria-pressed="true">Start here</button>
+<button type="button" data-view="reference" aria-pressed="false">Sign reference</button>
+<button type="button" data-view="cards" aria-pressed="false">Flashcards</button>
+<button type="button" data-view="quiz" aria-pressed="false">Practice quiz</button>
+</nav>
+<section id="learn" aria-labelledby="learn-title"><h2 id="learn-title">Your starting path</h2><ol><li>Recognize the eight starter signs in the reference.</li><li>Use flashcards to recall each sign's transliteration.</li><li>Test sign recognition with the multiple-choice quiz.</li></ol><div class="panel"><h3>What are you learning?</h3><p>Uniliteral signs represent a single sound. The picture and its sound value are different things: the owl sign, for example, can write <em>m</em>.</p><p>This starter covers only a small selection, not the complete writing system or Egyptian grammar. Transliteration is a written convention, not a recording of ancient pronunciation.</p><p>If signs appear as empty boxes, your device may need an Egyptian Hieroglyphs font such as Noto Sans Egyptian Hieroglyphs. Sign descriptions and transliterations remain available.</p></div><h3>Future lesson slots</h3><ul><li>Reading direction and sign grouping</li><li>Two- and three-consonant signs</li><li>Determinatives and whole-word signs</li><li>Guided words, inscriptions, and grammar</li></ul><p class="muted">These topics are planned placeholders, not completed lessons.</p></section>
+<section id="reference" hidden aria-labelledby="reference-title"><h2 id="reference-title">Starter sign reference</h2><p>Eight single-sound signs. The label describes the picture; the italic value is its transliteration.</p><div id="signs" class="grid"></div></section>
+<section id="cards" hidden aria-labelledby="cards-title"><h2 id="cards-title">Flashcards</h2><div class="panel study"><p id="card-count" class="muted"></p><div id="card-glyph" class="glyph" role="img"></div><p id="card-answer" hidden></p><div class="actions"><button id="previous" type="button">Previous</button><button id="reveal" type="button" aria-expanded="false" aria-controls="card-answer">Reveal answer</button><button id="next-card" type="button">Next</button></div></div></section>
+<section id="quiz" hidden aria-labelledby="quiz-title"><h2 id="quiz-title">Which transliteration matches?</h2><p id="score" class="muted" aria-live="polite"></p><div class="panel study"><div id="quiz-glyph" class="glyph" role="img"></div><div id="choices" class="actions"></div><p id="feedback" role="status"></p><button id="next-question" type="button" hidden>Next question</button></div><button id="reset" type="button">Reset score</button><p class="muted">Score is saved only in this browser when storage is available. No account or cloud sync.</p></section>
+<footer><p>Independent, unofficial study resource. Not affiliated with DLIFLC, UAD, or the U.S. Department of Defense.</p><p>Sign source: <a href="https://www.bibalex.org/learnhieroglyphs/lesson/LessonDetails_En.aspx?l=54">Bibliotheca Alexandrina: Uniliteral Signs</a>. Further study: <a href="https://www.britishmuseum.org/hieroglyphs-resources">British Museum hieroglyph resources</a>.</p></footer>
+<noscript><p>Enable JavaScript for the sign reference, flashcards, and quiz.</p></noscript>
+</main>
+<script>
+'use strict';
+// Extend this small dataset as additional lessons are researched.
+const signs=[
+{glyph:'𓇋',value:'i',label:'Flowering reed'},
+{glyph:'𓅱',value:'w',label:'Quail chick'},
+{glyph:'𓊪',value:'p',label:'Stool'},
+{glyph:'𓆑',value:'f',label:'Horned viper'},
+{glyph:'𓅓',value:'m',label:'Owl'},
+{glyph:'𓈖',value:'n',label:'Water'},
+{glyph:'𓂋',value:'r',label:'Mouth'},
+{glyph:'𓉔',value:'h',label:'Reed shelter'}
+];
+const $=id=>document.getElementById(id);
+const key='hieroglyphics-starter-score-v1';
+let score={correct:0,total:0};
+try{const saved=JSON.parse(localStorage.getItem(key));if(saved&&Number.isSafeInteger(saved.correct)&&Number.isSafeInteger(saved.total)&&saved.correct>=0&&saved.total>=saved.correct)score={correct:saved.correct,total:saved.total};}catch{}
+function updateScore(){ $('score').textContent=`Score: ${score.correct} / ${score.total}`;try{localStorage.setItem(key,JSON.stringify(score));}catch{}}
+function showGlyph(element,sign){element.textContent=sign.glyph;element.setAttribute('aria-label',sign.label+' sign');}
+for(const sign of signs){const tile=document.createElement('article');tile.className='tile';const glyph=document.createElement('div');glyph.className='glyph';glyph.setAttribute('role','img');showGlyph(glyph,sign);const label=document.createElement('p');label.textContent=sign.label;const value=document.createElement('em');value.textContent=sign.value;tile.append(glyph,label,value);$('signs').append(tile);}
+for(const button of document.querySelectorAll('[data-view]'))button.addEventListener('click',()=>{for(const b of document.querySelectorAll('[data-view]')){const active=b===button;b.setAttribute('aria-pressed',String(active));$(b.dataset.view).hidden=!active;}});
+let card=0;
+function renderCard(){const sign=signs[card];$('card-count').textContent=`Card ${card+1} of ${signs.length}`;showGlyph($('card-glyph'),sign);$('card-answer').textContent=`${sign.value} — ${sign.label}`;$('card-answer').hidden=true;$('reveal').textContent='Reveal answer';$('reveal').setAttribute('aria-expanded','false');}
+$('reveal').addEventListener('click',()=>{const visible=$('card-answer').hidden;$('card-answer').hidden=!visible;$('reveal').textContent=visible?'Hide answer':'Reveal answer';$('reveal').setAttribute('aria-expanded',String(visible));});
+$('previous').addEventListener('click',()=>{card=(card+signs.length-1)%signs.length;renderCard();});
+$('next-card').addEventListener('click',()=>{card=(card+1)%signs.length;renderCard();});
+function shuffled(items){const copy=[...items];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]];}return copy;}
+let current=null,answered=false;
+function question(){const pool=signs.filter(s=>s!==current);current=pool[Math.floor(Math.random()*pool.length)];answered=false;showGlyph($('quiz-glyph'),current);$('feedback').textContent='';$('next-question').hidden=true;$('choices').replaceChildren();const options=shuffled([current,...shuffled(signs.filter(s=>s!==current)).slice(0,3)]);for(const sign of options){const button=document.createElement('button');button.type='button';button.textContent=sign.value;button.addEventListener('click',()=>{if(answered)return;answered=true;score.total++;const correct=sign===current;if(correct)score.correct++;$('feedback').textContent=correct?`Correct: ${current.label} → ${current.value}`:`Not quite. ${current.label} → ${current.value}`;for(const choice of $('choices').children)choice.disabled=true;$('next-question').hidden=false;updateScore();$('next-question').focus();});$('choices').append(button);}}
+$('next-question').addEventListener('click',()=>{question();$('choices').firstElementChild.focus();});
+$('reset').addEventListener('click',()=>{score={correct:0,total:0};updateScore();question();});
+renderCard();question();updateScore();
+</script>
+</body>
+</html>
