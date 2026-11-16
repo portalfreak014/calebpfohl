@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-11-16
+
+### Shared UI and theme
+
+- Added homepage credits for Caleb Pfohl, Perplexity Pro, and Material Design 3, plus an unofficial/non-affiliation disclaimer; extracted reusable `arabic/footer.js` with homepage build integration.
+- Disabled and greyed out the shared Progress menu item with a Coming soon label.
+- Made pill navigation and the regular menu mutually exclusive at 700px; added automatic pill initialization/styles through `hamburger-menu.js` so the glossary participates without HTML-specific wiring.
+- Updated `scrollup.js` with an 80px fade-in threshold, responsive bottom positioning, reduced-motion handling, and direct includes on the homepage and glossary.
+- Added shared light/dark mode with a visible menu-adjacent toggle, local guest/account caches, and Firebase UID-scoped theme preferences separate from study progress.
+- Extended build-time theme integration to flashcards and vocabulary quizzes without theme/auth controls.
+- Added early theme initialization, optional text-font loading, icon-font readiness handling, and revalidation-based Arabic cache headers through the Netlify build pipeline.
+- Investigated but deferred Unit 10 enablement because inspected source/data files were placeholders or empty. No content flags changed.
+- Added [shared UI and theme maintenance notes](features/shared-ui-and-theme.md), including usage snippets, storage paths, build/source distinctions, known limitations, and a pending verification checklist.
+
+Status: committed implementation; production deployment and end-to-end verification were not confirmed during this session. No Firestore rules were deployed.
+
 ## 2026-09-26
 
 ### Flashcards
