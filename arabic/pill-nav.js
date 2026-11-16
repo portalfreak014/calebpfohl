@@ -21,9 +21,20 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
+      html[data-pill-navigation] [data-menu-button],
+      html[data-pill-navigation] [data-hamburger-menu] {
+        display: none !important;
+      }
+
       @media (min-width: 700px) {
         [data-pill-nav] {
-          display: none;
+          display: none !important;
+        }
+        html[data-pill-navigation] [data-menu-button] {
+          display: grid !important;
+        }
+        html[data-pill-navigation] [data-hamburger-menu] {
+          display: block !important;
         }
       }
 
@@ -49,12 +60,30 @@
     </nav>
   `;
 
-  const updatePillSize = () => {
-  const progress = Math.min(window.scrollY / 150, 1);
-  const scale = 1 - (progress * 0.3); // 1.0 → 0.7
-  root.querySelector('.nav').style.transform = `scale(${scale})`;
-};
+  document.documentElement.setAttribute('data-pill-navigation', '');
+  const desktop = window.matchMedia('(min-width: 700px)');
 
-window.addEventListener('scroll', updatePillSize, { passive: true });
-updatePillSize();
+  function syncNavigation() {
+    if (desktop.matches) {
+      if (root.contains(document.activeElement)) document.querySelector('[data-menu-button]')?.focus();
+      return;
+    }
+    const menuButton = document.querySelector('[data-menu-button]');
+    const menuRoot = document.querySelector('[data-hamburger-menu]');
+    const restoreFocus = document.activeElement === menuButton || menuRoot?.contains(document.activeElement);
+    window.SharedHamburgerMenu?.close({restoreFocus:false});
+    if (restoreFocus) root.querySelector('a')?.focus();
+  }
+
+  desktop.addEventListener('change', syncNavigation);
+  syncNavigation();
+
+  const updatePillSize = () => {
+    const progress = Math.min(window.scrollY / 150, 1);
+    const scale = 1 - (progress * 0.3);
+    root.querySelector('.nav').style.transform = `scale(${scale})`;
+  };
+
+  window.addEventListener('scroll', updatePillSize, { passive: true });
+  updatePillSize();
 })();
