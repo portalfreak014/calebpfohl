@@ -2,12 +2,38 @@
   const root = document.querySelector('[data-hamburger-menu]');
   if (!root) return;
 
+  const scriptBase = document.currentScript.src;
   const themeScript = document.createElement('script');
-  themeScript.src = new URL('./theme.js', document.currentScript.src).href;
+  themeScript.src = new URL('./theme.js', scriptBase).href;
   document.head.appendChild(themeScript);
 
   root.innerHTML = `
     <style>
+      [data-pill-nav] .nav {
+        position:fixed;right:0;bottom:max(12px,env(safe-area-inset-bottom));left:0;
+        z-index:10;display:flex;justify-content:center;padding:0 12px;pointer-events:none;
+      }
+      [data-pill-nav] .navin {
+        display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:min(100%,600px);
+        padding:5px;border:1px solid var(--outline-variant,var(--ov,#cac4d0));border-radius:999px;
+        background:var(--surface,var(--s,#fffbfe));box-shadow:0 5px 18px rgb(0 0 0 / .14);
+        backdrop-filter:blur(12px);pointer-events:auto;
+      }
+      [data-pill-nav] .nav a {
+        display:grid;place-items:center;gap:3px;min-height:52px;padding:3px 4px;
+        border:0;border-radius:999px;background:transparent;color:var(--muted,var(--v,#49454f));
+        font:700 .68rem/1.1 "Noto Sans","Noto Sans Arabic",system-ui,sans-serif;
+        text-decoration:none;
+      }
+      [data-pill-nav] .nav a:hover {background:var(--surface-container,var(--sl,#f7f2fa));}
+      [data-pill-nav] .nav a.active {
+        background:var(--primary-container,var(--pc,#e9ddff));
+        color:var(--on-primary-container,var(--opc,#21005d));
+      }
+      [data-pill-nav] .nav a:focus-visible {outline:3px solid var(--primary,var(--p,#6750a4));outline-offset:3px;}
+      @media (width < 700px) {
+        html[data-pill-navigation] .app {padding-bottom:calc(112px + env(safe-area-inset-bottom));}
+      }
       [data-hamburger-menu] #progress-menu-button:disabled {
         opacity: .38;
         cursor: not-allowed;
@@ -74,4 +100,28 @@
   });
 
   window.SharedHamburgerMenu = { open: openMenu, close: closeMenu };
+
+  function initializePill() {
+    let pill = document.querySelector('[data-pill-nav]');
+    if (!pill) {
+      pill = document.createElement('div');
+      pill.setAttribute('data-pill-nav', '');
+      document.body.appendChild(pill);
+    }
+    if (pill.querySelector('nav') || pill.dataset.loading === 'true') return;
+    pill.dataset.loading = 'true';
+    const pillScript = document.createElement('script');
+    pillScript.src = new URL('./pill-nav.js', scriptBase).href;
+    pillScript.onload = () => {delete pill.dataset.loading;};
+    pillScript.onerror = () => {
+      delete pill.dataset.loading;
+      document.documentElement.removeAttribute('data-pill-navigation');
+      console.error('Pill navigation could not load; keeping the regular menu available.');
+    };
+    document.head.appendChild(pillScript);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePill, {once:true});
+  } else initializePill();
 })();
