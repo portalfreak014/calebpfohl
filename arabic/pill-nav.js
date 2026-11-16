@@ -21,6 +21,12 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
+      @media (min-width: 700px) {
+        [data-pill-nav] {
+          display: none;
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         [data-pill-nav] .nav {
           transition: none;

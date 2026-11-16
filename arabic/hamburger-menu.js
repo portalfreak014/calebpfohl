@@ -3,6 +3,17 @@
   if (!root) return;
 
   root.innerHTML = `
+    <style>
+      [data-hamburger-menu] #progress-menu-button:disabled {
+        opacity: .38;
+        cursor: not-allowed;
+        background: transparent;
+      }
+      [data-hamburger-menu] #progress-menu-button:disabled,
+      [data-hamburger-menu] #progress-menu-button:disabled .material-symbols-rounded {
+        color: var(--v, #49454f);
+      }
+    </style>
     <div class="drawer-backdrop" id="drawer-backdrop"></div>
     <aside class="drawer" id="drawer" aria-label="Main menu" aria-hidden="true">
       <div class="drawer-head">
@@ -17,7 +28,7 @@
         <a href="flashcards.html"><span class="material-symbols-rounded" aria-hidden="true">style</span>Flashcards</a>
         <a href="match.html"><span class="material-symbols-rounded" aria-hidden="true">extension</span>Match</a>
         <a href="roots.html"><span class="material-symbols-rounded" aria-hidden="true">account_tree</span>Freya's Root Chart</a>
-        <button id="progress-menu-button" type="button"><span class="material-symbols-rounded" aria-hidden="true">bar_chart</span>Progress</button>
+        <button id="progress-menu-button" type="button" disabled><span class="material-symbols-rounded" aria-hidden="true">bar_chart</span><span>Progress <small>(Coming soon)</small></span></button>
         <a href="docs.html"><span class="material-symbols-rounded" aria-hidden="true">description</span>Docs</a>
         <div id="firebase-auth"></div>
       </div>
