@@ -20,6 +20,19 @@ if (!theme.includes(cachedApply)) {
 }
 await writeFile(themePath, theme);
 
+const studyCss = `
+html[data-theme=dark] {
+  --surface-low:#211f26!important;
+  --on-surface:#e6e0e9!important;
+  --variant:#cac4d0!important;
+}
+html[data-theme=dark] .chapter-icon {background:var(--primary-container);color:var(--on-primary-container);}
+html[data-theme=dark] .community {border-top-color:var(--outline-variant);}
+html[data-theme=dark] .button.tonal {color:var(--on-primary-container);}
+html[data-theme=dark] .button.text {color:var(--primary);}
+html[data-theme-controls=off] #uad-theme-toggle {display:none!important;}
+`;
+
 const boot = `<script id="uad-early-theme">
 (() => {
   let saved = null;
@@ -38,6 +51,7 @@ const boot = `<script id="uad-early-theme">
 })();
 </script>
 <style id="uad-early-theme-styles">${css}
+${studyCss}
 html:not(.uad-icons-ready) .material-symbols-rounded {visibility:hidden;}
 </style>`;
 
@@ -66,12 +80,22 @@ async function prepare(directory) {
     }
     if (!entry.name.endsWith('.html')) continue;
     let html = await readFile(file, 'utf8');
-    if (!html.includes('hamburger-menu.js') || !html.includes('data-hamburger-menu')) continue;
-    if (!html.includes('id="uad-early-theme"')) {
-      const charset = /<meta\s+charset=[^>]+>/i;
-      if (charset.test(html)) html = html.replace(charset, match => match + '\n' + boot);
-      else html = html.replace(/<head[^>]*>/i, match => match + '\n<meta charset="utf-8">\n' + boot);
+    const studyPage = file === path.join('arabic', 'flashcards.html') || file === path.join('arabic', 'quiz.html');
+    const sharedMenu = html.includes('hamburger-menu.js') && html.includes('data-hamburger-menu');
+    if (!sharedMenu && !studyPage) continue;
+    if (studyPage) {
+      html = html.replace(/<html\b([^>]*)>/i, (tag, attrs) => {
+        let updated = attrs.replace(/\sdata-theme-controls=(["']).*?\1/i, '').replace(/\sdata-firebase-auth-ui=(["']).*?\1/i, '');
+        return '<html' + updated + ' data-theme-controls="off" data-firebase-auth-ui="off">';
+      });
+      if (!/src=["'](?:\.\/)?theme\.js["']/.test(html)) {
+        html = html.replace(/<\/head>/i, '<script src="theme.js" defer></script>\n</head>');
+      }
     }
+    html = html.replace(/<script id="uad-early-theme">[\s\S]*?<\/script>\s*<style id="uad-early-theme-styles">[\s\S]*?<\/style>/, '');
+    const charset = /<meta\s+charset=[^>]+>/i;
+    if (charset.test(html)) html = html.replace(charset, match => match + '\n' + boot);
+    else html = html.replace(/<head[^>]*>/i, match => match + '\n<meta charset="utf-8">\n' + boot);
     html = html.replace(/<link\b[^>]*href="(https:\/\/fonts\.googleapis\.com\/css2[^"]*)"[^>]*>/gi, fontLinks);
     await writeFile(file, html);
     count++;
