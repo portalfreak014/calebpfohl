@@ -2,6 +2,10 @@
   const root = document.querySelector('[data-hamburger-menu]');
   if (!root) return;
 
+  const themeScript = document.createElement('script');
+  themeScript.src = new URL('./theme.js', document.currentScript.src).href;
+  document.head.appendChild(themeScript);
+
   root.innerHTML = `
     <style>
       [data-hamburger-menu] #progress-menu-button:disabled {
