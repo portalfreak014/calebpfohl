@@ -1,3 +1,6 @@
+[build]
+  command = "node scripts/prepare-arabic.mjs"
+
 [[redirects]]
   from = "/areastudies"
   to = "/areastudies.html"
@@ -7,3 +10,8 @@
   from = "/arabic"
   to = "/arabic/arabic"
   status = 301
+
+[[headers]]
+  for = "/arabic/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
