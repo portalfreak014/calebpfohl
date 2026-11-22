@@ -16,17 +16,8 @@
     @media (forced-colors:active) {.glossary-quiz-action {border:1px solid ButtonText;}}
   `;
   document.head.append(style);
-  const units = new Map();
-  function loadQuizUnit(unitId) {
-    if (!units.has(unitId)) {
-      units.set(unitId, fetch('data/' + unitId + '.json')
-        .then(response => {if (!response.ok) throw new Error('Quiz data unavailable');return response.json();})
-        .catch(error => {console.warn('Glossary quiz links:', unitId, error);return null;}));
-    }
-    return units.get(unitId);
-  }
-  async function enhance(heading) {
-    if (heading.dataset.quizChecked) return;
+  function enhance(heading) {
+    if (heading.dataset.quizChecked || !window.UnitsManifest) return;
     const chapterMatch = heading.textContent.trim().match(/^Chapter\s+(\d+)$/i);
     if (!chapterMatch) return;
     const section = heading.closest('section.chapter');
@@ -37,12 +28,9 @@
     if (!/^\d+$/.test(unitNumber || '')) return;
     const unitId = 'unit' + unitNumber;
     const chapterId = 'ch' + Number(chapterMatch[1]);
-    const chapter = window.UnitsManifest?.getChapter(unitId, chapterId);
+    const chapter = window.UnitsManifest.getChapter(unitId, chapterId);
     heading.dataset.quizChecked = 'true';
-    if (!chapter?.available) return;
-    const data = await loadQuizUnit(unitId);
-    const questions = data?.chapters?.[chapterId]?.questions;
-    if (!heading.isConnected || !Array.isArray(questions) || !questions.length) return;
+    if (!chapter?.available || !section.querySelector('tbody tr td.arabic')) return;
     const header = document.createElement('div');
     header.className = 'glossary-chapter-header';
     const link = document.createElement('a');
