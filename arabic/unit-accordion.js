@@ -64,9 +64,9 @@
     desired = target;
     const token = ++revision;
     const others = [...container.querySelectorAll('details.unit')].filter(section => section !== target && (section.open || running.has(section)));
-    await Promise.all(others.map(section => animateTo(section, false)));
-    if (token !== revision || !target?.isConnected) return;
-    await animateTo(target, true);
+    const transitions = others.map(section => animateTo(section, false));
+    if (token === revision && target?.isConnected) transitions.push(animateTo(target, true));
+    await Promise.all(transitions);
   }
 
   container.addEventListener('click', event => {
