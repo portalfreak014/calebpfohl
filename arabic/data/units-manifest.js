@@ -63,11 +63,11 @@ window.UNITS_MANIFEST = {
     {id:'ch45',number:45,title:'Chapter 45',available:true}
   ]},
   unit10:{title:'Unit 10 Vocabulary',chapters:[
-    {id:'ch46',number:46,title:'Chapter 46',available:false},
-    {id:'ch47',number:47,title:'Chapter 47',available:false},
-    {id:'ch48',number:48,title:'Chapter 48',available:false},
-    {id:'ch49',number:49,title:'Chapter 49',available:false},
-    {id:'ch50',number:50,title:'Chapter 50',available:false}
+    {id:'ch46',number:46,title:'Chapter 46',available:true},
+    {id:'ch47',number:47,title:'Chapter 47',available:true},
+    {id:'ch48',number:48,title:'Chapter 48',available:true},
+    {id:'ch49',number:49,title:'Chapter 49',available:true},
+    {id:'ch50',number:50,title:'Chapter 50',available:true}
   ]}
 };
 
