@@ -77,3 +77,146 @@
 | نظرية | theory |
 | نهض / ينهض / نهوض | to rise |
 | نهضة | rise, growth, upswing, revival |
+
+## Chapter 48
+
+| Arabic | English |
+|---|---|
+| اختصر / يختصر / اختصار | to shorten, condense |
+| أزاح / يزيح / إزاحة | to remove |
+| أعفى / يعفي / إعفاء | to relieve, exempt |
+| اقتصاد موجّه | planned economy |
+| انساب / ينساب / انسياب | to flow smoothly |
+| إنساني | humane |
+| بالتوازي | in parallel |
+| تدابير | necessary measures |
+| تشاور / يتشاور / تشاور | to take counsel, deliberate |
+| تطبيق | application |
+| تعصّب | fanaticism, zealotry, bigotry |
+| التفّ حول / يلتفّ / التفاف حول | to evade, go around |
+| جدل | argument |
+| جشع | greed |
+| حاجز / حواجز | obstacle(s), barrier(s) |
+| حلّ وسط | a compromise |
+| حيال | with regard to |
+| خليفة / خلفاء | successor(s) |
+| دفع / يدفع / دفع | to push |
+| رخاء | prosperity |
+| سلاح ذو حدّين | two-edged sword |
+| سلاسة | smoothness, fluency |
+| شجب / يشجب / شجب | to grieve |
+| صمّم / يصمّم / تصميم | to insist |
+| طريق مسدود | dead-end road |
+| على هامش | on the periphery of |
+| عملي | practical |
+| عولمة | globalization |
+| عيب / عيوب | fault(s), shortcoming(s) |
+| فجوة | gap, opening |
+| في أعقاب | following |
+| قيد / قيود | restriction(s) |
+| كرّس / يكرّس / تكريس | to concentrate, dedicate |
+| مثّل / يمثّل / تمثيل | to represent |
+| مدى | extent, scope |
+| مرجوّ | hoped for |
+| مستحقّ | owed, due to be paid |
+| مصيدة / مصائد | fishery(ies) |
+| مفوّض | deputy, delegate |
+| مقام | standing, rank, position |
+| مناهض | resistance fighter |
+| ناهض / يناهض / مناهضة | to resist, oppose, defy |
+| نعم / ينعم / نعومة | to enjoy, savor |
+| وفد / وفود | delegation(s) |
+| يسر | ease |
+
+## Chapter 49
+
+| Arabic | English |
+|---|---|
+| أحبط / يحبط / إحباط | to thwart, defeat, foil |
+| أدرج / يدرج / إدراج | to register, include, enter |
+| أدلى / يدلي / إدلاء | to express, declare |
+| ارتاب / يرتاب / ارتياب | to be suspicious |
+| استغرب / يستغرب / استغراب | to find odd, unusual |
+| أطلق العنان | to give free rein |
+| أعرب / يعرب / إعراب | to state clearly, express |
+| اقترع / يقترع / اقتراع | to vote |
+| أقسم / يقسم / قسم | to take an oath, swear |
+| بذرة / بذور | seed(s) |
+| تسامح | tolerance |
+| تسنّى / يتسنّى / تسنّي | to be possible |
+| تطلّعات | aspirations |
+| جوهر | essence, intrinsic nature |
+| حاكم / حكّام | governor(s) |
+| حجر الأساس | foundation, cornerstone |
+| حزب / أحزاب | political party(ies) |
+| حملة | campaign(s) |
+| زهاء | about, roughly, approximately |
+| سوّى / يسوّي / تسوية | to settle a dispute |
+| خرّب / يخرّب / تخريب | to ruin, destroy |
+| دستور | constitution |
+| روى / يروي / رواية | to tell a story, to narrate |
+| ساحة | arena |
+| سبيل / سبل | means |
+| سخيف | silly |
+| سمعة | reputation |
+| شكّ / شكوك | doubt(s) |
+| صلاحية | power, authority |
+| عدالة | justice |
+| عدواني | hostile, showing aggression |
+| غرس / يغرس / غرس | to plant, insert |
+| فريد | unique |
+| قاسى / يقاسي / مقاساة | to suffer, endure |
+| كدّ / يكدّ / كدّ | to work hard |
+| لائحة انتخابية / لوائح | list of candidates (lists) |
+| متحيّز | biased, prejudiced |
+| متطفّل | uninvited, parasitic |
+| متنفّس | relief, way out, escape |
+| مثلّث | triangle |
+| مجهر | microscope |
+| المرء | a man, person, human being |
+| مشرّع | legislator |
+| معارف | acquaintance |
+| مفعم | filled, overflowing |
+| من ثمّ | therefore |
+| منارة هادية | guiding light |
+| مناظرة | debate |
+| منصف | fair, just |
+| ميثاق / مواثيق | treaty, pact, charter, agreement |
+| نائب / نوّاب | representative, congressman, delegate(s) |
+| نزيه | unblemished, honest, impartial |
+| نضال | struggle |
+| نمطي | stereotype, typical |
+| وجهة نظر / وجهات نظر | point of view |
+| وزير الخارجية | foreign minister |
+| يمين | oath |
+
+## Chapter 50
+
+| Arabic | English |
+|---|---|
+| أداة / أدوات | a tool, means |
+| أرهق / يرهق / إرهاق | to burden |
+| أطاح بـ / يطيح / إطاحة | to discard, sweep away |
+| اغتال / يغتال / اغتيال | to assassinate |
+| أنصار | followers, supporters |
+| انقلاب | coup d’état, overthrow |
+| أوحى / يوحي / إيحاء | to give an impression |
+| تظاهر / يتظاهر / تظاهر | to pretend |
+| تغطرس / يتغطرس / تغطرس | to be arrogant |
+| تقدّمي | progressive |
+| تناقض / يتناقض / تناقض | to contradict |
+| جلّ | major portion, main part |
+| رابطة / روابط | association(s) |
+| ساد / يسود / سيادة | to be master, head |
+| شمولي | totalitarian |
+| صلب | solid, firm |
+| عبودية | slavery |
+| عوضًا (عن) | as a substitute for, instead of |
+| غطرسة | arrogance, conceitedness |
+| قبيل | shortly before |
+| قمّة / قمم | summit(s) |
+| قمع / يقمع / قمع | to suppress, quell, subdue |
+| محافظ | conservative |
+| محكومية | a court sentence |
+| مرموق | remarkable, noted |
+| مشتقّ | derived, derivative |
