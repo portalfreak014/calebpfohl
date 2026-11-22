@@ -58,4 +58,5 @@
   }
   addUnitQuizzes();
   new MutationObserver(addUnitQuizzes).observe(container,{childList:true,subtree:true});
+  import('./unit-accordion.js').catch(error => console.warn('Unit opening animation unavailable:', error));
 })();
