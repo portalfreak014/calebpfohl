@@ -13,35 +13,31 @@
   root.innerHTML = `
     <style>
       [data-pill-nav] .nav {
-        transform-origin: top center;
-        transition: transform 220ms ease;
+        opacity: 1;
+        transform: translateY(0);
+        transition: transform 220ms ease, opacity 220ms ease;
       }
-
+      [data-pill-nav] .nav.is-scroll-hidden {
+        opacity: 0;
+        transform: translateY(calc(100% + 32px + env(safe-area-inset-bottom)));
+      }
+      [data-pill-nav] .nav.is-scroll-hidden .navin {
+        pointer-events: none !important;
+      }
       [data-pill-nav] .navin {
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
-
       html[data-pill-navigation] [data-menu-button],
       html[data-pill-navigation] [data-hamburger-menu] {
         display: none !important;
       }
-
       @media (min-width: 700px) {
-        [data-pill-nav] {
-          display: none !important;
-        }
-        html[data-pill-navigation] [data-menu-button] {
-          display: grid !important;
-        }
-        html[data-pill-navigation] [data-hamburger-menu] {
-          display: block !important;
-        }
+        [data-pill-nav] { display: none !important; }
+        html[data-pill-navigation] [data-menu-button] { display: grid !important; }
+        html[data-pill-navigation] [data-hamburger-menu] { display: block !important; }
       }
-
       @media (prefers-reduced-motion: reduce) {
-        [data-pill-nav] .nav {
-          transition: none;
-        }
+        [data-pill-nav] .nav { transition: none; }
       }
     </style>
     <nav class="nav" aria-label="Primary navigation">
@@ -62,8 +58,33 @@
 
   document.documentElement.setAttribute('data-pill-navigation', '');
   const desktop = window.matchMedia('(min-width: 700px)');
+  const nav = root.querySelector('.nav');
+  let hidden = false;
+  let frame = null;
+  let direction = 0;
+  let distance = 0;
+  const scrollPosition = () => Math.max(0, Math.min(window.scrollY, Math.max(0, document.documentElement.scrollHeight - window.innerHeight)));
+  let lastY = scrollPosition();
+
+  function setHidden(next) {
+    if (next && nav.contains(document.activeElement) && document.activeElement.matches(':focus-visible')) return;
+    if (hidden === next) return;
+    hidden = next;
+    nav.classList.toggle('is-scroll-hidden', hidden);
+    nav.inert = hidden;
+    if (hidden) nav.setAttribute('aria-hidden', 'true');
+    else nav.removeAttribute('aria-hidden');
+  }
+
+  function resetScrollState() {
+    lastY = scrollPosition();
+    direction = 0;
+    distance = 0;
+    setHidden(false);
+  }
 
   function syncNavigation() {
+    resetScrollState();
     if (desktop.matches) {
       if (root.contains(document.activeElement)) document.querySelector('[data-menu-button]')?.focus();
       return;
@@ -75,15 +96,38 @@
     if (restoreFocus) root.querySelector('a')?.focus();
   }
 
+  function updateVisibility() {
+    frame = null;
+    const y = scrollPosition();
+    const delta = y - lastY;
+    lastY = y;
+    if (desktop.matches || y <= 24) {
+      direction = 0;
+      distance = 0;
+      setHidden(false);
+      return;
+    }
+    if (!delta) return;
+    const nextDirection = Math.sign(delta);
+    if (nextDirection !== direction) {
+      direction = nextDirection;
+      distance = 0;
+    }
+    distance = Math.min(8, distance + Math.abs(delta));
+    if (distance < 8) return;
+    if (direction < 0) setHidden(false);
+    else if (y > 64) setHidden(true);
+  }
+
   desktop.addEventListener('change', syncNavigation);
+  window.addEventListener('scroll', () => {
+    if (frame === null) frame = requestAnimationFrame(updateVisibility);
+  }, {passive:true});
+  window.addEventListener('pageshow', resetScrollState);
+  window.addEventListener('resize', resetScrollState);
+  window.addEventListener('keydown', event => {
+    if (event.key === 'Tab') resetScrollState();
+  }, true);
+  nav.addEventListener('focusin', () => setHidden(false));
   syncNavigation();
-
-  const updatePillSize = () => {
-    const progress = Math.min(window.scrollY / 150, 1);
-    const scale = 1 - (progress * 0.3);
-    root.querySelector('.nav').style.transform = `scale(${scale})`;
-  };
-
-  window.addEventListener('scroll', updatePillSize, { passive: true });
-  updatePillSize();
 })();
