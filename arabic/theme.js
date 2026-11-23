@@ -1,6 +1,12 @@
 (() => {
   if (window.UADTheme) return;
   const base = document.currentScript.src;
+  const faviconSource = new URL('./favicon.js', base).href;
+  if (![...document.scripts].some(script => script.src === faviconSource)) {
+    const faviconScript = document.createElement('script');
+    faviconScript.src = faviconSource;
+    document.head.appendChild(faviconScript);
+  }
   const key = 'uad-theme-guest';
   const valid = value => value === 'dark' || value === 'light';
   const read = name => { try { return localStorage.getItem(name); } catch { return null; } };
