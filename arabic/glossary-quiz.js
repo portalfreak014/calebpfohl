@@ -35,7 +35,10 @@
     header.className = 'glossary-chapter-header';
     const link = document.createElement('a');
     link.className = 'glossary-quiz-action';
-    link.href = 'quiz.html?' + new URLSearchParams({unit:unitId, chapter:chapterId});
+    link.href = 'quiz.html?' + new URLSearchParams({unit:unitId, chapter:chapterId, return:'glossary.html#' + section.id});
+    link.addEventListener('click', () => {
+      try { localStorage.setItem('uad-glossary-last-unit', unitNumber); } catch (error) {}
+    });
     link.setAttribute('aria-label', 'Take quiz for Unit ' + unitNumber + ', ' + chapter.title);
     link.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-2 16-4-4 1.41-1.41L10 16.17l6.59-6.59L18 11l-8 8z"/></svg><span>Take quiz</span>';
     heading.before(header);
@@ -44,4 +47,14 @@
   function scan() {content.querySelectorAll('h4.chapter-title').forEach(enhance);}
   new MutationObserver(scan).observe(content, {childList:true, subtree:true});
   scan();
+
+  if (location.hash.length > 1) {
+    const targetId = decodeURIComponent(location.hash.slice(1));
+    const scrollObserver = new MutationObserver(() => {
+      const target = document.getElementById(targetId);
+      if (target) { target.scrollIntoView(); scrollObserver.disconnect(); }
+    });
+    scrollObserver.observe(content, {childList:true, subtree:true});
+    setTimeout(() => scrollObserver.disconnect(), 8000);
+  }
 })();
