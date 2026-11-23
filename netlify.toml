@@ -1,5 +1,5 @@
 [build]
-  command = "node scripts/prepare-fursa-assets.mjs && node scripts/prepare-fursa-home.mjs && node scripts/prepare-arabic.mjs && node scripts/prepare-glossary-quiz.mjs && node scripts/prepare-footer.mjs"
+  command = "node scripts/prepare-fursa-assets.mjs && node scripts/prepare-fursa-home.mjs && node scripts/prepare-arabic.mjs && node scripts/prepare-glossary-quiz.mjs && node scripts/prepare-footer.mjs && node scripts/prepare-navigation.mjs"
 
 [[redirects]]
   from = "/areastudies"
