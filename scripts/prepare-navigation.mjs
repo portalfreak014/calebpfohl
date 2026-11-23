@@ -35,6 +35,24 @@ if (!quiz.includes('id="quiz-bottom-controls-styles"')) {
   </style>`;
   quiz = quiz.replace('</head>', styles + '\n</head>');
 }
+
+if (!quiz.includes('id="quiz-snackbar-anchor-styles"')) {
+  const snackbarPattern = /<div\b[^>]*\bid="snackbar"[^>]*>[\s\S]*?<\/div>/;
+  const snackbar = quiz.match(snackbarPattern)?.[0];
+  const anchor = '<div class="action-area quiz-bottom-controls">';
+  if (!snackbar || !quiz.includes(anchor) || !quiz.includes('</head>')) throw new Error('Quiz snackbar or bottom controls structure changed');
+  quiz = quiz.replace(snackbarPattern, '');
+  quiz = quiz.replace(anchor, () => anchor + snackbar);
+  const styles = `<style id="quiz-snackbar-anchor-styles">
+    #quiz-screen .quiz-bottom-controls {position:relative;}
+    #quiz-screen .quiz-bottom-controls #snackbar {
+      position:absolute;left:50%;bottom:calc(100% + 12px);
+      width:max-content;max-width:min(100%,420px);box-sizing:border-box;
+      white-space:normal;overflow-wrap:anywhere;direction:ltr;text-align:center;
+    }
+  </style>`;
+  quiz = quiz.replace('</head>', styles + '\n</head>');
+}
 await writeFile(quizFile, quiz);
 
 const pillFile = 'arabic/pill-nav.js';
@@ -79,4 +97,4 @@ if (!menu.includes('id="settings-menu-button"')) {
   menu = menu.replace('</style>', styles + '\n    </style>');
 }
 await writeFile(menuFile, menu);
-console.log('Prepared quiz bottom controls, hidden inline flag notice, and Settings coming-soon navigation.');
+console.log('Prepared quiz bottom controls and anchored snackbar, hidden inline flag notice, and Settings coming-soon navigation.');
