@@ -8,6 +8,33 @@ if (!quiz.includes('<!-- Inline flag notice hidden')) {
   quiz = quiz.replace(notice, match => '<!-- Inline flag notice hidden; account attribution remains enabled.\n' + match + '\n-->');
 }
 quiz = quiz.replace(/\saria-describedby="flag-privacy-notice"/g, '');
+
+if (!quiz.includes('id="quiz-bottom-controls-styles"')) {
+  const audioPattern = /<button\b[^>]*\bid="audio-button"[^>]*>[\s\S]*?<\/button>/;
+  const flagPattern = /<button\b[^>]*\bid="flag-button"[^>]*>[\s\S]*?<\/button>/;
+  const actionPattern = /<div class="action-area">\s*(<button\b[^>]*\bid="next-button"[^>]*>[\s\S]*?<\/button>)\s*<\/div>/;
+  const audio = quiz.match(audioPattern)?.[0];
+  const flag = quiz.match(flagPattern)?.[0];
+  if (!audio || !flag || !actionPattern.test(quiz)) throw new Error('Quiz controls structure changed; review bottom controls preparation');
+  quiz = quiz.replace(audioPattern, '').replace(flagPattern, '');
+  quiz = quiz.replace(actionPattern, (_, next) => '<div class="action-area quiz-bottom-controls">' + audio + next + flag + '</div>');
+  if (!quiz.includes('</head>')) throw new Error('Quiz head missing');
+  const styles = `<style id="quiz-bottom-controls-styles">
+    #quiz-screen .question-actions #known-toggle {grid-column:3;justify-self:center;}
+    #quiz-screen .action-area.quiz-bottom-controls {
+      display:grid;grid-template-columns:44px minmax(0,1fr) 44px;
+      align-items:center;gap:10px;direction:ltr;
+    }
+    #quiz-screen .quiz-bottom-controls #audio-button,
+    #quiz-screen .quiz-bottom-controls #flag-button {
+      width:44px;height:44px;min-width:44px;justify-self:center;
+    }
+    #quiz-screen .quiz-bottom-controls #next-button {
+      min-width:0;width:100%;padding-inline:12px;
+    }
+  </style>`;
+  quiz = quiz.replace('</head>', styles + '\n</head>');
+}
 await writeFile(quizFile, quiz);
 
 const pillFile = 'arabic/pill-nav.js';
@@ -52,4 +79,4 @@ if (!menu.includes('id="settings-menu-button"')) {
   menu = menu.replace('</style>', styles + '\n    </style>');
 }
 await writeFile(menuFile, menu);
-console.log('Commented out the inline flag notice and added Settings coming-soon placeholders to both navigation components.');
+console.log('Prepared quiz bottom controls, hidden inline flag notice, and Settings coming-soon navigation.');
