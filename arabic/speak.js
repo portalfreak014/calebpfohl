@@ -1,0 +1,77 @@
+(function () {
+  if (!('speechSynthesis' in window)) return;
+
+  var arabicVoice = null;
+  function pickVoice() {
+    var voices = speechSynthesis.getVoices();
+    arabicVoice = voices.find(function (v) { return /^ar(-|_|$)/i.test(v.lang); }) || null;
+  }
+  pickVoice();
+  speechSynthesis.addEventListener('voiceschanged', pickVoice);
+
+  function speak(text) {
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ar-SA';
+    if (arabicVoice) u.voice = arabicVoice;
+    u.rate = 0.85;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  }
+  function clean(text) { return String(text || '').trim().replace(/\s*\/\s*/g, '، '); }
+
+  function initGlossary() {
+    var content = document.getElementById('content');
+    if (!content) return;
+    var style = document.createElement('style');
+    style.textContent =
+      '.speak-btn{display:inline-grid;place-items:center;width:32px;height:32px;margin-left:8px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--primary,#6750a4);vertical-align:middle}' +
+      '.speak-btn:hover{background:rgb(103 80 164 / .12)}' +
+      '.speak-btn:focus-visible{outline:3px solid var(--primary,#6750a4);outline-offset:2px}' +
+      '.speak-btn .material-symbols-rounded{font-size:20px}';
+    document.head.appendChild(style);
+    function addButtons() {
+      content.querySelectorAll('td.arabic:not([data-speak])').forEach(function (td) {
+        td.dataset.speak = '1';
+        var text = clean(td.textContent);
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'speak-btn';
+        btn.setAttribute('aria-label', 'Pronounce ' + text);
+        btn.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">volume_up</span>';
+        btn.addEventListener('click', function () { speak(text); });
+        td.appendChild(btn);
+      });
+    }
+    addButtons();
+    new MutationObserver(addButtons).observe(content, { childList: true, subtree: true });
+  }
+
+  function initQuiz() {
+    var audioBtn = document.getElementById('audio-button');
+    if (!audioBtn) return;
+    window.updateAudioButton = function () {
+      var b = document.getElementById('audio-button');
+      if (!b) return;
+      b.setAttribute('aria-disabled', 'false');
+      b.title = 'Listen to pronunciation';
+      b.setAttribute('aria-label', 'Listen to pronunciation');
+    };
+    window.updateAudioButton();
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('#audio-button');
+      if (!b) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      try {
+        var q = state.questions[state.index];
+        if (!q || !q.arabic) return;
+        if (mode !== 'ar-to-en' && !state.answered) { showSnackbar('Answer first to hear it.'); return; }
+        speak(clean(q.arabic));
+      } catch (err) {}
+    }, true);
+  }
+
+  function init() { initGlossary(); initQuiz(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
