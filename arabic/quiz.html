@@ -61,6 +61,7 @@ align-items:center;gap:8px;margin:10px 4px 0;color:var(--variant);font-size:.82r
   <div class="snackbar" id="snackbar" role="status" aria-live="polite"></div>
   <script src="data/units-manifest.js"></script>
   <script src="progress-store.js"></script>
+  <script src="speak.js" defer></script>
   <script>
     const params = new URLSearchParams(location.search);
     const unit = (params.get('unit') || (window.UnitsManifest ? window.UnitsManifest.listUnits()[0] : 'unit6') || 'unit6').replace(/[^a-zA-Z0-9_-]/g, '');
