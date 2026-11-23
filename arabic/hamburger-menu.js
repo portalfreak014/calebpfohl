@@ -35,7 +35,10 @@
         html[data-pill-navigation] .app {padding-bottom:calc(112px + env(safe-area-inset-bottom));}
       }
       @media (width >= 700px) {
-        html[data-theme=dark] .drawer-backdrop.open {background:rgb(255 255 255 / .07);}
+        html[data-theme=dark] .drawer-backdrop {
+          background:rgb(255 255 255 / .07);
+          transition:opacity .22s ease,background-color .22s ease;
+        }
       }
       [data-hamburger-menu] #progress-menu-button:disabled {
         opacity: .38;
