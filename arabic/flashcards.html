@@ -29,7 +29,49 @@ function renderChapters(){chaptersEl.replaceChildren();for(const [unitId,unit] o
 async function loadCourse(){try{if(!window.UnitsManifest)throw new Error('Chapter manifest could not be loaded.');for(const unitId of window.UnitsManifest.listUnits()){const unit=window.UnitsManifest.getUnit(unitId);courseUnits.set(unitId,{title:unit.title,chapters:unit.chapters,cards:new Map(),loading:unit.chapters.some(c=>c.available),error:null})}renderChapters();await Promise.all([...courseUnits].map(async([unitId,unit])=>{if(!unit.loading)return;try{const [core,additional]=await Promise.all([fetchGlossary(unitId,'glossary'),fetchGlossary(unitId,'additional',true)]);for(const chapter of unit.chapters){const seen=new Set();const items=[...(core.get(chapter.number)||[]),...(additional.get(chapter.number)||[])].filter(item=>{const key=JSON.stringify([item.arabic,item.english]);if(seen.has(key))return false;seen.add(key);return true});unit.cards.set(chapter.number,items)}}catch(error){console.error(error);unit.error=error.message}finally{unit.loading=false;renderChapters()}}));const failed=[...courseUnits.values()].filter(unit=>unit.error);$('course-message').textContent=failed.length?'Some units could not load. Reload the page to try again.':''}catch(error){$('course-message').textContent=error.message}}
 function renderCommunitySets(){communitySetsEl.innerHTML='';if(!communitySets.length){communitySetsEl.innerHTML='<p class="community-empty">No community sets yet. Be the first to create one.</p>';return}const user=auth.currentUser;communitySets.forEach(set=>{const tile=document.createElement('div');tile.className='community-tile';const b=document.createElement('button');b.type='button';b.className='chapter'+(active===`community:${set.id}`?' active':'');b.innerHTML='<span class="chapter-icon material-symbols-rounded">groups</span><span><span class="chapter-title">'+esc(set.title)+'</span><span class="chapter-meta">By '+esc(set.ownerName||'Community member')+'</span></span><span class="chapter-count">'+set.cards.length+' cards</span>';b.onclick=()=>startCards(set.cards,set.title,`community:${set.id}`);tile.appendChild(b);if(user&&set.ownerId===user.uid){const remove=document.createElement('button');remove.type='button';remove.className='delete-set';remove.textContent='Delete';remove.setAttribute('aria-label',`Delete ${set.title}`);remove.onclick=()=>deleteCommunitySet(set);tile.appendChild(remove)}communitySetsEl.appendChild(tile)})}
 async function deleteCommunitySet(set){if(!auth.currentUser||set.ownerId!==auth.currentUser.uid)return;if(!window.confirm(`Delete “${set.title}” permanently?`))return;setCommunityMessage('Deleting your set…');try{await deleteDoc(doc(db,'communityFlashcards',set.id));communitySets=communitySets.filter(item=>item.id!==set.id);setCommunityMessage('Your set was deleted.');renderCommunitySets()}catch(error){console.error('Could not delete community flashcard set:',error);setCommunityMessage('Your set could not be deleted. Please try again.')}}
-function startCards(nextCards,title,id,course=null){if(!nextCards.length)return;returnScrollY=window.scrollY;active=id;activeTitle=title;cards=nextCards.slice();index=0;takeQuiz.hidden=!course;if(course)takeQuiz.href=`quiz.html?unit=${encodeURIComponent(course.unitId)}&chapter=${encodeURIComponent(course.chapterId)}`;else takeQuiz.removeAttribute('href');renderChapters();renderCommunitySets();renderCard();deckOverlay.classList.add('is-open');deckOverlay.setAttribute('aria-hidden','false');deckOverlay.scrollTop=0;$('back-to-sets').focus()}
+async function startCards(nextCards, title, id, course = null) {
+  if (!nextCards.length) return;
+
+  // Request the Arabic font, but never block opening for over 1.5 seconds.
+  if (document.fonts?.load) {
+    try {
+      await Promise.race([
+        document.fonts.load(
+          '700 32px "Noto Sans Arabic"',
+          nextCards[0].arabic || 'اختصر يختصر اختصار'
+        ),
+        new Promise(resolve => setTimeout(resolve, 1500))
+      ]);
+    } catch (error) {
+      console.warn('Arabic font could not be loaded:', error);
+    }
+  }
+
+  returnScrollY = window.scrollY;
+  active = id;
+  activeTitle = title;
+  cards = nextCards.slice();
+  index = 0;
+
+  takeQuiz.hidden = !course;
+
+  if (course) {
+    takeQuiz.href =
+      `quiz.html?unit=${encodeURIComponent(course.unitId)}` +
+      `&chapter=${encodeURIComponent(course.chapterId)}`;
+  } else {
+    takeQuiz.removeAttribute('href');
+  }
+
+  renderChapters();
+  renderCommunitySets();
+  renderCard();
+
+  deckOverlay.classList.add('is-open');
+  deckOverlay.setAttribute('aria-hidden', 'false');
+  deckOverlay.scrollTop = 0;
+  $('back-to-sets').focus();
+}
 function leaveStudy(){deckOverlay.classList.remove('is-open');deckOverlay.setAttribute('aria-hidden','true');active=null;takeQuiz.hidden=true;takeQuiz.removeAttribute('href');renderChapters();renderCommunitySets();window.scrollTo({top:returnScrollY,behavior:'smooth'})}
 function renderCard(){if(!cards.length)return;const item=cards[index];card.classList.add('no-transition');card.classList.remove('flipped');$('arabic-term').textContent=item.arabic;$('english-meaning').textContent=item.english;$('chapter-name').textContent=activeTitle;$('progress-text').textContent=`${index+1} / ${cards.length}`;void card.offsetWidth;card.classList.remove('no-transition')}
 function move(n){if(!cards.length)return;index=(index+n+cards.length)%cards.length;renderCard();card.classList.remove('slide-next','slide-previous');void card.offsetWidth;card.classList.add(n>0?'slide-next':'slide-previous')}
@@ -43,6 +85,7 @@ creator.addEventListener('submit',async event=>{event.preventDefault();const use
 $('back-to-sets').onclick=leaveStudy;$('previous').onclick=()=>move(-1);$('next').onclick=()=>move(1);$('flip').addEventListener('click',toggle);$('shuffle').onclick=()=>{cards=shuffle(cards);index=0;renderCard()};card.addEventListener('click',toggle);card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();toggle()}});
 loadCourse();resetCreator();loadCommunitySets();
 </script>
-  <script src="flashcards-audio.js" defer></script>
+<script src="flashcards-audio.js" defer></script>
+<script src="scrollup.js" defer></script>
 </body>
 </html>
