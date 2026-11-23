@@ -43,5 +43,6 @@ creator.addEventListener('submit',async event=>{event.preventDefault();const use
 $('back-to-sets').onclick=leaveStudy;$('previous').onclick=()=>move(-1);$('next').onclick=()=>move(1);$('flip').addEventListener('click',toggle);$('shuffle').onclick=()=>{cards=shuffle(cards);index=0;renderCard()};card.addEventListener('click',toggle);card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();toggle()}});
 loadCourse();resetCreator();loadCommunitySets();
 </script>
+  <script src="flashcards-audio.js" defer></script>
 </body>
 </html>
