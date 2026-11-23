@@ -1,4 +1,17 @@
 (function () {
+  function initReturn() {
+    var back = new URLSearchParams(location.search).get('return');
+    if (!back || !/^glossary\.html(#[A-Za-z0-9_-]+)?$/.test(back)) return;
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('#exit-button, a[href="arabic.html"]');
+      if (!t) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      location.href = back;
+    }, true);
+  }
+  initReturn();
+
   if (!('speechSynthesis' in window)) return;
 
   var arabicVoice = null;
