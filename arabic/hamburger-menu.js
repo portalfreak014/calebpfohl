@@ -34,6 +34,9 @@
       @media (width < 700px) {
         html[data-pill-navigation] .app {padding-bottom:calc(112px + env(safe-area-inset-bottom));}
       }
+      @media (width >= 700px) {
+        html[data-theme=dark] .drawer-backdrop.open {background:rgb(255 255 255 / .07);}
+      }
       [data-hamburger-menu] #progress-menu-button:disabled {
         opacity: .38;
         cursor: not-allowed;
