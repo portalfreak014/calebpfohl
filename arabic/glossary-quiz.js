@@ -5,15 +5,13 @@
   content.dataset.quizActions = 'ready';
   const style = document.createElement('style');
   style.textContent = `
-    .glossary-chapter-header {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 16px;margin-bottom:12px;}
+    .glossary-chapter-header {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;margin-bottom:12px;}
     .glossary-chapter-header .chapter-title {margin:0;}
-    .glossary-quiz-action {display:inline-flex;position:relative;isolation:isolate;align-items:center;justify-content:center;gap:8px;flex-shrink:0;min-height:44px;padding:0 20px;border:0;border-radius:999px;background:var(--primary,#6750a4);color:var(--on-primary,#fff);font:600 .875rem/1.25 system-ui,sans-serif;letter-spacing:.025em;text-decoration:none;box-shadow:0 1px 2px #0003;-webkit-tap-highlight-color:transparent;}
-    .glossary-quiz-action::before {content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:currentColor;opacity:0;pointer-events:none;}
-    .glossary-quiz-action:hover::before {opacity:.08;}
-    .glossary-quiz-action:focus-visible::before,.glossary-quiz-action:active::before {opacity:.12;}
-    .glossary-quiz-action:focus-visible {outline:3px solid var(--primary,#6750a4);outline-offset:4px;}
-    .glossary-quiz-action svg {width:20px;height:20px;fill:currentColor;flex-shrink:0;}
-    @media (forced-colors:active) {.glossary-quiz-action {border:1px solid ButtonText;}}
+    .glossary-study-actions {display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+    .glossary-study-action {display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 12px;border:1px solid var(--outline-variant,#cac4d0);border-radius:999px;background:transparent;color:var(--primary,#6750a4);font:600 .8rem/1.25 system-ui,sans-serif;text-decoration:none;-webkit-tap-highlight-color:transparent;}
+    .glossary-study-action:hover {background:var(--primary-container,#e9ddff);color:var(--on-primary-container,#21005d);}
+    .glossary-study-action:focus-visible {outline:3px solid var(--primary,#6750a4);outline-offset:3px;}
+    @media(forced-colors:active) {.glossary-study-action {border-color:LinkText;}}
   `;
   document.head.append(style);
   function enhance(heading) {
@@ -21,10 +19,9 @@
     const chapterMatch = heading.textContent.trim().match(/^Chapter\s+(\d+)$/i);
     if (!chapterMatch) return;
     const section = heading.closest('section.chapter');
-    const unitSection = section?.parentElement.closest('section[id^="unit-"]');
-    const unitNumber = unitSection
-      ? unitSection.id.replace('unit-', '')
-      : document.querySelector('.unit-tab.active')?.dataset.unit;
+    if (!section) return;
+    const unitSection = section.parentElement?.closest('section[id^="unit-"]');
+    const unitNumber = unitSection ? unitSection.id.replace('unit-', '') : document.querySelector('.unit-tab.active')?.dataset.unit;
     if (!/^\d+$/.test(unitNumber || '')) return;
     const unitId = 'unit' + unitNumber;
     const chapterId = 'ch' + Number(chapterMatch[1]);
@@ -33,28 +30,36 @@
     if (!chapter?.available || !section.querySelector('tbody tr td.arabic')) return;
     const header = document.createElement('div');
     header.className = 'glossary-chapter-header';
-    const link = document.createElement('a');
-    link.className = 'glossary-quiz-action';
-    link.href = 'quiz.html?' + new URLSearchParams({unit:unitId, chapter:chapterId, return:'glossary.html#' + section.id});
-    link.addEventListener('click', () => {
-      try { localStorage.setItem('uad-glossary-last-unit', unitNumber); } catch (error) {}
-    });
-    link.setAttribute('aria-label', 'Take quiz for Unit ' + unitNumber + ', ' + chapter.title);
-    link.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-2 16-4-4 1.41-1.41L10 16.17l6.59-6.59L18 11l-8 8z"/></svg><span>Take quiz</span>';
+    const actions = document.createElement('div');
+    actions.className = 'glossary-study-actions';
+    actions.setAttribute('role', 'group');
+    actions.setAttribute('aria-label', chapter.title + ' study options');
+    for (const [label, page] of [['Quiz','quiz.html'], ['Flashcards','flashcards.html']]) {
+      const link = document.createElement('a');
+      link.className = 'glossary-study-action';
+      const back = page === 'flashcards.html' ? 'glossary.html?unit=' + unitNumber + '#' + section.id : 'glossary.html#' + section.id;
+      link.href = page + '?' + new URLSearchParams({unit:unitId, chapter:chapterId, return:back});
+      link.textContent = label;
+      link.setAttribute('aria-label', label + ' for Unit ' + unitNumber + ', ' + chapter.title);
+      link.addEventListener('click', () => { try { localStorage.setItem('uad-glossary-last-unit', unitNumber); } catch {} });
+      actions.append(link);
+    }
     heading.before(header);
-    header.append(heading, link);
+    header.append(heading, actions);
   }
-  function scan() {content.querySelectorAll('h4.chapter-title').forEach(enhance);}
+  function scan() { content.querySelectorAll('h4.chapter-title').forEach(enhance); }
   new MutationObserver(scan).observe(content, {childList:true, subtree:true});
   scan();
-
   if (location.hash.length > 1) {
-    const targetId = decodeURIComponent(location.hash.slice(1));
-    const scrollObserver = new MutationObserver(() => {
+    let targetId;
+    try { targetId = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+    const scrollObserver = new MutationObserver(restore);
+    function restore() {
       const target = document.getElementById(targetId);
       if (target) { target.scrollIntoView(); scrollObserver.disconnect(); }
-    });
+    }
     scrollObserver.observe(content, {childList:true, subtree:true});
+    restore();
     setTimeout(() => scrollObserver.disconnect(), 8000);
   }
 })();
