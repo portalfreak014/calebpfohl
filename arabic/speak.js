@@ -62,12 +62,20 @@
   function initQuiz() {
     var audioBtn = document.getElementById('audio-button');
     if (!audioBtn) return;
+    var lastQuestion = null;
     window.updateAudioButton = function () {
       var b = document.getElementById('audio-button');
       if (!b) return;
       b.setAttribute('aria-disabled', 'false');
       b.title = 'Listen to pronunciation';
       b.setAttribute('aria-label', 'Listen to pronunciation');
+      try {
+        var q = state.questions[state.index];
+        if (!q || !q.arabic || mode !== 'ar-to-en' || q === lastQuestion) return;
+        if (navigator.userActivation && !navigator.userActivation.hasBeenActive) return;
+        lastQuestion = q;
+        setTimeout(function () { speak(clean(q.arabic)); }, 250);
+      } catch (err) {}
     };
     window.updateAudioButton();
     document.addEventListener('click', function (e) {
