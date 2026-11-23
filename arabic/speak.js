@@ -62,6 +62,17 @@
   function initQuiz() {
     var audioBtn = document.getElementById('audio-button');
     if (!audioBtn) return;
+    document.addEventListener('click', function (e) {
+      var choice = e.target.closest && e.target.closest('#choices button.choice');
+      if (!choice || choice.disabled) return;
+      try {
+        if (mode !== 'en-to-ar' || state.answered) return;
+        var text = clean(state.displayToOriginal[choice.dataset.key]);
+        if (text) speak(text);
+      } catch (err) {
+        console.warn('Selected choice pronunciation unavailable:', err);
+      }
+    }, true);
     var lastQuestion = null;
     window.updateAudioButton = function () {
       var b = document.getElementById('audio-button');
