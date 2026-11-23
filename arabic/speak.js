@@ -37,7 +37,7 @@
     if (!content) return;
     var style = document.createElement('style');
     style.textContent =
-      '.speak-btn{display:inline-grid;place-items:center;width:32px;height:32px;margin-left:8px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--primary,#6750a4);vertical-align:middle}' +
+      '.speak-btn{display:inline-grid;place-items:center;box-sizing:border-box;width:32px;height:32px;margin-left:8px;padding:0;border:1px solid var(--outline-variant,#cac4d0);border-radius:8px;background:transparent;color:var(--primary,#6750a4);vertical-align:middle}' +
       '.speak-btn:hover{background:rgb(103 80 164 / .12)}' +
       '.speak-btn:focus-visible{outline:3px solid var(--primary,#6750a4);outline-offset:2px}' +
       '.speak-btn .material-symbols-rounded{font-size:20px}';
