@@ -2,6 +2,24 @@
 
 ## 2026-11-23
 
+### Shared quiz bottom controls and pop-up spacing
+
+- `c9b8d70`: moved the shared quiz audio button to the bottom-left and flag button to the bottom-right, around the center answer/continue action; retained Mark as known in the upper-right grid column.
+- Added 44px square audio/flag targets and a flexible center button with 10px grid gaps. The same template covers Arabic-to-English, English-to-Arabic, chapter/unit quizzes, and written-answer mode without changing scoring, progress, audio eligibility, or reporting behavior.
+- `150323a`: moved the existing snackbar into the bottom action area and anchored it above that row with a 12px offset plus existing row padding, centered responsive sizing, and text wrapping. Retained its ID, live-region attributes, text/timing, and animation; it now follows the row rather than remaining fixed to the viewport.
+- Both transformations are owned by the existing final build helper, `scripts/prepare-navigation.mjs`; generated quiz HTML is not committed back to source.
+- Added implementation/maintenance notes and a cross-direction, responsive-layout, accessibility, and regression checklist to [Quiz Engine & Progress Store](features/quiz-engine-and-progress.md). Corrected that feature page's stale anonymous-only report description.
+
+Status: implementation committed; the user's screenshot showed the first layout and overlapping snackbar. Full build execution, cross-mode testing, and final snackbar spacing verification remain pending. This documentation update changes no application code.
+
+### Follow-up reconciliation and direction-aware pill
+
+- `60cfd7d`: replaced scroll scaling in `arabic/pill-nav.js` with full-size stable visibility states: hide on downward movement, reveal on upward movement, threshold-based jitter protection, near-top visibility, reduced-motion support, and hidden-state interaction/accessibility handling.
+- Added [November 23 implementation reconciliation](SESSION_RECONCILIATION_2026-11-23.md) to cover the prior branding/hero/CTA, theme-responsive icons and standalone-logo extraction, immediate quiz-choice audio, non-AI companion backlog, verified flag attribution/retry fixes, hidden inline notice, Settings placeholders, six-step build pipeline, and outstanding verification.
+- Updated docs discovery to include the reconciliation and previously omitted branding, shared-UI, companion, and flag-attribution documents. The supplement explicitly supersedes earlier build, scroll-scaling, and notice-visibility descriptions while preserving historical entries.
+
+Status: source changes committed; no full build or cross-browser verification was recorded. Deferred design discussion was intentionally excluded from documentation scope.
+
 ### Documentation reconciliation
 
 - Completed Project Compass with scope, page/navigation map, canonical file ownership, runtime dependencies, content sources, browser/Firebase state, preparation pipeline, and verification boundaries.
