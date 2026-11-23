@@ -5,6 +5,15 @@
   content.dataset.quizActions = 'ready';
   const style = document.createElement('style');
   style.textContent = `
+    /* Reverse column placement only; preserve each language's reading direction. */
+    #content .table-wrap table {direction:rtl;}
+    #content .table-wrap th:first-child {direction:rtl;text-align:right;}
+    #content .table-wrap th:last-child,
+    #content .table-wrap td:not(.arabic) {direction:ltr;text-align:left;}
+    #content .table-wrap td.arabic {direction:rtl;text-align:right;}
+    /* Reserve a fixed audio lane without changing table-cell semantics. */
+    #content .table-wrap td.arabic[data-speak] {position:relative;padding-right:52px;}
+    #content .table-wrap td.arabic .speak-btn {position:absolute;right:12px;top:50%;transform:translateY(-50%);margin:0;}
     .glossary-chapter-header {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;margin-bottom:12px;}
     .glossary-chapter-header .chapter-title {margin:0;}
     .glossary-study-actions {display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
