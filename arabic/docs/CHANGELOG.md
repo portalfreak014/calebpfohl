@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-11-23
+
+### Documentation reconciliation
+
+- Completed Project Compass with scope, page/navigation map, canonical file ownership, runtime dependencies, content sources, browser/Firebase state, preparation pipeline, and verification boundaries.
+- Reconciled root and Arabic READMEs and the documentation index: Fursa is the approved replacement brand, not a claim that all live pages have migrated.
+- Corrected authentication/community-flashcard status to acknowledge implementation in source without claiming verified production operation.
+- Recorded the current three-step Netlify preparation chain, including glossary quiz preparation, and the prepared-output font-loading distinction.
+- Linked existing feature references rather than creating another competing architecture document.
+- Recorded remaining docs-manifest omissions and verification tasks. No manifest regeneration or application/deployment changes are included in this documentation reconciliation.
+
+Status: documentation-only source reconciliation. No build execution, browser test, production deployment verification, or security-rule validation is implied.
+
 ## 2026-11-16
 
 ### Shared UI and theme

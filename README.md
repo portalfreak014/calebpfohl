@@ -1,41 +1,31 @@
 # calebpfohl
 
-Personal workspace for programming, coding experiments, and web projects.
+Personal workspace containing a website, Arabic-learning tools, and other web projects.
 
-## Repository layout
+## Repository map
 
-- `arabic/` — Existing Arabic documentation and materials. **Do not modify this directory.**
-- Root HTML, media, and configuration files — Existing site pages, assets, and deployment configuration.
+- `index.html` and root HTML/media files: site entry point and standalone projects/pages. These are separate from the Arabic application; the Arabic Compass is not a complete specification of their behavior.
+- `arabic/`: Arabic study application, vocabulary sources, shared scripts, assets, and documentation.
+- `scripts/`: preparation and maintenance scripts; some transform the deployment workspace rather than committing generated changes.
+- `netlify.toml` and `netlify/`: deployment configuration and related integration. Consult actual configuration before changing routes or services.
+- `docs/`: repository-level documentation, distinct from `arabic/docs/`.
+
+## Start here for the Arabic site
+
+Read [Project Compass](arabic/docs/PROJECT_COMPASS.md), then the [documentation index](arabic/docs/README.md). The approved rebrand is Fursa; migration is not assumed complete. See [branding](arabic/docs/BRANDING.md).
+
+Changes within `arabic/` require explicit authorization. This is an active application, not only a materials archive. Keep unrelated projects out of scope.
 
 ## Working conventions
 
-- Keep new programming work organized in clearly named top-level directories or project-specific folders.
-- Add a short README to each new project explaining its purpose, setup, and how to run it.
-- Do not commit secrets, API keys, credentials, or `.env` files. Use environment variables and provide an `.env.example` when needed.
-- Keep dependencies and run commands documented in each project's README.
-- Make focused commits with descriptive messages.
+- Specify target files and whether changes should be committed or proposed first.
+- Make focused edits and descriptive commits; document implementation separately from production verification.
+- Keep secrets and private credentials out of source control. Use environment variables and examples where appropriate.
+- Document dependencies, setup, and run commands for new projects.
+- Read `AGENTS.md` for authoritative glossary workflow.
 
-## Suggested structure for new work
+## Arabic vocabulary contract
 
-```text
-projects/
-  project-name/
-    README.md
-    src/
-    tests/
-    .env.example
-```
+Human-maintained Markdown in `arabic/data/glossary/` is authoritative for glossary coverage. Structured chapter JSON and unit JSON are downstream representations; inspect the relevant consumer before changing formats.
 
-## Notes for AI-assisted work
-
-When asking an AI assistant to work in this repository, specify the target files and whether changes should be made directly or proposed first. The `arabic/` directory is out of scope unless explicitly authorized.
-
-## Arabic vocabulary schema
-
-Changes within `arabic/` require explicit authorization. For new vocabulary entries, use the part-of-speech-agnostic template at `arabic/data/templates/vocabulary-entry.template.json`.
-
-- Use `templateVersion: "2.0.0"` for all new vocabulary entries.
-- Required fields are `id`, `arabic`, `lemma`, `glosses`, `partOfSpeech`, `chapter`, and `unit`.
-- Use the optional `forms` object for morphology only when needed, such as verb forms, noun plurals, or adjective gender variants.
-- The part-of-speech-specific templates are retained for reference only; they are legacy schemas and must not be used for new entries.
-- Prefer focused, additive edits, and validate JSON before committing vocabulary changes.
+For new structured entries, use `arabic/data/templates/vocabulary-entry.template.json`, template version `2.0.0`. Required fields are `id`, `arabic`, `lemma`, `glosses`, `partOfSpeech`, `chapter`, and `unit`. Use optional `forms` for morphology. Part-of-speech-specific templates are legacy reference only. Validate JSON and do not commit unreviewed vocabulary to live content.

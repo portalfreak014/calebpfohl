@@ -1,47 +1,42 @@
-# Arabic Study App — Documentation Index
+# Arabic study application — Documentation index
 
-Start with [Project Compass](PROJECT_COMPASS.md) for the canonical sources, architecture direction, decision rules, and current next steps. Use the feature documents below for detailed requirements and testing notes.
+Start with [Project Compass](PROJECT_COMPASS.md) for scope, page map, canonical sources, runtime dependencies, data paths, and build behavior. Approved brand: Fursa; migration is not assumed complete. See [BRANDING.md](BRANDING.md).
 
-This directory replaces the single monolithic `CHAPTER_PROGRESS_IMPLEMENTATION.md` file. Each shipped feature has its own small, stable file; `README.md` and `CHANGELOG.md` serve as the index and dated record.
+## Status vocabulary
 
-## Legend
+- Implemented in source: code exists; not a claim of verified production operation.
+- Approved/planned: direction or requirements, not proof of implementation.
+- Unverified: deployment, security rules, browser behavior, or account flows not checked end to end.
+- Historical: facts recorded at the document's date; recheck against current code.
 
-✅ Done and live on `main` | ⏳ Planned, not yet implemented
+## Architecture and feature references
 
-## Status Summary
-
-| Section | Status | Doc |
+| Area | Reference | Reconciled status / caveat |
 |---|---|---|
-| Project Compass | ✅ Done | [PROJECT_COMPASS.md](PROJECT_COMPASS.md) |
-| Content Contract | ✅ Done | [content-contract-and-manifest.md](features/content-contract-and-manifest.md) |
-| Units and Chapters Manifest | ✅ Done | [content-contract-and-manifest.md](features/content-contract-and-manifest.md) |
-| Homepage Changes | ✅ Done | [homepage.md](features/homepage.md) |
-| Quiz Changes | ✅ Done | [quiz-engine-and-progress.md](features/quiz-engine-and-progress.md) |
-| Local-First Progress Store | ✅ Done | [quiz-engine-and-progress.md](features/quiz-engine-and-progress.md) |
-| Known Vocabulary | ✅ Done | [known-vocabulary.md](features/known-vocabulary.md) |
-| Content Quality Control | ✅ Done | [content-quality-control.md](features/content-quality-control.md) |
-| Firestore Rules Reference | ⏳ Planned deployment | [FIRESTORE_RULES_REFERENCE.md](FIRESTORE_RULES_REFERENCE.md) |
-| Account Authentication | ⏳ Planned | [account-authentication.md](features/account-authentication.md) |
-| Community Flashcards | ⏳ Planned | [community-flashcards.md](features/community-flashcards.md) |
-| Unit 6 Supplementary Vocabulary | ⏳ Planned | [unit6-supplementary-vocab.md](features/unit6-supplementary-vocab.md) |
-| Dynamic schema-driven quiz migration | ⏳ Planned | [PROJECT_COMPASS.md](PROJECT_COMPASS.md) |
+| Site architecture | [Project Compass](PROJECT_COMPASS.md) | Source-level map reconciled 2026-11-23; not full production certification. |
+| Branding | [BRANDING.md](BRANDING.md) | Fursa direction approved; page migration/integration requires verification. |
+| Shared UI, navigation, theme, fonts | [shared-ui-and-theme.md](features/shared-ui-and-theme.md) | Implemented source and detailed limitations; use current Compass/netlify.toml for the expanded build chain. |
+| Content/units manifest | [content-contract-and-manifest.md](features/content-contract-and-manifest.md) | Existing architecture reference; confirm actual consumer and availability. |
+| Homepage | [homepage.md](features/homepage.md) | Feature reference; verify source versus prepared footer/theme output. |
+| Quiz / local-first progress | [quiz-engine-and-progress.md](features/quiz-engine-and-progress.md) | Implementation reference; not every roadmap migration is complete. |
+| Known vocabulary | [known-vocabulary.md](features/known-vocabulary.md) | Feature reference; known status belongs in ProgressStore. |
+| Content QC | [content-quality-control.md](features/content-quality-control.md) | Feature requirements/workflow; validate current wiring. |
+| Authentication | [account-authentication.md](features/account-authentication.md), [setup](FIREBASE_GOOGLE_SSO_SETUP.md) | Authentication code exists; no longer accurately described as solely planned. Production verification separate. |
+| Firebase progress | [architecture](FIREBASE_PROGRESS_SYNC_AND_ACTIVITY_ARCHITECTURE.md) | Source integration exists; cloud/account tests not certified here. |
+| Firestore rules | [FIRESTORE_RULES_REFERENCE.md](FIRESTORE_RULES_REFERENCE.md) | Reference is not proof of deployed rules. |
+| Flashcards | [flashcards.md](features/flashcards.md) | Course deck/study implementation exists; inspect current manifest rather than historical Unit 8-only notes. |
+| Community flashcards | [community-flashcards.md](features/community-flashcards.md) | Load/publish/delete code exists; backend permissions and production behavior unverified here. |
+| Matching | [matching-game.md](features/matching-game.md) | Feature reference; inspect current consumer before changing data. |
+| Roots | [freyas-root-chart.md](features/freyas-root-chart.md) | Preserve editorial ownership; consult before architecture changes. |
+| Listening/transcription | [ttt-listening-transcription.md](features/ttt-listening-transcription.md) | Feature-specific reference. |
+| Docs viewer | [interactive-docs-page.md](features/interactive-docs-page.md) | Check manifest discovery when adding docs. |
+| Supplementary vocabulary | [unit6-supplementary-vocab.md](features/unit6-supplementary-vocab.md) | Historical planning/reference; availability not re-audited here. |
+| Schema-driven migration | [content-first-vocabulary-migration.md](features/content-first-vocabulary-migration.md), [schema](VOCABULARY_SCHEMA.md) | Architectural direction; do not assume all activities use one structured pipeline. |
 
-## Purpose
+## Maintenance rules
 
-The app is unit-agnostic: adding a unit should require a content file and manifest entry, not new HTML pages or quiz-engine changes. It uses local-first learner progress and can later connect to an account provider without rewriting quiz logic.
+Read root `AGENTS.md` and [glossary workflow](GLOSSARY_WORKFLOW.md) before vocabulary work. Preserve Arabic Unicode, language/direction handling, URLs, accounts, and stored progress. Use `data/templates/` contracts; do not commit unreviewed vocabulary. Keep content, rendering, learner state, and external services separate; backend failure must not prevent ordinary study.
 
-## Guardrails
+Update the owning document when behavior changes, the Compass when architecture changes, and [CHANGELOG.md](CHANGELOG.md) for dated changes. `manifest.json` supplies docs discovery; use `generate-manifest.mjs` and verify the result when adding documents. The inspected manifest omitted BRANDING.md and shared-ui-and-theme.md; this reconciliation updates existing files only and does not regenerate it.
 
-- Preserve Material Design 3 styling and Arabic Unicode, `lang`, and `dir` handling.
-- Check `arabic/data/templates/` before defining new vocabulary fields.
-- Keep content, quiz rendering, learner progress, and external-service concerns separate.
-- Prefer additive modules and compatibility adapters over broad rewrites.
-- Do not make sign-in required for studying or flagging content.
-- Keep secrets out of the repository and make backend failures non-blocking.
-- Store known-word status only in `ProgressStore`, never in content JSON.
-- Do not commit unreviewed vocabulary into a live content file.
-- Keep all activity code unit- and subject-agnostic.
-
-## Documentation Use
-
-Read Project Compass first. Then consult the feature document that owns the area being changed, update that document when the architectural decision changes, and add a changelog entry for shipped work.
+Older feature documents and status claims must be read in their dated context. 'Implemented', 'deployed', and 'verified' are distinct claims.

@@ -1,13 +1,22 @@
-# (Unofficial) UAD Study Companion
+# Arabic study application — Fursa rebrand in progress
 
-Study tools and reference materials for Arabic learners.
+Independent Arabic-learning tools and reference materials. This is an unofficial project, not affiliated with, endorsed by, or officially connected to DLIFLC, UAD, or the U.S. Department of Defense.
 
-## Name and status
+## Start here
 
-This project is called **(Unofficial) UAD Study Companion**. It is an independent study-resource project and is not affiliated with, endorsed by, or officially connected to the Defense Language Institute Foreign Language Center (DLIFLC), UAD, or the U.S. Department of Defense.
+- [Project Compass](docs/PROJECT_COMPASS.md): page map, ownership, dependencies, data, build behavior, and verification boundaries.
+- [Documentation index](docs/README.md): feature references and status definitions.
+- [Branding](docs/BRANDING.md): approved Fursa direction and rollout checklist.
+- [Shared UI/theme](docs/features/shared-ui-and-theme.md): detailed UI and persistence behavior; its dated build command must be checked against current `../netlify.toml`.
 
-For browser titles and metadata, use: `UAD Study Companion (Unofficial)`.
+## Branding status
 
-## Pill navigation
+Fursa | فرصة is the approved replacement for (Unofficial) UAD Study Companion. Use `Glossary · Fursa`-style titles when migrating pages. Existing page titles and visible branding may still use the old name; documentation does not establish production rollout completion. Preserve creator credits and unofficial-affiliation/content-rights notices. Keep technical APIs and storage keys stable unless a separate migration is approved.
 
-The shared navigation is rendered by `pill-nav.js` into elements marked with `data-pill-nav`. On scroll, the pill scales smoothly from 100% to 70% over the first 150 px of page scrolling, then remains at 70%. Use a passive scroll listener and apply the scale directly to `.nav`; set `transform-origin: top center` and `will-change: transform` so the animation remains smooth.
+## Entry points and maintenance
+
+`arabic.html` is the study home. `glossary.html`, `flashcards.html`, `quiz.html`, `match.html`, `roots.html`, and `docs.html` provide the principal study/reference surfaces. Additional standalone HTML tools are inventoried in the Compass.
+
+The shared menu can initialize pill navigation and load `theme.js`. Source HTML is not always deployed unchanged: run the preparation chain documented in the Compass to reproduce build-time integration. Never infer feature availability solely from a script's presence.
+
+For vocabulary changes, read root `AGENTS.md`, `docs/GLOSSARY_WORKFLOW.md`, and the schema/template references first. Preserve Arabic Unicode and language/direction handling.
