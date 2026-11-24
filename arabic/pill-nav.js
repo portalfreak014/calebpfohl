@@ -83,6 +83,8 @@
     setHidden(false);
   }
 
+  root.addEventListener('pill-nav:reset', resetScrollState);
+
   function syncNavigation() {
     resetScrollState();
     if (desktop.matches) {
