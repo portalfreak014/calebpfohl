@@ -1,16 +1,15 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chaos Mode — Fursa</title><link rel="stylesheet" href="chaos.css"></head>
 <body><div id="scenery" aria-hidden="true"></div><main>
-<header><a href="arabic.html">Exit to Fursa</a><strong>CHAOS MODE <small>Solo prototype</small></strong><button id="pause" hidden>Pause</button></header>
-<section id="setup"><h1>Vocabulary. Absolutely unnecessary energy.</h1><p>Rainbow scenery, streaks, reaction cards and an original synth loop. Your normal quiz progress stays untouched.</p><p>Effects stay behind the questions. Music starts only after Start. Reduce effects or mute whenever you want.</p>
+<header><a href="arabic.html">Exit to Fursa</a><strong>CHAOS MODE</strong><button id="pause" hidden>Pause</button><button id="mute" type="button" aria-pressed="false">Mute music</button></header>
+<section id="setup"><h1>Ready for chaos?</h1><p>Pick your vocabulary. Hit Start.</p>
 <label>Unit <select id="unit"></select></label><label>Chapter <select id="chapter"></select></label>
-<label>Direction <select id="direction"><option value="ar">Arabic to English</option><option value="en">English to Arabic</option></select></label>
-<label>Round length <select id="length"><option>10</option><option selected>20</option><option>40</option></select></label>
-<label>Optional local music <input id="track" type="file" accept="audio/*"></label><p class="muted">Your selected file stays on this device. Otherwise, use the built-in original synth loop.</p><button id="start">Start solo round</button><p id="load" role="status"></p></section>
-<aside id="controls"><label><input id="reduced" type="checkbox"> Reduced effects</label><label><input id="music" type="checkbox" checked> Music</label><label>Volume <input id="volume" type="range" min="0" max="0.4" step="0.01" value="0.12"></label></aside>
+<details><summary>Round settings</summary><label>Direction <select id="direction"><option value="ar">Arabic to English</option><option value="en">English to Arabic</option></select></label><label>Round length <select id="length"><option>10</option><option selected>20</option><option>40</option></select></label><label><input id="reduced" type="checkbox"> Reduced effects</label></details>
+<p class="muted">Soundtrack: Running in the 90s. Music and visual effects begin after Start.</p><button id="start">Start</button><p id="load" role="status"></p></section>
+<aside id="controls"><label>Volume <input id="volume" type="range" min="0" max="1" step="0.01" value="0.25"></label><label><input id="calm" type="checkbox"> Reduce effects</label></aside>
 <section id="game" hidden><p id="score"></p><h1 id="prompt" tabindex="-1"></h1><div id="answers"></div><p id="feedback" role="status"></p><button id="next" hidden>Next question</button></section>
 <section id="count" hidden><h1 id="count-text" tabindex="-1">3</h1></section>
 <section id="paused" hidden><h1>Take a breath.</h1><button id="resume">Resume</button></section>
 <section id="results" hidden><h1 tabindex="-1" id="results-title">Round complete</h1><p id="summary"></p><ul id="misses"></ul><button id="retry">Review missed words</button><button id="again">New round</button></section>
-<p id="audio-status" role="status"></p><p class="muted">Multiplayer rooms are planned, not available yet.</p>
+<p id="audio-status" role="status"></p><button id="audio-retry" hidden type="button">Play music</button>
 </main><div id="reactions" aria-hidden="true"></div><script src="data/units-manifest.js"></script><script type="module" src="chaos.js"></script></body></html>
