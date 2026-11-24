@@ -3,8 +3,11 @@ for (const file of ['arabic/theme.js', 'arabic/pill-nav.js']) {
   let text = await readFile(file, 'utf8');
   if (!text.includes('account-profile.js')) {
     text = `(() => { const base = document.currentScript.src; import(new URL('./account-profile.js', base).href).catch(error => console.error('Account card could not load:', error)); })();\n` + text;
-    await writeFile(file, text);
   }
+  if (!text.includes('chaos-entry.js')) {
+    text = `(() => { const base = document.currentScript.src; import(new URL('./chaos-entry.js', base).href).catch(error => console.error('Chaos entry could not load:', error)); })();\n` + text;
+  }
+  await writeFile(file, text);
 }
 const file = 'arabic/firebase-auth.js';
 let text = await readFile(file, 'utf8');
@@ -35,4 +38,4 @@ window.FursaAccountAuth = {
 `;
 }
 await writeFile(file, text);
-console.log('Prepared shared account card integration and explicit One Tap ITP support.');
+console.log('Prepared shared account card, Chaos entry, and explicit One Tap ITP support.');
