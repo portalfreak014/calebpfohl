@@ -22,12 +22,23 @@
   pickVoice();
   speechSynthesis.addEventListener('voiceschanged', pickVoice);
 
+  function requestPlaybackSession() {
+    try {
+      if ('audioSession' in navigator && navigator.audioSession) {
+        navigator.audioSession.type = 'playback';
+      }
+    } catch (error) {
+      console.warn('Playback audio session unavailable; using default speech audio:', error);
+    }
+  }
+
   function speak(text) {
     var u = new SpeechSynthesisUtterance(text);
     u.lang = 'ar-SA';
     if (arabicVoice) u.voice = arabicVoice;
     u.rate = 0.85;
     speechSynthesis.cancel();
+    requestPlaybackSession();
     speechSynthesis.speak(u);
   }
   function clean(text) { return String(text || '').trim().replace(/\s*\/\s*/g, '، '); }
