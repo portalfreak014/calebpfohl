@@ -1,74 +1,45 @@
-import { parseGlossary, selectWords } from './chaos-vocabulary.js';
-const $=id=>document.getElementById(id), panels=['setup','game','count','paused','results'];
-$('next').remove();$('feedback').tabIndex=-1;
-const reactionStyle=document.createElement('style');reactionStyle.textContent=`#reactions .reaction{top:50%;left:50%;padding:0;border:0;background:transparent;box-shadow:none;font-size:clamp(64px,16vw,150px);font-weight:950;font-style:italic;letter-spacing:-.06em;text-transform:lowercase;color:#baffde;text-shadow:4px 5px 0 #45146c,0 0 24px #a76af0;white-space:nowrap;transform:translate(-50%,-50%) rotate(-12deg);animation:chaos-nice-drift 1.6s linear both}body.reduced #reactions .reaction{animation:none;font-size:clamp(48px,12vw,100px);transform:translate(-50%,-50%) rotate(-12deg)}@keyframes chaos-nice-drift{0%{opacity:0;transform:translate(-70%,-50%) rotate(-12deg)}15%{opacity:1}75%{opacity:1}100%{opacity:0;transform:translate(-30%,-50%) rotate(-12deg)}}@media(prefers-reduced-motion:reduce){#reactions .reaction{animation:none!important}}`;document.head.append(reactionStyle);
-const motion=matchMedia('(prefers-reduced-motion: reduce)');
-$('reduced').checked=motion.matches;$('calm').checked=motion.matches;
-function effects(value){$('reduced').checked=value;$('calm').checked=value;document.body.classList.toggle('reduced',value||motion.matches);}
-$('reduced').onchange=()=>effects($('reduced').checked);$('calm').onchange=()=>effects($('calm').checked);motion.addEventListener('change',()=>effects($('reduced').checked));effects(motion.matches);
+import {parseGlossary,selectWords} from './chaos-vocabulary.js';
+const $=id=>document.getElementById(id),panels=['setup','count','game','results'];
+const motion=matchMedia('(prefers-reduced-motion: reduce)');$('reduced').checked=motion.matches;
+function effects(){document.body.classList.toggle('reduced',$('reduced').checked||motion.matches);}
+$('reduced').onchange=effects;motion.addEventListener('change',effects);effects();
 const shuffle=values=>{const a=[...values];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
-let state='setup',previous='game',deck=[],pool=[],index=0,streak=0,best=0,score=0,correct=0,missed=[],answered=false,countdown=null,effectTimer=null,advanceTimer=null,roundDirection='ar';
-function clearAdvance(){clearTimeout(advanceTimer);advanceTimer=null;}
-function scheduleAdvance(){clearAdvance();const answeredIndex=index;advanceTimer=setTimeout(()=>{advanceTimer=null;if(state!=='game'||!answered||index!==answeredIndex)return;index++;if(index<deck.length)question();else finish();},500);}
-const player=new Audio(new URL('./assets/running_in_the_nineties.mp3',import.meta.url).href);player.loop=true;player.preload='none';player.volume=.25;
-let muted=false,musicAttempt=0;
-function stopMusic(){musicAttempt++;player.pause();}
-function music(){
-  const attempt=++musicAttempt;
-  if(muted||!['loading','count','game'].includes(state)){player.pause();return;}
-  try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch{}
-  player.play().then(()=>{if(!['loading','count','game'].includes(state)||muted){player.pause();return;}if(attempt===musicAttempt){$('audio-status').textContent='';$('audio-retry').hidden=true;}}).catch(error=>{if(attempt!==musicAttempt)return;$('audio-status').textContent=error.name==='NotAllowedError'?'Tap Play music to enable the soundtrack.':'Soundtrack could not play. Check your connection and retry.';$('audio-retry').hidden=false;});
-}
+let state='setup',unit=null,deck=[],pool=[],index=0,streak=0,best=0,score=0,correct=0,missed=[],answered=false,countdown=null,effectTimer=null,advanceTimer=null,questionTimer=null,frame=null,deadline=0;
+const cache=new Map(),player=new Audio(new URL('./assets/running_in_the_nineties.mp3',import.meta.url).href);player.loop=true;player.preload='none';player.volume=.25;
+let musicAttempt=0;
+function music(){const attempt=++musicAttempt;try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch{}player.play().then(()=>{if(attempt===musicAttempt){$('audio-status').textContent='';$('audio-retry').hidden=true;}}).catch(()=>{if(attempt!==musicAttempt)return;$('audio-status').textContent='Tap Play music to retry the soundtrack.';$('audio-retry').hidden=false;});}
 $('audio-retry').onclick=music;
-$('mute').onclick=()=>{muted=!muted;player.muted=muted;$('mute').textContent=muted?'Unmute music':'Mute music';$('mute').setAttribute('aria-pressed',String(muted));if(muted)stopMusic();else music();};
-$('volume').oninput=()=>{player.volume=Number($('volume').value);};
-function show(next){state=next;if(next!=='game')clearAdvance();for(const id of panels)$(id).hidden=id!==next;document.body.classList.toggle('playing',next==='game'||next==='count');$('pause').hidden=!['game','count'].includes(next);if(!['game','count','loading'].includes(next))stopMusic();}
+$('mute').onclick=()=>{player.muted=!player.muted;$('mute').textContent=player.muted?'Unmute music':'Mute music';$('mute').setAttribute('aria-pressed',String(player.muted));};
+$('volume').oninput=()=>{const value=Number($('volume').value);player.volume=value;$('volume').style.setProperty('--fill',`${value*100}%`);$('volume-value').textContent=`${Math.round(value*100)}%`;};
+function clearQuestion(){clearTimeout(questionTimer);questionTimer=null;cancelAnimationFrame(frame);frame=null;}
+function clearAdvance(){clearTimeout(advanceTimer);advanceTimer=null;}
 function clearEffects(){clearTimeout(effectTimer);$('reactions').replaceChildren();}
+function show(next){state=next;for(const id of panels)$(id).hidden=id!==next;}
 function reaction(){clearEffects();const node=document.createElement('div');node.className='reaction';node.textContent='nice';$('reactions').append(node);effectTimer=setTimeout(clearEffects,1600);}
-function chapters(){const unit=window.UnitsManifest.getUnit($('unit').value);$('chapter').replaceChildren(new Option('All available chapters','all'),...unit.chapters.filter(c=>c.available).map(c=>new Option(c.title,c.id)));}
-for(const id of window.UnitsManifest.listUnits())$('unit').add(new Option(window.UnitsManifest.getUnit(id).title,id));
-$('unit').value='unit8';$('unit').onchange=chapters;chapters();
-const cache=new Map();
-async function vocabulary(unit,chapter){
-  let parsed=cache.get(unit);
-  if(!parsed){const response=await fetch(`data/glossary/${unit}-glossary.md`);if(!response.ok)throw new Error('Could not load this unit glossary');parsed=parseGlossary(await response.text());cache.set(unit,parsed);}
-  const allowed=window.UnitsManifest.getAvailableChapters(unit).map(c=>c.id);
-  return selectWords(parsed,chapter,allowed);
-}
-function reset(items){clearAdvance();deck=shuffle(items).slice(0,Number($('length').value));index=0;streak=0;best=0;score=0;correct=0;missed=[];answered=false;clearEffects();count();}
-function count(){clearInterval(countdown);show('count');let n=3;$('count-text').textContent=n;$('count-text').focus();music();if(document.hidden){pause();return;}countdown=setInterval(()=>{n--;if(n>0)$('count-text').textContent=n;else{clearInterval(countdown);countdown=null;question();}},1000);}
-$('start').onclick=async()=>{
-  if(state==='loading')return;
-  const unit=$('unit').value,chapter=$('chapter').value;
-  state='loading';$('start').disabled=true;$('unit').disabled=true;$('chapter').disabled=true;$('load').textContent='Loading vocabulary…';
-  player.currentTime=0;music();
-  try{const words=await vocabulary(unit,chapter);if(words.length<2)throw new Error('This selection needs at least two glossary entries');pool=words;roundDirection=$('direction').value;$('load').textContent='';reset(words);}
-  catch(error){state='setup';stopMusic();$('load').textContent=error.message+'. Please retry or choose another chapter.';}
-  finally{$('start').disabled=false;$('unit').disabled=false;$('chapter').disabled=false;}
-};
-function question(){
-  clearAdvance();show('game');answered=false;$('feedback').textContent='';const q=deck[index];
-  $('score').textContent=`${index+1}/${deck.length} · ${score} points · ${streak} streak · Best ${best}`;
-  const arabic=roundDirection==='ar',answer=arabic?q.english:q.arabic;
-  $('prompt').textContent=arabic?q.arabic:q.english;$('prompt').lang=arabic?'ar':'en';$('prompt').dir='auto';
-  const others=[...new Set(pool.filter(word=>word.arabic!==q.arabic&&word.english!==q.english).map(word=>arabic?word.english:word.arabic))];
-  const options=shuffle([answer,...shuffle(others).slice(0,3)]);$('answers').replaceChildren();
-  for(const text of options){const button=document.createElement('button');button.textContent=text;button.dir='auto';button.lang=arabic?'en':'ar';button.dataset.correct=String(text===answer);button.onclick=()=>answerQuestion(button,text===answer);$('answers').append(button);}
-  $('prompt').focus();
-}
-function answerQuestion(button,yes){
-  if(answered||state!=='game')return;answered=true;const q=deck[index];
-  if(yes){streak++;correct++;best=Math.max(best,streak);score+=100+Math.min(streak-1,5)*20;reaction();}else{clearEffects();streak=0;missed.push(q);button.classList.add('wrong');}
+function chooseUnits(){clearQuestion();clearAdvance();clearInterval(countdown);clearEffects();show('setup');$('units').hidden=false;$('chapter-panel').hidden=true;$('setup-title').textContent='Choose a unit';$('load').textContent='';$('setup-title').focus();}
+function chooseUnit(id){unit=id;$('units').hidden=true;$('chapter-panel').hidden=false;$('setup-title').textContent=`Unit ${id.replace('unit','')}`;$('chapters').replaceChildren();
+  for(const chapter of window.UnitsManifest.getAvailableChapters(id)){const button=document.createElement('button');button.type='button';button.textContent=chapter.number;button.setAttribute('aria-label',chapter.title);button.onclick=()=>start(chapter.id);$('chapters').append(button);}
+  const all=document.createElement('button');all.textContent='All';all.setAttribute('aria-label','All chapters in this unit');all.onclick=()=>start('all');$('chapters').append(all);$('setup-title').focus();}
+for(const id of window.UnitsManifest.listUnits()){const button=document.createElement('button');button.type='button';button.textContent=id.replace('unit','');button.setAttribute('aria-label',`Unit ${button.textContent}`);button.onclick=()=>chooseUnit(id);$('units').append(button);}
+$('back').onclick=chooseUnits;
+async function vocabulary(selectedUnit,chapter){let parsed=cache.get(selectedUnit);if(!parsed){const response=await fetch(`data/glossary/${selectedUnit}-glossary.md`);if(!response.ok)throw new Error('Could not load this glossary');parsed=parseGlossary(await response.text());cache.set(selectedUnit,parsed);}return selectWords(parsed,chapter,window.UnitsManifest.getAvailableChapters(selectedUnit).map(c=>c.id));}
+async function start(chapter){if(state==='loading')return;state='loading';const selectedUnit=unit;for(const button of $('setup').querySelectorAll('button'))button.disabled=true;$('load').textContent='Loading…';music();try{const words=await vocabulary(selectedUnit,chapter);if(words.length<2)throw new Error('This selection needs at least two words');pool=words;$('load').textContent='';reset(words);}catch(error){show('setup');$('load').textContent=error.message+'. Please retry.';}finally{for(const button of $('setup').querySelectorAll('button'))button.disabled=false;}}
+function reset(items){clearQuestion();clearAdvance();clearEffects();clearInterval(countdown);deck=shuffle(items).slice(0,20);index=0;streak=0;best=0;score=0;correct=0;missed=[];answered=false;show('count');let n=3;$('count-text').textContent=n;$('count-text').focus();countdown=setInterval(()=>{n--;if(n>0)$('count-text').textContent=n;else{clearInterval(countdown);countdown=null;question();}},1000);}
+function scoreText(){ $('score').textContent=`${index+1}/${deck.length} · ${score} points · ${streak} streak · Best ${best}`; }
+function clock(){frame=null;if(state!=='game'||answered)return;const remaining=Math.max(0,deadline-performance.now());$('clock').textContent=(remaining/1000).toFixed(3);$('clock').classList.toggle('urgent',remaining<=3000);if(remaining<=0){settle(null,false,true);return;}frame=requestAnimationFrame(clock);}
+function expire(){if(state!=='game'||answered)return;const remaining=deadline-performance.now();if(remaining>0){questionTimer=setTimeout(expire,remaining);return;}settle(null,false,true);}
+function question(){clearQuestion();clearAdvance();show('game');answered=false;$('feedback').textContent='';const q=deck[index];scoreText();$('prompt').textContent=q.arabic;$('prompt').lang='ar';$('prompt').dir='auto';
+  const others=[...new Set(pool.filter(word=>word.arabic!==q.arabic&&word.english!==q.english).map(word=>word.english))];$('answers').replaceChildren();
+  for(const text of shuffle([q.english,...shuffle(others).slice(0,3)])){const button=document.createElement('button');button.textContent=text;button.dir='auto';button.dataset.correct=String(text===q.english);button.onclick=()=>{if(state!=='game'||answered)return;if(performance.now()>=deadline)settle(null,false,true);else settle(button,text===q.english,false);};$('answers').append(button);}
+  $('clock').textContent='5.000';$('clock').classList.remove('urgent');$('prompt').focus();deadline=performance.now()+5000;questionTimer=setTimeout(expire,5000);frame=requestAnimationFrame(clock);}
+function advance(){clearAdvance();if(state!=='game'||!answered)return;index++;if(index<deck.length)question();else finish();}
+function scheduleAdvance(){clearAdvance();advanceTimer=setTimeout(advance,500);}
+function settle(button,yes,timedOut){if(answered||state!=='game')return;answered=true;clearQuestion();const q=deck[index];if(timedOut)$('clock').textContent='0.000';else $('clock').textContent=(Math.max(0,deadline-performance.now())/1000).toFixed(3);$('clock').classList.remove('urgent');
+  if(yes){streak++;correct++;best=Math.max(best,streak);score+=100+Math.min(streak-1,5)*20;reaction();}else{clearEffects();streak=0;missed.push(q);if(button)button.classList.add('wrong');}
   for(const item of $('answers').children){item.disabled=true;if(item.dataset.correct==='true')item.classList.add('correct');}
-  $('feedback').textContent=yes?`Correct! ${streak} in a row.`:`Correct answer: ${roundDirection==='ar'?q.english:q.arabic}`;
-  $('score').textContent=`${index+1}/${deck.length} · ${score} points · ${streak} streak · Best ${best}`;
-  $('feedback').focus();scheduleAdvance();
-}
-function finish(){show('results');clearEffects();$('summary').textContent=`${correct}/${deck.length} correct (${Math.round(correct/deck.length*100)}%) · ${score} points · Best streak ${best}`;$('misses').replaceChildren();for(const q of missed){const li=document.createElement('li');li.textContent=`${q.arabic} — ${q.english}`;li.dir='auto';$('misses').append(li);}$('retry').hidden=!missed.length;$('results-title').focus();}
-$('retry').onclick=()=>{player.currentTime=0;reset([...missed]);};$('again').onclick=()=>{show('setup');$('start').focus();};
-function pause(){if(!['game','count'].includes(state))return;previous=state;clearInterval(countdown);countdown=null;clearEffects();show('paused');$('resume').focus();}
-$('pause').onclick=pause;$('resume').onclick=()=>{if(previous==='count')count();else{show('game');music();(answered?$('feedback'):$('prompt')).focus();if(answered)scheduleAdvance();}};
-document.addEventListener('visibilitychange',()=>{if(document.hidden){if(state==='loading')stopMusic();else pause();}});
-document.addEventListener('keydown',event=>{if(event.key==='Escape')pause();});
-window.addEventListener('pagehide',()=>{clearInterval(countdown);clearAdvance();stopMusic();clearEffects();});
-window.addEventListener('pageshow',event=>{if(event.persisted&&['game','count'].includes(state))pause();});
+  $('feedback').textContent=yes?`Correct! ${streak} in a row.`:`${timedOut?"Time's up. ":''}Correct answer: ${q.english}`;scoreText();$('feedback').focus();scheduleAdvance();}
+function finish(){clearQuestion();clearAdvance();clearEffects();show('results');$('summary').textContent=`${correct}/${deck.length} correct (${Math.round(correct/deck.length*100)}%) · ${score} points · Best streak ${best}`;$('misses').replaceChildren();for(const q of missed){const li=document.createElement('li');li.textContent=`${q.arabic} — ${q.english}`;li.dir='auto';$('misses').append(li);}$('retry').hidden=!missed.length;$('results-title').focus();}
+$('retry').onclick=()=>{music();reset([...missed]);};$('again').onclick=chooseUnits;
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&state==='game'&&!answered){cancelAnimationFrame(frame);clock();}});
+window.addEventListener('pagehide',()=>{clearQuestion();clearAdvance();clearInterval(countdown);clearEffects();musicAttempt++;player.pause();});
+window.addEventListener('pageshow',event=>{if(!event.persisted)return;if(state==='game'){if(answered)scheduleAdvance();else clock();}else if(state==='count'){question();}music();});

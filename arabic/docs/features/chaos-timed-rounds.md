@@ -1,0 +1,11 @@
+# Timed Chaos rounds
+
+Supersedes older setup/pause/timing descriptions. Unit selection is a four-column grid (1-4, 5-8, 9-10). Choosing a unit reveals its numbered chapter buttons plus All; clicking a chapter starts the music/load/countdown. Default rounds are 20 questions, Arabic to English. The previous direction and round-length selectors are removed for a minimal two-step menu. Glossary loading and normal progress isolation remain unchanged.
+
+Each question gets a performance.now deadline 5000 ms after rendering. The display uses three fractional digits (5.000, not 5.00); animation-frame refresh does not imply millisecond display or scheduling accuracy. At three seconds a slow low-contrast warning pulse begins, disabled in reduced-motion/effects settings. Timeout records a miss, shows the correct answer, and advances after 500 ms like a clicked answer. Clicks after the deadline cannot earn points. A timeout and answer cannot settle the same question twice. Browser background throttling can delay timers; returning to an active unanswered question reconciles against its elapsed deadline rather than granting extra time.
+
+Rainbow gradients now include pink, orange, yellow, green, blue and purple. The game has its own animated gradient pseudo-element behind quiz content, not just outside an opaque card. The nice overlay remains pointer-transparent and reduced motion disables drift. Volume has custom track/thumb styling, a colored fill and percentage readout.
+
+No Pause button, Take a breath screen, Escape pause, or visibility-triggered pause. Music is started by a chapter action and remains continuous through feedback, results, menu selection and retries. Muting changes the audio element's muted property without pausing the track. Actual navigation/page exit still stops this page's audio and timers. The browser/OS may independently suspend background media or timers; the app cannot override those policies. Curated song selection and multiplayer remain future work.
+
+Browser and deployment verification still required: all ten unit buttons and chapter labels, 5-second correct/wrong/timeout paths, duplicate-click protection, last-question results, missed-word retry, mobile four-column layout, reduced motion, slider appearance on Safari/Firefox, music continuity, leaving/returning to background and page exit cleanup.
