@@ -2,6 +2,18 @@
 
 ## 2026-11-23
 
+### Contextual flashcards, glossary layout, and branding
+
+- `1102f7e`: added a separate compact homepage Flashcards section with collapsed unit rows/chapter chips and All sets; added compact glossary Quiz/Flashcards actions, chapter deep links, and validated glossary-unit/chapter returns. Ordinary entries retain picker return; glossary context does not restore search text/exact pixel offset and is not forwarded by the player's Take quiz link.
+- `1c199da`: added subtle 1px rounded outlines to 32px glossary audio buttons, retaining 20px symbols and existing speech behavior.
+- `1168c1b`: added inline spacing around those buttons after the user's screenshot showed text crowding.
+- `e6d826b`: glossary-only CSS places English left and Arabic right, preserves language direction and existing column widths, and gives audio controls a fixed far-right lane with an 8px text gap. No Markdown/data/DOM cell reordering or pronunciation changes.
+- `2107e4e`: added homepage-derived Fursa glossary top-bar branding with Glossary replacing Home, a branded browser title, and concise glossary introduction. Added the shared mobile pill to the prepared flashcard picker; any open deck hides/inerts the pill, and picker return restores/resets it. Existing mobile/desktop and scroll behavior remain; no new desktop flashcard menu.
+- Current build has eight ordered helpers, ending with `prepare-chapter-flashcards.mjs` and `prepare-glossary-branding-and-flashcard-pill.mjs`. These counts supersede earlier historical pipeline descriptions; `netlify.toml` remains authoritative.
+- Reconciled [Flashcards](features/flashcards.md), [Contextual chapter flashcards](features/chapter-flashcard-navigation.md), and [Shared UI and theme](features/shared-ui-and-theme.md), including stale Unit-8-only/JSON-loader and scroll-scaling descriptions, source/build ownership, return/navigation limitations, theme/footer constraints, and pending tests. These existing paths are already in the docs manifest; no discovery-path changes are needed.
+
+Status: implementation commits succeeded. The user's screenshot showed the earlier outlined glossary buttons and spacing issue; it does not verify subsequent column alignment, branding, or pill behavior. Full clean/repeated build, deployment, browser/iPhone, responsive, accessibility, and regression checks remain pending. This reconciliation changes documentation only, not application/configuration/vocabulary/progress/security rules.
+
 ### Shared quiz bottom controls and pop-up spacing
 
 - `c9b8d70`: moved the shared quiz audio button to the bottom-left and flag button to the bottom-right, around the center answer/continue action; retained Mark as known in the upper-right grid column.
@@ -10,7 +22,7 @@
 - Both transformations are owned by the existing final build helper, `scripts/prepare-navigation.mjs`; generated quiz HTML is not committed back to source.
 - Added implementation/maintenance notes and a cross-direction, responsive-layout, accessibility, and regression checklist to [Quiz Engine & Progress Store](features/quiz-engine-and-progress.md). Corrected that feature page's stale anonymous-only report description.
 
-Status: implementation committed; the user's screenshot showed the first layout and overlapping snackbar. Full build execution, cross-mode testing, and final snackbar spacing verification remain pending. This documentation update changes no application code.
+Status: implementation committed; the user's screenshot showed the first layout and overlapping snackbar. Full build execution, cross-mode testing, and final snackbar spacing verification remain pending. This documentation update changes no application code. The helper called final above was final at that time; later helpers are listed in the current build section linked above.
 
 ### Follow-up reconciliation and direction-aware pill
 
@@ -18,18 +30,18 @@ Status: implementation committed; the user's screenshot showed the first layout 
 - Added [November 23 implementation reconciliation](SESSION_RECONCILIATION_2026-11-23.md) to cover the prior branding/hero/CTA, theme-responsive icons and standalone-logo extraction, immediate quiz-choice audio, non-AI companion backlog, verified flag attribution/retry fixes, hidden inline notice, Settings placeholders, six-step build pipeline, and outstanding verification.
 - Updated docs discovery to include the reconciliation and previously omitted branding, shared-UI, companion, and flag-attribution documents. The supplement explicitly supersedes earlier build, scroll-scaling, and notice-visibility descriptions while preserving historical entries.
 
-Status: source changes committed; no full build or cross-browser verification was recorded. Deferred design discussion was intentionally excluded from documentation scope.
+Status: source changes committed; no full build or cross-browser verification was recorded. Deferred design discussion was intentionally excluded from documentation scope. The historical six-step count is superseded by the current eight-step pipeline.
 
 ### Documentation reconciliation
 
 - Completed Project Compass with scope, page/navigation map, canonical file ownership, runtime dependencies, content sources, browser/Firebase state, preparation pipeline, and verification boundaries.
 - Reconciled root and Arabic READMEs and the documentation index: Fursa is the approved replacement brand, not a claim that all live pages have migrated.
 - Corrected authentication/community-flashcard status to acknowledge implementation in source without claiming verified production operation.
-- Recorded the current three-step Netlify preparation chain, including glossary quiz preparation, and the prepared-output font-loading distinction.
+- Recorded the then-current three-step Netlify preparation chain, including glossary quiz preparation, and the prepared-output font-loading distinction.
 - Linked existing feature references rather than creating another competing architecture document.
-- Recorded remaining docs-manifest omissions and verification tasks. No manifest regeneration or application/deployment changes are included in this documentation reconciliation.
+- Recorded remaining docs-manifest omissions and verification tasks. No manifest regeneration or application/deployment changes were included in that documentation reconciliation.
 
-Status: documentation-only source reconciliation. No build execution, browser test, production deployment verification, or security-rule validation is implied.
+Status: documentation-only source reconciliation. No build execution, browser test, production deployment verification, or security-rule validation is implied. Later discovery updates and pipeline changes are recorded above.
 
 ## 2026-11-16
 
