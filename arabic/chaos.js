@@ -1,10 +1,12 @@
 import {parseGlossary,selectWords} from './chaos-vocabulary.js';
+import {ANSWER_HOLD_MS,QUESTION_TIME_MS} from './chaos-config.js';
+import {playReaction,clearReaction} from './chaos-reactions.js';
 const $=id=>document.getElementById(id),panels=['setup','count','game','results'];
 const motion=matchMedia('(prefers-reduced-motion: reduce)');$('reduced').checked=motion.matches;
-function effects(){document.body.classList.toggle('reduced',$('reduced').checked||motion.matches);}
+function effects(){clearReaction();document.body.classList.toggle('reduced',$('reduced').checked||motion.matches);}
 $('reduced').onchange=effects;motion.addEventListener('change',effects);effects();
 const shuffle=values=>{const a=[...values];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
-let state='setup',unit=null,deck=[],pool=[],index=0,streak=0,best=0,score=0,correct=0,missed=[],answered=false,countdown=null,effectTimer=null,advanceTimer=null,questionTimer=null,frame=null,deadline=0;
+let state='setup',unit=null,deck=[],pool=[],index=0,streak=0,best=0,score=0,correct=0,missed=[],answered=false,countdown=null,advanceTimer=null,questionTimer=null,frame=null,deadline=0;
 const cache=new Map(),player=new Audio(new URL('./assets/running_in_the_nineties.mp3',import.meta.url).href);player.loop=true;player.preload='none';player.volume=.25;
 let musicAttempt=0;
 function music(){const attempt=++musicAttempt;try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch{}player.play().then(()=>{if(attempt===musicAttempt){$('audio-status').textContent='';$('audio-retry').hidden=true;}}).catch(()=>{if(attempt!==musicAttempt)return;$('audio-status').textContent='Tap Play music to retry the soundtrack.';$('audio-retry').hidden=false;});}
@@ -13,9 +15,9 @@ $('mute').onclick=()=>{player.muted=!player.muted;$('mute').textContent=player.m
 $('volume').oninput=()=>{const value=Number($('volume').value);player.volume=value;$('volume').style.setProperty('--fill',`${value*100}%`);$('volume-value').textContent=`${Math.round(value*100)}%`;};
 function clearQuestion(){clearTimeout(questionTimer);questionTimer=null;cancelAnimationFrame(frame);frame=null;}
 function clearAdvance(){clearTimeout(advanceTimer);advanceTimer=null;}
-function clearEffects(){clearTimeout(effectTimer);$('reactions').replaceChildren();}
+function clearEffects(){clearReaction();$('reactions').replaceChildren();}
 function show(next){state=next;for(const id of panels)$(id).hidden=id!==next;}
-function reaction(){clearEffects();const node=document.createElement('div');node.className='reaction';node.textContent='nice';$('reactions').append(node);effectTimer=setTimeout(clearEffects,1600);}
+function reaction(){playReaction($('reactions'),$('reduced').checked||motion.matches);}
 function chooseUnits(){clearQuestion();clearAdvance();clearInterval(countdown);clearEffects();show('setup');$('units').hidden=false;$('chapter-panel').hidden=true;$('setup-title').textContent='Choose a unit';$('load').textContent='';$('setup-title').focus();}
 function chooseUnit(id){unit=id;$('units').hidden=true;$('chapter-panel').hidden=false;$('setup-title').textContent=`Unit ${id.replace('unit','')}`;$('chapters').replaceChildren();
   for(const chapter of window.UnitsManifest.getAvailableChapters(id)){const button=document.createElement('button');button.type='button';button.textContent=chapter.number;button.setAttribute('aria-label',chapter.title);button.onclick=()=>start(chapter.id);$('chapters').append(button);}
@@ -31,9 +33,9 @@ function expire(){if(state!=='game'||answered)return;const remaining=deadline-pe
 function question(){clearQuestion();clearAdvance();show('game');answered=false;$('feedback').textContent='';const q=deck[index];scoreText();$('prompt').textContent=q.arabic;$('prompt').lang='ar';$('prompt').dir='auto';
   const others=[...new Set(pool.filter(word=>word.arabic!==q.arabic&&word.english!==q.english).map(word=>word.english))];$('answers').replaceChildren();
   for(const text of shuffle([q.english,...shuffle(others).slice(0,3)])){const button=document.createElement('button');button.textContent=text;button.dir='auto';button.dataset.correct=String(text===q.english);button.onclick=()=>{if(state!=='game'||answered)return;if(performance.now()>=deadline)settle(null,false,true);else settle(button,text===q.english,false);};$('answers').append(button);}
-  $('clock').textContent='5.000';$('clock').classList.remove('urgent');$('prompt').focus();deadline=performance.now()+5000;questionTimer=setTimeout(expire,5000);frame=requestAnimationFrame(clock);}
+  $('clock').textContent=(QUESTION_TIME_MS/1000).toFixed(3);$('clock').classList.remove('urgent');$('prompt').focus();deadline=performance.now()+QUESTION_TIME_MS;questionTimer=setTimeout(expire,QUESTION_TIME_MS);frame=requestAnimationFrame(clock);}
 function advance(){clearAdvance();if(state!=='game'||!answered)return;index++;if(index<deck.length)question();else finish();}
-function scheduleAdvance(){clearAdvance();advanceTimer=setTimeout(advance,500);}
+function scheduleAdvance(){clearAdvance();advanceTimer=setTimeout(advance,ANSWER_HOLD_MS);}
 function settle(button,yes,timedOut){if(answered||state!=='game')return;answered=true;clearQuestion();const q=deck[index];if(timedOut)$('clock').textContent='0.000';else $('clock').textContent=(Math.max(0,deadline-performance.now())/1000).toFixed(3);$('clock').classList.remove('urgent');
   if(yes){streak++;correct++;best=Math.max(best,streak);score+=100+Math.min(streak-1,5)*20;reaction();}else{clearEffects();streak=0;missed.push(q);if(button)button.classList.add('wrong');}
   for(const item of $('answers').children){item.disabled=true;if(item.dataset.correct==='true')item.classList.add('correct');}
